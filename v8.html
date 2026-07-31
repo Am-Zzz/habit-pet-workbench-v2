@@ -145,6 +145,25 @@
   .learn-section-h .l{font-size:13px;font-weight:800;display:flex;align-items:center;gap:6px}
   .learn-section-h .l b{color:var(--brand-d)}
   .learn-section-h .r{font-size:11px;color:var(--ink-faint);font-weight:700}
+
+  /* 主页：小教室 · 最右列新板块 */
+  .home-wrap{display:flex;gap:16px;align-items:flex-start}
+  .home-main{flex:1;min-width:0}
+  .home-mini{flex:0 0 252px;width:252px}
+  .mini-board{position:sticky;top:8px}
+  .mini-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:4px}
+  .mini-mod{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 10px;text-align:center;cursor:pointer;transition:.15s;position:relative}
+  .mini-mod:hover{border-color:var(--brand-s);box-shadow:0 6px 16px rgba(244,130,155,.15);transform:translateY(-2px)}
+  .mini-mod .e{font-size:26px;display:block;line-height:1}
+  .mini-mod .t{font-size:14px;font-weight:800;color:var(--ink);display:block;margin-top:5px}
+  .mini-mod .sub{font-size:11px;color:var(--ink-faint);display:block;margin-top:2px}
+  .mini-mod .ext{font-size:11px;opacity:.5;margin-left:3px}
+  @media(max-width:880px){
+    .home-wrap{flex-direction:column}
+    .home-mini{flex:1 1 auto;width:100%}
+    .mini-grid{grid-template-columns:repeat(2,1fr)}
+    .mini-board{position:static}
+  }
   .learn .sub{display:block;font-size:9.5px;font-weight:700;color:var(--ink-faint);margin-top:4px;line-height:1.3}
 
   /* 各模块标识角标 */
@@ -778,7 +797,9 @@
 
     <!-- 屏幕：主页 -->
     <div class="screen on" id="sc-home">
-      <div class="grid3">
+      <div class="home-wrap">
+        <div class="home-main">
+          <div class="grid3">
         <!-- 左：宠物 -->
         <div class="card">
           <div class="card-h"><span class="t">我的伙伴</span><span class="pet-head-icons"><span class="phi" onclick="go('pets')" title="宠物">🐶</span><span class="phi" onclick="go('store')" title="钱包">🪙</span></span></div>
@@ -837,7 +858,15 @@
             <div class="act" onclick="go('store')"><div class="e">🛒</div><div class="t">商城</div></div>
           </div>
         </div>
-      </div>
+          </div><!-- /grid3 -->
+        </div><!-- /home-main -->
+        <aside class="home-mini">
+          <div class="card mini-board">
+            <div class="card-h"><span class="t">📚 小教室</span><span class="s" title="站外学习网站">↗ 在线学习站</span></div>
+            <div class="mini-grid" id="miniClassGrid"></div>
+          </div>
+        </aside>
+      </div><!-- /home-wrap -->
     </div>
 
     <!-- 屏幕：家长模式（密码） -->
@@ -4201,7 +4230,9 @@
     m_web_engword:{new:true,sub:'Ogden 850 词',ext:true},
     m_web_engprac:{new:true,sub:'850 词·5 类',ext:true}
   };
-  function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')+(meta.ext?' <span style="font-size:11px;opacity:.5" title="站外学习网站">🔗</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';}
+  function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(meta.ext)return;html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on&&!(MODULE_META[m.id]||{}).ext;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';renderMiniClass();}
+  function renderMiniClass(){var g=document.getElementById('miniClassGrid');if(!g)return;var html='';MODULES.forEach(function(m){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(!meta.ext)return;html+='<div class="mini-mod" onclick="openMini(\''+m.screen+'\')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">'+esc(m.sub)+'</span>':'')+'<span class="ext" title="站外学习网站">🔗</span></div>';});g.innerHTML=html||'<div class="empty">暂无在线学习模块</div>';}
+  function openMini(screen){var op=MODULE_OPENERS[screen];if(op)op();else if(screen)go(screen);else toast('该内容暂未开放');}
   var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');}};
   function openModuleByIdx(idx){var m=MODULES[idx];if(!m)return;var op=MODULE_OPENERS[m.screen];if(op)op();else if(m.screen)go(m.screen);else toast('该内容暂未开放');}
   function renderStudies(){
@@ -4331,7 +4362,7 @@
     if(!localStorage.getItem(CHECKIN_KEY)){
       var all={}; all[getTodayKey()]=[0,1,2]; saveCheckinDone(all);
     }
-    renderHomeTasks(); renderLearnGrid(); renderGames();
+    renderHomeTasks(); renderLearnGrid(); renderMiniClass(); renderGames();
     renderPerm();
     initGacha();
     navSync('home');
