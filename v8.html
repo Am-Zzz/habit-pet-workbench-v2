@@ -1360,6 +1360,7 @@
         <div style="text-align:center;margin-bottom:12px">
           <button class="btn ghost" onclick="startOutdoorTimer()">▶ 开始计时</button>
           <button class="btn ghost" onclick="stopOdTimer();renderOdTimer()">⏸ 暂停</button>
+          <button class="btn ghost" onclick="resetOdTimer()">🔄 重置</button>
         </div>
         <div class="od-list" id="odList"></div>
         <div class="lrn-foot">
@@ -3734,7 +3735,7 @@
   function stopMorningTimer(){if(mrTimerId){clearInterval(mrTimerId);mrTimerId=null;}}
 
   function openOutdoor(){
-    odLeft=1800;renderOdTimer();stopOdTimer();
+    renderOdTimer();stopOdTimer();   // 进入时暂停后台计时，保留已用/剩余时间
     const list=document.getElementById('odList');list.innerHTML='';
     OUTDOOR_ACTS.forEach((a,i)=>{
       list.innerHTML+='<div class="od-item" id="od-'+i+'" onclick="toggleOd('+i+')"><span class="od-ck"></span><span>'+esc(a)+'</span></div>';
@@ -3743,7 +3744,9 @@
   }
   function toggleOd(i){const el=document.getElementById('od-'+i);el.classList.toggle('on');}
   function startOutdoorTimer(){
-    stopOdTimer();odLeft=1800;renderOdTimer();
+    if(odTimerId)return;                 // 正在计时则不重复启动
+    if(odLeft<=0)odLeft=1800;            // 已结束则从头开始，否则从暂停处继续
+    renderOdTimer();
     odTimerId=setInterval(()=>{
       odLeft--;renderOdTimer();
       if(odLeft<=0){stopOdTimer();const el=document.getElementById('odTimer');if(el)el.textContent='⏰ 30 分钟到！';completeHomeTask('task-outdoor');}
@@ -3751,6 +3754,7 @@
   }
   function renderOdTimer(){const m=Math.floor(odLeft/60),s=odLeft%60;const el=document.getElementById('odTimer');if(el)el.textContent='⏱️ 剩余 '+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
   function stopOdTimer(){if(odTimerId){clearInterval(odTimerId);odTimerId=null;}}
+  function resetOdTimer(){stopOdTimer();odLeft=1800;renderOdTimer();}
 
   function openPack(){
     const list=document.getElementById('pkList');list.innerHTML='';
