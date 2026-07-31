@@ -450,18 +450,34 @@
   .word-card .w-cn{font-size:12px;color:var(--ink-soft)}
   .word-card .w-actions{display:flex;gap:6px;justify-content:center;margin-top:10px}
 
-  /* ====== 英语对话句对列表 ====== */
-  .dlg-list{display:flex;flex-direction:column;gap:12px}
-  .dlg-item{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
-  .dlg-hd{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12px;font-weight:800;color:var(--brand-d)}
-  .dlg-en{font-size:19px;font-weight:900;color:var(--ink);margin-bottom:4px}
-  .dlg-zh{font-size:13px;color:var(--ink-soft);margin-bottom:10px}
-  .dlg-btns{display:flex;gap:8px}
-  .dlg-btn{flex:1;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 0;font-size:12px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:.15s}
+  /* ====== 英语对话句对卡片（参考“每日短句”设计） ====== */
+  .dlg-list{display:grid;grid-template-columns:1fr;gap:14px}
+  @media(min-width:640px){.dlg-list{grid-template-columns:repeat(2,1fr)}}
+  .dlg-item{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:16px 16px 14px;box-shadow:var(--shadow-sm);transition:.15s;display:flex;flex-direction:column}
+  .dlg-item:active{transform:scale(.985)}
+  .dlg-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .dlg-tag{font-size:11px;font-weight:900;color:var(--brand-d);background:rgba(244,130,155,.12);padding:4px 10px;border-radius:999px}
+  .dlg-status{font-size:11px;font-weight:800;color:var(--ink-soft);display:flex;align-items:center;gap:4px}
+  .dlg-status .ck{width:14px;height:14px;border:1.5px solid var(--ink-faint);border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:10px}
+  .dlg-item[data-mastered="1"] .dlg-status{color:var(--sage)}
+  .dlg-item[data-mastered="1"] .dlg-status .ck{background:var(--sage);border-color:var(--sage);color:#fff}
+  .dlg-body{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px}
+  .dlg-icon{font-size:48px;line-height:1;flex:0 0 48px;text-align:center}
+  .dlg-tx{flex:1;min-width:0}
+  .dlg-q{font-size:18px;font-weight:900;color:var(--ink);line-height:1.3;margin-bottom:6px}
+  .dlg-a{font-size:15px;font-weight:700;color:var(--brand-d);margin-bottom:5px;display:flex;align-items:center;gap:5px}
+  .dlg-a::before{content:"🔑";font-size:13px}
+  .dlg-zh{font-size:12px;color:var(--ink-soft);line-height:1.4}
+  .dlg-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:auto}
+  .dlg-btn{border:none;border-radius:999px;padding:10px 0;font-size:12px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:.15s}
   .dlg-btn:active{transform:scale(.96)}
-  .dlg-btn.db-read{color:#3F6BA8}
-  .dlg-btn.db-follow{color:var(--brand-d)}
-  .dlg-btn.db-master{background:var(--butter-s);color:#9A7416;border-color:var(--butter)}
+  .dlg-btn.db-read{background:#E8F4FF;color:#3F6BA8}
+  .dlg-btn.db-read:hover{background:#D6EBFF}
+  .dlg-btn.db-follow{background:#FFF0E0;color:#D46B08}
+  .dlg-btn.db-follow:hover{background:#FFE4C7}
+  .dlg-btn.db-master{background:#E8F5E9;color:#2E7D32}
+  .dlg-btn.db-master:hover{background:#D6EDD7}
+  .dlg-item[data-mastered="1"] .dlg-btn.db-master{background:#C8E6C9;color:#1B5E20}
 
   /* ====== 科普阅读屏 ====== */
   .sci-title{font-size:20px;font-weight:900;color:var(--ink);text-align:center;margin-bottom:16px}
@@ -2544,26 +2560,56 @@
    英语对话数据
    ================================================================ */
   const DIALOGUE_DATA=[
-    {icon:'🌈',en:'Good morning!',zh:'早上好！'},
-    {icon:'👍',en:'Thank you!',zh:'谢谢！'},
-    {icon:'❤️',en:'I love you!',zh:'我爱你！'},
-    {icon:'😊',en:'How are you?',zh:'你好吗？'},
-    {icon:'🎒',en:'Let\'s go to school.',zh:'我们去上学吧。'},
-    {icon:'🍎',en:'I like apples.',zh:'我喜欢苹果。'},
-    {icon:'👋',en:'Goodbye! See you.',zh:'再见！回头见。'}
+    {cat:'问答句式', icon:'🍎', q:"What's this?", a:"It's an apple.", zh:'这是什么？——这是一个苹果。'},
+    {cat:'问答句式', icon:'🐶', q:"What's this?", a:"It's a dog.", zh:'这是什么？——这是一只小狗。'},
+    {cat:'问答句式', icon:'🔵', q:"What colour is it?", a:"It is blue.", zh:'它是什么颜色？——它是蓝色的。'},
+    {cat:'问答句式', icon:'🟡', q:"What colour is it?", a:"It is yellow.", zh:'它是什么颜色？——它是黄色的。'},
+    {cat:'动作指令', icon:'🪑', q:"Sit down, please.", a:"Thank you.", zh:'请坐下。——谢谢。'},
+    {cat:'动作指令', icon:'👆', q:"Point to the door.", a:"OK.", zh:'指向门。——好的。'},
+    {cat:'日常用语', icon:'🌅', q:"Good morning!", a:"Good morning!", zh:'早上好！——早上好！'},
+    {cat:'日常用语', icon:'👋', q:"Goodbye!", a:"Bye-bye!", zh:'再见！——再见！'}
   ];
   function openDialogue(){loadDialogue();go('dialogue');}
+  function playDialogue(idx,btn){
+    const d=DIALOGUE_DATA[idx]; if(!d)return;
+    speak(d.q,'en');
+    btn.innerHTML='🔊 播放中…';
+    setTimeout(()=>btn.innerHTML='🔊 朗读',1300);
+  }
+  function toggleMastered(btn){
+    const card=btn.closest('.dlg-item');
+    const mastered=card.dataset.mastered==='1';
+    card.dataset.mastered=mastered?'0':'1';
+    const status=card.querySelector('.dlg-status');
+    if(mastered){
+      btn.innerHTML='⭐ 学会了';
+      status.innerHTML='<span class="ck"></span> 学习中';
+    }else{
+      btn.innerHTML='✓ 已学会';
+      status.innerHTML='<span class="ck">✓</span> 已学会';
+    }
+  }
   function loadDialogue(){
     const list=document.getElementById('dlgList');list.innerHTML='';
     DIALOGUE_DATA.forEach((d,i)=>{
-      list.innerHTML+=`<div class="dlg-item">
-        <div class="dlg-hd">第${i+1}句 ${d.icon}</div>
-        <div class="dlg-en">${d.en}</div>
-        <div class="dlg-zh">${d.zh}</div>
+      const q=esc(d.q), a=esc(d.a), zh=esc(d.zh);
+      list.innerHTML+=`<div class="dlg-item" data-mastered="0">
+        <div class="dlg-top">
+          <span class="dlg-tag">${esc(d.cat)}</span>
+          <span class="dlg-status"><span class="ck"></span> 学习中</span>
+        </div>
+        <div class="dlg-body">
+          <div class="dlg-icon">${d.icon}</div>
+          <div class="dlg-tx">
+            <div class="dlg-q">${q}</div>
+            <div class="dlg-a">${a}</div>
+            <div class="dlg-zh">${zh}</div>
+          </div>
+        </div>
         <div class="dlg-btns">
-          <div class="dlg-btn db-read" onclick="speak('${esc(d.en)}','en');this.innerHTML='🔊 播放中...';setTimeout(()=>this.innerHTML='🔊 朗读',1300)">🔊 朗读</div>
-          <div class="dlg-btn db-follow" onclick="this.innerHTML='🎤 跟读中...'">🎤 跟读</div>
-          <div class="dlg-btn db-master" onclick="this.innerHTML='⭐ 已学会';this.style.opacity=.6">⭐ 学会了</div>
+          <button class="dlg-btn db-read" onclick="playDialogue(${i},this)">🔊 朗读</button>
+          <button class="dlg-btn db-follow" onclick="this.innerHTML='🎤 跟读中…';setTimeout(()=>this.innerHTML='🎤 跟读',1300)">🎤 跟读</button>
+          <button class="dlg-btn db-master" onclick="toggleMastered(this)">⭐ 学会了</button>
         </div>
       </div>`;
     });
