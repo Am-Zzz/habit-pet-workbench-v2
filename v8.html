@@ -4083,12 +4083,16 @@
     {id:'m_books',name:'绘本',emoji:'📚',screen:'books',on:true},
     {id:'m_science',name:'科普阅读',emoji:'🔬',screen:'science',on:true},
     {id:'m_logic',name:'逻辑思维',emoji:'🧠',screen:'logic',on:true},
-    {id:'m_games',name:'游戏中心',emoji:'🎮',screen:'games',on:true}
+    {id:'m_games',name:'游戏中心',emoji:'🎮',screen:'games',on:true},
+    {id:'m_web_math',name:'数学·一下',emoji:'🔢',screen:'web_math',on:true},
+    {id:'m_web_chinese',name:'语文·一下',emoji:'📝',screen:'web_chinese',on:true},
+    {id:'m_web_engword',name:'英语·基础词汇',emoji:'🌐',screen:'web_engword',on:true},
+    {id:'m_web_engprac',name:'英语·词汇练习',emoji:'📘',screen:'web_engprac',on:true}
   ];}
   // 规范基础模块（学习乐园九宫格固定 9 格，游戏中心必须存在）
-  const CANON_MODULE_IDS=['m_chars','m_pinyin','m_math','m_words','m_poem','m_books','m_science','m_logic','m_games'];
+  const CANON_MODULE_IDS=['m_chars','m_pinyin','m_math','m_words','m_poem','m_books','m_science','m_logic','m_games','m_web_math','m_web_chinese','m_web_engword','m_web_engprac'];
   var CANON_MODULE_BY_ID={}; defaultModules().forEach(function(m){CANON_MODULE_BY_ID[m.id]=m;});
-  function loadModules(){var raw=localStorage.getItem(MODULES_KEY);if(raw){try{var arr=JSON.parse(raw);if(Array.isArray(arr)&&arr.length){var ids=arr.map(function(m){return m&&m.id;});var missing=CANON_MODULE_IDS.some(function(id){return ids.indexOf(id)<0;});if(!missing){arr.forEach(function(m){var c=CANON_MODULE_BY_ID[m.id];if(c){m.emoji=c.emoji;m.screen=c.screen;}});MODULES=arr;return;}}}catch(e){}}MODULES=defaultModules();saveModules();}
+  function loadModules(){var raw=localStorage.getItem(MODULES_KEY);if(raw){try{var arr=JSON.parse(raw);if(Array.isArray(arr)&&arr.length){var ids=arr.map(function(m){return m&&m.id;});arr.forEach(function(m){var c=CANON_MODULE_BY_ID[m.id];if(c){m.emoji=c.emoji;m.screen=c.screen;}});var added=false;CANON_MODULE_IDS.forEach(function(id){if(ids.indexOf(id)<0){var c=CANON_MODULE_BY_ID[id];if(c){arr.push(JSON.parse(JSON.stringify(c)));added=true;}}});if(added)saveModules();MODULES=arr;return;}}catch(e){}}MODULES=defaultModules();saveModules();}
   function saveModules(){try{localStorage.setItem(MODULES_KEY,JSON.stringify(MODULES));}catch(e){}}
   const MODULE_META={
     m_chars:{new:true,sub:'4/1015'},
@@ -4099,10 +4103,14 @@
     m_books:{new:true,sub:'0/16'},
     m_science:{new:true,sub:'0/100'},
     m_logic:{new:true,sub:'0/100'},
-    m_games:{new:true,sub:'0/5'}
+    m_games:{new:true,sub:'0/5'},
+    m_web_math:{new:true,sub:'小教室·数学一下',ext:true},
+    m_web_chinese:{new:true,sub:'小教室·语文一下',ext:true},
+    m_web_engword:{new:true,sub:'Ogden 850 词',ext:true},
+    m_web_engprac:{new:true,sub:'850 词·5 类',ext:true}
   };
-  function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';}
-  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames};
+  function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')+(meta.ext?' <span style="font-size:11px;opacity:.5" title="站外学习网站">🔗</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';}
+  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');}};
   function openModuleByIdx(idx){var m=MODULES[idx];if(!m)return;var op=MODULE_OPENERS[m.screen];if(op)op();else if(m.screen)go(m.screen);else toast('该内容暂未开放');}
   function renderStudies(){
     var box=document.getElementById('studyList');if(!box)return;
