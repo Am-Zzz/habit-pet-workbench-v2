@@ -3795,7 +3795,9 @@
     {id:'m_logic',name:'逻辑思维',emoji:'🧠',screen:'logic',on:true},
     {id:'m_games',name:'游戏中心',emoji:'🎮',screen:'games',on:true}
   ];}
-  function loadModules(){var raw=localStorage.getItem(MODULES_KEY);if(raw){try{MODULES=JSON.parse(raw);if(!Array.isArray(MODULES)||!MODULES.length)MODULES=defaultModules();}catch(e){MODULES=defaultModules();}}else{MODULES=defaultModules();saveModules();}}
+  // 规范基础模块（学习乐园九宫格固定 9 格，游戏中心必须存在）
+  const CANON_MODULE_IDS=['m_chars','m_pinyin','m_math','m_words','m_poem','m_books','m_science','m_logic','m_games'];
+  function loadModules(){var raw=localStorage.getItem(MODULES_KEY);if(raw){try{var arr=JSON.parse(raw);if(Array.isArray(arr)&&arr.length){var ids=arr.map(function(m){return m&&m.id;});var missing=CANON_MODULE_IDS.some(function(id){return ids.indexOf(id)<0;});if(!missing){MODULES=arr;return;}}}catch(e){}}MODULES=defaultModules();saveModules();}
   function saveModules(){try{localStorage.setItem(MODULES_KEY,JSON.stringify(MODULES));}catch(e){}}
   const MODULE_META={
     m_chars:{new:true,sub:'4/1015'},
