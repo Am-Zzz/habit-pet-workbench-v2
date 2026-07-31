@@ -3785,10 +3785,10 @@
   /* ====================== 主页打卡 / 学习乐园 / 游戏中心 / 商城 / 我的 ====================== */
   const MODULES_KEY='mp_modules_v1';
   function defaultModules(){return [
-    {id:'m_chars',name:'识字',emoji:'🔤',screen:'chars',on:true},
-    {id:'m_pinyin',name:'拼音',emoji:'🔡',screen:'pinyin',on:true},
+    {id:'m_chars',name:'识字',emoji:'✏️',screen:'chars',on:true},
+    {id:'m_pinyin',name:'拼音',emoji:'🗣️',screen:'pinyin',on:true},
     {id:'m_math',name:'口算闯关',emoji:'➗',screen:'math',on:true},
-    {id:'m_words',name:'英语',emoji:'🅰️',screen:'words',on:true},
+    {id:'m_words',name:'英语',emoji:'💬',screen:'words',on:true},
     {id:'m_poem',name:'古诗',emoji:'📜',screen:'poem',on:true},
     {id:'m_books',name:'绘本',emoji:'📚',screen:'books',on:true},
     {id:'m_science',name:'科普阅读',emoji:'🔬',screen:'science',on:true},
@@ -3797,7 +3797,8 @@
   ];}
   // 规范基础模块（学习乐园九宫格固定 9 格，游戏中心必须存在）
   const CANON_MODULE_IDS=['m_chars','m_pinyin','m_math','m_words','m_poem','m_books','m_science','m_logic','m_games'];
-  function loadModules(){var raw=localStorage.getItem(MODULES_KEY);if(raw){try{var arr=JSON.parse(raw);if(Array.isArray(arr)&&arr.length){var ids=arr.map(function(m){return m&&m.id;});var missing=CANON_MODULE_IDS.some(function(id){return ids.indexOf(id)<0;});if(!missing){MODULES=arr;return;}}}catch(e){}}MODULES=defaultModules();saveModules();}
+  var CANON_MODULE_BY_ID={}; defaultModules().forEach(function(m){CANON_MODULE_BY_ID[m.id]=m;});
+  function loadModules(){var raw=localStorage.getItem(MODULES_KEY);if(raw){try{var arr=JSON.parse(raw);if(Array.isArray(arr)&&arr.length){var ids=arr.map(function(m){return m&&m.id;});var missing=CANON_MODULE_IDS.some(function(id){return ids.indexOf(id)<0;});if(!missing){arr.forEach(function(m){var c=CANON_MODULE_BY_ID[m.id];if(c){m.emoji=c.emoji;m.screen=c.screen;}});MODULES=arr;return;}}}catch(e){}}MODULES=defaultModules();saveModules();}
   function saveModules(){try{localStorage.setItem(MODULES_KEY,JSON.stringify(MODULES));}catch(e){}}
   const MODULE_META={
     m_chars:{new:true,sub:'4/1015'},
@@ -3811,7 +3812,8 @@
     m_games:{new:true,sub:'0/5'}
   };
   function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';}
-  function openModuleByIdx(idx){var m=MODULES[idx];if(m&&m.screen)go(m.screen);else if(m)toast('该内容暂未开放');}
+  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openWords,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames};
+  function openModuleByIdx(idx){var m=MODULES[idx];if(!m)return;var op=MODULE_OPENERS[m.screen];if(op)op();else if(m.screen)go(m.screen);else toast('该内容暂未开放');}
   function renderStudies(){
     var box=document.getElementById('studyList');if(!box)return;
     box.innerHTML=MODULES.map(function(m,i){return '<div class="mrow"><span class="ck '+(m.on?'on':'')+'" onclick="toggleStudy('+i+')">'+(m.on?'✓':'✕')+'</span><span class="mn">'+m.emoji+' '+esc(m.name)+'</span><span class="mini-btn" onclick="editStudy('+i+')">改</span><span class="mini-btn del" onclick="delStudy('+i+')">删</span></div>';}).join('');
