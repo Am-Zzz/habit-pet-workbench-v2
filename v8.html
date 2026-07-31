@@ -130,7 +130,7 @@
   .learn:active{transform:scale(.97)}
   .learn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(221,94,134,.14);border-color:var(--brand)}
   .learn .e{font-size:22px;line-height:1}
-  .learn .t{font-size:11px;font-weight:700;color:var(--ink);margin-top:5px;line-height:1.25}
+  .learn .t{display:block;font-size:11px;font-weight:700;color:var(--ink);margin-top:5px;line-height:1.25}
   .learn .lv{display:inline-block;margin-top:6px;font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:999px;white-space:nowrap}
   .lv-eng{background:#E8F0FB;color:#3F6BA8}
   .lv-math{background:var(--butter-s);color:#9A7416}
@@ -145,7 +145,7 @@
   .learn-section-h .l{font-size:13px;font-weight:800;display:flex;align-items:center;gap:6px}
   .learn-section-h .l b{color:var(--brand-d)}
   .learn-section-h .r{font-size:11px;color:var(--ink-faint);font-weight:700}
-  .learn .sub{font-size:9.5px;font-weight:700;color:var(--ink-faint);margin-top:4px;line-height:1.3}
+  .learn .sub{display:block;font-size:9.5px;font-weight:700;color:var(--ink-faint);margin-top:4px;line-height:1.3}
 
   /* 各模块标识角标 */
   .badge{position:absolute;top:5px;right:5px;font-size:8.5px;font-weight:800;color:#fff;padding:1.5px 5.5px;border-radius:999px;box-shadow:0 2px 5px rgba(0,0,0,.15)}
@@ -3808,7 +3808,7 @@
     m_logic:{new:true,sub:'0/100'},
     m_games:{new:true,sub:'0/5'}
   };
-  function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">'+meta.sub+'</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';}
+  function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';}
   function openModuleByIdx(idx){var m=MODULES[idx];if(m&&m.screen)go(m.screen);else if(m)toast('该内容暂未开放');}
   function renderStudies(){
     var box=document.getElementById('studyList');if(!box)return;
