@@ -77,11 +77,11 @@ E('me nav active', d.getElementById('nav-me').classList.contains('active'));
 
 // ---- learn grid + modules ----
 w.go('home');
-E('learn grid has 8 modules', d.getElementById('learnGrid').children.length === 8);
+E('learn grid has 9 modules', d.getElementById('learnGrid').children.length === 9);
 S('MODULES[0].on = false; renderLearnGrid();');
-E('learn grid hides off module', d.getElementById('learnGrid').children.length === 7);
+E('learn grid hides off module', d.getElementById('learnGrid').children.length === 8);
 S('MODULES[0].on = true; renderLearnGrid();');
-E('learn grid restores', d.getElementById('learnGrid').children.length === 8);
+E('learn grid restores', d.getElementById('learnGrid').children.length === 9);
 w.openModuleByIdx(0);
 E('openModuleByIdx opens chars screen', d.getElementById('sc-chars').classList.contains('on'));
 w.go('home');
@@ -163,19 +163,10 @@ E('home task list rendered (5)', d.getElementById('homeTaskList').children.lengt
   E('progress header updates', /\d+\/\d+\s*完成/.test(d.getElementById('homeTaskCount').textContent));
 })();
 
-// ---- 主页学习乐园九宫格（游戏中心独立板块，不在九宫格中）----
-E('learn section header shows 8 modules', /学习乐园 · 8 大模块/.test(d.getElementById('sc-home').textContent));
-E('learn grid does NOT contain game center', !/游戏中心/.test(d.getElementById('learnGrid').textContent));
-E('separate home games card exists', !!d.getElementById('homeGamesCard'));
-E('home games grid renders 5 cards', d.getElementById('homeGamesGrid').children.length === 5);
-E('home games card clickable', (function(){ const c=d.querySelector('#homeGamesGrid .game-card:not(.off)'); return c && /openGame\(\d+\)/.test(c.getAttribute('onclick')||''); })());
-E('nav-games tab exists', !!d.getElementById('nav-games'));
-(function(){
-  const ng=d.getElementById('nav-games');
-  ng.click();
-  E('nav-games opens games screen', d.getElementById('sc-games').classList.contains('on'));
-  E('nav-games active after click', ng.classList.contains('active'));
-})();
+// ---- 主页学习乐园九宫格（旧版布局）----
+E('learn section header shows 9 modules', /学习乐园 · 9 大模块/.test(d.getElementById('sc-home').textContent));
+E('learn grid contains game center', /游戏中心/.test(d.getElementById('learnGrid').textContent));
+E('no separate games nav tab', !d.getElementById('nav-games'));
 w.go('home');
 
 // ---- parent add study propagates ----
