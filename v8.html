@@ -74,6 +74,13 @@
   .mood-pick button{flex:1;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 0;font-size:16px;cursor:pointer;transition:.15s}
   .mood-pick button.sel{border-color:var(--brand);background:var(--brand-s);box-shadow:0 2px 8px rgba(221,94,134,.15)}
 
+  .pet-head-icons{display:flex;align-items:center;gap:8px}
+  .pet-head-icons .phi{width:28px;height:28px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;font-size:14px;cursor:pointer;transition:.15s}
+  .pet-head-icons .phi:active{transform:scale(.92)}
+  .pet-lv{text-align:center;font-size:13px;font-weight:700;color:var(--brand-d);margin:-4px 0 12px}
+  .pet-slots{display:flex;justify-content:center;gap:8px;margin-bottom:14px}
+  .pet-slots span{width:28px;height:28px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;font-size:13px;color:var(--ink-faint)}
+
   .chips{display:flex;gap:8px;margin-bottom:14px}
   .chip{flex:1;text-align:center;background:var(--surface-2);border-radius:12px;padding:9px 4px}
   .chip .v{font-size:15px;font-weight:800}
@@ -102,8 +109,13 @@
   .task.done .tt{color:var(--ink-faint);text-decoration:line-through}
   .tt{flex:1;font-size:14px;font-weight:700}
   .tt .sub{display:block;font-size:11px;font-weight:500;color:var(--ink-soft);margin-top:2px}
+  .t-main{flex:1;min-width:0}
+  .t-name{font-size:14px;font-weight:700}
+  .t-tag{display:block;font-size:11px;font-weight:500;color:var(--ink-soft);margin-top:2px}
+  .task.done .t-name{color:var(--ink-faint);text-decoration:line-through}
   .ptag{font-size:11px;font-weight:700;color:var(--brand-d);background:var(--brand-s);padding:4px 9px;border-radius:999px;white-space:nowrap}
-  .ptag.req{color:#9A7416;background:var(--butter-s)}
+  .ptag.req,.rtag.req{color:#9A7416;background:var(--butter-s)}
+  .rtag{font-size:11px;font-weight:700;color:var(--brand-d);background:var(--brand-s);padding:4px 9px;border-radius:999px;white-space:nowrap;margin-left:auto}
 
   .acts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px}
   .act{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 4px;text-align:center;cursor:pointer;transition:.15s}
@@ -128,6 +140,12 @@
   .lv-sci{background:#E6F4EF;color:#2E8B6F}
   .lv-life{background:#FDEFE2;color:#B5762B}
   .lv-games{background:#F3E8FB;color:#7B5BB8}
+
+  .learn-section-h{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px}
+  .learn-section-h .l{font-size:13px;font-weight:800;display:flex;align-items:center;gap:6px}
+  .learn-section-h .l b{color:var(--brand-d)}
+  .learn-section-h .r{font-size:11px;color:var(--ink-faint);font-weight:700}
+  .learn .sub{font-size:9.5px;font-weight:700;color:var(--ink-faint);margin-top:4px;line-height:1.3}
 
   /* 各模块标识角标 */
   .badge{position:absolute;top:5px;right:5px;font-size:8.5px;font-weight:800;color:#fff;padding:1.5px 5.5px;border-radius:999px;box-shadow:0 2px 5px rgba(0,0,0,.15)}
@@ -258,6 +276,13 @@
   .coll{display:flex;align-items:center;justify-content:space-between;background:var(--surface-2);border-radius:14px;padding:12px 14px;cursor:pointer}
   .coll .l{font-size:13px;font-weight:800}
   .coll .r{font-size:12px;color:var(--ink-soft)}
+
+  .coll-card{background:linear-gradient(180deg,#FFFFFF,#FFFCF9);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-s);padding:14px 16px;margin-bottom:12px;cursor:pointer;transition:.15s}
+  .coll-card:active{transform:scale(.98)}
+  .coll-card .ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+  .coll-card .ct{font-size:15px;font-weight:800}
+  .coll-card .cs{font-size:11px;color:var(--ink-faint);font-weight:500;margin-top:2px}
+  .coll-card .ca{color:var(--brand-d);font-weight:800;font-size:12px}
 
   /* 家长模式 */
   .locked{max-width:340px;margin:30px auto;text-align:center}
@@ -676,7 +701,7 @@
       <div class="grid3">
         <!-- 左：宠物 -->
         <div class="card">
-          <div class="card-h"><span class="t">我的伙伴</span><span class="partner-tabs"><span class="ptab sel" onclick="setPartner('dog',this)" title="小萌">🐶</span><span class="ptab" onclick="setPartner('snake',this)" title="小蛇蛇">🐍</span></span></div>
+          <div class="card-h"><span class="t">我的伙伴</span><span class="pet-head-icons"><span class="phi" onclick="go('pets')" title="宠物">🐶</span><span class="phi" onclick="go('store')" title="钱包">🪙</span></span></div>
           <div class="pet-face">
             <div class="pet-stage" id="petFace"></div>
           </div>
@@ -684,60 +709,54 @@
             <span class="pet-name" id="petName">小萌</span>
             <span class="edit-name" onclick="rename()" title="改名">✏️</span>
           </div>
-          <div class="growth" id="growthBox">
-            <div class="growth-lv">Lv.<span id="snakeLv">3</span> · <span id="snakeStage">萌萌小蛇</span></div>
-            <div class="growth-track" id="growthTrack"></div>
+          <div class="pet-lv">Lv.<span id="snakeLv">1</span> · <span id="snakeStage">窝里小狗</span></div>
+          <div class="pet-slots" id="petSlots">
+            <span>🐶</span><span>🔒</span><span>🔒</span><span>🔒</span><span>🔒</span><span>🔒</span>
           </div>
           <div class="mood">
-            <div class="mood-top"><span>💗 心情</span><b id="moodVal">38%</b></div>
-            <div class="bar"><i id="moodBar" style="width:38%"></i></div>
+            <div class="mood-top"><span>💗 心情</span><b id="moodVal">85%</b></div>
+            <div class="bar"><i id="moodBar" style="width:85%"></i></div>
             <div class="mood-pick" id="moodPick">
-              <button onclick="setMood(85,'happy',this)">😊</button>
+              <button class="sel" onclick="setMood(85,'happy',this)">😊</button>
               <button onclick="setMood(55,'meh',this)">😐</button>
               <button onclick="setMood(38,'sad',this)">😢</button>
               <button onclick="setMood(15,'cry',this)">😭</button>
-              <button class="growth-btn sel" id="growthBtn" onclick="setGrowthView()" title="显示成长形象">🐶</button>
+              <button class="growth-btn" id="growthBtn" onclick="setGrowthView()" title="显示成长形象">🐶</button>
             </div>
           </div>
           <div class="chips">
             <div class="chip"><div class="v">72</div><div class="k">🍖 饱腹</div></div>
             <div class="chip"><div class="v">90</div><div class="k">🫧 清洁</div></div>
           </div>
-          <div class="bubble" id="bubble">今天有点提不起劲…陪我玩会儿好不好？做点有意思的事，我就开心啦～</div>
+          <div class="bubble" id="bubble">今天元气满满！要不要一起挑战趣题呀？😊</div>
           <button class="btn" onclick="go('home')">陪小萌玩 →</button>
         </div>
 
         <!-- 中：打卡 + 学习乐园 -->
         <div class="card" id="homeTasks">
-          <div class="card-h"><span class="t">今日打卡</span><span class="s" id="homeTaskCount">0/0 完成</span></div>
+          <div class="card-h"><span class="t">今日打卡</span><span class="s" id="homeTaskCount">3/5 完成</span></div>
           <div class="prog">
             <span class="rkt">🚀</span>
-            <div class="ptxt"><div class="l">成长进度</div><div class="n" id="homeProgNum">已完成 0 项</div></div>
-            <div class="bar"><i id="homeProgBar" style="width:0%;background:linear-gradient(90deg,#F7A8BC,var(--brand))"></i></div>
+            <div class="ptxt"><div class="l">成长进度</div><div class="n" id="homeProgNum">已完成 3 项</div></div>
+            <div class="bar"><i id="homeProgBar" style="width:60%;background:linear-gradient(90deg,#F7A8BC,var(--brand))"></i></div>
           </div>
           <div id="homeTaskList"></div>
 
-
-          <div class="acts-label" id="learnLabel">🎓 学习乐园</div>
+          <div class="learn-section-h"><span class="l">🎓 学习乐园 · <b id="learnCount">9 大模块</b></span></div>
           <div class="learn-grid" id="learnGrid"></div>
         </div>
 
         <!-- 右：图鉴 + 快捷入口 -->
         <div class="card">
-          <div class="coll" onclick="go('pets')">
-            <div><div class="l">宠物图鉴</div><div class="r" style="color:var(--ink-faint);font-weight:500;font-size:11px;margin-top:2px">已收集 3 / 8</div></div>
-            <span style="color:var(--brand-d);font-weight:800">查看 ›</span>
+          <div class="coll-card" onclick="go('pets')">
+            <div class="ch"><span class="ct">宠物图鉴</span><span class="ca">查看 ›</span></div>
+            <div class="cs">已收集 3 / 8</div>
           </div>
-          <div style="margin-top:12px" class="acts">
+          <div class="acts">
             <div class="act" onclick="go('pets')"><div class="e">🎁</div><div class="t">盲盒</div></div>
             <div class="act" onclick="go('store')"><div class="e">🛒</div><div class="t">商城</div></div>
           </div>
         </div>
-      </div>
-      <!-- 游戏中心板块（首页） -->
-      <div class="card" id="homeGamesCard" style="margin-top:16px">
-        <div class="card-h"><span class="t">🎮 游戏中心</span><span class="s" onclick="go('games')" style="cursor:pointer">查看全部 ›</span></div>
-        <div class="games-grid" id="homeGamesGrid" style="margin-bottom:0"></div>
       </div>
     </div>
 
@@ -1561,7 +1580,6 @@
     <div class="nav" id="nav">
       <div class="nav-item active" id="nav-home" onclick="go('home')"><span class="ic">🏠</span>首页</div>
       <div class="nav-item" id="nav-checkin" onclick="go('checkin')"><span class="ic">✅</span>打卡</div>
-      <div class="nav-item" id="nav-games" onclick="go('games')"><span class="ic">🎮</span>游戏</div>
       <div class="nav-mid" id="nav-store" onclick="go('store')"><div class="m">🛒</div><span>商城</span></div>
       <div class="nav-item" id="nav-pets" onclick="go('pets')"><span class="ic">🎁</span>盲盒</div>
       <div class="nav-item" id="nav-me" onclick="go('me')"><span class="ic">👤</span>我的</div>
@@ -1631,14 +1649,20 @@
   ];
   function renderPet(){
     const face=document.getElementById('petFace');
+    if(!face)return;
+    const growthBox=document.getElementById('growthBox');
+    const snakeLvEl=document.getElementById('snakeLv');
+    const snakeStageEl=document.getElementById('snakeStage');
+    const petNameEl=document.getElementById('petName');
+    const bubbleEl=document.getElementById('bubble');
     if(currentPartner==='snake'){
       const s=SNAKE_GROWTH[snakeLv-1];
       face.innerHTML=`<img src="${s.img}" alt="${s.name}" style="width:118px;height:118px;object-fit:contain">`;
-      document.getElementById('growthBox').style.display='block';
-      document.getElementById('snakeLv').textContent=s.lv;
-      document.getElementById('snakeStage').textContent=s.name;
-      document.getElementById('petName').textContent='小蛇蛇';
-      document.getElementById('bubble').textContent=s.say;
+      if(growthBox)growthBox.style.display='block';
+      if(snakeLvEl)snakeLvEl.textContent=s.lv;
+      if(snakeStageEl)snakeStageEl.textContent=s.name;
+      if(petNameEl)petNameEl.textContent='小蛇蛇';
+      if(bubbleEl)bubbleEl.textContent=s.say;
     } else {
       const d=DOG_GROWTH[dogLv-1];
       const showMood = currentFace && currentFace!=='growth';
@@ -1646,11 +1670,11 @@
       const imgSrc = showMood ? m.img : d.img;
       const imgAlt = showMood ? m.label : d.name;
       face.innerHTML=`<img src="${imgSrc}" alt="${imgAlt}" style="width:100%;height:100%;object-fit:contain">`;
-      document.getElementById('growthBox').style.display='block';
-      document.getElementById('petName').textContent='小萌';
-      document.getElementById('snakeLv').textContent=d.lv;
-      document.getElementById('snakeStage').textContent=d.name;
-      document.getElementById('bubble').textContent= showMood ? d.say : d.say;
+      if(growthBox)growthBox.style.display='block';
+      if(petNameEl)petNameEl.textContent='小萌';
+      if(snakeLvEl)snakeLvEl.textContent=d.lv;
+      if(snakeStageEl)snakeStageEl.textContent=d.name;
+      if(bubbleEl)bubbleEl.textContent= showMood ? d.say : d.say;
     }
   }
   function renderGrowthTrack(){
@@ -1728,7 +1752,7 @@
     else { go('home', {noHistory:true}); }
   }
   function openGames(){ go('games'); }
-  var NAV_MAP={home:'nav-home',checkin:'nav-checkin',games:'nav-games',store:'nav-store',pets:'nav-pets',me:'nav-me'};
+  var NAV_MAP={home:'nav-home',checkin:'nav-checkin',store:'nav-store',pets:'nav-pets',me:'nav-me'};
   function navSync(screen){var m=NAV_MAP[screen];document.querySelectorAll('.nav-item,.nav-mid').forEach(function(n){n.classList.remove('active');});if(m){var el=document.getElementById(m);if(el)el.classList.add('active');}}
 
   function setMood(v,emo,el){
@@ -3178,9 +3202,11 @@
   const MGMT_KEY='mp_mgmt_v1';
   let mgmtData={
     checkins:[
-      {name:'晨读 15 分钟',tag:'语文',on:true,act:'morning'},
-      {name:'口算练习',tag:'数学',on:true,act:'math'},
-      {name:'识字打卡',tag:'必做',on:true,act:'chars'}
+      {name:'晨读 15 分钟',tag:'语文·绘本朗读',right:'已朗读',on:true,act:'morning'},
+      {name:'口算练习',tag:'数学·20题',right:'来出题',on:true,act:'math'},
+      {name:'英语跟读',tag:'英语·对话练',right:'对话练',on:true,act:'dialogue'},
+      {name:'户外运动 30 分',tag:'体能·跳绳',right:'必做',req:true,on:true,act:'outdoor'},
+      {name:'整理书包',tag:'习惯·自理',right:'必做',req:true,on:true,act:'pack'}
     ],
     studies:[
       {name:'识字：一年级上册',tag:'1–3年级'},
@@ -3658,14 +3684,6 @@
 /* ================================================================
    初始化
    ================================================================ */
-  loadContent();
-  renderPet();renderGrowthTrack();renderGrowGrid(currentPartner);
-  initCalendar();
-  initKeypad();
-  refreshPinNow();
-  initPsetCtrls();
-  loadMgmt();renderCheckins();renderStudies();
-  buildCharIndex();loadStudy();loadLearned();loadPoemMastered();updateStudyDisplays();updateLearnedUI();initHanzi();
 
   /* ================================================================
      晨读 / 户外运动 / 整理书包（主页打卡项对应的真实模块）
@@ -3770,16 +3788,27 @@
     {id:'m_chars',name:'识字',emoji:'🔤',screen:'chars',on:true},
     {id:'m_pinyin',name:'拼音',emoji:'🔡',screen:'pinyin',on:true},
     {id:'m_math',name:'口算闯关',emoji:'➗',screen:'math',on:true},
-    {id:'m_words',name:'英语单词',emoji:'🅰️',screen:'words',on:true},
-    {id:'m_dialogue',name:'英语对话',emoji:'💬',screen:'dialogue',on:true},
+    {id:'m_words',name:'英语',emoji:'🅰️',screen:'words',on:true},
+    {id:'m_poem',name:'古诗',emoji:'📜',screen:'poem',on:true},
+    {id:'m_books',name:'绘本',emoji:'📚',screen:'books',on:true},
     {id:'m_science',name:'科普阅读',emoji:'🔬',screen:'science',on:true},
-    {id:'m_poem',name:'古诗全文',emoji:'📜',screen:'poem',on:true},
     {id:'m_logic',name:'逻辑思维',emoji:'🧠',screen:'logic',on:true},
-    {id:'m_hanzi',name:'汉字对对碰',emoji:'🀄',screen:'hanzi',on:true}
+    {id:'m_games',name:'游戏中心',emoji:'🎮',screen:'games',on:true}
   ];}
   function loadModules(){var raw=localStorage.getItem(MODULES_KEY);if(raw){try{MODULES=JSON.parse(raw);if(!Array.isArray(MODULES)||!MODULES.length)MODULES=defaultModules();}catch(e){MODULES=defaultModules();}}else{MODULES=defaultModules();saveModules();}}
   function saveModules(){try{localStorage.setItem(MODULES_KEY,JSON.stringify(MODULES));}catch(e){}}
-  function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;html+='<div class="learn" onclick="openModuleByIdx('+idx+')"><span class="le">'+m.emoji+'</span><span class="lt">'+esc(m.name)+'</span></div>';});g.innerHTML=html;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+MODULES.filter(function(m){return m.on;}).length+' 个模块';}
+  const MODULE_META={
+    m_chars:{new:true,sub:'4/1015'},
+    m_pinyin:{new:true,sub:'0/29'},
+    m_math:{new:false,sub:'每日'},
+    m_words:{new:true,sub:'单词·对话·跟读'},
+    m_poem:{new:true,sub:'0/50'},
+    m_books:{new:true,sub:'0/16'},
+    m_science:{new:true,sub:'0/100'},
+    m_logic:{new:true,sub:'0/100'},
+    m_games:{new:true,sub:'0/5'}
+  };
+  function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">'+meta.sub+'</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';}
   function openModuleByIdx(idx){var m=MODULES[idx];if(m&&m.screen)go(m.screen);else if(m)toast('该内容暂未开放');}
   function renderStudies(){
     var box=document.getElementById('studyList');if(!box)return;
@@ -3798,7 +3827,7 @@
     var list=document.getElementById('homeTaskList');if(!list)return;
     var done=(loadCheckinDone()[getTodayKey()]||[]);
     var html='';
-    mgmtData.checkins.forEach(function(c,i){if(!c.on)return;var isD=done.indexOf(i)>=0;html+='<div class="task'+(isD?' done':'')+'" id="ht-'+i+'"><span class="check" onclick="toggleHomeCheckin('+i+',event)">'+(isD?'✓':'')+'</span><div class="t-main" onclick="homeTaskGo('+i+')"><div class="t-name">'+esc(c.name)+'</div><div class="t-tag">'+esc(c.tag||'')+'</div></div></div>';});
+    mgmtData.checkins.forEach(function(c,i){if(!c.on)return;var isD=done.indexOf(i)>=0;html+='<div class="task'+(isD?' done':'')+'" id="ht-'+i+'"><span class="check" onclick="toggleHomeCheckin('+i+',event)">'+(isD?'✓':'')+'</span><div class="t-main" onclick="homeTaskGo('+i+')"><div class="t-name">'+esc(c.name)+'</div><div class="t-tag">'+esc(c.tag||'')+'</div></div>'+(c.right?'<span class="rtag'+(c.req?' req':'')+'">'+esc(c.right)+'</span>':'')+'</div>';});
     list.innerHTML=html;
     updateHomeProgress();
   }
@@ -3809,7 +3838,7 @@
     var list=document.getElementById('checkinTaskList');if(!list)return;
     var done=(loadCheckinDone()[getTodayKey()]||[]);
     var html='';
-    mgmtData.checkins.forEach(function(c,i){var isD=done.indexOf(i)>=0;html+='<div class="task'+(isD?' done':'')+'" id="ck-'+i+'"><span class="check" onclick="toggleCheckinTask('+i+',event)">'+(isD?'✓':'')+'</span><div class="t-main" onclick="homeTaskGo('+i+')"><div class="t-name">'+esc(c.name)+'</div><div class="t-tag">'+esc(c.tag||'')+'</div></div></div>';});
+    mgmtData.checkins.forEach(function(c,i){var isD=done.indexOf(i)>=0;html+='<div class="task'+(isD?' done':'')+'" id="ck-'+i+'"><span class="check" onclick="toggleCheckinTask('+i+',event)">'+(isD?'✓':'')+'</span><div class="t-main" onclick="homeTaskGo('+i+')"><div class="t-name">'+esc(c.name)+'</div><div class="t-tag">'+esc(c.tag||'')+'</div></div>'+(c.right?'<span class="rtag'+(c.req?' req':'')+'">'+esc(c.right)+'</span>':'')+'</div>';});
     list.innerHTML=html;
     var total=mgmtData.checkins.length,n=done.length;
     var prog=document.getElementById('ckProg');if(prog)prog.textContent='已完成 '+n+' 项';
@@ -3834,7 +3863,7 @@
   function loadPerm(){var raw=localStorage.getItem(PERM_KEY);if(raw){try{var o=JSON.parse(raw);gamePerm=Object.assign(gamePerm,o);}catch(e){}}}
   function savePerm(){try{localStorage.setItem(PERM_KEY,JSON.stringify(gamePerm));}catch(e){}}
   function renderPerm(){var box=document.getElementById('permList');if(!box)return;box.innerHTML=GAMES.map(function(g,i){return '<div class="mrow"><span class="ck '+(gamePerm[g.perm]?'on':'')+'" onclick="togglePerm('+i+')">'+(gamePerm[g.perm]?'✓':'✕')+'</span><span class="mn">'+g.emoji+' '+g.name+'</span></div>';}).join('');}
-  function togglePerm(i){var p=GAMES[i].perm;if(gamePerm[p]===undefined)return;gamePerm[p]=!gamePerm[p];savePerm();renderPerm();if(document.getElementById('sc-games').classList.contains('on'))renderGames();renderHomeGames();}
+  function togglePerm(i){var p=GAMES[i].perm;if(gamePerm[p]===undefined)return;gamePerm[p]=!gamePerm[p];savePerm();renderPerm();if(document.getElementById('sc-games').classList.contains('on'))renderGames();}
   function renderGames(){
     var g=document.getElementById('gamesGrid');if(!g)return;
     g.innerHTML=GAMES.map(function(gm,i){
@@ -3845,13 +3874,6 @@
     renderGameScores();
   }
   function openGame(i){var gm=GAMES[i];if(gm)go(gm.screen);}
-  function renderHomeGames(){
-    var g=document.getElementById('homeGamesGrid');if(!g)return;
-    g.innerHTML=GAMES.map(function(gm,i){
-      if(gamePerm[gm.perm]===false)return '<div class="game-card off"><span class="gc-ic">'+gm.emoji+'</span><div class="gc-name">'+gm.name+'</div><div class="gc-st">已关闭</div></div>';
-      return '<div class="game-card" onclick="openGame('+i+')"><span class="gc-ic">'+gm.emoji+'</span><div class="gc-name">'+gm.name+'</div><div class="gc-st">点击开始</div></div>';
-    }).join('');
-  }
   const GAMESCORE_KEY='mp_gamescore_v1';
   let GAMESCORE={block:0,mem:0,seq:0,diff:0};
   function loadGameScore(){var raw=localStorage.getItem(GAMESCORE_KEY);if(raw){try{var o=JSON.parse(raw);GAMESCORE=Object.assign(GAMESCORE,o);}catch(e){}}}
@@ -3905,9 +3927,18 @@
   function diffPick(i,correct){if(i===correct){diffState.streak++;GAMESCORE.diff++;saveGameScore();renderGameScores();nextDiff();}else{var sm=document.getElementById('diffMsg');if(sm)sm.textContent='那是一样的啦，再找找';var st=document.getElementById('diffStreak');if(st)st.textContent=0;setTimeout(function(){if(diffState)nextDiff();},900);}}
 
   function init(){
+    loadContent();
+    renderPet(); renderGrowthTrack(); renderGrowGrid(currentPartner);
+    initCalendar(); initKeypad(); refreshPinNow(); initPsetCtrls();
+    loadMgmt(); renderCheckins(); renderStudies();
+    buildCharIndex(); loadStudy(); loadLearned(); loadPoemMastered(); updateStudyDisplays(); updateLearnedUI(); initHanzi();
     loadModules(); loadPerm(); loadGameScore();
-    renderHomeTasks(); renderLearnGrid(); renderGames(); renderHomeGames();
-    renderCheckins(); renderStudies(); renderPerm();
+    // 首次运行时，默认完成前 3 个打卡项，还原旧版首页 3/5 完成效果
+    if(!localStorage.getItem(CHECKIN_KEY)){
+      var all={}; all[getTodayKey()]=[0,1,2]; saveCheckinDone(all);
+    }
+    renderHomeTasks(); renderLearnGrid(); renderGames();
+    renderPerm();
     initGacha();
     navSync('home');
   }
