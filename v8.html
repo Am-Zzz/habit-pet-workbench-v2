@@ -1129,6 +1129,7 @@
           </div>
         </div>
         <div class="lrn-foot">
+          <button class="btn ghost" id="playRecBtn" onclick="playMyRec()" style="display:none">🔊 我的录音</button>
           <button class="btn ghost" onclick="playModel()">🔁 再听一次</button>
           <button class="btn" id="nextBtn" onclick="nextRead()">下一句 →</button>
         </div>
@@ -2172,7 +2173,19 @@
         visual:{type:'compare',a:a,b:b,e1:emojis[rnd(0,emojis.length-1)],e2:emojis[rnd(0,emojis.length-1)]}};
     }}
   };
-  let mathType='yx', mathIdx=0, mathTotal=5, mathScore=0, mathCur=null, mathAnswered=false;
+  const DAILY_MATH_COUNT=20;
+  const MATH_DAILY_KEY='mp_math_daily_v1';
+  let dailyMath=null;
+  function genMathSet(key){const lv=MATH_LEVELS[key];const arr=[];for(let i=0;i<DAILY_MATH_COUNT;i++)arr.push(lv.gen());return arr;}
+  function getDailyMath(){
+    const t=todayStr();
+    if(dailyMath&&dailyMath.date===t)return dailyMath;
+    try{const raw=localStorage.getItem(MATH_DAILY_KEY);if(raw){const o=JSON.parse(raw);if(o&&o.date===t&&o.sets)return (dailyMath=o);}}catch(e){}
+    dailyMath={date:t,sets:{yx:genMathSet('yx'),l13:genMathSet('l13'),cmp:genMathSet('cmp')}};
+    try{localStorage.setItem(MATH_DAILY_KEY,JSON.stringify(dailyMath));}catch(e){}
+    return dailyMath;
+  }
+  let mathType='yx', mathIdx=0, mathTotal=DAILY_MATH_COUNT, mathScore=0, mathCur=null, mathAnswered=false;
   function openMath(type){mathType=type||'yx';mathIdx=0;mathScore=0;
     document.querySelectorAll('#mathPill button').forEach(b=>b.classList.toggle('sel',b.dataset.t===mathType));
     loadMath();go('math');initCalendar();}
@@ -2185,7 +2198,8 @@
     document.getElementById('mathIdx').textContent=mathIdx+1;
     document.getElementById('mathTot').textContent=mathTotal;
     document.getElementById('mathScoreShow').textContent='⭐ '+mathScore;
-    const p=lv.gen();mathCur=p;mathAnswered=false;
+    const pool=getDailyMath().sets[mathType];mathTotal=pool.length;
+    const p=pool[mathIdx]||lv.gen();mathCur=p;mathAnswered=false;
     document.getElementById('mathQ').textContent=p.q+' = ?';
     // 可视化渲染
     const visEl=document.getElementById('mathVisual');visEl.innerHTML='';
@@ -2404,7 +2418,7 @@
       {p:"x—i—ǎo—xiǎo", ph:"x ＋ i ＋ ǎo", zh:"小（xiǎo）"}
     ]}
   };
-  let readType='eng', readIdx=0, readTimer=null;
+  let readType='eng', readIdx=0, readTimer=null, mediaRec=null, recChunks=[], readClipURL=null, recStream=null, readRecording=false;
   function openRead(type){readType=type||'eng';readIdx=0;
     document.querySelectorAll('#readPill button').forEach(b=>b.classList.toggle('sel',b.dataset.t===readType));
     loadRead();go('read');}
@@ -2423,6 +2437,9 @@
   }
   function resetReadUI(){
     clearTimeout(readTimer);
+    if(readRecording){readRecording=false;if(mediaRec&&mediaRec.state!=='inactive'){try{mediaRec.stop();}catch(e){}}stopStream();}
+    if(readClipURL){try{URL.revokeObjectURL(readClipURL);}catch(e){}readClipURL=null;}
+    const pb=document.getElementById('playRecBtn');if(pb)pb.style.display='none';
     const mic=document.getElementById('micBtn');
     mic.classList.remove('rec');mic.textContent='🎙️';
     document.getElementById('wave').classList.remove('on');
@@ -2439,17 +2456,55 @@
   }
   function startRead(){
     const mic=document.getElementById('micBtn');
-    if(mic.classList.contains('rec'))return;
+    if(readRecording){stopReadRec();return;}
+    const supported=navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&typeof MediaRecorder!=='undefined';
+    if(!supported){startReadSim();return;}
+    navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
+      recStream=stream;recChunks=[];
+      try{mediaRec=new MediaRecorder(stream);}catch(e){stopStream();startReadSim();return;}
+      mediaRec.ondataavailable=function(e){if(e.data&&e.data.size)recChunks.push(e.data);};
+      mediaRec.onstop=function(){
+        stopStream();
+        if(recChunks.length){
+          let blob;
+          try{blob=new Blob(recChunks,{type:(mediaRec.mimeType||'audio/webm')});}catch(e){blob=null;}
+          if(blob){if(readClipURL)URL.revokeObjectURL(readClipURL);readClipURL=URL.createObjectURL(blob);
+            const pb=document.getElementById('playRecBtn');if(pb)pb.style.display='inline-flex';
+            document.getElementById('micTip').textContent='录好啦！点「我的录音」听一听，或点下一句～';}
+        }
+        showScore();
+      };
+      mediaRec.start();
+      readRecording=true;
+      mic.classList.add('rec');mic.textContent='⏹';
+      document.getElementById('wave').classList.add('on');
+      document.getElementById('micTip').textContent='正在录音…大声跟读吧！（再点一下停止）';
+    }).catch(function(err){
+      document.getElementById('micTip').textContent='没拿到麦克风权限，已为你模拟评分～';
+      startReadSim();
+    });
+  }
+  function stopReadRec(){
+    readRecording=false;
+    const mic=document.getElementById('micBtn');
+    mic.classList.remove('rec');mic.textContent='🎙️';
+    document.getElementById('wave').classList.remove('on');
+    if(mediaRec&&mediaRec.state!=='inactive'){try{mediaRec.stop();}catch(e){}} else { showScore(); }
+  }
+  function stopStream(){if(recStream){recStream.getTracks().forEach(function(t){t.stop();});recStream=null;}}
+  function startReadSim(){
+    const mic=document.getElementById('micBtn');
     mic.classList.add('rec');mic.textContent='⏺';
     document.getElementById('wave').classList.add('on');
     document.getElementById('micTip').textContent='正在聆听…大声跟读吧！';
     clearTimeout(readTimer);
-    readTimer=setTimeout(()=>{
+    readTimer=setTimeout(function(){
       mic.classList.remove('rec');mic.textContent='🎙️';
       document.getElementById('wave').classList.remove('on');
       showScore();
     },1900);
   }
+  function playMyRec(){if(readClipURL){try{new Audio(readClipURL).play();}catch(e){}}}
   function showScore(){
     const sc=80+Math.floor(Math.random()*18);
     document.getElementById('scoreNum').textContent=sc;
