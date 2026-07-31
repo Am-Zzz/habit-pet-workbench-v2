@@ -39,3 +39,6 @@ idiom_head.txt
 # 部署产物（由源码构建，不入库）
 deploy/
 deploy_ios/
+
+# AI 密钥（不入库）
+ai_config.json

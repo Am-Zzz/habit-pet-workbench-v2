@@ -940,6 +940,57 @@
   .unlock-pop p{font-size:13px;color:var(--ink-soft);margin-bottom:18px}
   .unlock-pop .btns{display:flex;gap:10px}
   .unlock-pop .btns .btn{flex:1;margin:0}
+  /* ====== 绘本：封面 / AI 创作 / 我的绘本 ====== */
+  .bk-nav-item[data-nav="mine"]{background:linear-gradient(135deg,var(--brand),var(--sky));color:#fff;border-color:transparent}
+  .bk-nav-item[data-nav="mine"].sel{box-shadow:0 4px 12px rgba(242,109,146,.35)}
+  /* 通用浮层 */
+  .mb-mask{position:fixed;inset:0;background:rgba(40,30,45,.45);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
+  .mb-mask.on{display:flex}
+  .mb-card{background:var(--surface);border-radius:18px;max-width:520px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 18px 50px rgba(0,0,0,.25);animation:popIn .25s ease}
+  .mb-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .mb-head h3{margin:0;font-size:16px;color:var(--brand-d)}
+  .mb-close{border:none;background:var(--secondary-100,#f1f2f4);width:30px;height:30px;border-radius:50%;font-size:16px;cursor:pointer;color:var(--ink-soft)}
+  .mb-body{padding:16px}
+  .mb-tabs{display:flex;gap:6px;margin-bottom:12px}
+  .mb-tab{flex:1;padding:9px 4px;border:1px solid var(--line);background:var(--secondary-100,#f6f6f8);border-radius:10px;font-size:13px;cursor:pointer;color:var(--ink-soft);font-weight:700}
+  .mb-tab.sel{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .mb-pane{display:none}
+  .mb-pane.sel{display:block}
+  .mb-pane textarea{width:100%;min-height:74px;resize:vertical;padding:10px;border:1px solid var(--line);border-radius:10px;font-family:var(--font-family-primary);font-size:13px}
+  .mb-hint{font-size:12px;color:var(--ink-soft);margin:8px 0 0;line-height:1.5}
+  .mb-prev{margin-top:12px;text-align:center}
+  .mb-prev img{max-width:160px;max-height:200px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+  .mb-grad{width:160px;height:200px;border-radius:12px;margin:0 auto;display:flex;align-items:flex-end;justify-content:center;padding:10px;color:#fff;font-weight:800;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.35);box-shadow:0 6px 18px rgba(0,0,0,.15)}
+  .mb-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .mb-row .lf-in,.mb-row input{flex:1;min-width:0}
+  /* 我的绘本列表 */
+  .mb-list{display:flex;flex-direction:column;gap:10px;margin:12px 0}
+  .mb-item{display:flex;gap:10px;align-items:center;background:var(--secondary-100,#f7f7f9);border-radius:12px;padding:8px}
+  .mb-item .thumb{width:42px;height:54px;border-radius:7px;object-fit:cover;background:#fff;flex:none;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .mb-item .mi-info{flex:1;min-width:0}
+  .mb-item .mi-title{font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mb-item .mi-sub{font-size:11px;color:var(--ink-soft)}
+  .mb-item .mi-act{display:flex;gap:4px}
+  .mb-item .mini-btn{border:none;background:#fff;border-radius:8px;padding:5px 8px;font-size:12px;cursor:pointer;color:var(--brand-d);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .mb-item .mini-btn.del{color:var(--color-error,#ef4444)}
+  .mb-form label{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);margin:8px 0 3px}
+  .mb-form input,.mb-form textarea,.mb-form select{width:100%;padding:9px;border:1px solid var(--line);border-radius:9px;font-size:13px;font-family:var(--font-family-primary)}
+  .mb-form textarea{min-height:96px;resize:vertical}
+  .mb-two{display:flex;gap:8px}
+  .mb-two>*{flex:1}
+  /* AI 对话 */
+  .ai-msgs{display:flex;flex-direction:column;gap:10px;max-height:46vh;overflow:auto;padding:4px}
+  .ai-msg{max-width:84%;padding:9px 12px;border-radius:14px;font-size:13.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+  .ai-msg.me{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:4px}
+  .ai-msg.ai{align-self:flex-start;background:var(--secondary-100,#f1f1f4);color:var(--ink);border-bottom-left-radius:4px}
+  .ai-msg.ai .role{font-size:11px;color:var(--brand-d);font-weight:800;display:block;margin-bottom:2px}
+  .ai-typing{font-size:12px;color:var(--ink-soft);padding:2px 4px}
+  .ai-input-row{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+  .ai-input-row input{flex:1;padding:10px;border:1px solid var(--line);border-radius:10px;font-size:14px}
+  .ai-tag{display:inline-block;font-size:11px;background:var(--butter,#fff3d6);color:#9a6b00;padding:2px 8px;border-radius:8px;margin-left:6px}
+  .ai-offline{font-size:11px;color:var(--ink-soft)}
+
+  @keyframes popIn{from{transform:translateY(12px) scale(.98);opacity:0}to{transform:none;opacity:1}}
 </style>
 </head>
 <body>
@@ -1569,12 +1620,14 @@
             <div class="bk-nav-item" data-nav="小学1-3" onclick="switchBookNav('小学1-3',this)">小学1-3年级</div>
             <div class="bk-nav-item" data-nav="小学3-6" onclick="switchBookNav('小学3-6',this)">小学3-6年级</div>
             <div class="bk-nav-item" data-nav="shelf" onclick="switchBookNav('shelf',this)">我的书架</div>
+            <div class="bk-nav-item" data-nav="mine" onclick="switchBookNav('mine',this)">✏️ 我的绘本</div>
           </div>
 
           <!-- 右侧内容区 -->
           <div class="bk-content">
             <div class="bk-tools">
               <div class="bk-count">共 <b id="bookCount">0</b> 本</div>
+              <button class="bk-shelf-btn" onclick="openMyBooks()">✏️ 我的绘本</button>
               <div class="bk-levels lrn-pill" id="bkLevelPill">
                 <button class="sel" data-level="all" onclick="switchBookLevel('all',this)">全部</button>
                 <button data-level="幼升小" onclick="switchBookLevel('幼升小',this)">AA级</button>
@@ -1600,6 +1653,9 @@
           <div class="reader-top">
             <button class="btn ghost sm" onclick="closeReader()">← 返回书库</button>
             <span class="reader-status" id="readerStatus"></span>
+            <span style="flex:1"></span>
+            <button class="btn ghost sm" onclick="openCoverPop()">🖼️ 换封面</button>
+            <button class="btn ghost sm" onclick="openAiChat()">🤖 AI创作</button>
           </div>
           <div class="reader-cover">
             <img id="rdCover" alt="" style="display:none">
@@ -3476,7 +3532,7 @@
   function renderBookList(){
     const list=document.getElementById('bookList');if(!list)return;list.innerHTML='';
     const done=getBookDone();const shelf=getBookShelf();
-    const all=(window.BOOK_CONTENT||[]);
+    const all=mergeBooks();
     const source=bookLang==='cn'?all:[];
     if(bookLang==='en'){
       document.getElementById('bookCount').textContent='0';
@@ -3484,14 +3540,16 @@
       return;
     }
     const kw=bookSearch.trim().toLowerCase();
+    const userIds=getUserBooks().map(function(b){return b.id;});
     const books=source.filter(function(b){
-      if(bookNav==='shelf'){if(shelf.indexOf(b.id)<0)return false;}
+      if(bookNav==='mine'){if(userIds.indexOf(b.id)<0)return false;}
+      else if(bookNav==='shelf'){if(shelf.indexOf(b.id)<0)return false;}
       else if(bookNav!=='all'){
         if(['classic','fable','fairy'].indexOf(bookNav)>=0){if(b.cat!==bookNav)return false;}
         else if(b.age!==bookNav)return false;
       }
       if(bookLevel!=='all'&&b.age!==bookLevel)return false;
-      if(kw&&b.title.toLowerCase().indexOf(kw)<0)return false;
+      if(kw&&b.title.toLowerCase().indexOf(kw)<0&&(b.desc||'').toLowerCase().indexOf(kw)<0&&(b.tags||[]).join(',').toLowerCase().indexOf(kw)<0)return false;
       return true;
     });
     document.getElementById('bookCount').textContent=books.length;
@@ -3499,9 +3557,10 @@
     books.forEach(function(b){
       const card=document.createElement('div');card.className='book-card'+(b.ready?'':' notready');
       const isDone=done.indexOf(b.id)>=0;const isShelf=inBookShelf(b.id);
-      const cover=b.cover?('<img src="'+b.cover+'" alt="'+esc(b.title)+'">'
+      const bcov=getBookCover(b.id);
+      const cover=bcov?('<img src="'+bcov+'" alt="'+esc(b.title)+'">'
         +'<div class="rd-cover-ph" style="display:none">'+b.icon+'</div>'):'';
-      const ph=b.cover?'':'<div class="rd-cover-ph">'+b.icon+'</div>';
+      const ph=bcov?'':'<div class="rd-cover-ph">'+b.icon+'</div>';
       const addBtn='<button class="bc-add" title="'+(isShelf?'移除书架':'加入书架')+'" onclick="toggleBookShelf(\''+b.id+'\',event)">'+(isShelf?'−':'+')+'</button>';
       card.innerHTML='<div class="bc-cover">'+cover+ph+(isDone?'<span class="bc-done">✓ 已读完</span>':'')+(isShelf&&!isDone?'<span class="bc-shelf">★ 书架</span>':'')+addBtn+'</div>'+
         '<div class="bc-body"><div class="bc-title">'+esc(b.title)+'</div>'+
@@ -3512,7 +3571,7 @@
     });
   }
   function openBookReader(id){
-    const all=window.BOOK_CONTENT||[];curBook=all.filter(function(b){return b.id===id;})[0];
+    curBook=findBook(id);
     if(!curBook){toast('故事没找到');return;}
     stopBookSpeech();resetBookRec();
     curPage=0;pinyinOn=false;
@@ -3521,7 +3580,8 @@
     document.getElementById('rdTitle').textContent=curBook.title;
     document.getElementById('rdAge').textContent=curBook.age+' · '+curBook.grade;
     const img=document.getElementById('rdCover'),ph=document.getElementById('rdCoverPh');
-    if(curBook.cover){img.src=curBook.cover;img.style.display='block';ph.style.display='none';
+    const rcover=getBookCover(curBook.id);
+    if(rcover){img.src=rcover;img.style.display='block';ph.style.display='none';
       img.onerror=function(){img.style.display='none';ph.style.display='flex';ph.textContent=curBook.icon;};}
     else{img.style.display='none';ph.style.display='flex';ph.textContent=curBook.icon;}
     document.getElementById('readerStatus').textContent=getBookDone().indexOf(id)>=0?'✓ 已读完':'📖 阅读中';
@@ -3640,6 +3700,271 @@
         renderBookList();toast('已更新 '+data.length+' 个新故事！');
       }else{toast('暂时没有新故事');}
     }).catch(function(){toast('联网失败，请检查代理');});
+  }
+
+/* ================================================================
+   绘本：用户绘本库 / 封面 / AI 创作 / 我的绘本管理
+   ================================================================ */
+  const BOOK_USER_KEY='mp_book_user_v2';
+  const BOOK_COVER_KEY='mp_book_cover_v1';
+  const BOOK_CHAT_KEY='mp_book_chat_v1';
+  const BOOK_SEED_KEY='mp_book_seed_v1';
+  const SEED_BOOK_RAW=[
+    {icon:"🐛",title:"好饿的毛毛虫",intro:"一颗小小的虫卵孵化出毛毛虫，毛毛虫不停吃东西，最后变成美丽蝴蝶。认识数字、星期、水果，感受生命蜕变。",storyContent:"月光下，一颗小小的蛋躺在叶子上。星期天早上，暖和的太阳升起来，“啵”一声，一条又小又饿的毛毛虫从蛋里爬了出来。他要去找一些东西来吃。星期一，他吃了一个苹果，还是好饿。星期二，他吃了两个梨子，还是好饿。星期三，他吃了三个李子，还是好饿。星期四，他吃了四个草莓，还是好饿。星期五，他吃了五个橘子，还是好饿。星期六，他吃了巧克力蛋糕、冰淇淋、黄瓜、奶酪、火腿、棒棒糖、樱桃派、香肠、纸杯蛋糕和西瓜。到了晚上，毛毛虫肚子疼。第二天又是星期天，毛毛虫啃了一片又嫩又绿的叶子，舒服多了。现在毛毛虫不饿了，他长得又大又胖。他造了一间小房子，叫做茧，在里面住了两个多星期。然后，他咬破茧，钻了出来，变成一只漂亮的蝴蝶！",difficulty:"低幼启蒙",tags:["认知启蒙","自然科普","数字","洞洞书"]},
+    {icon:"🐰",title:"猜猜我有多爱你",intro:"小兔子和大兔子用各种方式比拼谁的爱更多，温柔讲述亲子之间满满的爱意，适合睡前共读。",storyContent:"小兔子该上床睡觉了，可是他紧紧抓住大兔子的长耳朵不放。他要大兔子好好听他说：“猜猜我有多爱你。”大兔子说：“喔，这我可猜不出来。”小兔子把手臂张开，开得不能再开：“我爱你有这么多。”大兔子张开更长的手臂：“我爱你，有这么多。”小兔子想：嗯，这真的很多。小兔子把手高高举起：“我的手举得有多高，我就有多爱你。”大兔子也举起手：“我的手举得有多高，我就有多爱你。”小兔子又有了新主意，他倒立起来，把脚撑在树干上：“我爱你一直到我的脚趾头。”大兔子把小兔子抱起来，甩过头顶：“我爱你一直到你的脚趾头。”小兔子大喊：“我跳得有多高就有多爱你！”他不停地蹦跳。大兔子微微一笑，轻轻一跳，耳朵都碰到树枝。“我跳得有多高，就有多爱你。”小兔子心想，要是我能跳得更高就好了。小兔子望着小路尽头：“我爱你，从这条小路一直到小河边。”“我爱你，跨过小河，再翻过山丘。”小兔子太困了，想不出更多东西。他望着夜空，没有比黑沉沉的天空更远的地方了。“我爱你，从这里一直到月亮。”说完，小兔子闭上了眼睛。“噢，那真的非常远。”大兔子把小兔子放到叶子床上，低下头，亲吻小兔子。“我爱你，从这里一直到月亮，再绕回来。”",difficulty:"低幼启蒙",tags:["亲情","爱的表达","睡前故事"]},
+    {icon:"🦖",title:"你看起来好像很好吃",intro:"霸王龙捡到一只甲龙宝宝，甲龙把霸王龙当成爸爸。一场跨越天敌的温暖相遇，读懂爱与善良。",storyContent:"很久以前，在一个晴朗的日子，山轰隆隆爆发，岩石散落。一只甲龙宝宝破壳而出。就在这时，一只霸王龙出现，口水直流：“嘿嘿，你看起来好像很好吃！”小甲龙一点也不害怕，抱住霸王龙：“爸爸！”霸王龙大吃一惊。小甲龙把霸王龙当成爸爸。霸王龙本想吃掉它，却不忍心。从此以后，霸王龙教小甲龙撞击、甩尾巴，寻找红果子。霸王龙总是悄悄藏起眼泪，他知道总有一天要分开。某天，另外一群霸王龙来袭，想要吃掉小甲龙。霸王龙奋力保护孩子。最后，霸王龙决定送小甲龙回到同类身边。离别之时，小甲龙不断奔跑回头，霸王龙默默目送，心里充满不舍。原本是猎物与猎手，却拥有一段最珍贵的亲情。",difficulty:"初级",tags:["亲情","接纳","宫西达也","恐龙"]},
+    {icon:"🙅",title:"大卫，不可以！",intro:"调皮的大卫到处闯祸，妈妈不断制止他。虽然大卫总犯错，但妈妈永远爱着大卫。",storyContent:"大卫站在椅子上，伸手去够高处的饼干罐。“大卫，不可以！”妈妈大声说。大卫把泥巴踩得到处都是，地上留下一串泥脚印。“大卫，不可以！”大卫拿着叉子敲锅，叮叮咚咚吵个不停。大卫把玩具扔得满天飞，在墙上乱涂乱画。洗澡的时候水花溅满房间，光着身子跑到大街上。吃饭的时候，大卫把食物弄得一团糟，还挖鼻孔。每当大卫闯祸，妈妈都会严肃告诉他不可以。到了晚上，大卫做错事，委屈地哭了。妈妈张开怀抱：“大卫，过来。妈妈爱你。”就算大卫总是调皮捣蛋，妈妈的爱永远不会消失。",difficulty:"低幼启蒙",tags:["行为规范","情绪","亲子"]},
+    {icon:"🌼",title:"彩虹色的花",intro:"积雪融化，彩虹色的花绽放，不断把花瓣分享给小动物，传递分享与助人的快乐。",storyContent:"积雪慢慢融化，原野上露出一朵彩虹色的花。太阳升起来，花儿睁开眼睛：“早安，太阳！我想和大家分享我的快乐。”蚂蚁路过，想要渡过大水坑，彩虹色的花送它一片橙色花瓣当作小船。蜥蜴缺少漂亮披肩，红色花瓣送给蜥蜴。老鼠闷热喘气，黄色花瓣变成扇子。小鸟准备礼物，拿走蓝色花瓣。刺猬遇上下雨，绿色花瓣当雨伞。秋风来临，一片片花瓣慢慢飘落。冬天雪花落下，彩虹色的花看不见了。太阳再次升起，新的一年，彩虹色的花又一次出现在原野上。",difficulty:"初级",tags:["分享","季节","生命教育"]},
+    {icon:"🦷",title:"牙齿大街的新鲜事",intro:"牙齿里住着牙虫兄弟，他们在牙齿上挖洞建房。生动科普护牙知识，引导孩子主动刷牙。",storyContent:"牙齿大街上，住着哈克和迪克两只牙细菌。他们梦想把所有牙齿挖空，建成舒适的洞穴公寓。哈克负责挖洞，迪克规划房间。每当小朋友吃下糖果、饼干，他们就开心收集食物。他们不断在牙齿上开凿通道，牙齿慢慢出现小洞。很快，牙医发现了牙齿大街。牙医清理细菌，修补蛀牙。牙刷和牙膏大军赶来，把哈克和迪克冲走。如果不认真刷牙，牙齿大街就会再次出现，只有坚持清洁牙齿，才能赶走牙细菌。",difficulty:"初级",tags:["科普","习惯养成","健康"]},
+    {icon:"❤️",title:"我爸爸",intro:"孩子眼中无所不能的爸爸，勇敢、温柔又有趣，描绘孩子对父亲满满的崇拜与喜爱。",storyContent:"这是我的爸爸。我的爸爸真的很棒。爸爸什么都不怕，连坏蛋大野狼都不怕。他可以从月亮上跳过去，还会走高空绳索，不会掉下去。他敢跟大力士摔跤。在运动会比赛，轻轻松松就能拿到第一名。我的爸爸吃得像马一样多，游泳像鱼一样灵活。他像大猩猩一样强壮，又像河马一样快乐。爸爸有时候像房子一样高大，有时候又像泰迪熊一样柔软。他像猫头鹰一样聪明，偶尔也会做傻事。我的爸爸会唱歌，会跳舞。他是世界上最好的爸爸。我爱我的爸爸，而且，爸爸也爱我，永远爱我。",difficulty:"低幼启蒙",tags:["亲情","父爱","安东尼布朗"]},
+    {icon:"🌊",title:"小黑鱼",intro:"小黑鱼目睹同伴被大鱼捕食，独自冒险，最后想出办法团结小鱼，一起吓跑大鱼。教会孩子勇敢与合作。",storyContent:"在大海深处，住着一群红色小鱼，其中有一条小鱼是黑色的，大家叫他小黑鱼。有一天，凶猛的金枪鱼冲过来，一口吞掉所有小红鱼。只有小黑鱼逃了出去。茫茫大海里，小黑鱼孤单又害怕。一路上，他遇见奇妙的水母、彩虹珊瑚、慢悠悠的大海龟。不久，小黑鱼找到了另一群小红鱼。小红鱼害怕大鱼，不敢游出去。小黑鱼想到一个好主意：大家紧紧靠在一起，变成海里最大的鱼。小黑鱼当眼睛。成群小鱼组合成巨大鱼形，凶猛的大鱼看见，吓得连忙逃走。",difficulty:"初级",tags:["勇气","团结","想象力"]},
+    {icon:"🎒",title:"我爱幼儿园",intro:"小莱昂第一次上幼儿园，记录入园一整天的生活，缓解孩子入园焦虑，认识校园生活。",storyContent:"我叫莱昂，今天是我第一天上幼儿园。刚到门口，我有点舍不得妈妈。老师温柔迎接我。幼儿园里有好多小朋友。我们先玩积木、玩偶。到了画画时间，我可以随意涂色。午餐时间，大家坐在一起吃饭。饭后是午睡，躺在小床上休息。睡醒之后，我们去院子滑滑梯、奔跑玩耍。老师给我们讲故事，教我们唱歌。太阳慢慢下山，妈妈来接我。原来幼儿园有这么多好玩的事情。明天，我还想来幼儿园。",difficulty:"低幼启蒙",tags:["入园适应","社交","幼儿园"]},
+    {icon:"🧵",title:"爷爷一定有办法",intro:"爷爷用巧手把旧毯子不断改造，变成外套、背心、手帕……温暖讲述节俭、亲情与创造力。",storyContent:"约瑟小时候，爷爷为他缝制一条温暖的毯子。约瑟慢慢长大，毯子变得老旧破旧。约瑟说：“爷爷，毯子破了。”爷爷说：“别担心，爷爷一定有办法。”爷爷拿起剪刀，把毯子改成外套。约瑟又长高，外套太小。爷爷把外套改成背心，背心旧了改成领带，领带改成手帕，手帕最后改成一颗纽扣。直到有一天，纽扣不见了。约瑟难过极了。爷爷也没办法变出纽扣。后来约瑟拿起纸笔，写下这个充满温暖的故事。",difficulty:"中级",tags:["亲情","创造力","勤俭节约"]},
+    {icon:"😤",title:"菲菲生气了",intro:"菲菲因为争抢玩具大发雷霆，独自出走平复情绪，学习认识愤怒、疏导负面情绪。",storyContent:"菲菲和姐姐争抢猩猩玩具，姐姐抢走玩具，菲菲摔倒在地。菲菲非常非常生气！她大吼大叫，踢东西，摔门跑出门。菲菲一路奔跑，跑到树林，坐在大树下。她望着远处的大海，看着海浪慢慢涌上来。风吹过树林，小鸟飞过。菲菲看着广阔的世界，心里的怒火一点点消散。菲菲不再生气，慢慢走回家。家里有人等候她，菲菲明白，生气的时候可以独自安静一会儿，情绪总会平静下来。",difficulty:"初级",tags:["情绪管理","心理成长"]},
+    {icon:"🐘",title:"大猩猩",intro:"小女孩安娜渴望爸爸陪伴，一只大猩猩夜里带她开启奇妙旅行，探讨陪伴与父女情感。",storyContent:"安娜特别喜欢大猩猩，她一直希望爸爸陪她去动物园。可是爸爸总是很忙，没有时间。夜晚，安娜睡着后，玩偶大猩猩活了过来。大猩猩温柔牵起安娜的手，带着她走出家门。他们穿过夜晚的街道，来到动物园。所有动物都醒了，猩猩、长颈鹿、狮子自由散步。大猩猩陪着安娜尽情游玩。天亮之前，大猩猩送安娜回家。清晨安娜醒来，以为只是一场梦。这时，她发现床边放着一只崭新的大猩猩玩偶。",difficulty:"中级",tags:["陪伴","亲情","想象力"]},
+    {icon:"🍡",title:"妈妈，买绿豆",intro:"母子上街买绿豆，回家泡绿豆、煮绿豆汤、种绿豆，充满生活化的温馨，感受简单的幸福。",storyContent:"阿宝和妈妈上街买菜。阿宝拉住妈妈：“妈妈，买绿豆！”妈妈买了一袋绿豆。回到家里，阿宝帮忙洗绿豆，绿豆泡在水里慢慢变大。母子一起生火煮绿豆。锅里咕嘟咕嘟冒泡，香甜的绿豆汤煮好了。放凉之后，阿宝大口品尝。剩下的绿豆，阿宝拿来放进小盘子，浇水。几天后，绿豆冒出嫩芽，长出绿绿的叶子。小小的绿豆，藏着阿宝和妈妈简简单单的快乐。",difficulty:"初级",tags:["生活日常","亲情","科学观察"]},
+    {icon:"🐻",title:"獾的礼物",intro:"獾老去离开大家，朋友们慢慢回忆獾教会自己的本领，温柔向孩子解释死亡与离别。",storyContent:"獾年纪很大，他不怕死亡，只是担心朋友们伤心。一天傍晚，獾和大家告别，走进长长的隧道，再也没有回来。动物们十分悲伤。冬天慢慢过去，春天来临。狐狸想起獾教他系领带；野兔记得獾教他滑雪；青蛙不会忘记獾传授的滑冰技巧。大家慢慢懂得：獾虽然离开了，但是留给大家的本领、温暖和回忆永远不会消失。獾的礼物，会一直陪伴所有人。",difficulty:"进阶",tags:["生命教育","离别","友谊"]},
+    {icon:"🩰",title:"大脚丫跳芭蕾",intro:"贝琳达长着一双大脚，所有人都嘲笑她不适合跳舞，但她坚持梦想，最终站上舞台。",storyContent:"贝琳达热爱跳舞，但是她有一双特别大的脚。每次选拔评审都会摇头：“你的大脚不适合跳芭蕾！”贝琳达很难过，放弃舞蹈，去餐厅打工。餐厅老板欣赏贝琳达，鼓励她重新跳舞。贝琳达再次穿上舞鞋。她尽情舒展身体，旋转、跳跃。所有人被优美的舞姿打动。大家不再关注她的大脚，只看见闪闪发光的舞者。贝琳达明白，不要因为别人的评价放弃热爱。",difficulty:"中级",tags:["自信","坚持梦想","接纳自己"]},
+    {icon:"🐻‍❄️",title:"小熊很忙",intro:"互动机关绘本，跟随小熊体验不同工作场景，丰富画面锻炼宝宝观察力。",storyContent:"小熊今天很忙！他来到工地，帮忙搬运木材；来到农场，喂养小羊小鸡；来到深海，和小鱼一起遨游；来到城堡，参加热闹派对。小熊不停忙碌，体验各种各样有趣的工作，每一天都充满新鲜的惊喜。",difficulty:"低幼启蒙",tags:["机关绘本","职业认知","互动"]},
+    {icon:"🐸",title:"青蛙弗洛格的成长故事：找到一个好朋友",intro:"弗洛格孤单难过，主动寻找伙伴，学习如何交朋友，理解友谊的意义。",storyContent:"青蛙弗洛格独自坐在河边，心里闷闷的，他想要一个好朋友。他先遇见小鸭，一起游泳；找到小猪，一起品尝美食；和野兔一起看书。弗洛格发现，主动靠近别人，就能收获珍贵的友谊。开心有人分享，难过有人陪伴，这就是好朋友。",difficulty:"初级",tags:["社交","友谊","情绪成长"]},
+    {icon:"🌱",title:"一粒种子的旅行",intro:"科普绘本，讲述种子依靠风、动物、水流去往远方，认识植物传播奥秘。",storyContent:"植物不能移动，但是种子可以远行。蒲公英乘着风儿飞向远方；苍耳粘在小动物皮毛上去新地方；果子被小鸟吃下，种子随粪便落地；莲蓬顺着水流漂向湖面。每一粒小小的种子，都开启一场漫长旅行，落地生根，长出新植物。",difficulty:"中级",tags:["自然科普","植物","生命"]},
+    {icon:"🤖",title:"神奇飞书",intro:"灾难过后，书本带来希望。文字与书籍拥有拯救心灵的力量，适合培养阅读热爱。",storyContent:"狂风摧毁城市，一切变得灰暗。一位先生遇见一本会飞的书。书本带着他来到书屋，无数书籍等待修复。先生认真修补破损的书页。时光流逝，先生慢慢老去。当他离开，神奇飞书托起他飞向远方，书屋的故事永远延续，书本承载的记忆永不消散。",difficulty:"进阶",tags:["阅读","希望","生命与传承"]},
+    {icon:"🐱",title:"活了100万次的猫",intro:"一只活过一百万次的猫，一直麻木生活，直到遇见白猫，终于懂得爱与失去。",storyContent:"有一只猫，死了一百万次，又复活一百万次。它当过国王、水手、小偷、老奶奶的猫，它一点也不喜欢主人。直到有一天，它成为一只野猫，遇见美丽的白猫。它愿意永远陪伴白猫，生下小猫。当白猫老去离开，猫伤心痛哭，再也没有复活。它终于明白，因为爱过，生命才有意义。",difficulty:"进阶",tags:["爱","生命教育","感悟成长"]}
+  ];
+  function getUserBooks(){try{return JSON.parse(localStorage.getItem(BOOK_USER_KEY))||[];}catch(e){return [];}}
+  function setUserBooks(arr){try{localStorage.setItem(BOOK_USER_KEY,JSON.stringify(arr));}catch(e){}}
+  function getBookCoverMap(){try{return JSON.parse(localStorage.getItem(BOOK_COVER_KEY))||{};}catch(e){return {};}}
+  function mergeBooks(){return (window.BOOK_CONTENT||[]).concat(getUserBooks());}
+  function findBook(id){return mergeBooks().filter(function(b){return b.id===id;})[0];}
+  function getBookCover(id){const m=getBookCoverMap();if(m[id])return m[id];const b=findBook(id);return b?b.cover:'';}
+  function setBookCover(id,val){
+    const m=getBookCoverMap();if(val)m[id]=val;else delete m[id];
+    try{localStorage.setItem(BOOK_COVER_KEY,JSON.stringify(m));}catch(e){}
+    renderBookList();
+    if(curBook&&curBook.id===id){const img=document.getElementById('rdCover'),ph=document.getElementById('rdCoverPh');
+      if(val){img.src=val;img.style.display='block';ph.style.display='none';img.onerror=function(){img.style.display='none';ph.style.display='flex';ph.textContent=curBook.icon;};}
+      else{img.style.display='none';ph.style.display='flex';ph.textContent=curBook.icon;}}
+  }
+  function diffToAge(d){
+    if(d==='低幼启蒙'||d==='幼升小')return '幼升小';
+    if(d==='初级'||d==='中级')return '小学1-3';
+    if(d==='进阶')return '小学3-6';
+    if(d==='小学1-3')return '小学1-3';
+    if(d==='小学3-6')return '小学3-6';
+    return d||'幼升小';
+  }
+  function splitStory(text){
+    if(!text||!text.trim())return [{role:'旁白',chars:[{t:'（暂无内容）',p:null}]}];
+    const parts=text.split(/([。！？!?；;]+)/);
+    const sents=[];
+    for(let i=0;i<parts.length;i+=2){
+      let s=(parts[i]||'').trim();const punc=(parts[i+1]||'').trim();if(punc)s+=punc;
+      if(s)sents.push(s);
+    }
+    if(!sents.length)sents.push(text.trim());
+    const pages=[];let buf='';
+    sents.forEach(function(s,idx){
+      buf+=s;
+      if(buf.length>=40||idx===sents.length-1){
+        pages.push({role:'旁白',chars:Array.from(buf).map(function(ch){return {t:ch,p:null};})});
+        buf='';
+      }
+    });
+    if(!pages.length)pages.push({role:'旁白',chars:Array.from(text).map(function(ch){return {t:ch,p:null};})});
+    return pages;
+  }
+  function transformRawBook(raw,forcedId){
+    const id=forcedId||raw.id||('u_'+Date.now()+'_'+Math.random().toString(36).slice(2,7));
+    const age=diffToAge(raw.difficulty||raw.age||raw.grade);
+    const pages=raw.pages?raw.pages:splitStory(raw.storyContent||raw.content||raw.desc||'');
+    return {id:id,cat:raw.cat||'classic',icon:raw.icon||'📖',title:raw.title||'未命名绘本',
+      tag:raw.tag||(raw.tags&&raw.tags[0])||raw.difficulty||'',age:age,grade:age,ready:raw.ready!==false,
+      desc:raw.intro||raw.desc||'',cover:raw.cover||'',pages:pages,difficulty:raw.difficulty||age,
+      tags:raw.tags||(raw.tag?raw.tag.split(/[,，]/).map(function(s){return s.trim();}):[])};
+  }
+  function importUserBooksData(val){
+    let arr=[];
+    if(Array.isArray(val))arr=val;
+    else if(val&&typeof val==='object'){Object.keys(val).forEach(function(k){if(Array.isArray(val[k]))arr=arr.concat(val[k]);});if(!arr.length)arr=[val];}
+    else return;
+    const exist=getUserBooks();const byId={};exist.forEach(function(b){byId[b.id]=b;});
+    arr.forEach(function(it){const b=transformRawBook(it);byId[b.id]=b;});
+    setUserBooks(Object.keys(byId).map(function(k){return byId[k];}));
+  }
+  function importUserBooksFile(file){
+    const r=new FileReader();
+    r.onload=function(){try{
+      const d=JSON.parse(r.result);const data=Array.isArray(d)?d:(d.books?d.books:d);
+      importUserBooksData(data);toast('已导入我的绘本 ✔');openMyBooks();renderBookList();
+    }catch(e){toast('导入失败：'+e.message);}};
+    r.readAsText(file);
+  }
+  function looksLikeBook(it){return it&&typeof it==='object'&&it.title&&(it.storyContent||it.pages||it.desc||it.content);}
+  function seedUserBooks(){
+    if(localStorage.getItem(BOOK_SEED_KEY))return;
+    importUserBooksData(SEED_BOOK_RAW);
+    try{localStorage.setItem(BOOK_SEED_KEY,'1');}catch(e){}
+  }
+  /* ---- 换封面 ---- */
+  let cvBookId=null;
+  function openCoverPop(){
+    if(!curBook){toast('请先打开一本绘本');return;}
+    cvBookId=curBook.id;
+    document.getElementById('cvBookName').textContent=curBook.title;
+    document.getElementById('cvPrompt').value='温馨儿童插画风格封面，主题为《'+curBook.title+'》'+(curBook.desc?('，'+curBook.desc):'');
+    document.getElementById('cvKw').value=curBook.title;
+    cvTab('up',document.querySelector('#coverPop .mb-tab[data-t=up]'));
+    renderCvPrev();document.getElementById('coverPop').classList.add('on');
+  }
+  function closeCoverPop(){document.getElementById('coverPop').classList.remove('on');}
+  function cvTab(t,el){document.querySelectorAll('#coverPop .mb-tab').forEach(function(b){b.classList.remove('sel');});el.classList.add('sel');document.querySelectorAll('#coverPop .mb-pane').forEach(function(p){p.classList.remove('sel');});document.getElementById('cv'+t.charAt(0).toUpperCase()+t.slice(1)).classList.add('sel');}
+  function renderCvPrev(){
+    const cur=getBookCover(cvBookId);const box=document.getElementById('cvPrev');const title=curBook?curBook.title:'';
+    if(cur){box.innerHTML='<img src="'+cur+'" alt="预览">';}
+    else{box.innerHTML='<div class="mb-grad" style="background:linear-gradient(135deg,#F26D92,#7FB5E6)">'+esc(title)+'</div>';}
+  }
+  function uploadCoverFile(input){
+    const f=input.files&&input.files[0];if(!f)return;
+    const rd=new FileReader();rd.onload=function(){compressImage(rd.result,640,function(dataUrl){setBookCover(cvBookId,dataUrl);renderCvPrev();toast('封面已更新 ✔');});};
+    rd.readAsDataURL(f);
+  }
+  function compressImage(src,maxW,cb){
+    const img=new Image();img.onload=function(){let w=img.width,h=img.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.drawImage(img,0,0,w,h);try{cb(c.toDataURL('image/jpeg',0.82));}catch(e){cb(src);}};img.onerror=function(){cb(src);};img.src=src;
+  }
+  function aiGenCover(){
+    const btn=document.getElementById('cvAiBtn');btn.disabled=true;btn.textContent='生成中…';
+    const prompt=document.getElementById('cvPrompt').value||('儿童绘本封面《'+(curBook?curBook.title:'')+'》');
+    aiImage(prompt).then(function(url){setBookCover(cvBookId,url);renderCvPrev();toast('AI 封面已生成 ✔');})
+      .catch(function(){const grad='data:image/svg+xml;utf8,'+encodeURIComponent(gradientSvg(curBook?curBook.title:'绘本',prompt));setBookCover(cvBookId,grad);renderCvPrev();toast('云端生图不可用，已用离线封面替代');})
+      .then(function(){btn.disabled=false;btn.textContent='✨ 生成封面';});
+  }
+  function gradientSvg(title,prompt){
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="400"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F26D92"/><stop offset="1" stop-color="#7FB5E6"/></linearGradient></defs><rect width="320" height="400" fill="url(#g)"/><text x="160" y="200" font-size="22" fill="#fff" text-anchor="middle" font-family="sans-serif">'+title+'</text></svg>';
+  }
+  function fetchCover(){
+    const btn=document.getElementById('cvNetBtn');btn.disabled=true;btn.textContent='抓取中…';
+    const kw=document.getElementById('cvKw').value||(curBook?curBook.title:'');
+    aiFetchCover(kw).then(function(url){setBookCover(cvBookId,url);renderCvPrev();toast('封面已抓取 ✔');})
+      .catch(function(){toast('联网抓取不可用（需配置云端 AI）');})
+      .then(function(){btn.disabled=false;btn.textContent='🔎 抓取';});
+  }
+  function removeCover(){setBookCover(cvBookId,'');renderCvPrev();toast('已移除封面');}
+  /* ---- AI 服务端代理调用（本地 server.js） ---- */
+  function aiPost(path,body){
+    return fetch('/api/ai/'+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+      .then(function(r){if(r.status===501)throw new Error('未配置');if(!r.ok)throw new Error('服务错误 '+r.status);return r.json();});
+  }
+  function aiImage(prompt){
+    return aiPost('image',{prompt:prompt}).then(function(d){if(d&&d.url)return d.url;if(d&&d.b64)return 'data:image/jpeg;base64,'+d.b64;throw new Error('无图');});
+  }
+  function aiFetchCover(kw){
+    return aiPost('chat',{messages:[{role:'user',content:'只返回一个能直接访问的图片URL，用于关键词「'+kw+'」的儿童绘本封面，不要解释。'}]})
+      .then(function(d){const txt=((d&&d.reply)||'').trim();const m=txt.match(/https?:\/\/[^\s"'<>]+/);if(!m)throw new Error('无URL');return aiPost('fetch',{url:m[0]}).then(function(r){return r&&r.dataUrl?r.dataUrl:m[0];});});
+  }
+  function aiChat(messages){
+    return aiPost('chat',{messages:messages}).then(function(d){return (d&&d.reply)||'';});
+  }
+  /* ---- AI 创作 ---- */
+  let aiBookId=null,aiMsgs=[];
+  function openAiChat(){
+    if(!curBook){toast('请先打开一本绘本');return;}
+    aiBookId=curBook.id;document.getElementById('aiBookName').textContent=curBook.title;
+    aiMsgs=loadAiChat(aiBookId)||[];
+    document.getElementById('aiMode').textContent='离线优先：未配置云端时由本机模板生成续写/提问；配置后在家长设置开启联网生成。';
+    renderAiMsgs();document.getElementById('aiChatPop').classList.add('on');
+    if(!aiMsgs.length)pushAiSystem();
+  }
+  function closeAiChat(){saveAiChat(aiBookId,aiMsgs);document.getElementById('aiChatPop').classList.remove('on');}
+  function bookContextText(){
+    if(!curBook)return '';
+    let s='绘本《'+curBook.title+'》简介：'+(curBook.desc||'')+'\n';
+    if(curBook.pages&&curBook.pages.length)s+='正文节选：'+curBook.pages.slice(0,3).map(function(p){return p.chars.map(function(c){return c.t;}).join('');}).join('');
+    return s;
+  }
+  function pushAiSystem(){
+    aiMsgs.push({role:'ai',text:'嗨～我是你的绘本创作小助手 🎨 我们已经读过《'+(curBook?curBook.title:'')+'》啦。你想续写结局、改编角色，还是来几个阅读小提问？'});
+  }
+  function renderAiMsgs(){
+    const box=document.getElementById('aiMsgs');box.innerHTML='';
+    aiMsgs.forEach(function(m){const d=document.createElement('div');d.className='ai-msg '+(m.role==='me'?'me':'ai');if(m.role!=='me')d.innerHTML='<span class="role">AI 小助手</span>'+esc(m.text);else d.textContent=m.text;box.appendChild(d);});
+    box.scrollTop=box.scrollHeight;
+  }
+  function sendAiMsg(){
+    const inp=document.getElementById('aiInput');const txt=inp.value.trim();if(!txt)return;
+    aiMsgs.push({role:'me',text:txt});inp.value='';renderAiMsgs();
+    const btn=document.querySelector('#aiChatPop .ai-input-row .btn');btn.disabled=true;btn.textContent='生成中';
+    const ctx=bookContextText();
+    const hist=aiMsgs.filter(function(m){return m.role==='me'||m.role==='ai';}).map(function(m){return {role:m.role==='me'?'user':'assistant',content:m.text};});
+    aiChat([{role:'system',content:'你是儿童绘本创作助手，结合下面的绘本内容回答，语言生动、适合小学生。\n'+ctx}].concat(hist.map(function(m){return {role:m.role,content:m.content};})))
+      .then(function(reply){aiMsgs.push({role:'ai',text:reply||'（没有收到回复）'});renderAiMsgs();saveAiChat(aiBookId,aiMsgs);})
+      .catch(function(){const offline=aiChatOffline(txt,ctx);aiMsgs.push({role:'ai',text:offline});renderAiMsgs();saveAiChat(aiBookId,aiMsgs);})
+      .then(function(){btn.disabled=false;btn.textContent='发送';});
+  }
+  function aiChatOffline(userMsg,ctx){
+    const title=curBook?curBook.title:'';const lower=userMsg;
+    if(/结尾|结局|后续|续写/.test(lower))return '📝 离线续写小样例：\n《'+title+'》之后，小主角把这次的经历画成了一幅画，贴在了家门口。第二天，邻居的小伙伴们都来听这个故事，大家决定一起把善良和勇气传下去～\n（配置云端 AI 后可生成更贴合情节的专属结局）';
+    if(/提问|问题|问答|考/.test(lower))return '❓ 三个阅读小提问：\n1. 故事里谁最让你感动？为什么？\n2. 如果是你，会怎么帮助主角？\n3. 你从这本书里学到了什么？\n（配置云端 AI 可生成针对本书内容的智能提问）';
+    if(/角色|人物|改编/.test(lower))return '🎭 角色小灵感：\n试着把主角换成一个你喜欢的动物，故事会怎么变？比如让《'+title+'》的主角去交一个新朋友，会发生什么有趣的事？\n（配置云端 AI 可帮你扩写完整桥段）';
+    return '✨ 我已结合《'+title+'》的内容记下你的想法啦～离线模式下我能给续写、提问、角色改编三种示例。配置云端 AI 后，我们可以真正“对话创作”，生成专属情节哦！';
+  }
+  function loadAiChat(id){try{return JSON.parse(localStorage.getItem(BOOK_CHAT_KEY))[id]||[];}catch(e){return [];}}
+  function saveAiChat(id,msgs){try{const all=JSON.parse(localStorage.getItem(BOOK_CHAT_KEY))||{};all[id]=msgs;localStorage.setItem(BOOK_CHAT_KEY,JSON.stringify(all));}catch(e){}}
+  /* ---- 我的绘本管理 ---- */
+  let editBookId=null;
+  function openMyBooks(){renderMyBooks();document.getElementById('myBooksPop').classList.add('on');}
+  function closeMyBooks(){document.getElementById('myBooksPop').classList.remove('on');}
+  function renderMyBooks(){
+    const list=document.getElementById('mbList');const books=getUserBooks();
+    document.getElementById('mbEditor').style.display='none';document.getElementById('mbList').style.display='block';
+    if(!books.length){list.innerHTML='<div class="mb-hint" style="text-align:center;padding:10px">还没有我的绘本，点「＋ 新增」或「导入JSON」吧～</div>';return;}
+    list.innerHTML='';
+    books.forEach(function(b){
+      const cov=getBookCover(b.id);
+      const thumb=cov?('<img class="thumb" src="'+cov+'">'):('<div class="thumb">'+(b.icon||'📖')+'</div>');
+      const d=document.createElement('div');d.className='mb-item';
+      d.innerHTML=thumb+'<div class="mi-info"><div class="mi-title">'+esc(b.title)+'</div><div class="mi-sub">'+(b.age||'')+' · '+(b.cat||'')+' · '+(b.pages?b.pages.length:0)+'页</div></div>'+
+        '<div class="mi-act"><button class="mini-btn" onclick="editUserBook(\''+b.id+'\')">编辑</button><button class="mini-btn del" onclick="deleteUserBook(\''+b.id+'\')">删除</button><button class="mini-btn" onclick="openBookFromMine(\''+b.id+'\')">打开</button></div>';
+      list.appendChild(d);
+    });
+  }
+  function openBookFromMine(id){closeMyBooks();openBookReader(id);}
+  function addUserBook(){editBookId=null;document.getElementById('mbEditor').style.display='block';document.getElementById('mbList').style.display='none';
+    ['mbFTitle','mbFIcon','mbFDesc','mbFTags','mbFContent'].forEach(function(id2){document.getElementById(id2).value='';});
+    document.getElementById('mbFCat').value='classic';document.getElementById('mbFAge').value='幼升小';document.getElementById('mbFIcon').value='📖';document.getElementById('mbFSaveBtn').textContent='💾 保存';
+  }
+  function editUserBook(id){
+    const b=getUserBooks().filter(function(x){return x.id===id;})[0];if(!b)return;editBookId=id;
+    document.getElementById('mbFTitle').value=b.title||'';document.getElementById('mbFIcon').value=b.icon||'📖';
+    document.getElementById('mbFAge').value=b.age||'幼升小';document.getElementById('mbFCat').value=b.cat||'classic';
+    document.getElementById('mbFDesc').value=b.desc||'';document.getElementById('mbFTags').value=(b.tags||[]).join('，');
+    document.getElementById('mbFContent').value=b.pages?b.pages.map(function(p){return p.chars.map(function(c){return c.t;}).join('');}).join(''):'';
+    document.getElementById('mbEditor').style.display='block';document.getElementById('mbList').style.display='none';
+    document.getElementById('mbFSaveBtn').textContent='💾 保存修改';
+  }
+  function cancelEditBook(){document.getElementById('mbEditor').style.display='none';document.getElementById('mbList').style.display='block';renderMyBooks();}
+  function saveUserBook(){
+    const title=document.getElementById('mbFTitle').value.trim();if(!title){toast('请填写书名');return;}
+    const age=document.getElementById('mbFAge').value;const cat=document.getElementById('mbFCat').value;
+    const icon=document.getElementById('mbFIcon').value.trim()||'📖';const desc=document.getElementById('mbFDesc').value.trim();
+    const tags=document.getElementById('mbFTags').value.split(/[,，]/).map(function(s){return s.trim();}).filter(Boolean);
+    const content=document.getElementById('mbFContent').value;const pages=splitStory(content);
+    const books=getUserBooks();
+    if(editBookId){const b=books.filter(function(x){return x.id===editBookId;})[0];if(b){b.title=title;b.age=age;b.grade=age;b.cat=cat;b.icon=icon;b.desc=desc;b.tags=tags;b.pages=pages;b.ready=true;b.difficulty=age;}}
+    else{books.push({id:'u_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),cat:cat,icon:icon,title:title,tag:tags[0]||'',age:age,grade:age,ready:true,desc:desc,cover:'',pages:pages,difficulty:age,tags:tags});}
+    setUserBooks(books);document.getElementById('mbEditor').style.display='none';document.getElementById('mbList').style.display='block';
+    renderMyBooks();renderBookList();toast('已保存 ✔');
+  }
+  function deleteUserBook(id){
+    if(!confirm('确定删除这本绘本？'))return;
+    setUserBooks(getUserBooks().filter(function(b){return b.id!==id;}));
+    const m=getBookCoverMap();if(m[id]){delete m[id];try{localStorage.setItem(BOOK_COVER_KEY,JSON.stringify(m));}catch(e){}}
+    renderMyBooks();renderBookList();
+  }
+  function exportUserBooks(){
+    const books=getUserBooks();if(!books.length){toast('还没有我的绘本');return;}
+    const blob=new Blob([JSON.stringify(books,null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='my_books.json';a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href);},1000);toast('已导出 my_books.json');
   }
 
 /* ================================================================
@@ -3880,9 +4205,14 @@
     const r=new FileReader();
     r.onload=()=>{try{
       const d=JSON.parse(r.result);
-      let n=0;for(const k in LIB){if(d[k]!==undefined){const norm=normalizeImport(k,d[k]);deepAssign(LIB[k],norm);n++;}}
-      saveContent();renderLib();
-      libStatus('导入成功！已更新 '+n+' 个模块并保存本地（各学习屏下次打开即生效）');
+      let n=0;
+      if(Array.isArray(d)&&d.length&&looksLikeBook(d[0])){ importUserBooksData(d); n++; }
+      else if(d&&d.books){ importUserBooksData(d.books); n++; }
+      else {
+        for(const k in LIB){ if(k==='books')continue; if(d[k]!==undefined){const norm=normalizeImport(k,d[k]);deepAssign(LIB[k],norm);n++;} }
+      }
+      saveContent();renderLib();renderBookList();
+      libStatus(n?('导入成功！已更新 '+n+' 项，绘本已进入「我的绘本」并可阅读'):'没有识别到可导入的内容');
     }catch(e){libStatus('导入失败：'+e.message);}};
     r.readAsText(file);
   }
@@ -4877,8 +5207,25 @@
   /* ---- 7. 把情绪打卡接入任务完成 ---- */
   function onTaskCompleted(idx){var c=mgmtData.checkins[idx];var name=c?c.name:'';setTimeout(function(){showEmotionPop(name);},350);checkAchievements();}
 
+  function saveAiConfig(){
+    const endpoint=document.getElementById('aiEndpoint').value.trim();
+    const key=document.getElementById('aiKey').value.trim();
+    const model=document.getElementById('aiModel').value.trim();
+    const st=document.getElementById('aiCfgStatus');
+    if(!endpoint||!key){st.textContent='请填写地址和 Key';st.style.color='var(--color-error,#ef4444)';return;}
+    if(typeof fetch==='undefined'){st.textContent='请通过本地服务使用（node server.js）';st.style.color='var(--color-error,#ef4444)';return;}
+    fetch('/api/ai/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:endpoint,key:key,model:model||''})})
+      .then(function(r){return r.json();}).then(function(d){if(d&&d.ok){st.textContent='已保存（云端可用）';st.style.color='var(--sage)';}else{st.textContent='保存失败';st.style.color='var(--color-error,#ef4444)';}})
+      .catch(function(){st.textContent='连不上本地服务，请先 node server.js';st.style.color='var(--color-error,#ef4444)';});
+  }
+  function loadAiConfig(){
+    if(typeof fetch==='undefined')return;
+    fetch('/api/ai/config').then(function(r){return r.json();}).then(function(d){if(d&&d.configured){if(d.endpoint)document.getElementById('aiEndpoint').value=d.endpoint;if(d.model)document.getElementById('aiModel').value=d.model;document.getElementById('aiCfgStatus').textContent='云端已配置';}}).catch(function(){});
+  }
   function init(){
     loadContent();
+    seedUserBooks();
+    loadAiConfig();
     renderPet(); renderGrowthTrack(); renderGrowGrid(currentPartner);
     initCalendar(); initKeypad(); refreshPinNow(); initPsetCtrls();
     loadMgmt(); renderCheckins(); renderStudies();
@@ -4897,6 +5244,85 @@
   init();
 
 </script>
+
+    <!-- ============ 换封面浮层 ============ -->
+    <div class="mb-mask" id="coverPop" onclick="if(event.target===this)closeCoverPop()">
+      <div class="mb-card">
+        <div class="mb-head"><h3>🖼️ 更换封面 · <span id="cvBookName"></span></h3><button class="mb-close" onclick="closeCoverPop()">×</button></div>
+        <div class="mb-body">
+          <div class="mb-tabs">
+            <button class="mb-tab sel" data-t="up" onclick="cvTab('up',this)">📤 本地上传</button>
+            <button class="mb-tab" data-t="ai" onclick="cvTab('ai',this)">🤖 AI 修图</button>
+            <button class="mb-tab" data-t="net" onclick="cvTab('net',this)">🌐 联网抓取</button>
+          </div>
+          <div class="mb-pane sel" id="cvUp">
+            <input type="file" accept="image/*" id="cvFile" onchange="uploadCoverFile(this)" style="width:100%">
+            <p class="mb-hint">支持 jpg/png，会自动压缩存储在本机，离线也能用。</p>
+          </div>
+          <div class="mb-pane" id="cvAi">
+            <textarea id="cvPrompt" placeholder="描述你想要的封面，例如：温馨卡通风格，小猫在月光下读书"></textarea>
+            <div class="mb-row"><button class="btn" id="cvAiBtn" onclick="aiGenCover()">✨ 生成封面</button></div>
+            <p class="mb-hint">调用本地代理连接的大模型文生图。未配置云端时自动用离线渐变封面替代。</p>
+          </div>
+          <div class="mb-pane" id="cvNet">
+            <div class="mb-row"><input id="cvKw" placeholder="搜索关键词，如：毛毛虫 蝴蝶"><button class="btn" id="cvNetBtn" onclick="fetchCover()">🔎 抓取</button></div>
+            <p class="mb-hint">通过本地代理联网检索图片（需配置云端 AI）。离线时此功能不可用。</p>
+          </div>
+          <div class="mb-prev" id="cvPrev"></div>
+          <div class="mb-row" style="justify-content:center;margin-top:10px">
+            <button class="btn ghost" onclick="removeCover()">🗑 移除封面</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ AI 创作浮层 ============ -->
+    <div class="mb-mask" id="aiChatPop" onclick="if(event.target===this)closeAiChat()">
+      <div class="mb-card">
+        <div class="mb-head"><h3>🤖 AI 创作 · <span id="aiBookName"></span></h3><button class="mb-close" onclick="closeAiChat()">×</button></div>
+        <div class="mb-body" style="padding-bottom:0">
+          <div class="ai-offline" id="aiMode">离线模式：用本机模板生成续写与提问</div>
+        </div>
+        <div class="ai-msgs" id="aiMsgs"></div>
+        <div class="ai-input-row">
+          <input id="aiInput" placeholder="和 AI 一起创作，比如：帮我想个后续结局" onkeydown="if(event.key==='Enter')sendAiMsg()">
+          <button class="btn" onclick="sendAiMsg()">发送</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 我的绘本浮层 ============ -->
+    <div class="mb-mask" id="myBooksPop" onclick="if(event.target===this)closeMyBooks()">
+      <div class="mb-card">
+        <div class="mb-head"><h3>✏️ 我的绘本</h3><button class="mb-close" onclick="closeMyBooks()">×</button></div>
+        <div class="mb-body">
+          <div class="mb-row">
+            <button class="btn ghost" onclick="exportUserBooks()">⬇ 导出JSON</button>
+            <label class="btn ghost">📥 导入JSON<input type="file" accept="application/json,.json" style="display:none" onchange="if(this.files[0])importUserBooksFile(this.files[0])"></label>
+            <button class="btn" onclick="addUserBook()">＋ 新增</button>
+          </div>
+          <div class="mb-list" id="mbList"></div>
+          <div id="mbEditor" style="display:none" class="mb-form">
+            <label>书名 *</label><input id="mbFTitle" placeholder="绘本名称">
+            <div class="mb-two">
+              <div><label>图标</label><input id="mbFIcon" placeholder="📖" maxlength="4"></div>
+              <div><label>年龄/年级</label>
+                <select id="mbFAge"><option>幼升小</option><option>小学1-3</option><option>小学3-6</option></select>
+              </div>
+            </div>
+            <label>分类</label>
+            <select id="mbFCat"><option value="classic">经典故事</option><option value="fable">寓言故事</option><option value="fairy">童话故事</option></select>
+            <label>简介</label><input id="mbFDesc" placeholder="一句话简介">
+            <label>标签(逗号分隔)</label><input id="mbFTags" placeholder="亲情, 习惯养成">
+            <label>正文(按句自动分页)</label><textarea id="mbFContent" placeholder="把故事正文粘贴到这里，系统会按句号自动分页"></textarea>
+            <div class="mb-row" style="justify-content:flex-end;margin-top:10px">
+              <button class="btn ghost" onclick="cancelEditBook()">取消</button>
+              <button class="btn" id="mbFSaveBtn" onclick="saveUserBook()">💾 保存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 </html>
