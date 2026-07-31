@@ -3218,7 +3218,16 @@
       {name:'逻辑：找规律',tag:'全龄'}
     ]
   };
-  function loadMgmt(){const raw=localStorage.getItem(MGMT_KEY);if(raw){try{const d=JSON.parse(raw);if(Array.isArray(d.checkins))mgmtData.checkins=d.checkins;if(Array.isArray(d.studies))mgmtData.studies=d.studies;}catch(e){}}}
+  // 规范打卡项（用于自愈旧本地数据缺失的 act 字段，确保入口/完成映射可用）
+  const CANON_CHECKINS=[
+    {name:'晨读 15 分钟',act:'morning',req:true},
+    {name:'口算练习',act:'math',req:true},
+    {name:'英语跟读',act:'dialogue',req:true},
+    {name:'户外运动 30 分',act:'outdoor',req:true},
+    {name:'整理书包',act:'pack',req:true}
+  ];
+  function syncCheckinActs(){mgmtData.checkins.forEach(function(c){var m=CANON_CHECKINS.find(function(x){return c.name===x.name;});if(m){if(!c.act)c.act=m.act;if(m.req&&c.req===undefined)c.req=m.req;}});}
+  function loadMgmt(){var changed=false;const raw=localStorage.getItem(MGMT_KEY);if(raw){try{const d=JSON.parse(raw);if(Array.isArray(d.checkins)){mgmtData.checkins=d.checkins;changed=true;}if(Array.isArray(d.studies))mgmtData.studies=d.studies;}catch(e){}}syncCheckinActs();if(changed)saveMgmt();}
   function saveMgmt(){try{localStorage.setItem(MGMT_KEY,JSON.stringify(mgmtData));}catch(e){}}
   function renderCheckins(){
     const box=document.getElementById('checkinList');if(!box)return;
@@ -3758,9 +3767,23 @@
     const nEl=document.getElementById('pkNum');if(nEl)nEl.textContent=n+'/'+PACK_ITEMS.length+' 已装好';
   }
 
-  function completeHomeTask(id){
-    const el=document.getElementById(id);if(!el)return;
-    el.classList.add('done');const ck=el.querySelector('.check');if(ck)ck.textContent='✓';
+  // 完成某类打卡（晨读/户外运动/整理书包……）：按 act 找到对应主页打卡项并标记为今日已完成
+  function completeHomeTask(key){
+    var act=(typeof key==='string'&&key.indexOf('task-')===0)?key.slice(5):key;
+    var NAME_HINT={morning:'晨读',outdoor:'户外运动',pack:'整理书包'};
+    var idx=-1;
+    for(var k=0;k<mgmtData.checkins.length;k++){if(mgmtData.checkins[k].act===act){idx=k;break;}}
+    if(idx<0&&NAME_HINT[act]){ // 兜底：旧本地数据缺 act 时按名称匹配
+      for(var j=0;j<mgmtData.checkins.length;j++){if(mgmtData.checkins[j].name.indexOf(NAME_HINT[act])>=0){idx=j;break;}}
+    }
+    if(idx<0)return;
+    var all=loadCheckinDone();var tkey=getTodayKey();if(!all[tkey])all[tkey]=[];
+    if(all[tkey].indexOf(idx)>=0){markHomeDone(idx);return;} // 已完成则仅同步 UI
+    all[tkey].push(idx);saveCheckinDone(all);markHomeDone(idx);
+  }
+  function markHomeDone(idx){
+    var ht=document.getElementById('ht-'+idx);if(ht){ht.classList.add('done');var c=ht.querySelector('.check');if(c)c.textContent='✓';}
+    var ck=document.getElementById('ck-'+idx);if(ck){ck.classList.add('done');var c2=ck.querySelector('.check');if(c2)c2.textContent='✓';}
     updateHomeProgress();
   }
   function toggleTask(id){
