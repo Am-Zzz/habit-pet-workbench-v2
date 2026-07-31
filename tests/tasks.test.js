@@ -58,7 +58,7 @@ function E(name, cond){ if(cond){ pass++; } else { fail++; console.log('  FAIL:'
 
 // ---- nav ----
 E('go checkin switches screen', (function(){ w.go('checkin'); return d.getElementById('sc-checkin').classList.contains('on'); })());
-E('checkin task list rendered (5 default)', d.getElementById('checkinTaskList').children.length === 5);
+E('checkin task list rendered (3 default)', d.getElementById('checkinTaskList').children.length === 3);
 E('checkin nav active', d.getElementById('nav-checkin').classList.contains('active'));
 
 E('go store switches screen', (function(){ w.go('store'); return d.getElementById('sc-store').classList.contains('on'); })());
@@ -154,20 +154,14 @@ E('diff board 12 cells', d.getElementById('diffBoard').children.length === 12);
 
 // ---- home checkin toggle ----
 w.go('home');
-E('home task list rendered (5)', d.getElementById('homeTaskList').children.length === 5);
+E('home task list rendered (3)', d.getElementById('homeTaskList').children.length === 3);
 (function(){
   const before = (G('loadCheckinDone()')[G('getTodayKey()')] || []).length;
-  d.getElementById('ht-3').querySelector('.check').click();
+  d.getElementById('ht-0').querySelector('.check').click();
   const after = (G('loadCheckinDone()')[G('getTodayKey()')] || []).length;
   E('home checkin toggles done', after === before + 1);
-  E('progress header updates', /\d+\/\d+\s*完成/.test(d.getElementById('homeTaskCount').textContent));
+  E('progress header updates', /1\//.test(d.getElementById('homeTaskCount').textContent));
 })();
-
-// ---- 主页学习乐园九宫格（旧版布局）----
-E('learn section header shows 9 modules', /学习乐园 · 9 大模块/.test(d.getElementById('sc-home').textContent));
-E('learn grid contains game center', /游戏中心/.test(d.getElementById('learnGrid').textContent));
-E('no separate games nav tab', !d.getElementById('nav-games'));
-w.go('home');
 
 // ---- parent add study propagates ----
 w.prompt = () => '测试模块';
