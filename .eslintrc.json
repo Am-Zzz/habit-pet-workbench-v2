@@ -1,0 +1,31 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2022": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "script"
+  },
+  "globals": {
+    "CHARS_DATA": "readonly",
+    "HONGEN_1300": "readonly",
+    "POEM_DATA": "readonly",
+    "BOOK_DATA": "readonly",
+    "WORDS_DATA": "readonly",
+    "DIALOGUE_DATA": "readonly",
+    "READ_DATA": "readonly",
+    "PINYIN_DATA": "readonly",
+    "SCIENCE_DATA": "readonly",
+    "LOGIC_DATA": "readonly"
+  },
+  "rules": {
+    "no-undef": "error",
+    "no-dupe-keys": "error",
+    "no-duplicate-case": "error",
+    "no-redeclare": "error",
+    "no-unused-vars": "warn",
+    "no-cond-assign": "warn"
+  }
+}

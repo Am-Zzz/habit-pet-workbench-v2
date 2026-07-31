@@ -1,0 +1,12 @@
+{
+  "name": "habit-pet-workbench",
+  "version": "1.0.0",
+  "private": true,
+  "description": "萌宠小屋 PRO / 石榴学习屋 — 抖音带货亲子学习激励单文件应用",
+  "scripts": {
+    "test": "node tests/tasks.test.js && node tests/gacha.test.js",
+    "lint": "node scripts/lint-inline.mjs"
+  },
+  "keywords": ["habit", "education", "single-file"],
+  "license": "UNLICENSED"
+}

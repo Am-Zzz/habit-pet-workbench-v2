@@ -1,0 +1,41 @@
+# 运行数据（含用户本地状态，不入库）
+data.json
+data.json.bak
+data.json.tmp
+*.local.json
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
+node_modules/
+
+# ============================================================
+# 临时脚本 / 草稿 —— 一次性转换脚本，禁止入库
+# 这类「正则手术式」脚本是直接字符串替换 v8.html 的元凶，
+# 曾导致 TDZ 整页崩溃 + 脚本被重复追加。一律不入库、不保留。
+# ============================================================
+_*.py
+_*.js
+
+# ============================================================
+# 巨型数据语料 —— 运行时由 chars_data.js / mengchong_content.json 提供，非源码
+# 这些是构建数据源（生成 chars_data.js 的原材料），体积 10~27MB，
+# 入库会永久膨胀仓库。需要重新生成时从原始语料恢复，或用 Git LFS 管理。
+# ============================================================
+ci.json
+word.json
+idiom.json
+hongen_1300_full.json
+hongen_groups.json
+chars_groups.json
+ci_head.txt
+idiom_head.txt
+
+# 备份 / 临时
+*.bak
+*.tmp
+*.html.bak
+
+# 部署产物（由源码构建，不入库）
+deploy/
+deploy_ios/
