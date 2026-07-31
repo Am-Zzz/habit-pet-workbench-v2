@@ -7,6 +7,14 @@
     "test": "node tests/tasks.test.js && node tests/gacha.test.js",
     "lint": "node scripts/lint-inline.mjs"
   },
-  "keywords": ["habit", "education", "single-file"],
-  "license": "UNLICENSED"
+  "keywords": [
+    "habit",
+    "education",
+    "single-file"
+  ],
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "jsdom": "^30.0.1"
+  }
 }
