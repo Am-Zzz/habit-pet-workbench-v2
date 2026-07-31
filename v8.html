@@ -379,6 +379,7 @@
   .grow-cell .gn{font-size:11px;color:var(--ink-soft);margin-top:2px}
   .snake-av img{width:40px;height:40px;object-fit:contain;vertical-align:middle}
   .dog-av img{width:40px;height:40px;border-radius:50%;object-fit:cover;vertical-align:middle;box-shadow:0 1px 3px rgba(221,94,134,.25)}
+  .cat-av img{width:40px;height:40px;border-radius:50%;object-fit:cover;vertical-align:middle;box-shadow:0 1px 3px rgba(221,94,134,.25)}
 
   /* ====== 识字学习屏 ====== */
   .char-goal{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
@@ -1144,7 +1145,7 @@
         </div>
         <div class="grid-pet">
           <div class="pcard owned"><span class="rib n">普通</span><div class="av">🐶</div><div class="pn">小萌</div><div class="pp">6 级成长</div><button class="use" onclick="showGrow('dog')">看成长</button></div>
-          <div class="pcard owned"><span class="rib n">普通</span><div class="av">🐱</div><div class="pn">咪咪</div><div class="pp">已拥有</div><button class="use">设为出战</button></div>
+          <div class="pcard owned"><span class="rib n">普通</span><div class="av cat-av" style="cursor:pointer" title="设为出战" onclick="setPartner('cat',this)"><img src="pets/cat-l1.jpg" alt="咪咪"></div><div class="pn">咪咪</div><div class="pp">6 级成长</div><button class="use" onclick="showGrow('cat')">看成长</button></div>
           <div class="pcard owned"><span class="rib n">普通</span><div class="av">🐰</div><div class="pn">团团</div><div class="pp">已拥有</div><button class="use">设为出战</button></div>
           <div class="pcard locked"><span class="rib r">稀有</span><div class="av">🦊</div><div class="pn">？？？</div><div class="pp">未解锁</div><button class="use" style="opacity:.5">抽盲盒</button></div>
           <div class="pcard locked"><span class="rib r">稀有</span><div class="av">🐧</div><div class="pn">？？？</div><div class="pp">未解锁</div><button class="use" style="opacity:.5">抽盲盒</button></div>
@@ -1160,6 +1161,10 @@
         <div id="dogGrow" style="display:none;margin-top:16px">
           <div class="sec-h" style="color:var(--brand-d)">🐶 小萌 · 6 级成长之路</div>
           <div class="grow-grid" id="dogGrowGrid"></div>
+        </div>
+        <div id="catGrow" style="display:none;margin-top:16px">
+          <div class="sec-h" style="color:var(--brand-d)">🐱 咪咪 · 6 级成长之路</div>
+          <div class="grow-grid" id="catGrowGrid"></div>
         </div>
         <div class="legend">
           <span><i style="background:var(--surface-2)"></i>普通</span>
@@ -2123,7 +2128,7 @@
       ${faces[face]}
     </svg>`;
   }
-  let currentPartner='dog', currentFace='growth', snakeLv=3, dogLv=1;
+  let currentPartner='dog', currentFace='growth', snakeLv=3, dogLv=1, catLv=1;
   const DOG_MOODS={
     happy:{img:'pets/dog-mood-cry.png',label:'😊 开心'},
     meh:{img:'pets/dog-mood-happy.png',label:'😐 平静'},
@@ -2146,6 +2151,14 @@
     {lv:5,name:'学霸小蛇',img:'pets/snake-l5-student.png',say:'这道题我会！陪我挑战趣题吧'},
     {lv:6,name:'毕业小蛇',img:'pets/snake-l6-grad.png',say:'我毕业啦🎓 谢谢你陪我一路长大！'}
   ];
+  const CAT_GROWTH=[
+    {lv:1,name:'奶瓶咪咪',img:'pets/cat-l1.jpg',say:'我还在喝奶奶呢，陪我一起打卡长大吧～🍼'},
+    {lv:2,name:'趴垫咪咪',img:'pets/cat-l2.jpg',say:'趴在软垫上等你，今天任务完成了吗？'},
+    {lv:3,name:'毛线咪咪',img:'pets/cat-l3.jpg',say:'我会追毛线球啦！学习也要像追球一样专注～'},
+    {lv:4,name:'扑球咪咪',img:'pets/cat-l4.jpg',say:'扑住小皮球！每完成一项任务就离我毕业更近一步～'},
+    {lv:5,name:'玩鱼咪咪',img:'pets/cat-l5.jpg',say:'小鱼玩具真好玩，但你认真打卡的样子更酷！'},
+    {lv:6,name:'毕业咪咪',img:'pets/cat-l6.jpg',say:'我毕业啦🎓 谢谢你每天的陪伴，未来继续一起加油！'}
+  ];
   function renderPet(){
     const face=document.getElementById('petFace');
     if(!face)return;
@@ -2154,7 +2167,15 @@
     const snakeStageEl=document.getElementById('snakeStage');
     const petNameEl=document.getElementById('petName');
     const bubbleEl=document.getElementById('bubble');
-    if(currentPartner==='snake'){
+    if(currentPartner==='cat'){
+      const c=CAT_GROWTH[catLv-1];
+      face.innerHTML=`<img src="${c.img}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+      if(growthBox)growthBox.style.display='block';
+      if(snakeLvEl)snakeLvEl.textContent=c.lv;
+      if(snakeStageEl)snakeStageEl.textContent=c.name;
+      if(petNameEl)petNameEl.textContent='咪咪';
+      if(bubbleEl)bubbleEl.textContent=c.say;
+    } else if(currentPartner==='snake'){
       const s=SNAKE_GROWTH[snakeLv-1];
       face.innerHTML=`<img src="${s.img}" alt="${s.name}" style="width:118px;height:118px;object-fit:contain">`;
       if(growthBox)growthBox.style.display='block';
@@ -2180,17 +2201,17 @@
     const t=document.getElementById('growthTrack');if(!t)return;t.innerHTML='';
     // 彻底放弃 flexbox，改用 white-space:nowrap + inline-block（flexbox nowrap 在此渲染环境不生效）
     t.style.cssText='white-space:nowrap;overflow-x:auto;overflow-y:hidden;max-width:100%;padding-bottom:4px;font-size:0';
-    const data=currentPartner==='snake'?SNAKE_GROWTH:DOG_GROWTH;
-    const lv=currentPartner==='snake'?snakeLv:dogLv;
+    const data=currentPartner==='snake'?SNAKE_GROWTH:currentPartner==='cat'?CAT_GROWTH:DOG_GROWTH;
+    const lv=currentPartner==='snake'?snakeLv:currentPartner==='cat'?catLv:dogLv;
     data.forEach(s=>{
       const d=document.createElement('span');
       const locked=s.lv>lv;
       d.className='growth-dot'+(s.lv===lv?' on':'')+(locked?' locked':'');
       d.title=locked?`${s.name}（未解锁）`:s.name;
       d.style.cssText='display:inline-block;vertical-align:middle;width:30px;height:30px;min-width:30px;min-height:30px;margin-right:4px';
-      const img= currentPartner==='dog' ? `<img src="${s.img}" alt="${s.name}" style="width:22px;height:22px;object-fit:cover;border-radius:50%">` : `<img src="${s.img}" alt="${s.name}">`;
+      const img= currentPartner==='snake' ? `<img src="${s.img}" alt="${s.name}">` : `<img src="${s.img}" alt="${s.name}" style="width:22px;height:22px;object-fit:cover;border-radius:50%">`;
       d.innerHTML= img + (locked?'<span class="lock">🔒</span>':'');
-      if(!locked){ d.onclick=()=>{if(currentPartner==='snake'){snakeLv=s.lv;}else{dogLv=s.lv;}renderPet();renderGrowthTrack();}; }
+      if(!locked){ d.onclick=()=>{if(currentPartner==='snake'){snakeLv=s.lv;}else if(currentPartner==='cat'){catLv=s.lv;}else{dogLv=s.lv;}renderPet();renderGrowthTrack();}; }
       t.appendChild(d);
     });
   }
@@ -2200,24 +2221,34 @@
     (el||event.currentTarget).classList.add('sel');
     if(p==='snake'){snakeLv=3;renderGrowthTrack();}
     if(p==='dog'){dogLv=3;renderGrowthTrack();}
+    if(p==='cat'){catLv=catLv||3;renderGrowthTrack();}
     renderPet();
   }
   function renderGrowGrid(partner){
-    const g=document.getElementById(partner==='snake'?'snakeGrowGrid':'dogGrowGrid');if(!g)return;g.innerHTML='';
-    const data=partner==='snake'?SNAKE_GROWTH:DOG_GROWTH;
+    let g, data;
+    if(partner==='cat'){g=document.getElementById('catGrowGrid');data=CAT_GROWTH;}
+    else if(partner==='snake'){g=document.getElementById('snakeGrowGrid');data=SNAKE_GROWTH;}
+    else {g=document.getElementById('dogGrowGrid');data=DOG_GROWTH;}
+    if(!g)return;g.innerHTML='';
     data.forEach(s=>{
       const c=document.createElement('div');
       c.className='grow-cell';
-      c.innerHTML=(partner==='dog'?`<img src="${s.img}" alt="${s.name}" style="width:64px;height:64px;object-fit:cover;border-radius:50%">`:`<img src="${s.img}" alt="${s.name}" style="width:64px;height:64px;object-fit:contain">`)+`<div class="gl">Lv.${s.lv}</div><div class="gn">${s.name}</div>`;
+      let img='';
+      if(partner==='cat'){img=`<img src="${s.img}" alt="${s.name}" style="width:64px;height:86px;object-fit:cover;border-radius:12px">`;}
+      else if(partner==='dog'){img=`<img src="${s.img}" alt="${s.name}" style="width:64px;height:64px;object-fit:cover;border-radius:50%">`;}
+      else {img=`<img src="${s.img}" alt="${s.name}" style="width:64px;height:64px;object-fit:contain">`;}
+      c.innerHTML=img+`<div class="gl">Lv.${s.lv}</div><div class="gn">${s.name}</div>`;
       g.appendChild(c);
     });
   }
   function showGrow(partner){
     const sbox=document.getElementById('snakeGrow');
     const dbox=document.getElementById('dogGrow');
-    const show = partner==='snake'? sbox : dbox;
-    const hide = partner==='snake'? dbox : sbox;
-    if(hide.style.display==='block') hide.style.display='none';
+    const cbox=document.getElementById('catGrow');
+    if(partner!=='snake') sbox.style.display='none';
+    if(partner!=='dog') dbox.style.display='none';
+    if(partner!=='cat') cbox.style.display='none';
+    const show = partner==='snake'? sbox : partner==='cat'? cbox : dbox;
     show.style.display = show.style.display==='block' ? 'none':'block';
     if(show.style.display==='block'){renderGrowGrid(partner);window.scrollTo({top:document.getElementById('sc-pets').offsetTop+show.offsetTop-20,behavior:'smooth'});}
   }
@@ -4680,7 +4711,7 @@
   function buyStoreItem(i){var it=STORE_ITEMS[i];if(!it)return;if(it.cur==='coin'){if(gachaCoins<it.cost){toast('硬币不足');return;}gachaCoins-=it.cost;gachaSet(GACHA_KEYS.c,gachaCoins);}else{if(gachaPoints<it.cost){toast('积分不足');return;}gachaPoints-=it.cost;gachaSet(GACHA_KEYS.p,gachaPoints);}toast('已兑换：'+it.name);initStore();}
   function initMe(){
     var nm=document.getElementById('meName');if(nm)nm.textContent=document.getElementById('petName')?document.getElementById('petName').textContent:'小萌';
-    var pet=document.getElementById('mePet');if(pet)pet.textContent=(currentPartner==='snake')?'🐍':'🐶';
+    var pet=document.getElementById('mePet');if(pet)pet.textContent=(currentPartner==='snake')?'🐍':(currentPartner==='cat')?'🐱':'🐶';
     var done=(loadCheckinDone()[getTodayKey()]||[]);
     var stats=document.getElementById('meStats');
     if(stats)stats.innerHTML='<div class="me-stat"><b>'+done.length+'</b><span>今日打卡</span></div><div class="me-stat"><b>'+gachaPoints+'</b><span>⭐积分</span></div><div class="me-stat"><b>'+gachaCoins+'</b><span>🪙硬币</span></div><div class="me-stat"><b>'+(GAMESCORE.block+GAMESCORE.mem+GAMESCORE.seq+GAMESCORE.diff)+'</b><span>🎮游戏</span></div>';
