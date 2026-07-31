@@ -481,21 +481,53 @@
   .book-item .bi-tag{font-size:10px;background:var(--brand-s);color:#fff;padding:2px 8px;border-radius:999px;font-weight:700;flex-shrink:0}
   /* ====== 绘本乐园（新版：书库网格 + 阅读器） ====== */
   .btn.sm{padding:6px 12px;font-size:12px}
-  .bk-filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin-bottom:14px}
-  .bk-filters .btn.ghost.sm{padding:5px 12px;font-size:12px}
-  .book-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-  .book-card{background:#fff;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:.18s;display:flex;flex-direction:column}
-  .book-card:hover{border-color:var(--brand-s);box-shadow:0 6px 16px rgba(244,130,155,.15);transform:translateY(-2px)}
+  /* 绘本乐园新版布局 */
+  .bk-layout{display:flex;flex-direction:column;height:100%;max-width:860px;margin:0 auto;background:var(--surface);border-radius:22px;overflow:hidden;box-shadow:var(--shadow-sm)}
+  .bk-topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border-bottom:1px solid var(--line)}
+  .bk-back{font-size:20px;color:var(--ink-soft);cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:.15s}
+  .bk-back:hover{background:var(--surface-2)}
+  .bk-tabs{display:inline-flex;background:var(--surface-2);border-radius:999px;padding:3px;gap:3px}
+  .bk-tabs button{border:none;background:transparent;border-radius:999px;padding:7px 22px;font-size:14px;font-weight:800;color:var(--ink-soft);cursor:pointer}
+  .bk-tabs button.sel{background:var(--brand);color:#fff;box-shadow:0 3px 10px rgba(221,94,134,.3)}
+  .bk-search-btn{font-size:18px;color:var(--ink-soft);cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:.15s}
+  .bk-search-btn:hover{background:var(--surface-2)}
+  .bk-main{display:flex;flex:1;overflow:hidden}
+  .bk-sidebar{width:118px;flex-shrink:0;background:#fff;border-right:1px solid var(--line);overflow-y:auto;padding:10px 8px;display:flex;flex-direction:column;gap:4px}
+  .bk-nav-item{padding:10px 8px;border-radius:10px;font-size:12px;font-weight:700;color:var(--ink-soft);cursor:pointer;transition:.15s;text-align:center;line-height:1.3;position:relative}
+  .bk-nav-item:hover{background:var(--surface-2)}
+  .bk-nav-item.sel{background:#fff7e6;color:#8b5a00;font-weight:800;box-shadow:inset 3px 0 0 #ffc107}
+  .bk-nav-item.shelf{color:var(--brand-d)}
+  .bk-nav-item.sel.shelf{background:#fff0f5;box-shadow:inset 3px 0 0 var(--brand)}
+  .bk-content{flex:1;overflow-y:auto;padding:14px 16px 20px;background:var(--surface)}
+  .bk-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+  .bk-count{font-size:13px;color:var(--ink-soft);font-weight:700}
+  .bk-count b{color:var(--ink);font-size:15px}
+  .bk-levels{flex:1;justify-content:center}
+  .bk-levels button{padding:5px 12px!important}
+  .bk-shelf-btn{border:none;background:#ffc107;color:#5c3d00;font-size:12px;font-weight:800;padding:7px 12px;border-radius:999px;cursor:pointer;box-shadow:0 2px 6px rgba(255,193,7,.35);transition:.15s;white-space:nowrap}
+  .bk-shelf-btn:hover{background:#ffb300;transform:translateY(-1px)}
+  .bk-search{margin-bottom:12px}
+  .bk-search .form-input{width:100%;padding:10px 14px;border-radius:999px;font-size:13px;border:1px solid var(--line)}
+  .book-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:520px){.book-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+  .bk-empty{text-align:center;color:var(--ink-faint);font-size:13px;padding:40px 10px}
+  .bk-empty .big{font-size:42px;margin-bottom:8px}
+  .book-card{background:#fff;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:.18s;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .book-card:hover{border-color:var(--brand-s);box-shadow:0 8px 20px rgba(244,130,155,.18);transform:translateY(-2px)}
   .bc-cover{position:relative;width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,#FFF0F5,#FFE3EC);display:flex;align-items:center;justify-content:center;overflow:hidden}
   .bc-cover img{width:100%;height:100%;object-fit:cover;display:block}
   .rd-cover-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px}
   .bc-done{position:absolute;top:8px;right:8px;background:rgba(16,185,129,.92);color:#fff;font-size:10px;font-weight:800;padding:3px 8px;border-radius:999px}
-  .bc-body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
-  .bc-title{font-size:15px;font-weight:800;color:var(--ink)}
-  .bc-desc{font-size:11px;color:var(--ink-faint);line-height:1.4}
-  .bc-foot{display:flex;align-items:center;gap:6px;margin-top:auto}
+  .bc-shelf{position:absolute;top:8px;left:8px;background:rgba(255,193,7,.95);color:#5c3d00;font-size:10px;font-weight:800;padding:3px 8px;border-radius:999px}
+  .bc-body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1;text-align:center}
+  .bc-title{font-size:14px;font-weight:800;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bc-desc{font-size:11px;color:var(--ink-faint);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .bc-foot{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:auto}
   .bc-soon{font-size:10px;color:#b08968;background:#fff3e6;padding:2px 8px;border-radius:999px;font-weight:700}
   .book-card.notready{opacity:.92}
+  .book-card .bc-add{display:none;position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:rgba(255,193,7,.95);color:#5c3d00;border:none;font-size:16px;font-weight:900;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+  .book-card:hover .bc-add{display:flex}
+  .book-card .bc-add:hover{background:#ffb300;transform:scale(1.08)}
   .empty{text-align:center;color:var(--ink-faint);font-size:13px;padding:24px 10px}
   /* 阅读器浮层 */
   .reader-mask{position:fixed;inset:0;background:rgba(40,20,35,.5);display:none;align-items:flex-start;justify-content:center;z-index:60;overflow:auto;padding:18px 12px}
@@ -1315,26 +1347,51 @@
 
     <!-- ==================== 绘本乐园屏 ==================== -->
     <div class="screen" id="sc-books">
-      <div class="card" style="max-width:680px;margin:0 auto">
-        <div class="card-h"><span class="t">📖 绘本乐园</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
-        <!-- 筛选栏：分类 + 年龄/年级 + 联网刷新 -->
-        <div class="bk-filters">
-          <div class="lrn-pill" id="bkCatPill">
-            <button class="sel" data-cat="all" onclick="switchBookCat('all',this)">全部</button>
-            <button data-cat="classic" onclick="switchBookCat('classic',this)">经典</button>
-            <button data-cat="fable" onclick="switchBookCat('fable',this)">寓言</button>
-            <button data-cat="fairy" onclick="switchBookCat('fairy',this)">童话</button>
+      <div class="bk-layout">
+        <!-- 顶部：返回 + 中英文绘本 Tab + 搜索 -->
+        <div class="bk-topbar">
+          <span class="bk-back" onclick="goBack()">←</span>
+          <div class="bk-tabs" id="bookLangTabs">
+            <button class="sel" data-lang="cn" onclick="switchBookLang('cn',this)">中文绘本</button>
+            <button data-lang="en" onclick="switchBookLang('en',this)">英文绘本</button>
           </div>
-          <div class="lrn-pill" id="bkAgePill">
-            <button class="sel" data-age="all" onclick="switchBookAge('all',this)">全部年龄</button>
-            <button data-age="幼升小" onclick="switchBookAge('幼升小',this)">幼升小</button>
-            <button data-age="小学1-3" onclick="switchBookAge('小学1-3',this)">小学1-3</button>
-            <button data-age="小学3-6" onclick="switchBookAge('小学3-6',this)">小学3-6</button>
-          </div>
-          <button class="btn ghost sm" onclick="refreshBooks()">🔄 联网刷新</button>
+          <span class="bk-search-btn" onclick="toggleBookSearch()">🔍</span>
         </div>
-        <!-- 书库网格 -->
-        <div class="book-grid" id="bookList"></div>
+
+        <div class="bk-main">
+          <!-- 左侧分类导航 -->
+          <div class="bk-sidebar" id="bkSidebar">
+            <div class="bk-nav-item sel" data-nav="all" onclick="switchBookNav('all',this)">全部绘本</div>
+            <div class="bk-nav-item" data-nav="classic" onclick="switchBookNav('classic',this)">经典童话</div>
+            <div class="bk-nav-item" data-nav="fable" onclick="switchBookNav('fable',this)">寓言故事</div>
+            <div class="bk-nav-item" data-nav="fairy" onclick="switchBookNav('fairy',this)">童话故事</div>
+            <div class="bk-nav-item" data-nav="幼升小" onclick="switchBookNav('幼升小',this)">幼小衔接</div>
+            <div class="bk-nav-item" data-nav="小学1-3" onclick="switchBookNav('小学1-3',this)">小学1-3年级</div>
+            <div class="bk-nav-item" data-nav="小学3-6" onclick="switchBookNav('小学3-6',this)">小学3-6年级</div>
+            <div class="bk-nav-item" data-nav="shelf" onclick="switchBookNav('shelf',this)">我的书架</div>
+          </div>
+
+          <!-- 右侧内容区 -->
+          <div class="bk-content">
+            <div class="bk-tools">
+              <div class="bk-count">共 <b id="bookCount">0</b> 本</div>
+              <div class="bk-levels lrn-pill" id="bkLevelPill">
+                <button class="sel" data-level="all" onclick="switchBookLevel('all',this)">全部</button>
+                <button data-level="幼升小" onclick="switchBookLevel('幼升小',this)">AA级</button>
+                <button data-level="小学1-3" onclick="switchBookLevel('小学1-3',this)">A级</button>
+                <button data-level="小学3-6" onclick="switchBookLevel('小学3-6',this)">B级</button>
+              </div>
+              <button class="bk-shelf-btn" onclick="switchBookNav('shelf',document.querySelector('#bkSidebar .bk-nav-item[data-nav=shelf]'))">+ 加入书架</button>
+            </div>
+
+            <div class="bk-search" id="bookSearchBox" style="display:none">
+              <input type="text" class="form-input" id="bookSearchInput" placeholder="搜索绘本名称..." oninput="renderBookList()">
+            </div>
+
+            <!-- 书库网格 -->
+            <div class="book-grid" id="bookList"></div>
+          </div>
+        </div>
       </div>
 
       <!-- 阅读器浮层 -->
@@ -1370,6 +1427,7 @@
             <button class="btn ghost" id="rdRecBtn" onclick="toggleBookRec()">🎙️ 录音</button>
             <button class="btn ghost" id="rdPlayBtn" style="display:none" onclick="playBookRec()">▶ 我的录音</button>
             <button class="btn ghost" onclick="stopBookSpeech()">⏹ 停止</button>
+            <button class="btn ghost" id="rdShelfBtn" onclick="toggleReaderShelf()">☆ 加入书架</button>
             <button class="btn" onclick="markBookDone()">✅ 读完啦</button>
           </div>
         </div>
@@ -2951,7 +3009,8 @@
    ================================================================ */
   const BOOK_REFRESH_URL=''; // 留空=未配置联网代理；配置后 refreshBooks 会从此拉取新书
   const BOOK_DONE_KEY='mp_books_done_v1';
-  let bookCat='all', bookAge='all';
+  const BOOK_SHELF_KEY='mp_book_shelf_v1';
+  let bookNav='all', bookLevel='all', bookLang='cn', bookSearch='';
   let curBook=null, curPage=0, pinyinOn=false;
   let bookVoices=[], bookMediaRec=null, bookRecChunks=[], bookClipURL=null, bookRecStream=null, bookRecording=false;
   function stopBookStream(){if(bookRecStream){bookRecStream.getTracks().forEach(function(t){t.stop();});bookRecStream=null;}}
@@ -2976,30 +3035,57 @@
     let h=0;for(let i=0;i<role.length;i++)h=(h*31+role.charCodeAt(i))>>>0;
     return 1+(h%3)*0.18;
   }
-  function openBooks(){bookCat='all';bookAge='all';
-    document.querySelectorAll('#bkCatPill button').forEach(b=>b.classList.toggle('sel',b.dataset.cat==='all'));
-    document.querySelectorAll('#bkAgePill button').forEach(b=>b.classList.toggle('sel',b.dataset.age==='all'));
+  function openBooks(){bookNav='all';bookLevel='all';bookLang='cn';bookSearch='';
+    document.querySelectorAll('#bkSidebar .bk-nav-item').forEach(b=>b.classList.toggle('sel',b.dataset.nav==='all'));
+    document.querySelectorAll('#bkLevelPill button').forEach(b=>b.classList.toggle('sel',b.dataset.level==='all'));
+    document.querySelectorAll('#bookLangTabs button').forEach(b=>b.classList.toggle('sel',b.dataset.lang==='cn'));
+    document.getElementById('bookSearchBox').style.display='none';
+    document.getElementById('bookSearchInput').value='';
     renderBookList();go('books');}
-  function switchBookCat(c,btn){bookCat=c;
-    document.querySelectorAll('#bkCatPill button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');renderBookList();}
-  function switchBookAge(a,btn){bookAge=a;
-    document.querySelectorAll('#bkAgePill button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');renderBookList();}
+  function switchBookNav(n,btn){bookNav=n;
+    document.querySelectorAll('#bkSidebar .bk-nav-item').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');
+    renderBookList();}
+  function switchBookLevel(l,btn){bookLevel=l;
+    document.querySelectorAll('#bkLevelPill button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');renderBookList();}
+  function switchBookLang(l,btn){bookLang=l;
+    document.querySelectorAll('#bookLangTabs button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');
+    renderBookList();}
+  function toggleBookSearch(){const box=document.getElementById('bookSearchBox');const on=box.style.display==='none';box.style.display=on?'block':'none';if(on){document.getElementById('bookSearchInput').focus();}}
+  function getBookShelf(){try{return JSON.parse(localStorage.getItem(BOOK_SHELF_KEY))||[];}catch(e){return [];}}
+  function setBookShelf(ids){try{localStorage.setItem(BOOK_SHELF_KEY,JSON.stringify(ids));}catch(e){}}
+  function inBookShelf(id){return getBookShelf().indexOf(id)>=0;}
+  function toggleBookShelf(id,evt){if(evt)evt.stopPropagation();const shelf=getBookShelf();const i=shelf.indexOf(id);if(i>=0){shelf.splice(i,1);toast('已从书架移除');}else{shelf.push(id);toast('已加入书架');}setBookShelf(shelf);renderBookList();}
   function renderBookList(){
     const list=document.getElementById('bookList');if(!list)return;list.innerHTML='';
-    const done=getBookDone();
-    const books=(window.BOOK_CONTENT||[]).filter(function(b){
-      if(bookCat!=='all'&&b.cat!==bookCat)return false;
-      if(bookAge!=='all'&&b.age!==bookAge)return false;
+    const done=getBookDone();const shelf=getBookShelf();
+    const all=(window.BOOK_CONTENT||[]);
+    const source=bookLang==='cn'?all:[];
+    if(bookLang==='en'){
+      document.getElementById('bookCount').textContent='0';
+      list.innerHTML='<div class="bk-empty"><div class="big">📚</div>英文绘本正在整理中，先看看中文绘本吧～</div>';
+      return;
+    }
+    const kw=bookSearch.trim().toLowerCase();
+    const books=source.filter(function(b){
+      if(bookNav==='shelf'){if(shelf.indexOf(b.id)<0)return false;}
+      else if(bookNav!=='all'){
+        if(['classic','fable','fairy'].indexOf(bookNav)>=0){if(b.cat!==bookNav)return false;}
+        else if(b.age!==bookNav)return false;
+      }
+      if(bookLevel!=='all'&&b.age!==bookLevel)return false;
+      if(kw&&b.title.toLowerCase().indexOf(kw)<0)return false;
       return true;
     });
-    if(!books.length){list.innerHTML='<div class="empty">这个分类还没有故事哦～换一个看看吧</div>';return;}
+    document.getElementById('bookCount').textContent=books.length;
+    if(!books.length){list.innerHTML='<div class="bk-empty"><div class="big">🔍</div>这个分类还没有故事哦～换一个看看吧</div>';return;}
     books.forEach(function(b){
       const card=document.createElement('div');card.className='book-card'+(b.ready?'':' notready');
-      const isDone=done.indexOf(b.id)>=0;
+      const isDone=done.indexOf(b.id)>=0;const isShelf=inBookShelf(b.id);
       const cover=b.cover?('<img src="'+b.cover+'" alt="'+esc(b.title)+'">'
         +'<div class="rd-cover-ph" style="display:none">'+b.icon+'</div>'):'';
       const ph=b.cover?'':'<div class="rd-cover-ph">'+b.icon+'</div>';
-      card.innerHTML='<div class="bc-cover">'+cover+ph+(isDone?'<span class="bc-done">✓ 已学会</span>':'')+'</div>'+
+      const addBtn='<button class="bc-add" title="'+(isShelf?'移除书架':'加入书架')+'" onclick="toggleBookShelf(\''+b.id+'\',event)">'+(isShelf?'−':'+')+'</button>';
+      card.innerHTML='<div class="bc-cover">'+cover+ph+(isDone?'<span class="bc-done">✓ 已读完</span>':'')+(isShelf&&!isDone?'<span class="bc-shelf">★ 书架</span>':'')+addBtn+'</div>'+
         '<div class="bc-body"><div class="bc-title">'+esc(b.title)+'</div>'+
         '<div class="bc-desc">'+esc(b.desc)+'</div>'+
         '<div class="bc-foot"><span class="bi-tag">'+esc(b.age)+'</span>'+(b.ready?'':'<span class="bc-soon">内容整理中</span>')+'</div></div>';
@@ -3021,6 +3107,7 @@
       img.onerror=function(){img.style.display='none';ph.style.display='flex';ph.textContent=curBook.icon;};}
     else{img.style.display='none';ph.style.display='flex';ph.textContent=curBook.icon;}
     document.getElementById('readerStatus').textContent=getBookDone().indexOf(id)>=0?'✓ 已读完':'📖 阅读中';
+    updateReaderShelfBtn();
     if(!curBook.ready){
       document.getElementById('rdPage').innerHTML='<div class="empty">《'+esc(curBook.title)+'》的内容正在整理中，先看封面吧～</div>';
       document.getElementById('rdRole').textContent='';
@@ -3029,6 +3116,11 @@
     }
     renderBookPage();
   }
+  function updateReaderShelfBtn(){
+    const btn=document.getElementById('rdShelfBtn');if(!btn||!curBook)return;
+    const on=inBookShelf(curBook.id);btn.textContent=(on?'★ 已在书架':'☆ 加入书架');btn.classList.toggle('ghost',!on);btn.classList.toggle('btn',on||true);
+  }
+  function toggleReaderShelf(){if(!curBook)return;const on=inBookShelf(curBook.id);toggleBookShelf(curBook.id,null);updateReaderShelfBtn();renderBookList();}
   function pageText(pg){return pg.chars.map(function(c){return c.t;}).join('');}
   function renderBookPage(){
     if(!curBook||!curBook.ready)return;
