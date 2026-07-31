@@ -734,6 +734,11 @@
           </div>
         </div>
       </div>
+      <!-- 游戏中心板块（首页） -->
+      <div class="card" id="homeGamesCard" style="margin-top:16px">
+        <div class="card-h"><span class="t">🎮 游戏中心</span><span class="s" onclick="go('games')" style="cursor:pointer">查看全部 ›</span></div>
+        <div class="games-grid" id="homeGamesGrid" style="margin-bottom:0"></div>
+      </div>
     </div>
 
     <!-- 屏幕：家长模式（密码） -->
@@ -1556,6 +1561,7 @@
     <div class="nav" id="nav">
       <div class="nav-item active" id="nav-home" onclick="go('home')"><span class="ic">🏠</span>首页</div>
       <div class="nav-item" id="nav-checkin" onclick="go('checkin')"><span class="ic">✅</span>打卡</div>
+      <div class="nav-item" id="nav-games" onclick="go('games')"><span class="ic">🎮</span>游戏</div>
       <div class="nav-mid" id="nav-store" onclick="go('store')"><div class="m">🛒</div><span>商城</span></div>
       <div class="nav-item" id="nav-pets" onclick="go('pets')"><span class="ic">🎁</span>盲盒</div>
       <div class="nav-item" id="nav-me" onclick="go('me')"><span class="ic">👤</span>我的</div>
@@ -1722,7 +1728,7 @@
     else { go('home', {noHistory:true}); }
   }
   function openGames(){ go('games'); }
-  var NAV_MAP={home:'nav-home',checkin:'nav-checkin',store:'nav-store',pets:'nav-pets',me:'nav-me'};
+  var NAV_MAP={home:'nav-home',checkin:'nav-checkin',games:'nav-games',store:'nav-store',pets:'nav-pets',me:'nav-me'};
   function navSync(screen){var m=NAV_MAP[screen];document.querySelectorAll('.nav-item,.nav-mid').forEach(function(n){n.classList.remove('active');});if(m){var el=document.getElementById(m);if(el)el.classList.add('active');}}
 
   function setMood(v,emo,el){
@@ -3828,7 +3834,7 @@
   function loadPerm(){var raw=localStorage.getItem(PERM_KEY);if(raw){try{var o=JSON.parse(raw);gamePerm=Object.assign(gamePerm,o);}catch(e){}}}
   function savePerm(){try{localStorage.setItem(PERM_KEY,JSON.stringify(gamePerm));}catch(e){}}
   function renderPerm(){var box=document.getElementById('permList');if(!box)return;box.innerHTML=GAMES.map(function(g,i){return '<div class="mrow"><span class="ck '+(gamePerm[g.perm]?'on':'')+'" onclick="togglePerm('+i+')">'+(gamePerm[g.perm]?'✓':'✕')+'</span><span class="mn">'+g.emoji+' '+g.name+'</span></div>';}).join('');}
-  function togglePerm(i){var p=GAMES[i].perm;if(gamePerm[p]===undefined)return;gamePerm[p]=!gamePerm[p];savePerm();renderPerm();if(document.getElementById('sc-games').classList.contains('on'))renderGames();}
+  function togglePerm(i){var p=GAMES[i].perm;if(gamePerm[p]===undefined)return;gamePerm[p]=!gamePerm[p];savePerm();renderPerm();if(document.getElementById('sc-games').classList.contains('on'))renderGames();renderHomeGames();}
   function renderGames(){
     var g=document.getElementById('gamesGrid');if(!g)return;
     g.innerHTML=GAMES.map(function(gm,i){
@@ -3839,6 +3845,13 @@
     renderGameScores();
   }
   function openGame(i){var gm=GAMES[i];if(gm)go(gm.screen);}
+  function renderHomeGames(){
+    var g=document.getElementById('homeGamesGrid');if(!g)return;
+    g.innerHTML=GAMES.map(function(gm,i){
+      if(gamePerm[gm.perm]===false)return '<div class="game-card off"><span class="gc-ic">'+gm.emoji+'</span><div class="gc-name">'+gm.name+'</div><div class="gc-st">已关闭</div></div>';
+      return '<div class="game-card" onclick="openGame('+i+')"><span class="gc-ic">'+gm.emoji+'</span><div class="gc-name">'+gm.name+'</div><div class="gc-st">点击开始</div></div>';
+    }).join('');
+  }
   const GAMESCORE_KEY='mp_gamescore_v1';
   let GAMESCORE={block:0,mem:0,seq:0,diff:0};
   function loadGameScore(){var raw=localStorage.getItem(GAMESCORE_KEY);if(raw){try{var o=JSON.parse(raw);GAMESCORE=Object.assign(GAMESCORE,o);}catch(e){}}}
@@ -3893,7 +3906,7 @@
 
   function init(){
     loadModules(); loadPerm(); loadGameScore();
-    renderHomeTasks(); renderLearnGrid(); renderGames();
+    renderHomeTasks(); renderLearnGrid(); renderGames(); renderHomeGames();
     renderCheckins(); renderStudies(); renderPerm();
     initGacha();
     navSync('home');

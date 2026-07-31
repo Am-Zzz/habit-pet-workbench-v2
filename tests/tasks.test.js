@@ -163,6 +163,22 @@ E('home task list rendered (3)', d.getElementById('homeTaskList').children.lengt
   E('progress header updates', /1\//.test(d.getElementById('homeTaskCount').textContent));
 })();
 
+// ---- 主页游戏中心板块（修复：游戏入口缺失）----
+E('home games card exists', !!d.getElementById('homeGamesCard'));
+E('home games grid renders 5 cards', d.getElementById('homeGamesGrid').children.length === 5);
+E('home games card clickable', (function(){ const c=d.querySelector('#homeGamesGrid .game-card:not(.off)'); return c && /openGame\(\d+\)/.test(c.getAttribute('onclick')||''); })());
+E('home contains 游戏中心 label', /游戏中心/.test(d.getElementById('sc-home').textContent));
+
+// ---- 底导游戏 tab（修复：无游戏导航入口）----
+E('nav-games tab exists', !!d.getElementById('nav-games'));
+(function(){
+  const ng=d.getElementById('nav-games');
+  ng.click();
+  E('nav-games opens games screen', d.getElementById('sc-games').classList.contains('on'));
+  E('nav-games active after click', ng.classList.contains('active'));
+})();
+w.go('home');
+
 // ---- parent add study propagates ----
 w.prompt = () => '测试模块';
 const beforeModules = G('MODULES.length');
