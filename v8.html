@@ -742,7 +742,7 @@
           </div>
           <div id="homeTaskList"></div>
 
-          <div class="learn-section-h"><span class="l">🎓 学习乐园 · <b id="learnCount">9 大模块</b></span></div>
+          <div class="learn-section-h"><span class="l">🎓 学习乐园 · <b id="learnCount">8 大模块</b></span></div>
           <div class="learn-grid" id="learnGrid"></div>
         </div>
 
@@ -757,6 +757,11 @@
             <div class="act" onclick="go('store')"><div class="e">🛒</div><div class="t">商城</div></div>
           </div>
         </div>
+      </div>
+      <!-- 游戏中心板块（首页独立板块，不在九宫格中） -->
+      <div class="card" id="homeGamesCard" style="margin-top:16px">
+        <div class="card-h"><span class="t">🎮 游戏中心</span><span class="s" onclick="go('games')" style="cursor:pointer">查看全部 ›</span></div>
+        <div class="games-grid" id="homeGamesGrid" style="margin-bottom:0"></div>
       </div>
     </div>
 
@@ -1580,6 +1585,7 @@
     <div class="nav" id="nav">
       <div class="nav-item active" id="nav-home" onclick="go('home')"><span class="ic">🏠</span>首页</div>
       <div class="nav-item" id="nav-checkin" onclick="go('checkin')"><span class="ic">✅</span>打卡</div>
+      <div class="nav-item" id="nav-games" onclick="go('games')"><span class="ic">🎮</span>游戏</div>
       <div class="nav-mid" id="nav-store" onclick="go('store')"><div class="m">🛒</div><span>商城</span></div>
       <div class="nav-item" id="nav-pets" onclick="go('pets')"><span class="ic">🎁</span>盲盒</div>
       <div class="nav-item" id="nav-me" onclick="go('me')"><span class="ic">👤</span>我的</div>
@@ -1752,7 +1758,7 @@
     else { go('home', {noHistory:true}); }
   }
   function openGames(){ go('games'); }
-  var NAV_MAP={home:'nav-home',checkin:'nav-checkin',store:'nav-store',pets:'nav-pets',me:'nav-me'};
+  var NAV_MAP={home:'nav-home',checkin:'nav-checkin',games:'nav-games',store:'nav-store',pets:'nav-pets',me:'nav-me'};
   function navSync(screen){var m=NAV_MAP[screen];document.querySelectorAll('.nav-item,.nav-mid').forEach(function(n){n.classList.remove('active');});if(m){var el=document.getElementById(m);if(el)el.classList.add('active');}}
 
   function setMood(v,emo,el){
@@ -3792,8 +3798,7 @@
     {id:'m_poem',name:'古诗',emoji:'📜',screen:'poem',on:true},
     {id:'m_books',name:'绘本',emoji:'📚',screen:'books',on:true},
     {id:'m_science',name:'科普阅读',emoji:'🔬',screen:'science',on:true},
-    {id:'m_logic',name:'逻辑思维',emoji:'🧠',screen:'logic',on:true},
-    {id:'m_games',name:'游戏中心',emoji:'🎮',screen:'games',on:true}
+    {id:'m_logic',name:'逻辑思维',emoji:'🧠',screen:'logic',on:true}
   ];}
   function loadModules(){var raw=localStorage.getItem(MODULES_KEY);if(raw){try{MODULES=JSON.parse(raw);if(!Array.isArray(MODULES)||!MODULES.length)MODULES=defaultModules();}catch(e){MODULES=defaultModules();}}else{MODULES=defaultModules();saveModules();}}
   function saveModules(){try{localStorage.setItem(MODULES_KEY,JSON.stringify(MODULES));}catch(e){}}
@@ -3805,8 +3810,7 @@
     m_poem:{new:true,sub:'0/50'},
     m_books:{new:true,sub:'0/16'},
     m_science:{new:true,sub:'0/100'},
-    m_logic:{new:true,sub:'0/100'},
-    m_games:{new:true,sub:'0/5'}
+    m_logic:{new:true,sub:'0/100'}
   };
   function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">'+meta.sub+'</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';}
   function openModuleByIdx(idx){var m=MODULES[idx];if(m&&m.screen)go(m.screen);else if(m)toast('该内容暂未开放');}
@@ -3863,7 +3867,7 @@
   function loadPerm(){var raw=localStorage.getItem(PERM_KEY);if(raw){try{var o=JSON.parse(raw);gamePerm=Object.assign(gamePerm,o);}catch(e){}}}
   function savePerm(){try{localStorage.setItem(PERM_KEY,JSON.stringify(gamePerm));}catch(e){}}
   function renderPerm(){var box=document.getElementById('permList');if(!box)return;box.innerHTML=GAMES.map(function(g,i){return '<div class="mrow"><span class="ck '+(gamePerm[g.perm]?'on':'')+'" onclick="togglePerm('+i+')">'+(gamePerm[g.perm]?'✓':'✕')+'</span><span class="mn">'+g.emoji+' '+g.name+'</span></div>';}).join('');}
-  function togglePerm(i){var p=GAMES[i].perm;if(gamePerm[p]===undefined)return;gamePerm[p]=!gamePerm[p];savePerm();renderPerm();if(document.getElementById('sc-games').classList.contains('on'))renderGames();}
+  function togglePerm(i){var p=GAMES[i].perm;if(gamePerm[p]===undefined)return;gamePerm[p]=!gamePerm[p];savePerm();renderPerm();if(document.getElementById('sc-games').classList.contains('on'))renderGames();renderHomeGames();}
   function renderGames(){
     var g=document.getElementById('gamesGrid');if(!g)return;
     g.innerHTML=GAMES.map(function(gm,i){
@@ -3874,6 +3878,13 @@
     renderGameScores();
   }
   function openGame(i){var gm=GAMES[i];if(gm)go(gm.screen);}
+  function renderHomeGames(){
+    var g=document.getElementById('homeGamesGrid');if(!g)return;
+    g.innerHTML=GAMES.map(function(gm,i){
+      if(gamePerm[gm.perm]===false)return '<div class="game-card off"><span class="gc-ic">'+gm.emoji+'</span><div class="gc-name">'+gm.name+'</div><div class="gc-st">已关闭</div></div>';
+      return '<div class="game-card" onclick="openGame('+i+')"><span class="gc-ic">'+gm.emoji+'</span><div class="gc-name">'+gm.name+'</div><div class="gc-st">点击开始</div></div>';
+    }).join('');
+  }
   const GAMESCORE_KEY='mp_gamescore_v1';
   let GAMESCORE={block:0,mem:0,seq:0,diff:0};
   function loadGameScore(){var raw=localStorage.getItem(GAMESCORE_KEY);if(raw){try{var o=JSON.parse(raw);GAMESCORE=Object.assign(GAMESCORE,o);}catch(e){}}}
@@ -3937,7 +3948,7 @@
     if(!localStorage.getItem(CHECKIN_KEY)){
       var all={}; all[getTodayKey()]=[0,1,2]; saveCheckinDone(all);
     }
-    renderHomeTasks(); renderLearnGrid(); renderGames();
+    renderHomeTasks(); renderLearnGrid(); renderGames(); renderHomeGames();
     renderPerm();
     initGacha();
     navSync('home');
