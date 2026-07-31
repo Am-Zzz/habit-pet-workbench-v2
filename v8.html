@@ -791,6 +791,154 @@
   .seq-opts .so:hover{transform:translateY(-2px);border-color:var(--brand)}
   .seq-opts .so.ok{background:var(--sage-s);border-color:var(--sage)}
   .seq-opts .so.no{background:#ffe3e3;border-color:var(--error)}
+
+  /* ================================================================
+     新增强化：任务盲盒 / 番茄钟 / 宝箱商店 / 情绪打卡 / 数据报告 / 成就徽章
+     ================================================================ */
+
+  /* ---- 通用弹窗遮罩 ---- */
+  .pop-overlay{position:fixed;inset:0;background:rgba(46,41,38,.55);display:none;place-items:center;z-index:80;padding:20px}
+  .pop-overlay.on{display:grid}
+  .pop-card{background:linear-gradient(180deg,#FFFFFF,#FFFCF9);border:1px solid var(--line);border-radius:26px;padding:22px;max-width:360px;width:100%;box-shadow:var(--shadow);position:relative;animation:popIn .35s ease}
+  @keyframes popIn{from{opacity:0;transform:scale(.92) translateY(12px)}to{opacity:1;transform:none}}
+  .pop-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;font-size:16px;cursor:pointer;border:1px solid var(--line)}
+
+  /* ---- 1. 任务盲盒弹窗 ---- */
+  .tg-header{text-align:center;font-size:22px;font-weight:900;color:var(--brand-d);margin-bottom:4px;letter-spacing:1px;text-shadow:0 2px 0 #fff}
+  .tg-sub{text-align:center;font-size:12px;color:var(--ink-soft);margin-bottom:16px}
+  .slot-machine{background:linear-gradient(160deg,#F9A8D4,#F472B6);border-radius:24px;padding:18px 16px 14px;box-shadow:0 10px 28px rgba(244,114,182,.35),inset 0 2px 0 rgba(255,255,255,.4);position:relative}
+  .slot-machine::before{content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:80%;height:10px;background:rgba(0,0,0,.08);border-radius:50%;filter:blur(4px)}
+  .slot-window{display:flex;gap:8px;justify-content:center;background:#fff;border-radius:16px;padding:14px 10px;border:4px solid #FBCFE8;box-shadow:inset 0 2px 8px rgba(0,0,0,.06)}
+  .slot-reel{width:58px;height:58px;border-radius:14px;background:var(--surface-2);display:grid;place-items:center;font-size:32px;border:1px solid var(--line);overflow:hidden;position:relative}
+  .slot-reel.spinning{animation:slotSpin .18s linear infinite}
+  @keyframes slotSpin{0%{background-position:0 0}100%{background-position:0 100%}}
+  .slot-reel::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.7),transparent 40%,transparent 60%,rgba(255,255,255,.7));pointer-events:none}
+  .slot-handle{position:absolute;right:-10px;top:50%;transform:translateY(-50%);width:16px;height:56px;background:linear-gradient(90deg,#FBBF24,#F59E0B);border-radius:8px;box-shadow:-2px 0 6px rgba(0,0,0,.15)}
+  .slot-btn{width:100%;margin-top:14px;border:none;border-radius:14px;padding:13px;font-size:15px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--brand),var(--brand-d));box-shadow:0 8px 18px rgba(221,94,134,.3);cursor:pointer}
+  .slot-btn:disabled{opacity:.6;cursor:not-allowed}
+  .slot-decor{position:absolute;top:6px;left:10px;font-size:18px;opacity:.9}
+  .slot-decor.r{left:auto;right:10px}
+
+  /* 任务卡信封 */
+  .task-envelope{background:linear-gradient(160deg,#FDE2EA,#FCE7F3);border:1px solid #F5D0E0;border-radius:20px;padding:18px;text-align:center;position:relative;margin-top:12px}
+  .task-envelope::before{content:"任务卡";font-size:12px;font-weight:800;color:var(--brand-d);background:#fff;border:1px solid #F5D0E0;border-radius:999px;padding:3px 12px;position:absolute;top:-11px;left:50%;transform:translateX(-50%)}
+  .te-sub{font-size:12px;color:var(--ink-soft);margin-bottom:6px}
+  .te-subj{font-size:15px;font-weight:800;color:var(--brand-d);margin-bottom:4px}
+  .te-name{font-size:18px;font-weight:900;color:var(--ink);margin-bottom:10px}
+  .te-diff{display:inline-flex;align-items:center;gap:4px;background:#fff;border:1px solid #F5D0E0;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--brand-d)}
+  .te-btns{display:flex;gap:10px;margin-top:16px}
+  .te-btns .btn{flex:1;margin:0;font-size:13px;padding:11px 0}
+  .te-btns .btn.ghost{background:#fff}
+
+  /* ---- 2. 趣味番茄钟 ---- */
+  .timer-scene{background:linear-gradient(180deg,#1a1a3e 0%,#2d1b4e 50%,#5b2a5e 100%);border-radius:26px;padding:28px 20px 22px;text-align:center;position:relative;overflow:hidden;min-height:420px}
+  .timer-scene .star{position:absolute;background:#fff;border-radius:50%;opacity:.7;animation:twinkle 2s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.3}50%{opacity:.8}}
+  .timer-cloud{width:220px;height:110px;background:radial-gradient(circle at 50% 50%,#fff,#F3E8FF 60%,#E9D5FF 100%);border-radius:50%;margin:30px auto 10px;position:relative;box-shadow:0 8px 30px rgba(233,213,255,.25);display:grid;place-items:center}
+  .timer-cloud::before,.timer-cloud::after{content:"";position:absolute;background:inherit;border-radius:50%}
+  .timer-cloud::before{width:90px;height:90px;top:-30px;left:30px}
+  .timer-cloud::after{width:100px;height:100px;top:-35px;right:25px}
+  .timer-time{font-size:56px;font-weight:900;color:#4338ca;position:relative;z-index:1;text-shadow:0 2px 0 rgba(255,255,255,.5);letter-spacing:-1px}
+  .timer-pet{font-size:48px;margin-top:18px;animation:floatPet 3s ease-in-out infinite}
+  @keyframes floatPet{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .timer-btns{display:flex;gap:12px;justify-content:center;margin-top:24px}
+  .timer-btns .btn{flex:1;max-width:130px}
+  .timer-mode{display:flex;justify-content:center;gap:8px;margin-bottom:16px}
+  .timer-mode span{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,.15);color:#fff}
+  .timer-mode span.sel{background:#fff;color:#6b21a8}
+  .challenge-card{background:#fff;border-radius:18px;padding:16px;margin:14px 0;text-align:left}
+  .challenge-card h4{font-size:15px;font-weight:800;margin-bottom:6px;color:var(--ink)}
+  .challenge-card p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin-bottom:12px}
+  .challenge-card .btns{display:flex;gap:10px}
+
+  /* ---- 3. 魔法宝箱 + 商店 ---- */
+  .chest-room{background:linear-gradient(180deg,#2a1b3d,#1a1025);border-radius:26px;padding:22px;text-align:center;position:relative;overflow:hidden;min-height:320px}
+  .chest-room h3{color:#FCE7F3;font-size:18px;font-weight:800;margin-bottom:4px}
+  .chest-room .sub{color:#D8B4FE;font-size:12px;margin-bottom:20px}
+  .chests{display:flex;justify-content:center;gap:18px;margin:24px 0}
+  .chest{width:80px;height:70px;background:linear-gradient(160deg,#FBBF24,#D97706);border-radius:12px;display:grid;place-items:center;font-size:34px;cursor:pointer;position:relative;box-shadow:0 8px 20px rgba(217,119,6,.4);transition:.2s}
+  .chest:hover{transform:translateY(-4px) scale(1.05)}
+  .chest.open{animation:chestOpen .6s ease forwards}
+  @keyframes chestOpen{0%{transform:scale(1)}50%{transform:scale(1.2) rotate(-5deg)}100%{transform:scale(1) rotate(0);filter:brightness(1.2)}}
+  .chest-lock{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);background:#78350F;color:#FCD34D;font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px}
+  .chest-glow{position:absolute;inset:-6px;border-radius:16px;border:2px solid rgba(252,211,77,.5);opacity:0;animation:pulseGlow 2s ease-in-out infinite}
+  @keyframes pulseGlow{0%,100%{opacity:0;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+  .store-tabs{display:flex;gap:8px;margin-bottom:14px}
+  .store-tabs span{flex:1;text-align:center;padding:9px 0;border-radius:14px;font-size:13px;font-weight:800;cursor:pointer;background:var(--surface-2);color:var(--ink-soft);border:1px solid var(--line)}
+  .store-tabs span.sel{background:var(--brand);color:#fff;border-color:var(--brand);box-shadow:0 4px 12px rgba(221,94,134,.25)}
+  .shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .shop-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;text-align:center;transition:.15s}
+  .shop-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-s)}
+  .shop-card .av{width:64px;height:64px;border-radius:50%;background:var(--surface-2);margin:0 auto 8px;display:grid;place-items:center;font-size:34px}
+  .shop-card .n{font-size:13px;font-weight:800;margin-bottom:2px}
+  .shop-card .d{font-size:11px;color:var(--ink-soft);min-height:28px;margin-bottom:8px;line-height:1.4}
+  .shop-card .cost{display:inline-flex;align-items:center;gap:4px;background:#F3E8FF;color:#6b21a8;font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px;margin-bottom:8px}
+  .shop-card .btn{width:auto;padding:8px 18px;margin:0;font-size:12px}
+
+  /* ---- 4. 情绪打卡弹窗 ---- */
+  .emo-pop{text-align:center}
+  .emo-pop h3{font-size:18px;font-weight:800;margin-bottom:4px}
+  .emo-pop p{font-size:13px;color:var(--ink-soft);margin-bottom:16px}
+  .emo-grid{display:flex;gap:10px;justify-content:center;margin-bottom:18px}
+  .emo-btn{width:56px;height:66px;border-radius:16px;background:#fff;border:2px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;transition:.15s}
+  .emo-btn .e{font-size:28px}
+  .emo-btn .l{font-size:11px;font-weight:700;color:var(--ink-soft)}
+  .emo-btn.sel{border-color:var(--brand);background:var(--brand-s);box-shadow:0 4px 12px rgba(221,94,134,.2)}
+  .emo-btns{display:flex;gap:10px}
+  .emo-btns .btn{flex:1;margin:0}
+  .emo-btns .btn.ghost{background:#fff}
+
+  /* ---- 5. 学习报告 ---- */
+  .report-tabs{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px}
+  .report-tabs span{flex:1;min-width:52px;text-align:center;padding:7px 0;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;background:var(--surface-2);color:var(--ink-soft);white-space:nowrap}
+  .report-tabs span.sel{background:var(--brand);color:#fff}
+  .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+  .stat-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}
+  .stat-card .k{font-size:12px;color:var(--ink-soft);margin-bottom:6px}
+  .stat-card .v{font-size:22px;font-weight:900;color:var(--brand-d)}
+  .stat-card .v.gr{color:var(--sage)}.stat-card .v.bl{color:var(--sky)}
+  .stat-card .sub{font-size:11px;color:var(--ink-faint);margin-top:4px}
+  .chart-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+  .chart-card h4{font-size:14px;font-weight:800;margin-bottom:12px}
+  .chart-empty{height:120px;display:grid;place-items:center;color:var(--ink-faint);font-size:13px}
+  .line-chart{height:130px;position:relative}
+  .line-chart svg{width:100%;height:100%}
+  .donut-wrap{display:flex;align-items:center;gap:16px}
+  .donut{width:120px;height:120px;flex:none}
+  .donut-legend{flex:1;display:flex;flex-direction:column;gap:8px}
+  .donut-legend .li{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700}
+  .donut-legend .dot{width:10px;height:10px;border-radius:50%}
+  .stack-chart{display:flex;align-items:flex-end;gap:14px;height:120px;justify-content:center;padding-top:10px}
+  .stack-bar{width:42px;border-radius:10px;overflow:hidden;display:flex;flex-direction:column-reverse;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+  .stack-seg{width:100%}
+  .stack-label{font-size:11px;font-weight:800;text-align:center;margin-top:6px;color:var(--ink-soft)}
+
+  /* ---- 6. 成就徽章 ---- */
+  .ach-header{background:linear-gradient(160deg,#FDE2EA,#FCE7F3);border-radius:20px;padding:18px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden}
+  .ach-header .medal{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#FBBF24,#F59E0B);margin:0 auto 10px;display:grid;place-items:center;font-size:38px;box-shadow:0 6px 16px rgba(245,158,11,.35);border:3px solid #fff}
+  .ach-header .title{font-size:15px;font-weight:800;color:var(--ink)}
+  .ach-header .sub{font-size:12px;color:var(--ink-soft)}
+  .ach-cats{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto}
+  .ach-cats span{padding:7px 14px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;background:var(--surface-2);color:var(--ink-soft);white-space:nowrap}
+  .ach-cats span.sel{background:var(--brand);color:#fff}
+  .ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .ach-item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center;transition:.15s;position:relative}
+  .ach-item.locked{opacity:.55}
+  .ach-item .ic{font-size:32px;margin-bottom:6px;display:block}
+  .ach-item .n{font-size:12px;font-weight:800;margin-bottom:2px}
+  .ach-item .c{font-size:10px;color:var(--ink-faint)}
+  .ach-item .wear{position:absolute;top:5px;right:5px;background:var(--brand);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:999px}
+
+  /* 解锁弹窗 */
+  .unlock-pop{text-align:center;padding-top:10px}
+  .unlock-pop .rays{width:140px;height:140px;margin:0 auto 12px;border-radius:50%;background:conic-gradient(from 0deg,#FDE68A,#F9A8D4,#A78BFA,#FDE68A);position:relative;animation:spinRays 8s linear infinite;display:grid;place-items:center}
+  @keyframes spinRays{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  .unlock-pop .rays::before{content:"";position:absolute;inset:10px;border-radius:50%;background:linear-gradient(180deg,#4c1d95,#2e1065)}
+  .unlock-pop .rays .badge-inner{position:relative;z-index:1;width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#FBBF24,#F59E0B);display:grid;place-items:center;font-size:48px;border:4px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.2)}
+  .unlock-pop h3{font-size:20px;font-weight:900;color:var(--brand-d);margin-bottom:4px}
+  .unlock-pop p{font-size:13px;color:var(--ink-soft);margin-bottom:18px}
+  .unlock-pop .btns{display:flex;gap:10px}
+  .unlock-pop .btns .btn{flex:1;margin:0}
 </style>
 </head>
 <body>
@@ -870,8 +1018,10 @@
             <div class="cs">已收集 3 / 8</div>
           </div>
           <div class="acts">
-            <div class="act" onclick="go('pets')"><div class="e">🎁</div><div class="t">盲盒</div></div>
-            <div class="act" onclick="go('store')"><div class="e">🛒</div><div class="t">商城</div></div>
+            <div class="act" onclick="openTaskGacha()"><div class="e">🎰</div><div class="t">抽任务</div></div>
+            <div class="act" onclick="go('timer')"><div class="e">⏰</div><div class="t">番茄钟</div></div>
+            <div class="act" onclick="go('report')"><div class="e">📊</div><div class="t">报告</div></div>
+            <div class="act" onclick="go('achievements')"><div class="e">🏅</div><div class="t">成就</div></div>
           </div>
         </div>
           </div><!-- /grid3 -->
@@ -1705,9 +1855,26 @@
     <!-- ==================== 商城屏 ==================== -->
     <div class="screen" id="sc-store">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🛒 积分商城</span><span class="s" onclick="go('home')" style="cursor:pointer">← 返回</span></div>
+        <div class="card-h"><span class="t">🛒 魔法商店</span><span class="s" onclick="go('home')" style="cursor:pointer">← 返回</span></div>
         <div class="store-bal">⭐ 积分 <b id="storePoints">0</b> · 🪙 硬币 <b id="storeCoins">0</b></div>
-        <div id="storeList"></div>
+
+        <div class="chest-room" style="margin-bottom:18px">
+          <h3>✨ 今日魔法能量集齐</h3>
+          <div class="sub">和小萌一起开启宝箱，获得随机奖励</div>
+          <div class="chests">
+            <div class="chest" id="chest1" onclick="openChest(1)"><span>🎁</span><span class="chest-lock" id="lock1">免费</span><div class="chest-glow"></div></div>
+            <div class="chest" id="chest2" onclick="openChest(2)"><span>🎁</span><span class="chest-lock" id="lock2">20🪙</span><div class="chest-glow"></div></div>
+            <div class="chest" id="chest3" onclick="openChest(3)"><span>🎁</span><span class="chest-lock" id="lock3">50⭐</span><div class="chest-glow"></div></div>
+          </div>
+          <button class="btn butter" onclick="openAllChestsHint()" style="max-width:200px;margin:0 auto">🔑 选一个宝箱开启</button>
+        </div>
+
+        <div class="store-tabs">
+          <span class="sel" onclick="switchShopTab('wish',this)">💝 心愿商店</span>
+          <span onclick="switchShopTab('monster',this)">👾 怪兽商店</span>
+        </div>
+        <div class="shop-grid" id="shopGrid"></div>
+        <div style="margin-top:18px"><div class="card-h" style="margin-bottom:10px"><span class="t">🎁 基础兑换</span></div><div id="storeList"></div></div>
       </div>
     </div>
 
@@ -1718,9 +1885,11 @@
         <div class="me-pet"><div class="pet-stage" id="mePet">🐶</div><div class="me-name" id="meName">小萌</div><button class="btn ghost" onclick="rename()">✏️ 改名</button></div>
         <div class="me-stats" id="meStats"></div>
         <div class="me-actions">
+          <div class="act" onclick="go('report')">📊 学习报告</div>
+          <div class="act" onclick="go('achievements')">🏅 成就勋章</div>
+          <div class="act" onclick="go('pets')">🎁 宠物图鉴</div>
           <div class="act" onclick="go('parent')">⚙️ 家长模式</div>
           <div class="act" onclick="resetAllData()">🗑️ 清除本地数据</div>
-          <div class="act" onclick="go('pets')">🎁 宠物图鉴</div>
         </div>
       </div>
     </div>
@@ -1766,6 +1935,82 @@
       </div>
     </div>
 
+    <!-- ==================== 趣味番茄钟 ==================== -->
+    <div class="screen" id="sc-timer">
+      <div class="card" style="max-width:600px;margin:0 auto;padding:16px">
+        <div class="card-h"><span class="t">⏰ 趣味番茄钟</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="timer-mode">
+          <span class="sel" onclick="setTimerMode('focus',this)">专注</span>
+          <span onclick="setTimerMode('challenge',this)">挑战</span>
+        </div>
+        <div class="timer-scene" id="timerScene">
+          <div class="timer-cloud"><div class="timer-time" id="timerDisplay">25:00</div></div>
+          <div class="timer-pet" id="timerPet">🐶</div>
+          <div class="timer-btns">
+            <button class="btn ghost" id="timerToggleBtn" onclick="toggleTimer()">▶ 开始</button>
+            <button class="btn" onclick="resetTimer()">🔄 重置</button>
+          </div>
+        </div>
+        <div class="challenge-card" id="timerChallenge" style="display:none">
+          <h4>🍦 冰淇淋救援赛</h4>
+          <p>太阳好热，小怪兽的冰淇淋开始融化了！快快！在它变成奶昔之前，帮小怪兽抢救美味的冰淇淋吧！完成一次 15 分钟专注即可获胜。</p>
+          <div class="btns"><button class="btn ghost" onclick="closeTimerChallenge()">取消</button><button class="btn" onclick="acceptTimerChallenge()">确认挑战</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 学习报告 ==================== -->
+    <div class="screen" id="sc-report">
+      <div class="card" style="max-width:600px;margin:0 auto">
+        <div class="card-h"><span class="t">📊 学习报告</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="report-tabs" id="reportTabs">
+          <span class="sel" onclick="switchReportTab('today',this)">今日</span>
+          <span onclick="switchReportTab('week',this)">本周</span>
+          <span onclick="switchReportTab('month',this)">本月</span>
+          <span onclick="switchReportTab('all',this)">全部</span>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card"><div class="k">学习总时长</div><div class="v" id="rpTotalTime">0 分钟</div><div class="sub">日均 <span id="rpAvgTime">0</span> 分钟</div></div>
+          <div class="stat-card"><div class="k">任务完成率</div><div class="v gr" id="rpDoneRate">0%</div><div class="sub"><span id="rpDoneCount">0</span> / <span id="rpTotalCount">0</span> 完成</div></div>
+          <div class="stat-card"><div class="k">获得积分</div><div class="v bl" id="rpPoints">0</div><div class="sub">🪙 硬币 <span id="rpCoins">0</span></div></div>
+          <div class="stat-card"><div class="k">心情指数</div><div class="v" id="rpMood">😊</div><div class="sub">平均 <span id="rpMoodVal">85</span> 分</div></div>
+        </div>
+        <div class="chart-card">
+          <h4>📈 心情变化曲线</h4>
+          <div class="line-chart" id="moodLineChart"><div class="chart-empty">暂无情绪打卡数据</div></div>
+        </div>
+        <div class="chart-card">
+          <h4>📚 各学科任务情绪分布</h4>
+          <div class="stack-chart" id="subjectEmotionChart"><div class="chart-empty">暂无数据</div></div>
+        </div>
+        <div class="chart-card">
+          <h4>⏱️ 各科学习时长分布</h4>
+          <div class="donut-wrap" id="timeDonutChart"><div class="chart-empty">暂无数据</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 成就勋章墙 ==================== -->
+    <div class="screen" id="sc-achievements">
+      <div class="card" style="max-width:600px;margin:0 auto">
+        <div class="card-h"><span class="t">🏅 成就勋章墙</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="ach-header">
+          <div class="medal" id="achMainMedal">🏆</div>
+          <div class="title" id="achMainTitle">学习小达人</div>
+          <div class="sub">已解锁 <b id="achUnlockedCount">0</b> / <b id="achTotalCount">0</b> 个成就</div>
+        </div>
+        <div class="ach-cats" id="achCats">
+          <span class="sel" data-cat="all" onclick="filterAch('all',this)">全部</span>
+          <span data-cat="growth" onclick="filterAch('growth',this)">成长</span>
+          <span data-cat="habit" onclick="filterAch('habit',this)">习惯</span>
+          <span data-cat="effort" onclick="filterAch('effort',this)">效率</span>
+          <span data-cat="knowledge" onclick="filterAch('knowledge',this)">知识</span>
+          <span data-cat="fun" onclick="filterAch('fun',this)">趣味</span>
+        </div>
+        <div class="ach-grid" id="achGrid"></div>
+      </div>
+    </div>
+
     <!-- 底部导航 -->
     <div class="nav" id="nav">
       <div class="nav-item active" id="nav-home" onclick="go('home')"><span class="ic">🏠</span>首页</div>
@@ -1773,6 +2018,69 @@
       <div class="nav-mid" id="nav-store" onclick="go('store')"><div class="m">🛒</div><span>商城</span></div>
       <div class="nav-item" id="nav-pets" onclick="go('pets')"><span class="ic">🎁</span>盲盒</div>
       <div class="nav-item" id="nav-me" onclick="go('me')"><span class="ic">👤</span>我的</div>
+    </div>
+  </div>
+
+  <!-- ==================== 全局弹窗层 ==================== -->
+  <!-- 任务盲盒弹窗 -->
+  <div class="pop-overlay" id="taskGachaPop" onclick="if(event.target===this)closeTaskGacha()">
+    <div class="pop-card" onclick="event.stopPropagation()">
+      <div class="pop-close" onclick="closeTaskGacha()">✕</div>
+      <div class="tg-header">GOOD LUCK</div>
+      <div class="tg-sub">把做作业变成抽盲盒 ✨</div>
+      <div class="slot-machine">
+        <span class="slot-decor">⭐</span><span class="slot-decor r">✨</span>
+        <div class="slot-window">
+          <div class="slot-reel" id="slotReel1">📚</div>
+          <div class="slot-reel" id="slotReel2">🔢</div>
+          <div class="slot-reel" id="slotReel3">🎨</div>
+        </div>
+        <div class="slot-handle"></div>
+        <button class="slot-btn" id="drawTaskBtn" onclick="drawTaskGacha()">🎰 抽取任务</button>
+      </div>
+      <div class="task-envelope" id="taskEnvelope" style="display:none">
+        <div class="te-sub" id="teSub">抽中了一个任务</div>
+        <div class="te-subj" id="teSubj">📘 英语</div>
+        <div class="te-name" id="teName">朗读课文</div>
+        <div class="te-diff" id="teDiff">❤️ 简单</div>
+        <div class="te-btns">
+          <button class="btn ghost" onclick="drawTaskGacha()">🔄 再来一次</button>
+          <button class="btn" onclick="startDrawnTask()">▶ 开始闯关</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 情绪打卡弹窗 -->
+  <div class="pop-overlay" id="emotionPop" onclick="if(event.target===this)closeEmotion()">
+    <div class="pop-card emo-pop" onclick="event.stopPropagation()">
+      <div class="pop-close" onclick="closeEmotion()">✕</div>
+      <h3>任务完成！🎉</h3>
+      <p>现在感觉怎么样？让每一次情绪变化都被看见</p>
+      <div class="emo-grid">
+        <div class="emo-btn" data-v="100" onclick="pickEmotion(100,'开心',this)"><span class="e">😊</span><span class="l">开心</span></div>
+        <div class="emo-btn" data-v="75" onclick="pickEmotion(75,'还好',this)"><span class="e">🙂</span><span class="l">还好</span></div>
+        <div class="emo-btn" data-v="50" onclick="pickEmotion(50,'一般',this)"><span class="e">😐</span><span class="l">一般</span></div>
+        <div class="emo-btn" data-v="30" onclick="pickEmotion(30,'有点难',this)"><span class="e">😣</span><span class="l">有点难</span></div>
+        <div class="emo-btn" data-v="10" onclick="pickEmotion(10,'很难',this)"><span class="e">😭</span><span class="l">很难</span></div>
+      </div>
+      <div class="emo-btns">
+        <button class="btn ghost" onclick="skipEmotion()">跳过</button>
+        <button class="btn" onclick="saveEmotion()">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 成就解锁弹窗 -->
+  <div class="pop-overlay" id="achievementUnlockPop" onclick="if(event.target===this)closeAchievementUnlock()">
+    <div class="pop-card unlock-pop" onclick="event.stopPropagation()">
+      <div class="rays"><div class="badge-inner" id="unlockBadgeIcon">🏅</div></div>
+      <h3 id="unlockTitle">成就解锁！</h3>
+      <p id="unlockDesc">你达成了「学习小达人」成就</p>
+      <div class="btns">
+        <button class="btn ghost" onclick="closeAchievementUnlock()">收下了</button>
+        <button class="btn" onclick="goAchievements()">查看勋章墙</button>
+      </div>
     </div>
   </div>
 
@@ -1923,6 +2231,7 @@
       english:'sc-english-hub',read:'sc-read',write:'sc-write',math:'sc-math',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
       science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',
+      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',
       'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff'};
     let target=map[screen];
     if(!target){ target = document.getElementById(screen)? screen : 'sc-home'; }
@@ -1936,6 +2245,9 @@
     else if(target==='sc-store')initStore();
     else if(target==='sc-me')initMe();
     else if(target==='sc-games')renderGames();
+    else if(target==='sc-timer')initTimer();
+    else if(target==='sc-report')initReport();
+    else if(target==='sc-achievements')initAchievements();
     navSync(screen);
     window.scrollTo({top:0,behavior:'smooth'});
   }
@@ -4302,7 +4614,7 @@
     list.innerHTML=html;
     updateHomeProgress();
   }
-  function toggleHomeCheckin(i,ev){if(ev&&ev.stopPropagation)ev.stopPropagation();var el=document.getElementById('ht-'+i);if(!el)return;var all=loadCheckinDone();var key=getTodayKey();if(!all[key])all[key]=[];var arr=all[key];var ix=arr.indexOf(i);if(ix>=0){arr.splice(ix,1);el.classList.remove('done');el.querySelector('.check').textContent='';}else{arr.push(i);el.classList.add('done');el.querySelector('.check').textContent='✓';}saveCheckinDone(all);updateHomeProgress();if(document.getElementById('sc-checkin').classList.contains('on'))renderCheckinTasks();}
+  function toggleHomeCheckin(i,ev){if(ev&&ev.stopPropagation)ev.stopPropagation();var el=document.getElementById('ht-'+i);if(!el)return;var all=loadCheckinDone();var key=getTodayKey();if(!all[key])all[key]=[];var arr=all[key];var ix=arr.indexOf(i);var becameDone=false;if(ix>=0){arr.splice(ix,1);el.classList.remove('done');el.querySelector('.check').textContent='';}else{arr.push(i);el.classList.add('done');el.querySelector('.check').textContent='✓';becameDone=true;}saveCheckinDone(all);updateHomeProgress();if(document.getElementById('sc-checkin').classList.contains('on'))renderCheckinTasks();if(becameDone)onTaskCompleted(i);}
   function homeTaskGo(i){var c=mgmtData.checkins[i];if(c&&c.act)go(c.act);}
   function initCheckin(){renderCheckinTasks();initCheckinCalendar();}
   function renderCheckinTasks(){
@@ -4315,7 +4627,7 @@
     var prog=document.getElementById('ckProg');if(prog)prog.textContent='已完成 '+n+' 项';
     var bar=document.getElementById('ckBar');if(bar)bar.style.width=Math.round(n/(total||1)*100)+'%';
   }
-  function toggleCheckinTask(i,ev){if(ev&&ev.stopPropagation)ev.stopPropagation();var el=document.getElementById('ck-'+i);if(!el)return;var all=loadCheckinDone();var key=getTodayKey();if(!all[key])all[key]=[];var arr=all[key];var ix=arr.indexOf(i);if(ix>=0){arr.splice(ix,1);el.classList.remove('done');el.querySelector('.check').textContent='';}else{arr.push(i);el.classList.add('done');el.querySelector('.check').textContent='✓';}saveCheckinDone(all);var total=mgmtData.checkins.length,n=arr.length;var prog=document.getElementById('ckProg');if(prog)prog.textContent='已完成 '+n+' 项';var bar=document.getElementById('ckBar');if(bar)bar.style.width=Math.round(n/(total||1)*100)+'%';renderHomeTasks();}
+  function toggleCheckinTask(i,ev){if(ev&&ev.stopPropagation)ev.stopPropagation();var el=document.getElementById('ck-'+i);if(!el)return;var all=loadCheckinDone();var key=getTodayKey();if(!all[key])all[key]=[];var arr=all[key];var ix=arr.indexOf(i);var becameDone=false;if(ix>=0){arr.splice(ix,1);el.classList.remove('done');el.querySelector('.check').textContent='';}else{arr.push(i);el.classList.add('done');el.querySelector('.check').textContent='✓';becameDone=true;}saveCheckinDone(all);var total=mgmtData.checkins.length,n=arr.length;var prog=document.getElementById('ckProg');if(prog)prog.textContent='已完成 '+n+' 项';var bar=document.getElementById('ckBar');if(bar)bar.style.width=Math.round(n/(total||1)*100)+'%';renderHomeTasks();if(becameDone)onTaskCompleted(i);}
   function initCheckinCalendar(){
     var g=document.getElementById('ckCalGrid');if(!g)return;g.innerHTML='';
     var done=loadCheckinDone();
@@ -4364,7 +4676,7 @@
     {id:'s_double',name:'双倍硬币卡',emoji:'✨',cost:30,cur:'pts',desc:'下次抽扭蛋硬币×2'},
     {id:'s_game',name:'30分钟游戏时间',emoji:'🎮',cost:40,cur:'pts',desc:'兑换半小时游戏'}
   ];
-  function initStore(){var p=document.getElementById('storePoints');if(p)p.textContent=gachaPoints;var c=document.getElementById('storeCoins');if(c)c.textContent=gachaCoins;var list=document.getElementById('storeList');if(!list)return;list.innerHTML=STORE_ITEMS.map(function(it,i){return '<div class="store-item"><span class="si-ic">'+it.emoji+'</span><div class="si-main"><div class="si-name">'+esc(it.name)+'</div><div class="si-desc">'+esc(it.desc)+'</div></div><div class="si-cost">'+it.cost+' '+(it.cur==='coin'?'🪙':'⭐')+'</div><button class="btn ghost" onclick="buyStoreItem('+i+')">兑换</button></div>';}).join('');}
+  function initStore(){var p=document.getElementById('storePoints');if(p)p.textContent=gachaPoints;var c=document.getElementById('storeCoins');if(c)c.textContent=gachaCoins;var list=document.getElementById('storeList');if(list)list.innerHTML=STORE_ITEMS.map(function(it,i){return '<div class="store-item"><span class="si-ic">'+it.emoji+'</span><div class="si-main"><div class="si-name">'+esc(it.name)+'</div><div class="si-desc">'+esc(it.desc)+'</div></div><div class="si-cost">'+it.cost+' '+(it.cur==='coin'?'🪙':'⭐')+'</div><button class="btn ghost" onclick="buyStoreItem('+i+')">兑换</button></div>';}).join('');renderShopGrid();}
   function buyStoreItem(i){var it=STORE_ITEMS[i];if(!it)return;if(it.cur==='coin'){if(gachaCoins<it.cost){toast('硬币不足');return;}gachaCoins-=it.cost;gachaSet(GACHA_KEYS.c,gachaCoins);}else{if(gachaPoints<it.cost){toast('积分不足');return;}gachaPoints-=it.cost;gachaSet(GACHA_KEYS.p,gachaPoints);}toast('已兑换：'+it.name);initStore();}
   function initMe(){
     var nm=document.getElementById('meName');if(nm)nm.textContent=document.getElementById('petName')?document.getElementById('petName').textContent:'小萌';
@@ -4397,6 +4709,143 @@
   function nextDiff(){var animals=['🐱','🐶','🐰','🐯','🐸','🐵'];var base=animals[Math.floor(Math.random()*animals.length)];diffBase=base;var N=12;var diffIdx=Math.floor(Math.random()*N);var others=animals.filter(function(x){return x!==base;});var other=others[Math.floor(Math.random()*others.length)];var cells=[];for(var i=0;i<N;i++)cells.push(i===diffIdx?other:base);var b=document.getElementById('diffBoard');if(!b)return;b.innerHTML='';cells.forEach(function(e,i){b.innerHTML+='<div class="cell" onclick="diffPick('+i+','+diffIdx+')">'+e+'</div>';});var st=document.getElementById('diffStreak');if(st)st.textContent=diffState.streak;var sm=document.getElementById('diffMsg');if(sm)sm.textContent='里面有一个不一样，点它！';}
   function diffPick(i,correct){if(i===correct){diffState.streak++;GAMESCORE.diff++;saveGameScore();renderGameScores();nextDiff();}else{var sm=document.getElementById('diffMsg');if(sm)sm.textContent='那是一样的啦，再找找';var st=document.getElementById('diffStreak');if(st)st.textContent=0;setTimeout(function(){if(diffState)nextDiff();},900);}}
 
+  /* ================================================================
+     新增强化：任务盲盒 / 番茄钟 / 宝箱商店 / 情绪打卡 / 数据报告 / 成就徽章
+     ================================================================ */
+
+  /* ---- 1. 任务盲盒 ---- */
+  const TASK_GACHA_POOL=[
+    {subj:'📘 英语',name:'朗读课文',diff:'简单',act:'words',icon:'📘'},
+    {subj:'📘 英语',name:'单词跟读 5 个',diff:'简单',act:'words',icon:'📘'},
+    {subj:'🔢 数学',name:'口算闯关 10 题',diff:'中等',act:'math',icon:'🔢'},
+    {subj:'🔢 数学',name:'完成 1 页计算',diff:'中等',act:'math',icon:'🔢'},
+    {subj:'✏️ 识字',name:'学习 5 个新字',diff:'简单',act:'chars',icon:'✏️'},
+    {subj:'📜 古诗',name:'背诵一首古诗',diff:'中等',act:'poem',icon:'📜'},
+    {subj:'📚 绘本',name:'读一本绘本',diff:'简单',act:'books',icon:'📚'},
+    {subj:'🔬 科普',name:'读一篇科普短文',diff:'中等',act:'science',icon:'🔬'},
+    {subj:'🧠 逻辑',name:'完成 3 道逻辑题',diff:'困难',act:'logic',icon:'🧠'},
+    {subj:'🎮 游戏',name:'玩一局记忆翻牌',diff:'简单',act:'game-memory',icon:'🎮'}
+  ];
+  let taskGachaResult=null,taskGachaSpinning=false;
+  function openTaskGacha(){taskGachaResult=null;taskGachaSpinning=false;document.getElementById('taskEnvelope').style.display='none';document.getElementById('drawTaskBtn').style.display='block';document.getElementById('drawTaskBtn').disabled=false;document.getElementById('drawTaskBtn').textContent='🎰 抽取任务';['slotReel1','slotReel2','slotReel3'].forEach(function(id,i){document.getElementById(id).textContent=['📚','🔢','🎨'][i];});document.getElementById('taskGachaPop').classList.add('on');}
+  function closeTaskGacha(){document.getElementById('taskGachaPop').classList.remove('on');}
+  function drawTaskGacha(){if(taskGachaSpinning)return;taskGachaSpinning=true;const btn=document.getElementById('drawTaskBtn');btn.disabled=true;const reels=['slotReel1','slotReel2','slotReel3'].map(function(id){return document.getElementById(id);});reels.forEach(function(r){r.classList.add('spinning');});let step=0;const icons=TASK_GACHA_POOL.map(function(t){return t.icon;});const interval=setInterval(function(){reels.forEach(function(r){r.textContent=icons[Math.floor(Math.random()*icons.length)];});step++;if(step>=18){clearInterval(interval);const pick=TASK_GACHA_POOL[Math.floor(Math.random()*TASK_GACHA_POOL.length)];taskGachaResult=pick;reels[0].textContent=pick.icon;reels[1].textContent=pick.icon;reels[2].textContent=pick.icon;reels.forEach(function(r){r.classList.remove('spinning');});showTaskEnvelope(pick);taskGachaSpinning=false;}},120);}
+  function showTaskEnvelope(t){const heart={简单:'❤️',中等:'❤️❤️',困难:'❤️❤️❤️'}[t.diff];document.getElementById('teSub').textContent='抽中了一个【'+t.subj.replace(/^\S+\s/,'')+'】任务';document.getElementById('teSubj').textContent=t.subj;document.getElementById('teName').textContent=t.name;document.getElementById('teDiff').innerHTML=heart+' '+t.diff;document.getElementById('drawTaskBtn').style.display='none';document.getElementById('taskEnvelope').style.display='block';}
+  function startDrawnTask(){closeTaskGacha();if(taskGachaResult&&taskGachaResult.act){if(taskGachaResult.act.indexOf('game-')===0)go(taskGachaResult.act);else go(taskGachaResult.act);}}
+
+  /* ---- 2. 趣味番茄钟 ---- */
+  let timerMode='focus',timerLeft=1500,timerId=null,timerRunning=false,timerChallenge=false;
+  function initTimer(){renderTimer();renderStars();}
+  function renderStars(){var scene=document.getElementById('timerScene');if(!scene)return;scene.querySelectorAll('.star').forEach(function(s){s.remove();});for(var i=0;i<20;i++){var s=document.createElement('div');s.className='star';s.style.width=(2+Math.random()*3)+'px';s.style.height=s.style.width;s.style.left=(Math.random()*100)+'%';s.style.top=(Math.random()*60)+'%';s.style.animationDelay=(Math.random()*2)+'s';scene.appendChild(s);}}
+  function setTimerMode(mode,el){timerMode=mode;document.querySelectorAll('.timer-mode span').forEach(function(s){s.classList.remove('sel');});el.classList.add('sel');stopTimer();if(mode==='focus'){timerLeft=1500;document.getElementById('timerChallenge').style.display='none';}else{timerLeft=900;showTimerChallenge();}renderTimer();}
+  function toggleTimer(){if(timerRunning){stopTimer();document.getElementById('timerToggleBtn').textContent='▶ 开始';}else{startTimer();document.getElementById('timerToggleBtn').textContent='⏸ 暂停';}}
+  function startTimer(){if(timerId)return;timerId=setInterval(function(){timerLeft--;renderTimer();if(timerLeft<=0){stopTimer();completeTimer();}},1000);timerRunning=true;}
+  function stopTimer(){if(timerId){clearInterval(timerId);timerId=null;}timerRunning=false;}
+  function resetTimer(){stopTimer();timerLeft=timerMode==='focus'?1500:900;renderTimer();document.getElementById('timerToggleBtn').textContent='▶ 开始';}
+  function renderTimer(){var m=Math.floor(timerLeft/60),s=timerLeft%60;document.getElementById('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
+  function completeTimer(){document.getElementById('timerToggleBtn').textContent='▶ 开始';toast('番茄钟完成！🎉');gachaPoints+=timerMode==='focus'?10:20;gachaSet(GACHA_KEYS.p,gachaPoints);logStudyTime(timerMode==='focus'?'专注':'挑战',timerMode==='focus'?25:15);checkAchievements();}
+  function showTimerChallenge(){document.getElementById('timerChallenge').style.display='block';}
+  function closeTimerChallenge(){document.getElementById('timerChallenge').style.display='none';}
+  function acceptTimerChallenge(){closeTimerChallenge();timerLeft=900;renderTimer();startTimer();document.getElementById('timerToggleBtn').textContent='⏸ 暂停';}
+
+  /* ---- 3. 情绪打卡 ---- */
+  let emotionPick=null,emotionTask=null;
+  function showEmotionPop(taskName){emotionPick=null;emotionTask=taskName||'任务';document.querySelectorAll('.emo-btn').forEach(function(b){b.classList.remove('sel');});document.getElementById('emotionPop').classList.add('on');}
+  function pickEmotion(v,label,el){emotionPick={v:v,label:label};document.querySelectorAll('.emo-btn').forEach(function(b){b.classList.remove('sel');});el.classList.add('sel');}
+  function saveEmotion(){if(!emotionPick)return;logMood(emotionPick.v,emotionPick.label,emotionTask);closeEmotion();toast('情绪已记录 '+emotionPick.label+' 😊');}
+  function skipEmotion(){closeEmotion();}
+  function closeEmotion(){document.getElementById('emotionPop').classList.remove('on');}
+  function logMood(value,label,task){var log=loadMoodLog();log.push({date:getTodayKey(),time:Date.now(),value:value,label:label,task:task||''});saveMoodLog(log);checkAchievements();}
+  function loadMoodLog(){try{var r=localStorage.getItem(MOOD_KEY);return r?JSON.parse(r):[];}catch(e){return [];}}
+  function saveMoodLog(log){try{localStorage.setItem(MOOD_KEY,JSON.stringify(log));}catch(e){}}
+
+  /* ---- 4. 成就系统 ---- */
+  const ACHIEVEMENTS=[
+    {id:'first_task',name:'初次打卡',icon:'🌱',cat:'growth',desc:'完成第一个任务'},
+    {id:'streak3',name:'三日坚持',icon:'🔥',cat:'habit',desc:'连续打卡 3 天'},
+    {id:'streak7',name:'一周小达人',icon:'🌟',cat:'habit',desc:'连续打卡 7 天'},
+    {id:'focus_min30',name:'专注小能手',icon:'⏰',cat:'effort',desc:'累计专注 30 分钟'},
+    {id:'focus_min120',name:'时间管理大师',icon:'🎯',cat:'effort',desc:'累计专注 120 分钟'},
+    {id:'learn_10chars',name:'识字小达人',icon:'✏️',cat:'knowledge',desc:'累计学习 10 个汉字'},
+    {id:'read_5books',name:'绘本探险家',icon:'📚',cat:'knowledge',desc:'读完 5 本绘本'},
+    {id:'master_10words',name:'单词小达人',icon:'🔤',cat:'knowledge',desc:'掌握 10 个英语单词'},
+    {id:'game_pro',name:'游戏高手',icon:'🎮',cat:'fun',desc:'游戏中心总分超过 100'},
+    {id:'mood_7',name:'情绪观察员',icon:'💖',cat:'growth',desc:'记录 7 次情绪'},
+    {id:'chest_3',name:'寻宝猎人',icon:'🎁',cat:'fun',desc:'开启 3 个宝箱'},
+    {id:'rich',name:'小富翁',icon:'🪙',cat:'fun',desc:'同时拥有 50 硬币和 100 积分'}
+  ];
+  const ACH_KEY='mp_achievements_v1';const WORN_BADGE_KEY='mp_worn_badge_v1';
+  function loadAchievementsData(){try{var r=localStorage.getItem(ACH_KEY);return r?JSON.parse(r):{};}catch(e){return {};}}
+  function saveAchievementsData(o){try{localStorage.setItem(ACH_KEY,JSON.stringify(o));}catch(e){}}
+  function initAchievements(){renderAchGrid('all');var data=loadAchievementsData();var unlocked=ACHIEVEMENTS.filter(function(a){return data[a.id];});document.getElementById('achUnlockedCount').textContent=unlocked.length;document.getElementById('achTotalCount').textContent=ACHIEVEMENTS.length;var worn=localStorage.getItem(WORN_BADGE_KEY);var main=ACHIEVEMENTS.find(function(a){return a.id===worn;})||unlocked[unlocked.length-1]||ACHIEVEMENTS[0];document.getElementById('achMainMedal').textContent=main?main.icon:'🏆';document.getElementById('achMainTitle').textContent=main?main.name:'学习小达人';}
+  function filterAch(cat,el){document.querySelectorAll('#achCats span').forEach(function(s){s.classList.remove('sel');});el.classList.add('sel');renderAchGrid(cat);}
+  function renderAchGrid(cat){var data=loadAchievementsData();var grid=document.getElementById('achGrid');if(!grid)return;grid.innerHTML=ACHIEVEMENTS.filter(function(a){return cat==='all'||a.cat===cat;}).map(function(a){var unlocked=!!data[a.id];var worn=localStorage.getItem(WORN_BADGE_KEY)===a.id;return '<div class="ach-item'+(unlocked?'':' locked')+'" onclick="wearBadge(\''+a.id+'\')">'+(worn?'<span class="wear">佩戴中</span>':'')+'<span class="ic">'+a.icon+'</span><div class="n">'+esc(a.name)+'</div><div class="c">'+esc(a.desc)+'</div></div>';}).join('');}
+  function wearBadge(id){var data=loadAchievementsData();if(!data[id])return;localStorage.setItem(WORN_BADGE_KEY,id);var sel=document.querySelector('#achCats span.sel');renderAchGrid(sel?sel.getAttribute('data-cat'):'all');initAchievements();toast('已佩戴勋章：'+ACHIEVEMENTS.find(function(a){return a.id===id;}).name);}
+  function unlockAchievement(id){var data=loadAchievementsData();if(data[id])return false;data[id]={t:Date.now()};saveAchievementsData(data);var a=ACHIEVEMENTS.find(function(x){return x.id===id;});if(a){document.getElementById('unlockBadgeIcon').textContent=a.icon;document.getElementById('unlockTitle').textContent='成就解锁！';document.getElementById('unlockDesc').textContent='你达成了「'+a.name+'」成就';document.getElementById('achievementUnlockPop').classList.add('on');}return true;}
+  function closeAchievementUnlock(){document.getElementById('achievementUnlockPop').classList.remove('on');}
+  function goAchievements(){closeAchievementUnlock();go('achievements');}
+  function checkAchievements(){var data=loadAchievementsData();var done=loadCheckinDone();var today=getTodayKey();var todayDone=done[today]||[];var mood=loadMoodLog();var time=loadStudyTime();var totalMin=0;for(var k in time)totalMin+=time[k];var gameTotal=GAMESCORE.block+GAMESCORE.mem+GAMESCORE.seq+GAMESCORE.diff;var achs=[];if(todayDone.length>=1)achs.push('first_task');if(Object.keys(done).length>=3)achs.push('streak3');if(Object.keys(done).length>=7)achs.push('streak7');if(totalMin>=30)achs.push('focus_min30');if(totalMin>=120)achs.push('focus_min120');if(LEARNED.length>=10)achs.push('learn_10chars');if((window.BOOK_SHELF||[]).length>=5)achs.push('read_5books');if(LEARNED.filter(function(x){return x.tag==='en'||x.py===''}).length>=10)achs.push('master_10words');if(gameTotal>=100)achs.push('game_pro');if(mood.length>=7)achs.push('mood_7');var chest=loadChestDay();if((chest.opened||[]).length>=3)achs.push('chest_3');if(gachaCoins>=50&&gachaPoints>=100)achs.push('rich');var any=false;achs.forEach(function(id){if(unlockAchievement(id))any=true;});if(any&&document.getElementById('sc-achievements').classList.contains('on'))initAchievements();}
+
+  /* ---- 5. 学习报告 ---- */
+  const MOOD_KEY='mp_mood_log_v1';const TIME_KEY='mp_time_log_v1';
+  function loadStudyTime(){try{var r=localStorage.getItem(TIME_KEY);return r?JSON.parse(r):{};}catch(e){return {};}}
+  function saveStudyTime(o){try{localStorage.setItem(TIME_KEY,JSON.stringify(o));}catch(e){}}
+  function logStudyTime(subject,minutes){var t=loadStudyTime();var k=getTodayKey();if(!t[k])t[k]={};if(!t[k][subject])t[k][subject]=0;t[k][subject]+=minutes;saveStudyTime(t);}
+  function initReport(){switchReportTab('today',document.querySelector('#reportTabs span'))}
+  function switchReportTab(tab,el){document.querySelectorAll('#reportTabs span').forEach(function(s){s.classList.remove('sel');});el.classList.add('sel');renderReport(tab);}
+  function renderReport(tab){var done=loadCheckinDone();var mood=loadMoodLog();var time=loadStudyTime();
+    var days=[];var today=getTodayKey();
+    if(tab==='today')days=[today];
+    else if(tab==='week'){let rd=new Date();for(let ri=6;ri>=0;ri--){let rdd=new Date(rd);rdd.setDate(rdd.getDate()-ri);days.push(rdd.getFullYear()+'-'+(rdd.getMonth()+1)+'-'+rdd.getDate());}}
+    else if(tab==='month'){let rd2=new Date();for(let ri2=29;ri2>=0;ri2--){let rdd2=new Date(rd2);rdd2.setDate(rdd2.getDate()-ri2);days.push(rdd2.getFullYear()+'-'+(rdd2.getMonth()+1)+'-'+rdd2.getDate());}}
+    else days=Object.keys(done).concat(Object.keys(time)).filter(function(v,idx,a){return a.indexOf(v)===idx;}).sort();
+    var totalDone=0,totalTasks=0,totalMin=0,dayCount=days.length||1;
+    days.forEach(function(day){var arr=done[day]||[];totalDone+=arr.length;totalTasks+=Math.max(arr.length,mgmtData.checkins.length);var t=time[day]||{};for(var s in t)totalMin+=t[s];});
+    var doneRate=totalTasks?Math.round(totalDone/totalTasks*100):0;
+    document.getElementById('rpTotalTime').textContent=totalMin>=60?Math.floor(totalMin/60)+'小时'+(totalMin%60)+'分钟':totalMin+' 分钟';
+    document.getElementById('rpAvgTime').textContent=Math.round(totalMin/dayCount);
+    document.getElementById('rpDoneRate').textContent=doneRate+'%';
+    document.getElementById('rpDoneCount').textContent=totalDone;
+    document.getElementById('rpTotalCount').textContent=totalTasks;
+    document.getElementById('rpPoints').textContent=gachaPoints;
+    document.getElementById('rpCoins').textContent=gachaCoins;
+    var avgMood=0,cnt=0;mood.forEach(function(m){if(days.indexOf(m.date)>=0){avgMood+=m.value;cnt++;}});avgMood=cnt?Math.round(avgMood/cnt):85;
+    var moodEmoji=avgMood>=85?'😊':avgMood>=65?'🙂':avgMood>=45?'😐':avgMood>=25?'😣':'😭';
+    document.getElementById('rpMood').textContent=moodEmoji;document.getElementById('rpMoodVal').textContent=avgMood;
+    renderMoodLine(mood.filter(function(m){return days.indexOf(m.date)>=0;}));
+    renderSubjectEmotion(mood.filter(function(m){return days.indexOf(m.date)>=0;}));
+    renderTimeDonut(time,days);
+  }
+  function renderMoodLine(logs){var el=document.getElementById('moodLineChart');if(!logs.length){el.innerHTML='<div class="chart-empty">暂无情绪打卡数据</div>';return;}var w=el.clientWidth||300,h=130,pd=20;var pts=logs.map(function(m,i){return {x:pd+(i/(logs.length-1||1))*(w-2*pd),y:h-pd-(m.value/100)*(h-2*pd)};});var path=pts.map(function(p,i){return (i?'L':'M')+p.x+','+p.y;}).join(' ');var circles=pts.map(function(p){return '<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="#F26D92" stroke="#fff" stroke-width="2"/>';}).join('');el.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><polyline points="'+pts.map(function(p){return p.x+','+(h-pd);}).join(' ')+'" fill="none" stroke="#F1E7E0" stroke-width="1"/><path d="'+path+'" fill="none" stroke="#F26D92" stroke-width="2.5" stroke-linecap="round"/>'+circles+'</svg>';}
+  function renderSubjectEmotion(logs){var el=document.getElementById('subjectEmotionChart');if(!logs.length){el.innerHTML='<div class="chart-empty">暂无数据</div>';return;}var subs={'英语':0,'数学':0,'识字':0,'古诗':0,'绘本':0,'其他':0};logs.forEach(function(m){var task=m.task||'';if(task.indexOf('英语')>=0)subs['英语']++;else if(task.indexOf('数学')>=0)subs['数学']++;else if(task.indexOf('识字')>=0)subs['识字']++;else if(task.indexOf('古诗')>=0)subs['古诗']++;else if(task.indexOf('绘本')>=0)subs['绘本']++;else subs['其他']++;});var max=Math.max.apply(null,Object.values(subs))||1;var colors=['#FDE68A','#A7F3D0','#FBCFE8'];var html='';Object.keys(subs).forEach(function(s){var v=subs[s];if(!v)return;var h1=Math.round(v/max*70);var h2=Math.round((v/max)*(100-h1));html+='<div><div class="stack-bar" style="height:'+(h1+h2)+'px"><div class="stack-seg" style="height:'+h2+'px;background:'+colors[1]+'"></div><div class="stack-seg" style="height:'+h1+'px;background:'+colors[0]+'"></div></div><div class="stack-label">'+s+'</div></div>';});el.innerHTML=html||'<div class="chart-empty">暂无数据</div>';}
+  function renderTimeDonut(time,days){var el=document.getElementById('timeDonutChart');var totals={};days.forEach(function(d){var t=time[d]||{};for(var s in t){totals[s]=(totals[s]||0)+t[s];}});var total=0;for(var s in totals)total+=totals[s];if(!total){el.innerHTML='<div class="chart-empty">暂无数据</div>';return;}var colors={'专注':'#F26D92','挑战':'#8FBC8D','英语':'#FBBF24','数学':'#8CB4DC','识字':'#A78BFA','古诗':'#F472B6','绘本':'#34D399','其他':'#D1D5DB'};var offset=0;var segs='';var legend='';Object.keys(totals).forEach(function(s){var v=totals[s];var pct=v/total;var dash=pct*377;var gap=377-dash;var color=colors[s]||colors['其他'];segs+='<circle cx="60" cy="60" r="60" fill="none" stroke="'+color+'" stroke-width="18" stroke-dasharray="'+dash+' '+gap+'" stroke-dashoffset="'+(-offset)+'" transform="rotate(-90 60 60)" />';offset+=dash;legend+='<div class="li"><span class="dot" style="background:'+color+'"></span><span>'+s+' '+Math.round(pct*100)+'%</span></div>';});el.innerHTML='<div class="donut"><svg viewBox="0 0 120 120">'+segs+'<circle cx="60" cy="60" r="42" fill="#fff"/></svg></div><div class="donut-legend">'+legend+'</div>';}
+
+  /* ---- 6. 魔法宝箱 + 商店 ---- */
+  const CHEST_KEY='mp_chest_day_v1';
+  let shopTab='wish';
+  const WISH_SHOP=[
+    {id:'w_snack',name:'萌兽森林',emoji:'🌲',cost:100,cur:'pts',desc:'cos可爱小动物，和森林伙伴一起卖萌玩耍！'},
+    {id:'w_fruit',name:'果果奇遇记',emoji:'🍓',cost:150,cur:'pts',desc:'变身水果小精灵，在果园里蹦蹦跳跳玩个够！'},
+    {id:'w_job',name:'梦想职业城',emoji:'🎨',cost:200,cur:'pts',desc:'体验各种有趣职业，今天要当什么小能手？'},
+    {id:'w_candy',name:'糖果王国',emoji:'🍬',cost:260,cur:'pts',desc:'来到糖果王国，连走路都带着甜甜的香气！'}
+  ];
+  const MONSTER_SHOP=[
+    {id:'m_food1',name:'彩虹糖',emoji:'🍭',cost:15,cur:'coin',desc:'甜甜的小奖励'},
+    {id:'m_food2',name:'小饼干',emoji:'🍪',cost:20,cur:'coin',desc:'酥脆小点心'},
+    {id:'m_skin1',name:'星星贴纸',emoji:'⭐',cost:30,cur:'coin',desc:'贴贴画装饰'},
+    {id:'m_skin2',name:'怪兽徽章',emoji:'👾',cost:40,cur:'coin',desc:'酷炫小徽章'}
+  ];
+  function loadChestDay(){var today=getTodayKey();try{var r=localStorage.getItem(CHEST_KEY);if(r){var o=JSON.parse(r);if(o.day===today)return o;}}catch(e){}return {day:today,opened:[]};}
+  function saveChestDay(o){try{localStorage.setItem(CHEST_KEY,JSON.stringify(o));}catch(e){}}
+  function switchShopTab(tab,el){shopTab=tab;document.querySelectorAll('.store-tabs span').forEach(function(s){s.classList.remove('sel');});el.classList.add('sel');renderShopGrid();}
+  function renderShopGrid(){var grid=document.getElementById('shopGrid');if(!grid)return;var items=shopTab==='wish'?WISH_SHOP:MONSTER_SHOP;grid.innerHTML=items.map(function(it){var can=it.cur==='coin'?gachaCoins>=it.cost:gachaPoints>=it.cost;return '<div class="shop-card"><div class="av">'+it.emoji+'</div><div class="n">'+esc(it.name)+'</div><div class="d">'+esc(it.desc)+'</div><div class="cost">'+(it.cur==='coin'?'🪙':'⭐')+' '+it.cost+'</div><button class="btn '+(can?'':'ghost')+'" '+(can?'':'disabled')+' onclick="buyShopItem(\''+it.id+'\')">'+(can?'兑换':'余额不足')+'</button></div>';}).join('');}
+  function buyShopItem(id){var it=(shopTab==='wish'?WISH_SHOP:MONSTER_SHOP).find(function(x){return x.id===id;});if(!it)return;if(it.cur==='coin'){if(gachaCoins<it.cost){toast('硬币不足');return;}gachaCoins-=it.cost;gachaSet(GACHA_KEYS.c,gachaCoins);}else{if(gachaPoints<it.cost){toast('积分不足');return;}gachaPoints-=it.cost;gachaSet(GACHA_KEYS.p,gachaPoints);}toast('已兑换：'+it.name);initStore();}
+  function openChest(n){var cd=loadChestDay();if(cd.opened.indexOf(n)>=0){toast('这个宝箱今天已经开过了');return;}var costs={1:{cur:'free',cost:0},2:{cur:'coin',cost:20},3:{cur:'pts',cost:50}};var c=costs[n];if(c.cur==='coin'&&gachaCoins<c.cost){toast('硬币不足 20');return;}if(c.cur==='pts'&&gachaPoints<c.cost){toast('积分不足 50');return;}if(c.cur==='coin'){gachaCoins-=c.cost;gachaSet(GACHA_KEYS.c,gachaCoins);}else if(c.cur==='pts'){gachaPoints-=c.cost;gachaSet(GACHA_KEYS.p,gachaPoints);}cd.opened.push(n);saveChestDay(cd);var chest=document.getElementById('chest'+n);if(chest)chest.classList.add('open');var rewards=[{t:'pts',v:10},{t:'pts',v:20},{t:'coin',v:5},{t:'coin',v:10},{t:'pts',v:30}];var rw=rewards[Math.floor(Math.random()*rewards.length)];if(rw.t==='pts'){gachaPoints+=rw.v;gachaSet(GACHA_KEYS.p,gachaPoints);}else{gachaCoins+=rw.v;gachaSet(GACHA_KEYS.c,gachaCoins);}toast('宝箱开启！获得 '+rw.v+(rw.t==='pts'?' 积分':' 硬币'));checkAchievements();}
+  function openAllChestsHint(){toast('点击任意宝箱即可开启');}
+
+  /* ---- 7. 把情绪打卡接入任务完成 ---- */
+  function onTaskCompleted(idx){var c=mgmtData.checkins[idx];var name=c?c.name:'';setTimeout(function(){showEmotionPop(name);},350);checkAchievements();}
+
   function init(){
     loadContent();
     renderPet(); renderGrowthTrack(); renderGrowGrid(currentPartner);
@@ -4411,6 +4860,7 @@
     renderHomeTasks(); renderLearnGrid(); renderMiniClass(); renderGames();
     renderPerm();
     initGacha();
+    checkAchievements();
     navSync('home');
   }
   init();
