@@ -479,6 +479,54 @@
   .book-item .bi-title{font-size:16px;font-weight:800;color:var(--ink)}
   .book-item .bi-desc{font-size:11px;color:var(--ink-faint);margin-top:2px}
   .book-item .bi-tag{font-size:10px;background:var(--brand-s);color:#fff;padding:2px 8px;border-radius:999px;font-weight:700;flex-shrink:0}
+  /* ====== 绘本乐园（新版：书库网格 + 阅读器） ====== */
+  .btn.sm{padding:6px 12px;font-size:12px}
+  .bk-filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin-bottom:14px}
+  .bk-filters .btn.ghost.sm{padding:5px 12px;font-size:12px}
+  .book-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .book-card{background:#fff;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:.18s;display:flex;flex-direction:column}
+  .book-card:hover{border-color:var(--brand-s);box-shadow:0 6px 16px rgba(244,130,155,.15);transform:translateY(-2px)}
+  .bc-cover{position:relative;width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,#FFF0F5,#FFE3EC);display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .bc-cover img{width:100%;height:100%;object-fit:cover;display:block}
+  .rd-cover-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px}
+  .bc-done{position:absolute;top:8px;right:8px;background:rgba(16,185,129,.92);color:#fff;font-size:10px;font-weight:800;padding:3px 8px;border-radius:999px}
+  .bc-body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
+  .bc-title{font-size:15px;font-weight:800;color:var(--ink)}
+  .bc-desc{font-size:11px;color:var(--ink-faint);line-height:1.4}
+  .bc-foot{display:flex;align-items:center;gap:6px;margin-top:auto}
+  .bc-soon{font-size:10px;color:#b08968;background:#fff3e6;padding:2px 8px;border-radius:999px;font-weight:700}
+  .book-card.notready{opacity:.92}
+  .empty{text-align:center;color:var(--ink-faint);font-size:13px;padding:24px 10px}
+  /* 阅读器浮层 */
+  .reader-mask{position:fixed;inset:0;background:rgba(40,20,35,.5);display:none;align-items:flex-start;justify-content:center;z-index:60;overflow:auto;padding:18px 12px}
+  .reader{width:100%;max-width:480px;background:var(--surface);border-radius:22px;padding:14px 16px 18px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+  .reader-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .reader-status{font-size:12px;color:var(--ink-soft);font-weight:700}
+  .reader-cover{position:relative;width:100%;max-height:230px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#FFF0F5,#FFE3EC);display:flex;align-items:center;justify-content:center}
+  .reader-cover img{width:100%;max-height:230px;object-fit:cover}
+  .reader-cover .rd-cover-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px}
+  .reader-meta{display:flex;align-items:center;justify-content:space-between;margin:10px 2px 4px}
+  .rd-title{font-size:18px;font-weight:900;color:var(--ink)}
+  .rd-age{font-size:11px;color:#fff;background:var(--brand);padding:3px 10px;border-radius:999px;font-weight:700}
+  .reader-pinyin-toggle{display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0;font-size:12px;color:var(--ink-soft);font-weight:700}
+  .switch{position:relative;display:inline-block;width:42px;height:24px}
+  .switch input{opacity:0;width:0;height:0}
+  .slider{position:absolute;cursor:pointer;inset:0;background:#d9c3cf;border-radius:999px;transition:.2s}
+  .slider:before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+  .switch input:checked+.slider{background:var(--brand)}
+  .switch input:checked+.slider:before{transform:translateX(18px)}
+  .reader-page{font-size:19px;line-height:2.05;color:var(--ink);text-align:justify;min-height:120px;padding:6px 4px;letter-spacing:.5px}
+  .reader-page .cz{display:inline-block;vertical-align:top;text-align:center;line-height:1}
+  .reader-page .cz .ch{display:block;font-style:normal}
+  .reader-page .cz .py{display:none;font-size:10px;color:var(--brand-d);font-weight:700;line-height:1;margin-bottom:2px;font-family:var(--font-family-secondary)}
+  .reader-page.py-on .cz .py{display:block}
+  .reader-page.py-on .cz{margin:0 1px}
+  .reader-role{text-align:center;font-size:13px;font-weight:800;color:var(--brand-d);margin:6px 0}
+  .reader-nav{display:flex;align-items:center;justify-content:space-between;margin:10px 0}
+  .reader-nav .cp-now{font-size:13px;color:var(--ink-soft);font-weight:800}
+  .reader-controls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px}
+  .reader-controls .btn{padding:9px 14px;font-size:13px}
+  .btn.rec,.btn.ghost.rec{background:var(--error);color:#fff;border-color:var(--error)}
 
   /* ====== 素材库编辑器 ====== */
   .lib-bar{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0}
@@ -1267,30 +1315,63 @@
 
     <!-- ==================== 绘本乐园屏 ==================== -->
     <div class="screen" id="sc-books">
-      <div class="card" style="max-width:620px;margin:0 auto">
+      <div class="card" style="max-width:680px;margin:0 auto">
         <div class="card-h"><span class="t">📖 绘本乐园</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
-        <!-- 状态 tab -->
-        <div style="text-align:center;margin-bottom:12px">
-          <div class="lrn-pill">
-            <button class="sel" id="bookStLearning" onclick="switchBookStatus('learning')">📚 学习中</button>
-            <button id="bookStMastered" onclick="switchBookStatus('mastered')">⭐ 已学会</button>
+        <!-- 筛选栏：分类 + 年龄/年级 + 联网刷新 -->
+        <div class="bk-filters">
+          <div class="lrn-pill" id="bkCatPill">
+            <button class="sel" data-cat="all" onclick="switchBookCat('all',this)">全部</button>
+            <button data-cat="classic" onclick="switchBookCat('classic',this)">经典</button>
+            <button data-cat="fable" onclick="switchBookCat('fable',this)">寓言</button>
+            <button data-cat="fairy" onclick="switchBookCat('fairy',this)">童话</button>
           </div>
-        </div>
-        <!-- 分类 tab -->
-        <div style="text-align:center;margin-bottom:14px">
-          <div class="lrn-pill">
-            <button class="sel" data-bt="classic" onclick="switchBookTab('classic',this)">📖 经典故事</button>
-            <button data-bt="fable" onclick="switchBookTab('fable',this)">🦊 寓言故事</button>
-            <button data-bt="fairy" onclick="switchBookTab('fairy',this)">🏰 童话故事</button>
+          <div class="lrn-pill" id="bkAgePill">
+            <button class="sel" data-age="all" onclick="switchBookAge('all',this)">全部年龄</button>
+            <button data-age="幼升小" onclick="switchBookAge('幼升小',this)">幼升小</button>
+            <button data-age="小学1-3" onclick="switchBookAge('小学1-3',this)">小学1-3</button>
+            <button data-age="小学3-6" onclick="switchBookAge('小学3-6',this)">小学3-6</button>
           </div>
+          <button class="btn ghost sm" onclick="refreshBooks()">🔄 联网刷新</button>
         </div>
-        <!-- 绘本列表 -->
-        <div class="book-list" id="bookList"></div>
-        <!-- 分页 -->
-        <div class="poem-page" style="margin-top:14px">
-          <button onclick="bookPage(-1)">◀</button>
-          <span class="cp-now" id="bookPageNow">1 / 6</span>
-          <button onclick="bookPage(1)">▶</button>
+        <!-- 书库网格 -->
+        <div class="book-grid" id="bookList"></div>
+      </div>
+
+      <!-- 阅读器浮层 -->
+      <div class="reader-mask" id="readerMask" style="display:none" onclick="if(event.target===this)closeReader()">
+        <div class="reader" id="reader">
+          <div class="reader-top">
+            <button class="btn ghost sm" onclick="closeReader()">← 返回书库</button>
+            <span class="reader-status" id="readerStatus"></span>
+          </div>
+          <div class="reader-cover">
+            <img id="rdCover" alt="" style="display:none">
+            <div class="rd-cover-ph" id="rdCoverPh" style="display:none"></div>
+          </div>
+          <div class="reader-meta">
+            <span class="rd-title" id="rdTitle"></span>
+            <span class="rd-age" id="rdAge"></span>
+          </div>
+          <div class="reader-pinyin-toggle">
+            <span>纯文字</span>
+            <label class="switch"><input type="checkbox" id="pySwitch" onchange="setPinyin(this.checked)"><span class="slider"></span></label>
+            <span>拼音</span>
+          </div>
+          <div class="reader-page" id="rdPage"></div>
+          <div class="reader-role" id="rdRole"></div>
+          <div class="reader-nav">
+            <button class="btn ghost" onclick="bookPage(-1)">◀ 上一页</button>
+            <span class="cp-now" id="rdPageNo">1 / 1</span>
+            <button class="btn ghost" onclick="bookPage(1)">下一页 ▶</button>
+          </div>
+          <div class="reader-controls">
+            <button class="btn" onclick="speakBookPage()">🔊 朗读</button>
+            <button class="btn" onclick="speakBookMulti()">🎭 AI多人朗读</button>
+            <button class="btn ghost" id="rdRecBtn" onclick="toggleBookRec()">🎙️ 录音</button>
+            <button class="btn ghost" id="rdPlayBtn" style="display:none" onclick="playBookRec()">▶ 我的录音</button>
+            <button class="btn ghost" onclick="stopBookSpeech()">⏹ 停止</button>
+            <button class="btn" onclick="markBookDone()">✅ 读完啦</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1596,6 +1677,7 @@
 </div>
 
 <script src="chars_data.js"></script>
+<script src="books_content.js"></script>
 <script>
 
 /* ================================================================
@@ -2864,74 +2946,190 @@
   }
 
 /* ================================================================
-   绘本乐园数据
+   绘本乐园（内容由 books_content.js 注入：window.BOOK_CONTENT）
+   支持：封面/分页正文/拼音开关/年龄年级筛选/TTS单角色+AI多人朗读/录音回放/联网刷新
    ================================================================ */
-  const BOOK_DATA={
-    classic:[
-      {icon:'🐢',title:'龟兔赛跑',desc:'坚持到底就是胜利',tag:'🌱幼升小'},
-      {icon:'👸',title:'白雪公主',desc:'善良是最美的魔法',tag:'🌱幼升小'},
-      {icon:'👧',title:'小红帽',desc:'要听妈妈的话，不要轻信陌生人',tag:'🌱幼升小'},
-      {icon:'🐷',title:'三只小猪',desc:'勤劳和智慧能战胜困难',tag:'🌱幼升小'},
-      {icon:'🥕',title:'拔萝卜',desc:'团结力量大',tag:'🌱幼升小'},
-      {icon:'🎋',title:'竹石',desc:'咬定青山不放松',tag:'📖小学1-3'}
-    ],
-    fable:[
-      {icon:'🦆',title:'丑小鸭',desc:'每只天鹅都曾是丑小鸭',tag:'🌱幼升小'},
-      {icon:'🦊',title:'狐狸和葡萄',desc:'吃不到的葡萄是酸的？',tag:'🌱幼升小'},
-      {icon:'🐺',title:'狼来了',desc:'诚实比什么都重要',tag:'🌱幼升小'},
-      {icon:'🐜',title:'蚂蚁和蝈蝈',desc:'未雨绸缪，有备无患',tag:'📖小学1-3'},
-      {icon:'🐢',title:'龟兔赛跑(寓言版)',desc:'虚心使人进步，骄傲使人落后',tag:'📖小学1-3'},
-      {icon:'🌾',title:'北风与太阳',desc:'温和比暴力更有力量',tag:'🎓小学3-6'}
-    ],
-    fairy:[
-      {icon:'🧜‍♀️',title:'海的女儿',desc:'爱与牺牲的美好故事',tag:'📖小学1-3'},
-      {icon:'🌹',title:'美女与野兽',desc:'真正的美在于内心',tag:'📖小学1-3'},
-      {icon:'🏰',title:'睡美人',desc:'真爱之吻唤醒一切',tag:'🌱幼升小'},
-      {icon:'👗',title:'灰姑娘',desc:'善良的女孩会有好报',tag:'🌱幼升小'},
-      {icon:'🐸',title:'青蛙王子',desc:'承诺一定要遵守哦',tag:'🌱幼升小'},
-      {icon:'💡',title:'卖火柴的小女孩',desc:'珍惜现在的幸福生活',tag:'🎓小学3-6'},
-      {icon:'🌙',title:'月亮公主',desc:'勇敢追寻自己的梦想',tag:'📖小学1-3'},
-      {icon:'🎄',title:'胡桃夹子',desc:'勇气和爱心创造奇迹',tag:'📖小学1-3'}
-    ]
-  };
-  let bookTab='classic', bookPg=0, bookStatus='learning';
-
-  function openBooks(){bookPg=0;renderBookList();go('books');}
-  function switchBookStatus(s){
-    bookStatus=s;
-    document.getElementById('bookStLearning').classList.toggle('sel',s==='learning');
-    document.getElementById('bookStMastered').classList.toggle('sel',s==='mastered');
-    renderBookList();
+  const BOOK_REFRESH_URL=''; // 留空=未配置联网代理；配置后 refreshBooks 会从此拉取新书
+  const BOOK_DONE_KEY='mp_books_done_v1';
+  let bookCat='all', bookAge='all';
+  let curBook=null, curPage=0, pinyinOn=false;
+  let bookVoices=[], bookMediaRec=null, bookRecChunks=[], bookClipURL=null, bookRecStream=null, bookRecording=false;
+  function stopBookStream(){if(bookRecStream){bookRecStream.getTracks().forEach(function(t){t.stop();});bookRecStream=null;}}
+  function hasSpeech(){return typeof speechSynthesis!=='undefined'&&speechSynthesis&&typeof speechSynthesis.speak==='function';}
+  function getBookDone(){try{return JSON.parse(localStorage.getItem(BOOK_DONE_KEY))||[];}catch(e){return [];}}
+  function setBookDone(id){const a=getBookDone();if(a.indexOf(id)<0){a.push(id);localStorage.setItem(BOOK_DONE_KEY,JSON.stringify(a));}}
+  function loadBookVoices(){if(!hasSpeech()){bookVoices=[];return;}try{bookVoices=speechSynthesis.getVoices()||[];}catch(e){bookVoices=[];}
+    if('onvoiceschanged'in speechSynthesis&&speechSynthesis.onvoiceschanged===null){
+      speechSynthesis.onvoiceschanged=function(){try{bookVoices=speechSynthesis.getVoices()||[];}catch(e){}};
+    }}
+  function voiceForRole(role){
+    loadBookVoices();
+    const zh=bookVoices.filter(function(v){return /zh|Chinese|中文|cmn/i.test(v.lang+' '+v.name);});
+    const pool=zh.length?zh:(bookVoices.length?bookVoices:[]);
+    if(!pool.length)return null;
+    if(role==='旁白'||!role)return pool[0];
+    let h=0;for(let i=0;i<role.length;i++)h=(h*31+role.charCodeAt(i))>>>0;
+    return pool[h%pool.length];
   }
-  function switchBookTab(t,btn){
-    bookTab=t;bookPg=0;
-    document.querySelectorAll('#sc-books .lrn-pill[data-bt] button').forEach(b=>b.classList.remove('sel'));
-    btn.classList.add('sel');
-    renderBookList();
+  function pitchForRole(role){
+    if(role==='旁白')return 1;
+    let h=0;for(let i=0;i<role.length;i++)h=(h*31+role.charCodeAt(i))>>>0;
+    return 1+(h%3)*0.18;
   }
+  function openBooks(){bookCat='all';bookAge='all';
+    document.querySelectorAll('#bkCatPill button').forEach(b=>b.classList.toggle('sel',b.dataset.cat==='all'));
+    document.querySelectorAll('#bkAgePill button').forEach(b=>b.classList.toggle('sel',b.dataset.age==='all'));
+    renderBookList();go('books');}
+  function switchBookCat(c,btn){bookCat=c;
+    document.querySelectorAll('#bkCatPill button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');renderBookList();}
+  function switchBookAge(a,btn){bookAge=a;
+    document.querySelectorAll('#bkAgePill button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');renderBookList();}
   function renderBookList(){
     const list=document.getElementById('bookList');if(!list)return;list.innerHTML='';
-    const books=BOOK_DATA[bookTab]||[];
-    const pageSize=6;
-    const start=bookPg*pageSize;
-    const pageBooks=books.slice(start,start+pageSize);
-    pageBooks.forEach(b=>{
-      const item=document.createElement('div');item.className='book-item';
-      item.onclick=function(){alert('📖 打开《'+b.title+'》\n\n'+b.desc+'\n\n（绘本内容开发中…）');};
-      item.innerHTML=`<div class="bi-icon">${b.icon}</div><div class="bi-info"><div class="bi-title">${b.title}</div><div class="bi-desc">${b.desc}</div></div><span class="bi-tag">${b.tag}</span>`;
-      list.appendChild(item);
+    const done=getBookDone();
+    const books=(window.BOOK_CONTENT||[]).filter(function(b){
+      if(bookCat!=='all'&&b.cat!==bookCat)return false;
+      if(bookAge!=='all'&&b.age!==bookAge)return false;
+      return true;
     });
-    const totPages=Math.ceil(books/pageSize)||1;
-    document.getElementById('bookPageNow').textContent=Math.min(bookPg+1,totPages)+' / '+totPages;
+    if(!books.length){list.innerHTML='<div class="empty">这个分类还没有故事哦～换一个看看吧</div>';return;}
+    books.forEach(function(b){
+      const card=document.createElement('div');card.className='book-card'+(b.ready?'':' notready');
+      const isDone=done.indexOf(b.id)>=0;
+      const cover=b.cover?('<img src="'+b.cover+'" alt="'+esc(b.title)+'">'
+        +'<div class="rd-cover-ph" style="display:none">'+b.icon+'</div>'):'';
+      const ph=b.cover?'':'<div class="rd-cover-ph">'+b.icon+'</div>';
+      card.innerHTML='<div class="bc-cover">'+cover+ph+(isDone?'<span class="bc-done">✓ 已学会</span>':'')+'</div>'+
+        '<div class="bc-body"><div class="bc-title">'+esc(b.title)+'</div>'+
+        '<div class="bc-desc">'+esc(b.desc)+'</div>'+
+        '<div class="bc-foot"><span class="bi-tag">'+esc(b.age)+'</span>'+(b.ready?'':'<span class="bc-soon">内容整理中</span>')+'</div></div>';
+      card.onclick=function(){openBookReader(b.id);};
+      list.appendChild(card);
+    });
   }
+  function openBookReader(id){
+    const all=window.BOOK_CONTENT||[];curBook=all.filter(function(b){return b.id===id;})[0];
+    if(!curBook){toast('故事没找到');return;}
+    stopBookSpeech();resetBookRec();
+    curPage=0;pinyinOn=false;
+    const sw=document.getElementById('pySwitch');if(sw)sw.checked=false;
+    document.getElementById('readerMask').style.display='flex';
+    document.getElementById('rdTitle').textContent=curBook.title;
+    document.getElementById('rdAge').textContent=curBook.age+' · '+curBook.grade;
+    const img=document.getElementById('rdCover'),ph=document.getElementById('rdCoverPh');
+    if(curBook.cover){img.src=curBook.cover;img.style.display='block';ph.style.display='none';
+      img.onerror=function(){img.style.display='none';ph.style.display='flex';ph.textContent=curBook.icon;};}
+    else{img.style.display='none';ph.style.display='flex';ph.textContent=curBook.icon;}
+    document.getElementById('readerStatus').textContent=getBookDone().indexOf(id)>=0?'✓ 已读完':'📖 阅读中';
+    if(!curBook.ready){
+      document.getElementById('rdPage').innerHTML='<div class="empty">《'+esc(curBook.title)+'》的内容正在整理中，先看封面吧～</div>';
+      document.getElementById('rdRole').textContent='';
+      document.getElementById('rdPageNo').textContent='—';
+      return;
+    }
+    renderBookPage();
+  }
+  function pageText(pg){return pg.chars.map(function(c){return c.t;}).join('');}
+  function renderBookPage(){
+    if(!curBook||!curBook.ready)return;
+    const pg=curBook.pages[curPage];
+    const box=document.getElementById('rdPage');let html='';
+    pg.chars.forEach(function(c){
+      if(c.p){html+='<span class="cz"><b class="py">'+c.p+'</b><i class="ch">'+c.t+'</i></span>';}
+      else{html+='<span class="cz"><i class="ch">'+c.t+'</i></span>';}
+    });
+    box.innerHTML=html;box.classList.toggle('py-on',pinyinOn);
+    document.getElementById('rdRole').textContent=pg.role==='旁白'?('📖 '+pg.role):('🗣️ '+pg.role+'：');
+    document.getElementById('rdPageNo').textContent=(curPage+1)+' / '+curBook.pages.length;
+  }
+  function setPinyin(on){pinyinOn=on;const box=document.getElementById('rdPage');if(box)box.classList.toggle('py-on',on);}
   function bookPage(d){
-    const books=BOOK_DATA[bookTab]||[];
-    const pageSize=6;
-    const totPages=Math.ceil(books.length/pageSize)||1;
-    bookPg=Math.max(0,Math.min(totPages-1,bookPg+d));
+    if(!curBook||!curBook.ready)return;
+    curPage=Math.max(0,Math.min(curBook.pages.length-1,curPage+d));
+    renderBookPage();
+  }
+  function closeReader(){
+    document.getElementById('readerMask').style.display='none';
+    stopBookSpeech();resetBookRec();
+  }
+  function stopBookSpeech(){if(hasSpeech())try{speechSynthesis.cancel();}catch(e){}}
+  function speakBookPage(){
+    if(!curBook||!curBook.ready)return;
+    if(!hasSpeech()){toast('当前环境不支持语音朗读（需用浏览器打开）');return;}
+    stopBookSpeech();
+    const pg=curBook.pages[curPage];
+    const u=new SpeechSynthesisUtterance(pageText(pg));
+    u.lang='zh-CN';const v=voiceForRole(pg.role);if(v)u.voice=v;
+    if(!v)u.pitch=pitchForRole(pg.role);
+    u.rate=pg.role==='旁白'?0.95:1;
+    speechSynthesis.speak(u);
+  }
+  function speakBookMulti(){
+    if(!curBook||!curBook.ready)return;
+    if(!hasSpeech()){toast('当前环境不支持语音朗读（需用浏览器打开）');return;}
+    stopBookSpeech();
+    const pages=curBook.pages;let mi=0;
+    function step(){
+      if(mi>=pages.length){toast('故事读完啦～');return;}
+      curPage=mi;renderBookPage();
+      const pg=pages[mi];const u=new SpeechSynthesisUtterance(pageText(pg));
+      u.lang='zh-CN';const v=voiceForRole(pg.role);if(v)u.voice=v;
+      if(!v)u.pitch=pitchForRole(pg.role);
+      u.rate=pg.role==='旁白'?0.92:1.02;
+      u.onend=function(){mi++;step();};
+      speechSynthesis.speak(u);
+    }
+    step();
+  }
+  function markBookDone(){
+    if(!curBook)return;
+    setBookDone(curBook.id);
+    document.getElementById('readerStatus').textContent='✓ 已读完';
+    toast('太棒了！《'+curBook.title+'》读完啦 🎉');
     renderBookList();
-    bookPg=Math.max(0,Math.min(totPages-1,bookPg+d));
-    renderBookList();
+  }
+  /* 录音：复用 MediaRecorder（需 localhost/https 才有麦克风权限） */
+  function toggleBookRec(){
+    if(bookRecording){stopBookRec();return;}
+    const supported=navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&typeof MediaRecorder!=='undefined';
+    if(!supported){toast('当前环境不支持录音（请用 localhost 或 https 打开）');return;}
+    navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
+      bookRecStream=stream;bookRecChunks=[];
+      try{bookMediaRec=new MediaRecorder(stream);}catch(e){stopBookStream();toast('录音初始化失败');return;}
+      bookMediaRec.ondataavailable=function(e){if(e.data&&e.data.size)bookRecChunks.push(e.data);};
+      bookMediaRec.onstop=function(){
+        stopBookStream();
+        let blob;try{blob=new Blob(bookRecChunks,{type:(bookMediaRec.mimeType||'audio/webm')});}catch(e){blob=null;}
+        if(blob){if(bookClipURL)URL.revokeObjectURL(bookClipURL);bookClipURL=URL.createObjectURL(blob);
+          document.getElementById('rdPlayBtn').style.display='inline-flex';}
+      };
+      bookMediaRec.start();bookRecording=true;
+      const btn=document.getElementById('rdRecBtn');btn.textContent='⏹ 停止';btn.classList.add('rec');
+    }).catch(function(){toast('没拿到麦克风权限，无法录音');});
+  }
+  function stopBookRec(){
+    bookRecording=false;
+    const btn=document.getElementById('rdRecBtn');btn.textContent='🎙️ 录音';btn.classList.remove('rec');
+    if(bookMediaRec&&bookMediaRec.state!=='inactive'){try{bookMediaRec.stop();}catch(e){}}
+  }
+  function resetBookRec(){
+    if(bookRecording)stopBookRec();
+    if(bookClipURL){try{URL.revokeObjectURL(bookClipURL);}catch(e){}bookClipURL=null;}
+    const pb=document.getElementById('rdPlayBtn');if(pb)pb.style.display='none';
+  }
+  function playBookRec(){if(bookClipURL){try{new Audio(bookClipURL).play();}catch(e){}}}
+  function refreshBooks(){
+    if(!BOOK_REFRESH_URL){
+      toast('联网刷新需配置代理：可让我帮你搭一个本地代理，或直接从我这里添加新故事～');
+      return;
+    }
+    toast('正在联网获取新故事…');
+    fetch(BOOK_REFRESH_URL).then(function(r){return r.json();}).then(function(data){
+      if(Array.isArray(data)&&data.length){
+        window.BOOK_CONTENT=(window.BOOK_CONTENT||[]).concat(data);
+        renderBookList();toast('已更新 '+data.length+' 个新故事！');
+      }else{toast('暂时没有新故事');}
+    }).catch(function(){toast('联网失败，请检查代理');});
   }
 
 /* ================================================================
@@ -3029,7 +3227,9 @@
   // 洪恩识字1300字与分组已由 chars_data.js 注入
 
   const LIB={
-    poems:POEM_DATA, books:BOOK_DATA, words:WORDS_DATA, dialogues:DIALOGUE_DATA,
+    poems:POEM_DATA,
+    books:(function(){var m={classic:[],fable:[],fairy:[]};(window.BOOK_CONTENT||[]).forEach(function(b){if(m[b.cat])m[b.cat].push(b);});return m;})(),
+    words:WORDS_DATA, dialogues:DIALOGUE_DATA,
     reads:READ_DATA, chars:CHARS_DATA, pinyin:PINYIN_DATA, science:SCIENCE_DATA,
     logic:LOGIC_DATA, chars1300:HONGEN_1300
   };
