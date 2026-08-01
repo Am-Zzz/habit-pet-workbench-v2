@@ -946,6 +946,25 @@
   .bank-btn:hover:not(:disabled){transform:translateY(-2px)}
   .bank-btn:active:not(:disabled){transform:scale(.98)}
   .bank-btn:disabled{opacity:.45;cursor:not-allowed;background:var(--line,#e8d5c8);box-shadow:none}
+  .ch-modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:4px}
+  .ch-mode{padding:7px 12px;border-radius:12px;border:2px solid var(--line,#ecd9d2);background:var(--surface,#fff);font-size:12px;font-weight:700;cursor:pointer;color:var(--ink-soft,#a08a7d);font-family:inherit;transition:all .2s}
+  .ch-mode.active{border-color:var(--brand,#f26d92);color:var(--brand-d,#dd5e86);background:linear-gradient(180deg,#fff,#fff5f9)}
+  .ch-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;margin:6px 0}
+  .ch-ring{position:relative;width:200px;height:200px}
+  .ch-ring svg{transform:rotate(-90deg)}
+  .ch-ring .cr-bg{fill:none;stroke:var(--line,#ecd9d2);stroke-width:12}
+  .ch-ring .cr-fg{fill:none;stroke:var(--brand,#f26d92);stroke-width:12;stroke-linecap:round}
+  .cr-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+  .ch-hour{font-size:54px;line-height:1;font-weight:800;color:var(--brand-d,#dd5e86);font-variant-numeric:tabular-nums}
+  .ch-amp{font-size:24px;animation:chShake 1.2s ease-in-out infinite}
+  @keyframes chShake{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+  .ch-btns{display:flex;gap:10px;width:100%;max-width:300px}
+  .ch-btns .bank-btn{background:linear-gradient(135deg,#F26D92,#DD5E86)}
+  .ch-btns .bank-btn:disabled{opacity:.45;background:var(--line,#e8d5c8)}
+  .ch-rec{display:flex;gap:10px;width:100%;max-width:340px;margin-top:2px}
+  .ch-rec .rec-card{flex:1;background:var(--surface-2,#fbf1ec);border-radius:14px;padding:12px 6px;text-align:center}
+  .ch-rec .rec-card b{display:block;font-size:22px;color:var(--brand-d,#dd5e86)}
+  .ch-rec .rec-card span{font-size:11px;color:var(--ink-soft,#a08a7d)}
   .chest-room{background:linear-gradient(180deg,#2a1b3d,#1a1025);border-radius:26px;padding:22px;text-align:center;position:relative;overflow:hidden;min-height:320px}
   .chest-room h3{color:#FCE7F3;font-size:18px;font-weight:800;margin-bottom:4px}
   .chest-room .sub{color:#D8B4FE;font-size:12px;margin-bottom:20px}
@@ -1256,6 +1275,7 @@
             <div class="act" onclick="go('level')"><div class="e">🗡️</div><div class="t">闯关升级</div></div>
             <div class="act" onclick="go('rich')"><div class="e">🎲</div><div class="t">大富翁</div></div>
             <div class="act" onclick="go('passport')"><div class="e">📔</div><div class="t">学习护照</div></div>
+            <div class="act" onclick="go('challenge')"><div class="e">⏳</div><div class="t">时间挑战</div></div>
           </div>
         </div>
           </div><!-- /grid3 -->
@@ -2265,6 +2285,60 @@
       </div>
     </div>
 
+    <!-- ==================== 时间挑战赛 ==================== -->
+    <div class="screen" id="sc-challenge">
+      <div class="card" style="max-width:600px;margin:0 auto">
+        <div class="card-h"><span class="t">⏳ 时间挑战赛</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="bank-tagline">和沙漏赛跑，把专注变成一场闯关！</div>
+
+        <div class="bank-section">
+          <div class="bank-h">🎯 玩法说明</div>
+          <div class="bank-howto">
+            <div class="bh-step"><span class="bh-ic">⏱️</span><b>设定挑战</b><br><span style="font-size:10px;color:var(--ink-faint)">选一个时长</span></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">⏳</span><b>沙漏倒计时</b><br><span style="font-size:10px;color:var(--ink-faint)">专注不被打扰</span></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🏆</span><b>刷新纪录</b><br><span style="font-size:10px;color:var(--ink-faint)">累计挑战成绩</span></div>
+          </div>
+        </div>
+
+        <div class="bank-section">
+          <div class="bank-h">⏳ 挑战沙漏</div>
+          <div class="ch-modes" id="chModes"></div>
+          <div class="ch-wrap">
+            <div class="ch-ring">
+              <svg width="200" height="200" viewBox="0 0 200 200">
+                <circle class="cr-bg" cx="100" cy="100" r="88"></circle>
+                <circle class="cr-fg" id="chRing" cx="100" cy="100" r="88"></circle>
+              </svg>
+              <div class="cr-mid">
+                <div class="ch-hour" id="chTime">10:00</div>
+                <div class="ch-amp">⏳</div>
+              </div>
+            </div>
+            <div class="ch-btns">
+              <button class="bank-btn" id="chStartBtn" onclick="chStart()">▶ 开始挑战</button>
+              <button class="bank-btn" id="chResetBtn" onclick="chReset()">↺ 重置</button>
+            </div>
+          </div>
+          <div class="ch-rec">
+            <div class="rec-card"><b id="chTotal">0</b><span>累计挑战</span></div>
+            <div class="rec-card"><b id="chMin">0</b><span>专注分钟</span></div>
+            <div class="rec-card"><b id="chToday">0</b><span>今日完成</span></div>
+          </div>
+        </div>
+
+        <div class="bank-section">
+          <div class="bank-h">💡 懒妈技巧 <span class="bank-h-sub">——给家长的省力小窍门</span></div>
+          <div class="bank-tips">
+            <div class="bt-row"><span class="bt-ic">⏳</span><div><b>沙漏视觉化</b><br><span>实物沙漏比手机更让孩子专注</span></div></div>
+            <div class="bt-row"><span class="bt-ic">📋</span><div><b>记录挑战成绩</b><br><span>贴墙画正字，看得见进步</span></div></div>
+            <div class="bt-row"><span class="bt-ic">📈</span><div><b>难度循序渐进</b><br><span>从 5 分钟起步不挫败</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ==================== 我的屏 ==================== -->
     <div class="screen" id="sc-me">
       <div class="card" style="max-width:600px;margin:0 auto">
@@ -2655,7 +2729,7 @@
       english:'sc-english-hub',read:'sc-read',write:'sc-write',math:'sc-math',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
       science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',
-      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',
+      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',challenge:'sc-challenge',
       'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff'};
     let target=map[screen];
     if(!target){ target = document.getElementById(screen)? screen : 'sc-home'; }
@@ -2676,6 +2750,7 @@
     else if(target==='sc-level')renderLevel();
     else if(target==='sc-rich')renderRich();
     else if(target==='sc-passport')renderPassport();
+    else if(target==='sc-challenge')renderChallenge();
     else if(target==='sc-netdisk')renderNetHub();
     navSync(screen);
     window.scrollTo({top:0,behavior:'smooth'});
@@ -4603,7 +4678,7 @@
       note.innerHTML='⚠️ 你现在是<b>直接用文件打开</b>本页，保存/使用网盘账号必须走本地服务器（server.js）。请改用地址 <b>http://localhost:8124/v8.html</b> 打开本页后再保存。';
     }else if(netAcctTab==='aliyun'){
       cookieBox.style.display='none';
-      note.innerHTML='✅ 阿里云盘 / 阿里网盘(<b>公开分享免登录</b>)：粘贴 <code>aliyundrive.com/s/xxx</code> 或 <code>alipan.com/s/xxx</code> 链接，点开即播，无需 cookie。';
+      note.innerHTML='ℹ️ 阿里云盘 / 阿里网盘：粘贴 <code>aliyundrive.com/s/xxx</code> 或 <code>alipan.com/s/xxx</code> 分享链接会尝试自动解析；若解析失败（阿里云盘当前已收紧免登录接口）则回退为「打开网盘」跳转，在网盘网页内观看（受网盘 2 分钟试看限制）。想要<b>点开即播、无限制</b>，请粘贴以 <code>.mp4/.webm/.m3u8</code> 结尾的直链。';
     }else{
       cookieBox.style.display='block';
       note.innerHTML='把你的 <b>'+title+'</b> 网页版登录后的 Cookie 粘贴到这里（仅存本机 server.js 所在目录）。解析模式为「自动解析」时，分享链接会由本地服务用该 cookie 解析后直接播放；cookie 过期需重新粘贴。';
@@ -5151,6 +5226,7 @@
   ];
   const PASSPORT_STAMPS=[{id:'read',ic:'📚',name:'阅读章'},{id:'math',ic:'🧮',name:'口算章'},{id:'pinyin',ic:'🔤',name:'拼音章'},{id:'english',ic:'🍎',name:'英语章'},{id:'science',ic:'🔬',name:'科学章'},{id:'poem',ic:'📜',name:'古诗章'}];
   const PASSPORT_REWARD={ic:'🎉',name:'旅行/大餐',cost:50};
+  const CHALLENGE_MODES=[{min:5,label:'⚡ 快速'},{min:10,label:'🔥 标准'},{min:15,label:'🏋️ 进阶'},{min:25,label:'🏆 马拉松'}];
   const GACHA_CATS=[['arith','🧮 算术'],['english','🔤 英语'],['knowledge','🌍 百科'],['poem','📜 古诗词']];
   function escHTML(x){return String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
   function gachaGet(k,d){try{const r=localStorage.getItem(k);return r?JSON.parse(r):d;}catch(e){return d;}}
@@ -5642,7 +5718,7 @@
   function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(meta.ext)return;html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on&&!(MODULE_META[m.id]||{}).ext;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';renderMiniClass();}
   function renderMiniClass(){var g=document.getElementById('miniClassGrid');if(!g)return;var html='';MODULES.forEach(function(m){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(!meta.ext)return;html+='<div class="mini-mod" onclick="openMini(\''+m.screen+'\')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">'+esc(m.sub)+'</span>':'')+'<span class="ext" title="站外学习网站">🔗</span></div>';});g.innerHTML=html||'<div class="empty">暂无在线学习模块</div>';}
   function openMini(screen){var op=MODULE_OPENERS[screen];if(op)op();else if(screen)go(screen);else toast('该内容暂未开放');}
-  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');},bank:renderBank,level:renderLevel,rich:renderRich,passport:renderPassport,netdisk:function(){go('netdisk');}};
+  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');},bank:renderBank,level:renderLevel,rich:renderRich,passport:renderPassport,challenge:renderChallenge,netdisk:function(){go('netdisk');}};
   function openModuleByIdx(idx){var m=MODULES[idx];if(!m)return;var op=MODULE_OPENERS[m.screen];if(op)op();else if(m.screen)go(m.screen);else toast('该内容暂未开放');}
   function renderStudies(){
     var box=document.getElementById('studyList');if(!box)return;
@@ -5995,6 +6071,52 @@
   }
   function passportLoad(){try{return JSON.parse(localStorage.getItem('passport_state_v1')||'{}');}catch(e){return {};}}
   function passportSave(st){try{localStorage.setItem('passport_state_v1',JSON.stringify(st));}catch(e){}}
+  var chId=null,chLeft=0,chTotalMin=10,chRunning=false;
+  function chGet(){try{return JSON.parse(localStorage.getItem('challenge_state_v1')||'{}');}catch(e){return {};}}
+  function chSet(o){try{localStorage.setItem('challenge_state_v1',JSON.stringify(o));}catch(e){}}
+  function chModeSel(min,el){if(chRunning)return;chTotalMin=min;var ms=document.querySelectorAll('.ch-mode');for(var i=0;i<ms.length;i++)ms[i].classList.remove('active');if(el)el.classList.add('active');chLeft=min*60;chRender();}
+  function chRender(){
+    var m=Math.floor(chLeft/60),s=chLeft%60;
+    var t=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    var tt=document.getElementById('chTime');if(tt)tt.textContent=t;
+    var ring=document.getElementById('chRing');
+    if(ring){var r=88,C=2*Math.PI*r;var total=chTotalMin*60;var frac=total>0?chLeft/total:0;ring.style.strokeDasharray=C;ring.style.strokeDashoffset=C*(1-frac);}
+    var st=chGet();
+    var tot=document.getElementById('chTotal');if(tot)tot.textContent=st.total||0;
+    var mn=document.getElementById('chMin');if(mn)mn.textContent=st.min||0;
+    var td=document.getElementById('chToday');if(td)td.textContent=(st.todayDate===getTodayKey())?(st.today||0):0;
+  }
+  function chStart(){
+    if(chRunning){chPause();return;}
+    chRunning=true;
+    var btn=document.getElementById('chStartBtn');if(btn)btn.textContent='⏸ 暂停';
+    chId=setInterval(function(){chLeft--;chRender();if(chLeft<=0){clearInterval(chId);chId=null;chRunning=false;chComplete();}},1000);
+  }
+  function chPause(){if(chId){clearInterval(chId);chId=null;}chRunning=false;var btn=document.getElementById('chStartBtn');if(btn)btn.textContent='▶ 继续';}
+  function chReset(){if(chId){clearInterval(chId);chId=null;}chRunning=false;chLeft=chTotalMin*60;var btn=document.getElementById('chStartBtn');if(btn)btn.textContent='▶ 开始挑战';chRender();}
+  function chComplete(){
+    var btn=document.getElementById('chStartBtn');if(btn)btn.textContent='▶ 开始挑战';
+    var st=chGet();
+    st.total=(st.total||0)+1;
+    st.min=(st.min||0)+chTotalMin;
+    var tk=getTodayKey();
+    if(st.todayDate===tk){st.today=(st.today||0)+1;}else{st.todayDate=tk;st.today=1;}
+    chSet(st);
+    gachaPoints+=20;gachaSet(GACHA_KEYS.p,gachaPoints);
+    if(typeof checkAchievements==='function')checkAchievements();
+    chRender();
+    toast('🏆 挑战完成！+20 积分');
+  }
+  function renderChallenge(){
+    var box=document.getElementById('chModes');
+    if(box&&!box.children.length){
+      box.innerHTML=CHALLENGE_MODES.map(function(mm,i){return '<div class="ch-mode'+(i===1?' active':'')+'" onclick="chModeSel('+mm.min+',this)">'+mm.label+' '+mm.min+'分</div>';}).join('');
+    }
+    chLeft=chTotalMin*60;chRunning=false;
+    var btn=document.getElementById('chStartBtn');if(btn)btn.textContent='▶ 开始挑战';
+    if(chId){clearInterval(chId);chId=null;}
+    chRender();
+  }
   function renderReport(tab){var done=loadCheckinDone();var mood=loadMoodLog();var time=loadStudyTime();
     var days=[];var today=getTodayKey();
     if(tab==='today')days=[today];
