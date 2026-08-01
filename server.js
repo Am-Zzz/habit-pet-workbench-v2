@@ -13,7 +13,7 @@ const NET_CFG=path.join(root,'netdisk_config.json');
 function readNetCfg(){try{return JSON.parse(fs.readFileSync(NET_CFG,'utf8'));}catch(e){return {};}}
 function writeNetCfg(o){try{fs.writeFileSync(NET_CFG,JSON.stringify(o,null,2));}catch(e){}}
 function detectProvider(url){
-  if(/aliyundrive\.com\/s\/|alywp\.net\/s\//.test(url))return 'aliyun';
+  if(/aliyundrive\.com\/s\/|alipan\.com\/s\/|alywp\.net\/s\//.test(url))return 'aliyun';
   if(/pan\.baidu\.com/.test(url))return 'baidu';
   if(/quark\.cn|pan\.quark\.cn/.test(url))return 'quark';
   return '';
@@ -28,7 +28,7 @@ function postJSON(url,body,cookie,referer){
 async function resolveAliyun(shareUrl,pwd){
   const m=shareUrl.match(/\/s\/([A-Za-z0-9]+)/); if(!m)throw new Error('阿里云盘分享链接格式不对');
   const shareId=m[1];
-  const lt=await postJSON('https://api.aliyundrive.com/adrive/v3/share/linkToken',{share_id:shareId,share_pwd:pwd||''});
+  const lt=await postJSON('https://api.aliyundrive.com/v2/share/share_token',{share_id:shareId,share_pwd:pwd||''});
   const shareToken=lt.json&&lt.json.share_token; if(!shareToken)throw new Error('阿里云盘获取 share_token 失败：'+(lt.json&&lt.json.message||JSON.stringify(lt.json)));
   const list=await postJSON('https://api.aliyundrive.com/adrive/v3/share/file/list',{share_token:shareToken,parent_file_id:'root',limit:100,order_by:'name',order_direction:'ASC'});
   const items=(list.json&&list.json.items)||[]; if(!items.length)throw new Error('阿里云盘分享为空');

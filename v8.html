@@ -931,6 +931,21 @@
   .rich-quest{min-height:60px;padding:12px;background:var(--surface-2);border-radius:14px;font-size:13px;color:var(--ink,#2C2C2A);text-align:center;border:1px dashed var(--line);line-height:1.6}
   .rich-quest b{color:var(--brand);font-size:14px}
   .rich-quest .rq-tip{color:var(--ink-soft);font-size:11px}
+  .ps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0 4px}
+  .ps-stamp{aspect-ratio:1;border-radius:14px;border:2px dashed var(--line,#ecd9d2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--surface,#fff);cursor:pointer;transition:all .2s;text-align:center}
+  .ps-stamp:active{transform:scale(.97)}
+  .ps-stamp .ps-ic{font-size:30px;filter:grayscale(1);opacity:.4;transition:all .2s}
+  .ps-stamp .ps-name{font-size:12px;color:var(--ink-soft,#a08a7d)}
+  .ps-stamp.done{border-style:solid;border-color:var(--brand,#f26d92);background:linear-gradient(180deg,#fff,#fff5f9)}
+  .ps-stamp.done .ps-ic{filter:none;opacity:1;transform:scale(1.1)}
+  .ps-stamp.done .ps-name{color:var(--brand-d,#dd5e86);font-weight:800}
+  .ps-status{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink-soft,#a08a7d);margin:8px 2px;padding:8px 10px;background:var(--surface-2,#fbf1ec);border-radius:12px}
+  .ps-status b{color:var(--brand,#dd5e86)}
+  .ps-reward{margin-top:8px}
+  .bank-btn{width:100%;padding:11px 0;border-radius:14px;border:none;font-size:13px;font-weight:800;cursor:pointer;color:#fff;background:linear-gradient(135deg,#FBBF24,#F59E0B);box-shadow:0 4px 12px rgba(251,191,36,.35);transition:all .2s;font-family:inherit}
+  .bank-btn:hover:not(:disabled){transform:translateY(-2px)}
+  .bank-btn:active:not(:disabled){transform:scale(.98)}
+  .bank-btn:disabled{opacity:.45;cursor:not-allowed;background:var(--line,#e8d5c8);box-shadow:none}
   .chest-room{background:linear-gradient(180deg,#2a1b3d,#1a1025);border-radius:26px;padding:22px;text-align:center;position:relative;overflow:hidden;min-height:320px}
   .chest-room h3{color:#FCE7F3;font-size:18px;font-weight:800;margin-bottom:4px}
   .chest-room .sub{color:#D8B4FE;font-size:12px;margin-bottom:20px}
@@ -1240,6 +1255,7 @@
             <div class="act" onclick="go('bank')"><div class="e">🏦</div><div class="t">积分银行</div></div>
             <div class="act" onclick="go('level')"><div class="e">🗡️</div><div class="t">闯关升级</div></div>
             <div class="act" onclick="go('rich')"><div class="e">🎲</div><div class="t">大富翁</div></div>
+            <div class="act" onclick="go('passport')"><div class="e">📔</div><div class="t">学习护照</div></div>
           </div>
         </div>
           </div><!-- /grid3 -->
@@ -2215,6 +2231,40 @@
       </div>
     </div>
 
+    <div class="screen" id="sc-passport">
+      <div class="card" style="max-width:600px;margin:0 auto">
+        <div class="card-h"><span class="t">📔 学习护照</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="bank-tagline">把每种学习变成一枚印章，集满就出发！</div>
+
+        <div class="bank-section">
+          <div class="bank-h">🎯 玩法说明</div>
+          <div class="bank-howto">
+            <div class="bh-step"><span class="bh-ic">📌</span><b>主题学习</b><br><span style="font-size:10px;color:var(--ink-faint)">每类盖一个章</span></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🏅</span><b>集满六章</b><br><span style="font-size:10px;color:var(--ink-faint)">阅读/口算/拼音…</span></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🎁</span><b>兑换奖励</b><br><span style="font-size:10px;color:var(--ink-faint)">旅行或大餐</span></div>
+          </div>
+        </div>
+
+        <div class="bank-section">
+          <div class="bank-h">📒 我的护照本</div>
+          <div class="ps-grid" id="psGrid"></div>
+          <div class="ps-status"><span>已盖章 <b id="psDone">0</b>/6</span><span>⭐ 积分 <b id="psPoints">0</b></span></div>
+          <div class="ps-reward"><button class="bank-btn" id="psRewardBtn" onclick="passportReward()" disabled>🎉 集满六章兑换：旅行/大餐（+50 积分）</button></div>
+        </div>
+
+        <div class="bank-section">
+          <div class="bank-h">💡 懒妈技巧 <span class="bank-h-sub">——给家长的省力小窍门</span></div>
+          <div class="bank-tips">
+            <div class="bt-row"><span class="bt-ic">📒</span><div><b>护照本淘宝</b><br><span>几块钱买个真实护照本更有仪式感</span></div></div>
+            <div class="bt-row"><span class="bt-ic">🎉</span><div><b>仪式感拉满</b><br><span>盖章时放音乐、签字留念</span></div></div>
+            <div class="bt-row"><span class="bt-ic">📅</span><div><b>适合长期项目</b><br><span>一学期一本，毕业有纪念</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ==================== 我的屏 ==================== -->
     <div class="screen" id="sc-me">
       <div class="card" style="max-width:600px;margin:0 auto">
@@ -2605,7 +2655,7 @@
       english:'sc-english-hub',read:'sc-read',write:'sc-write',math:'sc-math',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
       science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',
-      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',level:'sc-level',rich:'sc-rich',
+      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',
       'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff'};
     let target=map[screen];
     if(!target){ target = document.getElementById(screen)? screen : 'sc-home'; }
@@ -2625,6 +2675,7 @@
     else if(target==='sc-bank')renderBank();
     else if(target==='sc-level')renderLevel();
     else if(target==='sc-rich')renderRich();
+    else if(target==='sc-passport')renderPassport();
     else if(target==='sc-netdisk')renderNetHub();
     navSync(screen);
     window.scrollTo({top:0,behavior:'smooth'});
@@ -4515,7 +4566,7 @@
   let netMode='auto'; try{ netMode=localStorage.getItem('mp_net_mode')||'auto'; }catch(e){}
   let netAcct={}; let netAcctTab='baidu';
   function detectNetProvider(u){
-    if(/aliyundrive\.com\/s\/|alywp\.net\/s\//.test(u))return 'aliyun';
+    if(/aliyundrive\.com\/s\/|alipan\.com\/s\/|alywp\.net\/s\//.test(u))return 'aliyun';
     if(/pan\.baidu\.com/.test(u))return 'baidu';
     if(/quark\.cn|pan\.quark\.cn/.test(u))return 'quark';
     return '';
@@ -4552,7 +4603,7 @@
       note.innerHTML='⚠️ 你现在是<b>直接用文件打开</b>本页，保存/使用网盘账号必须走本地服务器（server.js）。请改用地址 <b>http://localhost:8124/v8.html</b> 打开本页后再保存。';
     }else if(netAcctTab==='aliyun'){
       cookieBox.style.display='none';
-      note.innerHTML='✅ 阿里云盘<b>公开分享免登录</b>：粘贴 <code>aliyundrive.com/s/xxx</code> 链接，点开即播，无需 cookie。';
+      note.innerHTML='✅ 阿里云盘 / 阿里网盘(<b>公开分享免登录</b>)：粘贴 <code>aliyundrive.com/s/xxx</code> 或 <code>alipan.com/s/xxx</code> 链接，点开即播，无需 cookie。';
     }else{
       cookieBox.style.display='block';
       note.innerHTML='把你的 <b>'+title+'</b> 网页版登录后的 Cookie 粘贴到这里（仅存本机 server.js 所在目录）。解析模式为「自动解析」时，分享链接会由本地服务用该 cookie 解析后直接播放；cookie 过期需重新粘贴。';
@@ -5098,6 +5149,8 @@
     {i:10,col:'#F472B6',name:'推理',cat:'puzzle',q:'猜猜少了什么'},
     {i:11,col:'#FBBF24',name:'终点',cat:'end',q:'通关啦！'}
   ];
+  const PASSPORT_STAMPS=[{id:'read',ic:'📚',name:'阅读章'},{id:'math',ic:'🧮',name:'口算章'},{id:'pinyin',ic:'🔤',name:'拼音章'},{id:'english',ic:'🍎',name:'英语章'},{id:'science',ic:'🔬',name:'科学章'},{id:'poem',ic:'📜',name:'古诗章'}];
+  const PASSPORT_REWARD={ic:'🎉',name:'旅行/大餐',cost:50};
   const GACHA_CATS=[['arith','🧮 算术'],['english','🔤 英语'],['knowledge','🌍 百科'],['poem','📜 古诗词']];
   function escHTML(x){return String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
   function gachaGet(k,d){try{const r=localStorage.getItem(k);return r?JSON.parse(r):d;}catch(e){return d;}}
@@ -5589,7 +5642,7 @@
   function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(meta.ext)return;html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on&&!(MODULE_META[m.id]||{}).ext;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';renderMiniClass();}
   function renderMiniClass(){var g=document.getElementById('miniClassGrid');if(!g)return;var html='';MODULES.forEach(function(m){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(!meta.ext)return;html+='<div class="mini-mod" onclick="openMini(\''+m.screen+'\')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">'+esc(m.sub)+'</span>':'')+'<span class="ext" title="站外学习网站">🔗</span></div>';});g.innerHTML=html||'<div class="empty">暂无在线学习模块</div>';}
   function openMini(screen){var op=MODULE_OPENERS[screen];if(op)op();else if(screen)go(screen);else toast('该内容暂未开放');}
-  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');},bank:renderBank,level:renderLevel,rich:renderRich,netdisk:function(){go('netdisk');}};
+  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');},bank:renderBank,level:renderLevel,rich:renderRich,passport:renderPassport,netdisk:function(){go('netdisk');}};
   function openModuleByIdx(idx){var m=MODULES[idx];if(!m)return;var op=MODULE_OPENERS[m.screen];if(op)op();else if(m.screen)go(m.screen);else toast('该内容暂未开放');}
   function renderStudies(){
     var box=document.getElementById('studyList');if(!box)return;
@@ -5912,6 +5965,36 @@
     if(typeof checkAchievements==='function')checkAchievements();
     toast('✅ 买地成功 +5 积分（🏠）');
   }
+  function renderPassport(){
+    var st=passportLoad();
+    var grid=document.getElementById('psGrid');
+    if(grid)grid.innerHTML=PASSPORT_STAMPS.map(function(s){
+      var on=st[s.id];
+      return '<div class="ps-stamp'+(on?' done':'')+'" onclick="passportToggle(\''+s.id+'\')"><span class="ps-ic">'+s.ic+'</span><span class="ps-name">'+s.name+'</span></div>';
+    }).join('');
+    var done=0;for(var k in st){if(st[k])done++;}
+    var dEl=document.getElementById('psDone');if(dEl)dEl.textContent=done;
+    var pEl=document.getElementById('psPoints');if(pEl)pEl.textContent=gachaPoints;
+    var btn=document.getElementById('psRewardBtn');if(btn)btn.disabled=done<6;
+  }
+  function passportToggle(id){
+    var st=passportLoad();
+    st[id]=!st[id];
+    passportSave(st);
+    renderPassport();
+  }
+  function passportReward(){
+    var st=passportLoad();
+    var done=0;for(var k in st){if(st[k])done++;}
+    if(done<6)return;
+    gachaPoints+=PASSPORT_REWARD.cost;
+    gachaSet(GACHA_KEYS.p,gachaPoints);
+    if(typeof checkAchievements==='function')checkAchievements();
+    renderPassport();
+    toast('🎉 集满六章！+'+PASSPORT_REWARD.cost+' 积分');
+  }
+  function passportLoad(){try{return JSON.parse(localStorage.getItem('passport_state_v1')||'{}');}catch(e){return {};}}
+  function passportSave(st){try{localStorage.setItem('passport_state_v1',JSON.stringify(st));}catch(e){}}
   function renderReport(tab){var done=loadCheckinDone();var mood=loadMoodLog();var time=loadStudyTime();
     var days=[];var today=getTodayKey();
     if(tab==='today')days=[today];
