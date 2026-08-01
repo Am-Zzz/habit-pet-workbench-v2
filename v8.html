@@ -965,6 +965,31 @@
   .ch-rec .rec-card{flex:1;background:var(--surface-2,#fbf1ec);border-radius:14px;padding:12px 6px;text-align:center}
   .ch-rec .rec-card b{display:block;font-size:22px;color:var(--brand-d,#dd5e86)}
   .ch-rec .rec-card span{font-size:11px;color:var(--ink-soft,#a08a7d)}
+  .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px}
+  .role-card{background:var(--surface-2,#fbf1ec);border:2px solid transparent;border-radius:18px;padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s}
+  .role-card.on{border-color:var(--brand,#F26D92);background:var(--brand-tint,#fff0f5);box-shadow:var(--shadow-sm)}
+  .role-card .rc-ic{font-size:34px;display:block;margin-bottom:4px}
+  .role-card b{font-size:15px;color:var(--ink,#4a3b34);display:block}
+  .role-card .rc-desc{font-size:11px;color:var(--ink-soft,#a08a7d)}
+  .role-tasks{display:flex;flex-direction:column;gap:8px}
+  .rt-row{display:flex;align-items:center;gap:8px;background:var(--surface-2,#fbf1ec);border-radius:12px;padding:10px 12px}
+  .rt-row .rt-ic{font-size:16px}
+  .rt-row div{font-size:13px;color:var(--ink,#4a3b34)}
+  .quiz-days{display:flex;gap:10px;flex-wrap:wrap}
+  .quiz-day{flex:1;min-width:78px;background:var(--surface-2,#fbf1ec);border-radius:14px;padding:12px;text-align:center;border:2px solid transparent}
+  .quiz-day.today{border-color:var(--brand,#F26D92);background:var(--brand-tint,#fff0f5)}
+  .quiz-day b{display:block;font-size:15px;color:var(--ink,#4a3b34)}
+  .quiz-day span{font-size:11px;color:var(--ink-soft,#a08a7d)}
+  .quiz-q{background:var(--surface-2,#fbf1ec);border-radius:14px;padding:16px;font-size:14px;color:var(--ink,#4a3b34);min-height:54px;display:flex;align-items:center}
+  .script-acts{display:flex;flex-direction:column;gap:10px}
+  .script-act{background:var(--surface-2,#fbf1ec);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:flex-start;border:2px solid transparent;cursor:pointer;transition:all .2s}
+  .script-act.done{border-color:var(--brand,#F26D92);background:var(--brand-tint,#fff0f5)}
+  .script-act .sa-no{font-size:24px}
+  .script-act .sa-body{flex:1}
+  .script-act .sa-title{font-size:14px;font-weight:700;color:var(--ink,#4a3b34)}
+  .script-act .sa-story{font-size:12px;color:var(--ink-soft,#a08a7d);margin:2px 0}
+  .script-act .sa-q{font-size:13px;color:var(--brand-d,#dd5e86)}
+  .script-act .sa-flag{font-size:12px;color:var(--ink-soft,#a08a7d);white-space:nowrap}
   .chest-room{background:linear-gradient(180deg,#2a1b3d,#1a1025);border-radius:26px;padding:22px;text-align:center;position:relative;overflow:hidden;min-height:320px}
   .chest-room h3{color:#FCE7F3;font-size:18px;font-weight:800;margin-bottom:4px}
   .chest-room .sub{color:#D8B4FE;font-size:12px;margin-bottom:20px}
@@ -1276,6 +1301,9 @@
             <div class="act" onclick="go('rich')"><div class="e">🎲</div><div class="t">大富翁</div></div>
             <div class="act" onclick="go('passport')"><div class="e">📔</div><div class="t">学习护照</div></div>
             <div class="act" onclick="go('challenge')"><div class="e">⏳</div><div class="t">时间挑战</div></div>
+            <div class="act" onclick="go('role')"><div class="e">🎭</div><div class="t">角色扮演</div></div>
+            <div class="act" onclick="go('quiz')"><div class="e">🏆</div><div class="t">知识竞赛</div></div>
+            <div class="act" onclick="go('script')"><div class="e">🎬</div><div class="t">剧本杀</div></div>
           </div>
         </div>
           </div><!-- /grid3 -->
@@ -2339,6 +2367,105 @@
       </div>
     </div>
 
+    <!-- ==================== 角色扮演屏 ==================== -->
+    <div class="screen" id="sc-role">
+      <div class="card" style="max-width:600px;margin:0 auto">
+        <div class="card-h"><span class="t">🎭 角色扮演</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="bank-tagline">换上角色，把学习变成一场戏！</div>
+        <div class="bank-section">
+          <div class="bank-h">🎯 玩法说明</div>
+          <div class="bank-howto">
+            <div class="bh-step"><span class="bh-ic">🎭</span><div><b>选角色</b><span>挑一个想演的人</span></div></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">📜</span><div><b>接任务</b><span>角色专属小任务</span></div></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🏅</span><div><b>领奖励</b><span>演完盖个章</span></div></div>
+          </div>
+        </div>
+        <div class="bank-section">
+          <div class="bank-h">🎭 今天演谁</div>
+          <div class="role-grid" id="roleGrid"></div>
+        </div>
+        <div class="bank-section">
+          <div class="bank-h">📜 角色任务</div>
+          <div class="role-tasks" id="roleTasks"></div>
+        </div>
+        <div class="bank-section">
+          <div class="bank-h">💡 懒妈技巧<span class="bank-h-sub">——给家长的省力小窍门</span></div>
+          <div class="bank-tips">
+            <div class="bt-row"><span class="bt-ic">🎬</span><div><b>演一遍记得牢</b><br><span>孩子当老师最专注</span></div></div>
+            <div class="bt-row"><span class="bt-ic">🧩</span><div><b>任务要具体</b><br><span>一个小任务就好</span></div></div>
+            <div class="bt-row"><span class="bt-ic">👏</span><div><b>多鼓掌少纠正</b><br><span>先夸再悄悄补</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 家庭知识竞赛屏 ==================== -->
+    <div class="screen" id="sc-quiz">
+      <div class="card" style="max-width:600px;margin:0 auto">
+        <div class="card-h"><span class="t">🏆 家庭知识竞赛</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="bank-tagline">全家一起答题，知识记得更牢！</div>
+        <div class="bank-section">
+          <div class="bank-h">🎯 玩法说明</div>
+          <div class="bank-howto">
+            <div class="bh-step"><span class="bh-ic">📅</span><div><b>定赛日</b><span>周一三五开赛</span></div></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🎲</span><div><b>抽题目</b><span>从本周内容出</span></div></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🎁</span><div><b>发奖励</b><span>答对赢小奖</span></div></div>
+          </div>
+        </div>
+        <div class="bank-section">
+          <div class="bank-h">📅 本周赛日</div>
+          <div class="quiz-days" id="quizDays"></div>
+        </div>
+        <div class="bank-section">
+          <div class="bank-h">🎲 抽一道题</div>
+          <div class="quiz-q" id="quizBox">点按钮抽本周题目</div>
+          <button class="bank-btn" onclick="quizDraw()" style="margin-top:10px">🎲 抽题</button>
+        </div>
+        <div class="bank-section">
+          <div class="bank-h">💡 懒妈技巧<span class="bank-h-sub">——给家长的省力小窍门</span></div>
+          <div class="bank-tips">
+            <div class="bt-row"><span class="bt-ic">👨‍👩‍👧</span><div><b>全家都参与</b><br><span>气氛比输赢重要</span></div></div>
+            <div class="bt-row"><span class="bt-ic">📚</span><div><b>题从本周来</b><br><span>复习不额外备课</span></div></div>
+            <div class="bt-row"><span class="bt-ic">🍬</span><div><b>小奖即时给</b><br><span>一块糖也开心</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 学习剧本杀屏 ==================== -->
+    <div class="screen" id="sc-script">
+      <div class="card" style="max-width:600px;margin:0 auto">
+        <div class="card-h"><span class="t">🎬 学习剧本杀</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="bank-tagline">把知识藏进故事，边演边学！</div>
+        <div class="bank-section">
+          <div class="bank-h">🎯 玩法说明</div>
+          <div class="bank-howto">
+            <div class="bh-step"><span class="bh-ic">📖</span><div><b>看剧情</b><span>四幕小故事</span></div></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🔍</span><div><b>解谜题</b><span>每幕藏一题</span></div></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🎬</span><div><b>推剧情</b><span>答对就续写</span></div></div>
+          </div>
+        </div>
+        <div class="bank-section">
+          <div class="bank-h">🎬 四幕剧情</div>
+          <div class="script-acts" id="scriptActs"></div>
+        </div>
+        <div class="bank-section">
+          <div class="bank-h">💡 懒妈技巧<span class="bank-h-sub">——给家长的省力小窍门</span></div>
+          <div class="bank-tips">
+            <div class="bt-row"><span class="bt-ic">📖</span><div><b>用孩子当主角</b><br><span>代入感最强</span></div></div>
+            <div class="bt-row"><span class="bt-ic">🔍</span><div><b>谜题要简单</b><br><span>一道题就够</span></div></div>
+            <div class="bt-row"><span class="bt-ic">🎭</span><div><b>过程比答案</b><br><span>享受推理就好</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ==================== 我的屏 ==================== -->
     <div class="screen" id="sc-me">
       <div class="card" style="max-width:600px;margin:0 auto">
@@ -2729,7 +2856,7 @@
       english:'sc-english-hub',read:'sc-read',write:'sc-write',math:'sc-math',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
       science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',
-      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',challenge:'sc-challenge',
+      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',challenge:'sc-challenge',role:'sc-role',quiz:'sc-quiz',script:'sc-script',
       'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff'};
     let target=map[screen];
     if(!target){ target = document.getElementById(screen)? screen : 'sc-home'; }
@@ -2751,6 +2878,9 @@
     else if(target==='sc-rich')renderRich();
     else if(target==='sc-passport')renderPassport();
     else if(target==='sc-challenge')renderChallenge();
+    else if(target==='sc-role')renderRole();
+    else if(target==='sc-quiz')renderQuiz();
+    else if(target==='sc-script')renderScript();
     else if(target==='sc-netdisk')renderNetHub();
     navSync(screen);
     window.scrollTo({top:0,behavior:'smooth'});
@@ -5227,6 +5357,9 @@
   const PASSPORT_STAMPS=[{id:'read',ic:'📚',name:'阅读章'},{id:'math',ic:'🧮',name:'口算章'},{id:'pinyin',ic:'🔤',name:'拼音章'},{id:'english',ic:'🍎',name:'英语章'},{id:'science',ic:'🔬',name:'科学章'},{id:'poem',ic:'📜',name:'古诗章'}];
   const PASSPORT_REWARD={ic:'🎉',name:'旅行/大餐',cost:50};
   const CHALLENGE_MODES=[{min:5,label:'⚡ 快速'},{min:10,label:'🔥 标准'},{min:15,label:'🏋️ 进阶'},{min:25,label:'🏆 马拉松'}];
+  const ROLE_CARDS=[{id:'teacher',ic:'👩‍🏫',name:'小老师',desc:'把刚学的讲给家长听',tasks:['讲一道口算题','教一个拼音','复述一个故事']},{id:'explorer',ic:'🧭',name:'探险家',desc:'在探险里发现知识',tasks:['找 3 个英语单词','收集 5 片叶子','解开一个谜题']}];
+  const QUIZ_DAYS=[{d:1,name:'周一'},{d:3,name:'周三'},{d:5,name:'周五'}];
+  const SCRIPT_ACTS=[{no:'第一幕',ic:'🌅',title:'引入',story:'故事开场，留下一个谜',q:'猜猜主角会遇到什么'},{no:'第二幕',ic:'😱',title:'难题',story:'出现一个知识关卡',q:'用本周学的知识解开它'},{no:'第三幕',ic:'⚔️',title:'挑战',story:'主角动手尝试',q:'你来帮主角做选择'},{no:'第四幕',ic:'🎉',title:'推进',story:'谜题解开，故事继续',q:'复述今天学到的'}];
   const GACHA_CATS=[['arith','🧮 算术'],['english','🔤 英语'],['knowledge','🌍 百科'],['poem','📜 古诗词']];
   function escHTML(x){return String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
   function gachaGet(k,d){try{const r=localStorage.getItem(k);return r?JSON.parse(r):d;}catch(e){return d;}}
@@ -5718,7 +5851,7 @@
   function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(meta.ext)return;html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on&&!(MODULE_META[m.id]||{}).ext;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';renderMiniClass();}
   function renderMiniClass(){var g=document.getElementById('miniClassGrid');if(!g)return;var html='';MODULES.forEach(function(m){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(!meta.ext)return;html+='<div class="mini-mod" onclick="openMini(\''+m.screen+'\')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">'+esc(m.sub)+'</span>':'')+'<span class="ext" title="站外学习网站">🔗</span></div>';});g.innerHTML=html||'<div class="empty">暂无在线学习模块</div>';}
   function openMini(screen){var op=MODULE_OPENERS[screen];if(op)op();else if(screen)go(screen);else toast('该内容暂未开放');}
-  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');},bank:renderBank,level:renderLevel,rich:renderRich,passport:renderPassport,challenge:renderChallenge,netdisk:function(){go('netdisk');}};
+  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');},bank:renderBank,level:renderLevel,rich:renderRich,passport:renderPassport,challenge:renderChallenge,role:renderRole,quiz:renderQuiz,script:renderScript,netdisk:function(){go('netdisk');}};
   function openModuleByIdx(idx){var m=MODULES[idx];if(!m)return;var op=MODULE_OPENERS[m.screen];if(op)op();else if(m.screen)go(m.screen);else toast('该内容暂未开放');}
   function renderStudies(){
     var box=document.getElementById('studyList');if(!box)return;
@@ -6117,6 +6250,42 @@
     if(chId){clearInterval(chId);chId=null;}
     chRender();
   }
+  var roleCur='teacher';
+  function renderRole(){
+    var grid=document.getElementById('roleGrid');
+    if(grid){
+      grid.innerHTML=ROLE_CARDS.map(function(r){return '<div class="role-card'+(r.id===roleCur?' on':'')+'" onclick="rolePick(\''+r.id+'\')"><span class="rc-ic">'+r.ic+'</span><b>'+r.name+'</b><span class="rc-desc">'+r.desc+'</span></div>';}).join('');
+    }
+    roleTasksShow();
+  }
+  function rolePick(id){roleCur=id;renderRole();var r=ROLE_CARDS.filter(function(x){return x.id===id;})[0];toast('🎭 今天演：'+(r?r.name:''));}
+  function roleTasksShow(){
+    var box=document.getElementById('roleTasks');
+    if(!box)return;
+    var r=ROLE_CARDS.filter(function(x){return x.id===roleCur;})[0];
+    box.innerHTML=r.tasks.map(function(t){return '<div class="rt-row"><span class="rt-ic">✅</span><div>'+t+'</div></div>';}).join('');
+  }
+  var quizPool=['识字：说出 5 个带木字旁的字','拼音：读出 b-p-d-q 四个声母','口算：7+8 等于多少','英语：苹果用英语怎么说','古诗：背一句写春天的诗','百科：太阳系有几颗行星'];
+  function renderQuiz(){
+    var box=document.getElementById('quizDays');
+    if(box){
+      var todayD=new Date().getDay();
+      box.innerHTML=QUIZ_DAYS.map(function(q){return '<div class="quiz-day'+(q.d===todayD?' today':'')+'"><b>'+q.name+'</b><span>'+(q.d===todayD?'今天开赛':'备战日')+'</span></div>';}).join('');
+    }
+    var qb=document.getElementById('quizBox');if(qb)qb.textContent='点按钮抽本周题目';
+  }
+  function quizDraw(){
+    var qb=document.getElementById('quizBox');
+    if(qb){var t=quizPool[Math.floor(Math.random()*quizPool.length)];qb.textContent='📝 '+t;toast('🎲 抽题成功');}
+  }
+  var scriptDone={};
+  function renderScript(){
+    var box=document.getElementById('scriptActs');
+    if(box){
+      box.innerHTML=SCRIPT_ACTS.map(function(a,i){return '<div class="script-act'+(scriptDone[i]?' done':'')+'" onclick="scriptPass('+i+')"><span class="sa-no">'+a.ic+'</span><div class="sa-body"><div class="sa-title">'+a.no+' · '+a.title+'</div><div class="sa-story">'+a.story+'</div><div class="sa-q">🔍 '+a.q+'</div></div><span class="sa-flag">'+(scriptDone[i]?'✅ 已过':'点我通关')+'</span></div>';}).join('');
+    }
+  }
+  function scriptPass(i){scriptDone[i]=true;renderScript();toast('🎬 第'+(i+1)+'幕通关！');}
   function renderReport(tab){var done=loadCheckinDone();var mood=loadMoodLog();var time=loadStudyTime();
     var days=[];var today=getTodayKey();
     if(tab==='today')days=[today];
