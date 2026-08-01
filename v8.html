@@ -1001,6 +1001,55 @@
   .mi-media{margin-top:6px;width:100%}
   .mi-media audio{width:100%;max-width:300px;height:34px}
   .mi-media .mini-btn{max-width:300px}
+  /* ====== 英语闪卡屏 ====== */
+  .mask{position:fixed;inset:0;background:rgba(20,16,28,.5);display:none;align-items:center;justify-content:center;z-index:60;padding:16px}
+  .mask.on{display:flex}
+  .flash-bar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+  .flash-bar .btn{padding:7px 12px;font-size:12px}
+  .flash-wrap{display:flex;gap:12px;align-items:flex-start}
+  .flash-sets{flex:0 0 132px;width:132px;display:flex;flex-direction:column;gap:8px;max-height:62vh;overflow:auto}
+  .fset{padding:9px 10px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--ink-soft);cursor:pointer;transition:.15s;display:flex;align-items:center;gap:6px}
+  .fset:hover{border-color:var(--brand-s)}
+  .fset.sel{background:linear-gradient(135deg,var(--brand),var(--sky));color:#fff;border-color:transparent}
+  .fset .fcnt{margin-left:auto;font-size:10px;opacity:.7;background:rgba(0,0,0,.08);padding:0 6px;border-radius:8px}
+  .fset.sel .fcnt{background:rgba(255,255,255,.25)}
+  .fset .fdel{margin-left:4px;opacity:.5;font-size:11px}
+  .fset.sel .fdel{opacity:.85}
+  .flash-main{flex:1;min-width:0}
+  .flash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:640px){.flash-grid{grid-template-columns:repeat(2,1fr)}.flash-wrap{flex-direction:column}.flash-sets{flex:1 1 auto;width:100%;flex-direction:row;flex-wrap:wrap;max-height:none}.fset{flex:1 1 auto}}
+  .fcard{perspective:900px;cursor:pointer;height:168px}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .4s;transform-style:preserve-3d}
+  .fcard.flipped .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:8px}
+  .fc-front .fc-img{width:100%;height:100%;object-fit:cover;border-radius:14px}
+  .fc-front .fc-em{font-size:46px}
+  .fc-tip{position:absolute;top:6px;left:0;right:0;text-align:center;font-size:10px;color:var(--ink-faint)}
+  .fc-back{transform:rotateY(180deg);background:linear-gradient(135deg,var(--brand-s),var(--sky))}
+  .fc-back .fc-en{font-size:22px;font-weight:900;color:var(--brand-d)}
+  .fc-back .fc-cn{font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .fc-actions{margin-top:8px;display:flex;gap:8px}
+  .fc-actions button,.fc-actions label{background:var(--surface);border:1px solid var(--line);border-radius:10px;width:30px;height:30px;display:grid;place-items:center;font-size:14px;cursor:pointer}
+  .flash-empty{text-align:center;color:var(--ink-faint);padding:40px 10px;font-size:13px}
+  .flash-study{width:min(420px,92vw);background:var(--surface);border-radius:22px;padding:18px;box-shadow:0 24px 60px rgba(0,0,0,.25)}
+  .fs-top{display:flex;justify-content:space-between;align-items:center;font-weight:800;color:var(--ink)}
+  .fs-close{cursor:pointer;opacity:.6;font-size:16px}
+  .fs-prog{font-size:12px;color:var(--ink-soft);text-align:center;margin:6px 0 14px}
+  .fs-card{perspective:1000px;height:300px;cursor:pointer}
+  .fs-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .fs-card.flipped .fs-inner{transform:rotateY(180deg)}
+  .fs-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+  .fs-front{background:var(--surface-2)}
+  .fs-front .fs-img{width:100%;height:100%;object-fit:cover}
+  .fs-front .fs-em{font-size:110px}
+  .fs-front .fs-let{font-size:130px;font-weight:900;color:var(--brand-d);text-transform:uppercase}
+  .fs-back{transform:rotateY(180deg);background:linear-gradient(135deg,var(--brand),var(--sky))}
+  .fs-back .fs-en{font-size:40px;font-weight:900;color:#fff;text-transform:lowercase}
+  .fs-back .fs-cn{font-size:18px;color:rgba(255,255,255,.9);margin-top:6px}
+  .fs-flip-tip{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:11px;color:var(--ink-faint)}
+  .fs-actions{display:flex;gap:8px;margin-top:14px}
+  .fs-actions .btn{flex:1;padding:9px;font-size:13px}
+
 </style>
 </head>
 <body>
@@ -1395,6 +1444,11 @@
           <div class="eng-entry" onclick="openRead()">
             <div class="ee-ic">🎤</div>
             <div class="ee-tx"><div class="ee-t">跟读练习</div><div class="ee-s">英语情景对话跟读</div></div>
+            <div class="ee-go">›</div>
+          </div>
+          <div class="eng-entry" onclick="openFlash()">
+            <div class="ee-ic">🃏</div>
+            <div class="ee-tx"><div class="ee-t">英语闪卡</div><div class="ee-s">图卡翻面 · 批量导入图片</div></div>
             <div class="ee-go">›</div>
           </div>
         </div>
@@ -2976,6 +3030,127 @@
 /* ================================================================
    英语对话数据
    ================================================================ */
+  /* ====== 英语闪卡 ====== */
+  const FLASH_KEY='mp_flash_v1';
+  let flashSets=[], currentFlashSet=null, studyIdx=0, studyList=[];
+  function seedFlashSets(){
+    const mk=function(en,cn,em){return {en:en,cn:cn,em:em,img:null};};
+    return [
+      {id:'tpl_animal',name:'动物 Animals',icon:'🐾',cards:WORDS_DATA.animal.flat().map(function(w){return mk(w.en,w.cn,w.em);})},
+      {id:'tpl_fruit',name:'水果 Fruits',icon:'🍎',cards:WORDS_DATA.fruit.flat().map(function(w){return mk(w.en,w.cn,w.em);})},
+      {id:'tpl_color',name:'颜色 Colors',icon:'🌈',cards:WORDS_DATA.color.flat().map(function(w){return mk(w.en,w.cn,w.em);})},
+      {id:'tpl_family',name:'家庭 Family',icon:'👨‍👩‍👧',cards:WORDS_DATA.family.flat().map(function(w){return mk(w.en,w.cn,w.em);})},
+      {id:'tpl_alpha',name:'字母 Alphabet',icon:'🔤',cards:'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(function(l){return mk(l,'字母 '+l,l);})},
+      {id:'tpl_num',name:'数字 Numbers',icon:'🔢',cards:[1,2,3,4,5,6,7,8,9,10].map(function(n){return mk(String(n),'数字 '+n,String(n));})}
+    ];
+  }
+  function getFlashSets(){try{return JSON.parse(localStorage.getItem(FLASH_KEY))||null;}catch(e){return null;}}
+  function setFlashSets(v){try{localStorage.setItem(FLASH_KEY,JSON.stringify(v));}catch(e){toast('存储空间不足，图片可能太多');}}
+  function seedFlash(){
+    const sv=getFlashSets();
+    if(sv&&Array.isArray(sv)&&sv.length){flashSets=sv;}
+    else{flashSets=seedFlashSets();setFlashSets(flashSets);}
+    currentFlashSet=flashSets[0]?flashSets[0].id:null;
+  }
+  function findFlashSet(id){return flashSets.find(function(s){return s.id===id;});}
+  function renderFlashSets(){
+    const box=document.getElementById('flashSets');if(!box)return;box.innerHTML='';
+    flashSets.forEach(function(s){
+      const d=document.createElement('div');
+      d.className='fset'+(s.id===currentFlashSet?' sel':'');
+      d.innerHTML='<span>'+esc(s.icon||'🃏')+'</span><span>'+esc(s.name)+'</span><span class="fcnt">'+(s.cards?s.cards.length:0)+'</span>'+(s.id.indexOf('tpl_')===0?'':'<span class="fdel" onclick="event.stopPropagation();delFlashSet(\''+s.id+'\')">🗑</span>');
+      d.onclick=function(){currentFlashSet=s.id;renderFlashSets();renderFlashCards();};
+      box.appendChild(d);
+    });
+  }
+  function renderFlashCards(){
+    const g=document.getElementById('flashGrid');if(!g)return;
+    const set=findFlashSet(currentFlashSet);
+    if(!set||!set.cards||!set.cards.length){g.innerHTML='<div class="flash-empty">这组还没有卡片，点「＋ 新建组」或批量导入图片～</div>';return;}
+    g.innerHTML='';
+    set.cards.forEach(function(c,i){
+      const front=c.img?'<img class="fc-img" src="'+c.img+'">':'<div class="fc-em">'+(c.em||'🃏')+'</div>';
+      const div=document.createElement('div');div.className='fcard';
+      div.innerHTML='<div class="fc-inner">'
+        +'<div class="fc-face fc-front">'+front+'<div class="fc-tip">点击翻面</div></div>'
+        +'<div class="fc-face fc-back"><div class="fc-en">'+esc(c.en)+'</div><div class="fc-cn">'+esc(c.cn)+'</div>'
+        +'<div class="fc-actions"><button title="听发音" onclick="event.stopPropagation();speakWord(\''+esc(c.en)+'\')">🔊</button>'
+        +'<label title="换图">📷<input type="file" accept="image/*" style="display:none" onchange="importCardImage(\''+currentFlashSet+'\','+i+',this.files[0])"></label></div></div></div>';
+      div.onclick=function(){div.classList.toggle('flipped');};
+      g.appendChild(div);
+    });
+  }
+  function openFlash(){
+    if(!flashSets.length)seedFlash();
+    renderFlashSets();renderFlashCards();go('sc-flash');
+  }
+  function addFlashSet(){
+    const name=prompt('新闪卡组名称（如：我的动物卡）','我的闪卡组');
+    if(!name)return;
+    const id='u_'+Date.now();
+    flashSets.push({id:id,name:name,icon:'🃏',cards:[]});
+    setFlashSets(flashSets);currentFlashSet=id;renderFlashSets();renderFlashCards();
+    toast('已新建「'+name+'」');
+  }
+  function delFlashSet(id){
+    if(typeof confirm==='function'&&!confirm('删除这组闪卡？此操作不可恢复'))return;
+    flashSets=flashSets.filter(function(s){return s.id!==id;});
+    setFlashSets(flashSets);
+    if(currentFlashSet===id)currentFlashSet=flashSets[0]?flashSets[0].id:null;
+    renderFlashSets();renderFlashCards();toast('已删除');
+  }
+  function importCardImage(setId,idx,file){
+    if(!file)return;
+    const reader=new FileReader();
+    reader.onload=function(){
+      compressImage(reader.result,480,function(b64){
+        const s=findFlashSet(setId);if(!s||!s.cards[idx])return;
+        s.cards[idx].img=b64;setFlashSets(flashSets);renderFlashCards();toast('图片已更新 ✔');
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+  function batchImportImages(setId,files){
+    if(!files||!files.length){toast('未选择图片');return;}
+    const s=findFlashSet(setId);if(!s)return;
+    const arr=Array.prototype.slice.call(files).filter(function(f){return /image/i.test(f.type);});
+    if(!arr.length){toast('请选择图片文件');return;}
+    const n=Math.min(arr.length,s.cards.length);
+    let done=0;
+    arr.forEach(function(f,i){
+      if(i>=s.cards.length)return;
+      const reader=new FileReader();
+      reader.onload=function(){
+        compressImage(reader.result,480,function(b64){
+          s.cards[i].img=b64;done++;
+          if(done>=n){setFlashSets(flashSets);renderFlashCards();toast('已导入 '+n+' 张图');}
+        });
+      };
+      reader.readAsDataURL(f);
+    });
+    if(arr.length>s.cards.length){toast('图片('+arr.length+')多于卡片('+s.cards.length+')，仅按序填充前 '+s.cards.length+' 张');}
+  }
+  function openFlashStudy(setId){
+    const s=findFlashSet(setId||currentFlashSet);if(!s||!s.cards||!s.cards.length){toast('这组还没有卡片');return;}
+    studyList=s.cards;studyIdx=0;
+    document.getElementById('fsTitle').textContent=s.name+' · 学习模式';
+    document.getElementById('flashStudy').classList.add('on');
+    renderStudy();
+  }
+  function renderStudy(){
+    const c=studyList[studyIdx];if(!c)return;
+    const card=document.getElementById('fsCard');card.classList.remove('flipped');
+    const isLetter=c.em&&/^[A-Za-z0-9]$/.test(c.em);
+    const front=c.img?'<img class="fs-img" src="'+c.img+'">':(isLetter?'<div class="fs-let">'+esc(c.en)+'</div>':'<div class="fs-em">'+esc(c.em||'🃏')+'</div>');
+    document.getElementById('fsInner').innerHTML='<div class="fs-face fs-front">'+front+'<div class="fs-flip-tip">点击翻面看答案</div></div>'
+      +'<div class="fs-face fs-back"><div class="fs-en">'+esc(c.en)+'</div><div class="fs-cn">'+esc(c.cn)+'</div></div>';
+    document.getElementById('fsProg').textContent='第 '+(studyIdx+1)+' / '+studyList.length+' 张';
+  }
+  function flipStudy(){const el=document.getElementById('fsCard');if(el)el.classList.toggle('flipped');}
+  function studyNext(){if(studyIdx<studyList.length-1){studyIdx++;renderStudy();}}
+  function studyPrev(){if(studyIdx>0){studyIdx--;renderStudy();}}
+  function closeFlashStudy(){const el=document.getElementById('flashStudy');if(el)el.classList.remove('on');}
+
   const DIALOGUE_DATA=[
     {cat:'问答句式', icon:'🍎', q:"What's this?", a:"It's an apple.", zh:'这是什么？——这是一个苹果。'},
     {cat:'问答句式', icon:'🐶', q:"What's this?", a:"It's a dog.", zh:'这是什么？——这是一只小狗。'},
@@ -5294,6 +5469,7 @@
   function init(){
     loadContent();
     seedUserBooks();
+    seedFlash();
     loadAiConfig();
     renderPet(); renderGrowthTrack(); renderGrowGrid(currentPartner); updatePetButtons();
     initCalendar(); initKeypad(); refreshPinNow(); initPsetCtrls();
@@ -5421,6 +5597,35 @@
               <button class="btn" onclick="importNetLinks()">📥 导入到学习内容</button>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 英语闪卡屏 ==================== -->
+    <div class="screen" id="sc-flash">
+      <div class="card" style="max-width:760px;margin:0 auto">
+        <div class="card-h"><span class="t">🃏 英语闪卡</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="flash-bar">
+          <button class="btn" onclick="openFlashStudy(currentFlashSet)">▶️ 学习模式</button>
+          <label class="btn ghost">📷 批量导入图<input type="file" accept="image/*" multiple webkitdirectory style="display:none" onchange="batchImportImages(currentFlashSet,this.files)"></label>
+          <button class="btn ghost" onclick="addFlashSet()">＋ 新建组</button>
+        </div>
+        <div class="flash-wrap">
+          <div class="flash-sets" id="flashSets"></div>
+          <div class="flash-main"><div class="flash-grid" id="flashGrid"></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- 学习模式浮层 -->
+    <div class="mask" id="flashStudy">
+      <div class="flash-study">
+        <div class="fs-top"><span id="fsTitle">学习模式</span><span class="fs-close" onclick="closeFlashStudy()">✕</span></div>
+        <div class="fs-prog" id="fsProg"></div>
+        <div class="fs-card" id="fsCard" onclick="flipStudy()"><div class="fs-inner" id="fsInner"></div></div>
+        <div class="fs-actions">
+          <button class="btn ghost" onclick="studyPrev()">‹ 上一张</button>
+          <button class="btn" onclick="speakWord(studyList[studyIdx]?studyList[studyIdx].en:'')">🔊 听</button>
+          <button class="btn ghost" onclick="studyNext()">下一张 ›</button>
         </div>
       </div>
     </div>
