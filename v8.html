@@ -2455,7 +2455,7 @@
       english:'sc-english-hub',read:'sc-read',write:'sc-write',math:'sc-math',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
       science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',
-      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',
+      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',
       'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff'};
     let target=map[screen];
     if(!target){ target = document.getElementById(screen)? screen : 'sc-home'; }
@@ -2472,6 +2472,7 @@
     else if(target==='sc-timer')initTimer();
     else if(target==='sc-report')initReport();
     else if(target==='sc-achievements')initAchievements();
+    else if(target==='sc-bank')renderBank();
     else if(target==='sc-netdisk')renderNetHub();
     navSync(screen);
     window.scrollTo({top:0,behavior:'smooth'});
@@ -4285,11 +4286,11 @@
     let media='';
     if(b==='video'&&it.playable){ media='<div class="n-media"><video controls preload="none" src="'+esc(it.url)+'"></video></div>'; }
     else if(b==='audio'&&it.playable){ media='<div class="n-media"><audio controls preload="none" src="'+esc(it.url)+'"></audio></div>'; }
-    else { media='<div class="n-media"><button class="btn ghost" onclick="window.open('+JSON.stringify(it.url)+',\'_blank\')">🔗 打开网盘'+(it.code?('（提取码 '+it.code+'）'):'')+'</button></div>'; }
+    else { media='<div class="n-media"><button class="btn ghost" onclick="netOpen(\''+it.id+'\')">🔗 打开网盘'+(it.code?('（提取码 '+it.code+'）'):'')+'</button></div>'; }
     const meta={video:'动画片',book:'绘本图书',audio:'故事音频'}[b]||'内容';
     return '<div class="net-card"><div class="n-ic">'+NET_BOARDS[b].icon+'</div>'+
       '<div class="n-info"><div class="n-title">'+esc(it.title)+'</div><div class="n-sub">🌐 '+meta+(it.code?(' · 码 '+it.code):'')+(it.playable?' · 可直接播放':'')+'</div>'+media+'</div>'+
-      '<div class="n-act"><button class="mini-btn del" onclick="deleteNetItem(\''+it.id+'\')">删除</button></div></div>';
+      '<div class="n-act"><button class="mini-btn" onclick="editNetItem(\''+it.id+'\')">编辑</button><button class="mini-btn del" onclick="deleteNetItem(\''+it.id+'\')">删除</button></div></div>';
   }
   function renderNetHub(){
     const box=document.getElementById('netHubList');if(!box)return;
@@ -4308,6 +4309,33 @@
     box.innerHTML=items.slice().reverse().map(netCardHTML).join('');
   }
   function deleteNetItem(id){if(!confirm('确定删除该网盘内容？'))return;setNetItems(getNetItems().filter(function(x){return x.id!==id;}));renderNetHub();renderNetItems();}
+  function getNetItem(id){ return getNetItems().filter(function(x){return x.id===id;})[0]; }
+  function netOpen(id){ const it=getNetItem(id); if(it&&it.url){ window.open(it.url,'_blank'); } else { toast('该内容链接为空'); } }
+  function editNetItem(id){
+    const it=getNetItem(id); if(!it){toast('内容不存在');return;}
+    document.getElementById('netEditId').value=it.id;
+    document.getElementById('netEditTitle').value=it.title||'';
+    document.getElementById('netEditUrl').value=it.url||'';
+    document.getElementById('netEditCode').value=it.code||'';
+    document.getElementById('netEditBoard').value=itemBoard(it);
+    document.getElementById('netEditPop').classList.add('on');
+  }
+  function closeNetEdit(){ const p=document.getElementById('netEditPop'); if(p)p.classList.remove('on'); }
+  function saveNetEdit(){
+    const id=document.getElementById('netEditId').value;
+    const title=document.getElementById('netEditTitle').value.trim();
+    let url=document.getElementById('netEditUrl').value.trim();
+    const code=document.getElementById('netEditCode').value.trim().replace(/[^a-zA-Z0-9]/g,'').slice(0,4);
+    const board=document.getElementById('netEditBoard').value;
+    if(!url){toast('链接不能为空');return;}
+    if(!/^https?:\/\//.test(url)){toast('链接格式不正确（需 http/https 开头）');return;}
+    const items=getNetItems(); const idx=items.findIndex(function(x){return x.id===id;});
+    if(idx<0){toast('内容不存在');return;}
+    const playable = board==='video'?isDirectVideo(url):(board==='audio'?isDirectAudio(url):false);
+    items[idx]=Object.assign({},items[idx],{title:title||'网盘内容',url:url,code:code,board:board,kind:board,playable:playable});
+    setNetItems(items); closeNetEdit(); renderNetHub(); renderNetItems();
+    toast('已保存修改 ✔');
+  }
 
 /* ================================================================
    逻辑思维数据
@@ -5726,6 +5754,37 @@
             <div class="mb-row" style="justify-content:flex-end;margin-top:10px">
               <button class="btn ghost" onclick="closeNetImport()">取消</button>
               <button class="btn" onclick="importNetLinks()">📥 导入</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 网盘内容编辑弹窗（二次编辑已导入条目） -->
+    <div class="mb-mask" id="netEditPop" onclick="if(event.target===this)closeNetEdit()">
+      <div class="mb-card" style="max-width:540px">
+        <div class="mb-head"><h3>✏️ 编辑网盘内容</h3><button class="mb-close" onclick="closeNetEdit()">×</button></div>
+        <div class="mb-body">
+          <div class="mb-form">
+            <input id="netEditId" type="hidden">
+            <label>标题</label>
+            <input id="netEditTitle" placeholder="内容标题">
+            <label>网盘链接 / 直链</label>
+            <input id="netEditUrl" placeholder="https://...">
+            <div class="mb-two">
+              <div><label>提取码（可选）</label><input id="netEditCode" maxlength="4" placeholder="如 ab12"></div>
+              <div><label>所属板块</label>
+                <select id="netEditBoard">
+                  <option value="video">📺 动画片视频</option>
+                  <option value="book">📚 绘本图书</option>
+                  <option value="audio">🎧 故事音频</option>
+                </select>
+              </div>
+            </div>
+            <div class="net-note">💡 修改链接后可跨板块移动（如视频改绘本）；直链会自动启用页内播放。改动仅保存在本机。</div>
+            <div class="mb-row" style="justify-content:flex-end;margin-top:10px">
+              <button class="btn ghost" onclick="closeNetEdit()">取消</button>
+              <button class="btn" onclick="saveNetEdit()">💾 保存修改</button>
             </div>
           </div>
         </div>

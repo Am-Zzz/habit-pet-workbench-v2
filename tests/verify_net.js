@@ -88,6 +88,19 @@ S("deleteNetItem(__baidu.id);");
 S("var __items3 = getNetItems();");
 E('删除百度项后剩 3 条', G("__items3.length") === 3);
 
+// ---- 二次编辑 + 跳转 ----
+E('netOpen 函数已定义（修复跳转）', typeof G("netOpen") === 'function');
+S("editNetItem(__mp4.id);");
+S("var __editOpen = document.getElementById('netEditPop').classList.contains('on');");
+S("document.getElementById('netEditUrl').value='https://cdn.example.com/newcartoon.m4a';");
+S("document.getElementById('netEditBoard').value='audio';");
+S("netTab='audio'; saveNetEdit();");
+S("var __after = getNetItem(__mp4.id);");
+E('二次编辑：弹窗正确打开', G("__editOpen") === true);
+E('二次编辑：链接已更新', G("__after && __after.url === 'https://cdn.example.com/newcartoon.m4a'"));
+E('二次编辑：可跨板块移动(video→audio)', G("__after && __after.board === 'audio'"));
+E('二次编辑：跨板块后按直链重算可播放', G("__after && __after.playable === true"));
+
 E('无 JS 错误', jsErrors.length === 0);
 if(jsErrors.length) console.log(jsErrors.join('\n'));
 
