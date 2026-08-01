@@ -146,18 +146,18 @@
   .learn-section-h .l b{color:var(--brand-d)}
   .learn-section-h .r{font-size:11px;color:var(--ink-faint);font-weight:700}
 
-  /* 主页：小教室 · 最右列新板块 */
+  /* 主页：小教室 · 最右列新板块（紧凑，避免遮挡其他板块） */
   .home-wrap{display:flex;gap:16px;align-items:flex-start}
   .home-main{flex:1;min-width:0}
-  .home-mini{flex:0 0 252px;width:252px}
-  .mini-board{position:sticky;top:8px}
-  .mini-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:4px}
-  .mini-mod{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 10px;text-align:center;cursor:pointer;transition:.15s;position:relative}
+  .home-mini{flex:0 0 210px;width:210px}
+  .mini-board{position:static}
+  .mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:4px}
+  .mini-mod{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:9px 6px;text-align:center;cursor:pointer;transition:.15s;position:relative;min-width:0}
   .mini-mod:hover{border-color:var(--brand-s);box-shadow:0 6px 16px rgba(244,130,155,.15);transform:translateY(-2px)}
-  .mini-mod .e{font-size:26px;display:block;line-height:1}
-  .mini-mod .t{font-size:14px;font-weight:800;color:var(--ink);display:block;margin-top:5px}
-  .mini-mod .sub{font-size:11px;color:var(--ink-faint);display:block;margin-top:2px}
-  .mini-mod .ext{font-size:11px;opacity:.5;margin-left:3px}
+  .mini-mod .e{font-size:21px;display:block;line-height:1}
+  .mini-mod .t{font-size:12px;font-weight:800;color:var(--ink);display:block;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mini-mod .sub{font-size:9.5px;color:var(--ink-faint);display:block;margin-top:1px}
+  .mini-mod .ext{font-size:10px;opacity:.5;margin-left:2px}
   @media(max-width:880px){
     .home-wrap{flex-direction:column}
     .home-mini{flex:1 1 auto;width:100%}
@@ -994,6 +994,13 @@
   .ai-offline{font-size:11px;color:var(--ink-soft)}
 
   @keyframes popIn{from{transform:translateY(12px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+  /* 网盘导入（百度/夸克） */
+  .net-note{font-size:11px;color:var(--ink-soft);background:var(--surface-2);border:1px dashed var(--line);border-radius:10px;padding:8px 10px;margin:8px 0;line-height:1.65}
+  .net-sec-h{font-size:13px;font-weight:800;color:var(--brand-d);margin:14px 0 6px;display:flex;align-items:center;gap:6px}
+  .net-sec-h .net-clear{margin-left:auto;font-size:11px;font-weight:700;color:var(--ink-soft);cursor:pointer}
+  .mi-media{margin-top:6px;width:100%}
+  .mi-media audio{width:100%;max-width:300px;height:34px}
+  .mi-media .mini-btn{max-width:300px}
 </style>
 </head>
 <body>
@@ -1193,10 +1200,6 @@
     <div class="screen" id="sc-pets">
       <div class="card" style="max-width:680px;margin:0 auto">
         <div class="card-h"><span class="t">宠物图鉴</span><span class="s">已收集 3 / 8</span></div>
-        <div class="gacha-bar">
-          <button class="btn" style="background:linear-gradient(135deg,#9B8BE0,#6B5BD8);box-shadow:0 8px 18px rgba(107,91,216,.3)">🎁 抽盲盒 · ⭐10</button>
-          <button class="btn ghost">🛒 积分兑换</button>
-        </div>
         <div class="grid-pet">
           <div class="pcard owned"><span class="rib n">普通</span><div class="av">🐶</div><div class="pn">小萌</div><div class="pp">6 级成长</div><div class="pcard-actions"><button class="use" onclick="showGrow('dog')">看成长</button><button class="use" data-set-partner="dog" onclick="setPartner('dog');go('home')">设为主页伙伴</button></div></div>
           <div class="pcard owned"><span class="rib n">普通</span><div class="av cat-av"><img src="pets/cat-avatar.jpg" alt="咪咪"></div><div class="pn">咪咪</div><div class="pp">6 级成长</div><div class="pcard-actions"><button class="use" onclick="showGrow('cat')">看成长</button><button class="use" data-set-partner="cat" onclick="setPartner('cat');go('home')">设为主页伙伴</button></div></div>
@@ -1631,6 +1634,7 @@
             <div class="bk-tools">
               <div class="bk-count">共 <b id="bookCount">0</b> 本</div>
               <button class="bk-shelf-btn" onclick="openMyBooks()">✏️ 我的绘本</button>
+              <button class="bk-shelf-btn" onclick="openNetImport()">🌐 网盘</button>
               <div class="bk-levels lrn-pill" id="bkLevelPill">
                 <button class="sel" data-level="all" onclick="switchBookLevel('all',this)">全部</button>
                 <button data-level="幼升小" onclick="switchBookLevel('幼升小',this)">AA级</button>
@@ -3925,7 +3929,7 @@
   function saveAiChat(id,msgs){try{const all=JSON.parse(localStorage.getItem(BOOK_CHAT_KEY))||{};all[id]=msgs;localStorage.setItem(BOOK_CHAT_KEY,JSON.stringify(all));}catch(e){}}
   /* ---- 我的绘本管理 ---- */
   let editBookId=null;
-  function openMyBooks(){renderMyBooks();document.getElementById('myBooksPop').classList.add('on');}
+  function openMyBooks(){renderMyBooks();renderNetItems();document.getElementById('myBooksPop').classList.add('on');}
   function closeMyBooks(){document.getElementById('myBooksPop').classList.remove('on');}
   function renderMyBooks(){
     const list=document.getElementById('mbList');const books=getUserBooks();
@@ -3980,6 +3984,57 @@
     const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='my_books.json';a.click();
     setTimeout(function(){URL.revokeObjectURL(a.href);},1000);toast('已导出 my_books.json');
   }
+
+  /* ===== 网盘导入（百度/夸克）===== */
+  const NET_ITEMS_KEY='mp_net_v1';
+  function getNetItems(){try{return JSON.parse(localStorage.getItem(NET_ITEMS_KEY))||[];}catch(e){return [];}}
+  function setNetItems(a){try{localStorage.setItem(NET_ITEMS_KEY,JSON.stringify(a));}catch(e){}}
+  function isDirectAudio(u){return /\.(mp3|m4a|aac|wav|ogg|oga|flac|webm)(\?|$|#)/i.test(u);}
+  function openNetImport(){document.getElementById('netLinks').value='';document.getElementById('netTitle').value='';document.getElementById('netKind').value='audio';document.getElementById('netImportPop').classList.add('on');}
+  function closeNetImport(){document.getElementById('netImportPop').classList.remove('on');}
+  function deriveNetTitle(url,code){
+    if(/pan\.baidu\.com/.test(url))return '百度网盘内容'+(code?('('+code+')'):'');
+    if(/quark/.test(url)||/lanzou/.test(url))return '夸克网盘内容'+(code?('('+code+')'):'');
+    try{const u=new URL(url);const seg=decodeURIComponent(u.pathname.split('/').filter(Boolean).pop()||'');if(seg&&seg.length>1)return seg.replace(/\.[^.]+$/,'');
+    }catch(e){}
+    return '网盘内容';
+  }
+  function importNetLinks(){
+    const raw=document.getElementById('netLinks').value.trim();
+    const kind=document.getElementById('netKind').value;
+    const baseTitle=document.getElementById('netTitle').value.trim();
+    if(!raw){toast('请粘贴至少一个链接');return;}
+    const lines=raw.split(/\r?\n/).map(function(s){return s.trim();}).filter(Boolean);
+    const items=getNetItems();let n=0;
+    lines.forEach(function(line,idx){
+      const m=line.match(/(https?:\/\/\S+)/);if(!m)return;
+      let url=m[0].replace(/[。，,）)]$/,'');
+      const cm=line.match(/提取码[\s:：]*([a-zA-Z0-9]{4})/);const code=cm?cm[1]:'';
+      if(!/^https?:\/\//.test(url))return;
+      const playable=isDirectAudio(url);
+      const title=baseTitle?(lines.length>1?baseTitle+' '+(idx+1):baseTitle):deriveNetTitle(url,code);
+      items.push({id:'net_'+Date.now()+'_'+idx+'_'+Math.random().toString(36).slice(2,6),title:title,url:url,code:code,kind:kind,playable:playable,added:Date.now()});
+      n++;
+    });
+    if(!n){toast('没有可导入的有效链接');return;}
+    setNetItems(items);closeNetImport();renderNetItems();toast('已导入 '+n+' 条到学习内容 ✔');
+  }
+  function renderNetItems(){
+    const box=document.getElementById('netList');if(!box)return;
+    const items=getNetItems();
+    if(!items.length){box.innerHTML='<div class="mb-hint" style="text-align:center;padding:10px">还没有网盘内容，点「🌐 网盘导入」粘贴链接吧～</div>';return;}
+    box.innerHTML='';
+    items.slice().reverse().forEach(function(it){
+      const d=document.createElement('div');d.className='mb-item';
+      let media='';
+      if(it.playable){media='<div class="mi-media"><audio controls src="'+esc(it.url)+'"></audio></div>';}
+      else{media='<div class="mi-media"><button class="mini-btn" onclick="window.open('+JSON.stringify(it.url)+',\'_blank\')">🔗 去网盘收听/查看'+(it.code?('（提取码 '+it.code+'）'):'')+'</button></div>';}
+      const kindLabel={audio:'音频',book:'绘本',poem:'古诗',image:'图片'}[it.kind]||'内容';
+      d.innerHTML='<div class="thumb">🌐</div><div class="mi-info"><div class="mi-title">'+esc(it.title)+'</div><div class="mi-sub">🌐 '+kindLabel+(it.code?(' · 码 '+it.code):'')+'</div></div>'+media+'<div class="mi-act"><button class="mini-btn del" onclick="deleteNetItem(\''+it.id+'\')">删除</button></div>';
+      box.appendChild(d);
+    });
+  }
+  function deleteNetItem(id){if(!confirm('确定删除该网盘内容？'))return;setNetItems(getNetItems().filter(function(x){return x.id!==id;}));renderNetItems();}
 
 /* ================================================================
    逻辑思维数据
@@ -5314,8 +5369,11 @@
             <button class="btn ghost" onclick="exportUserBooks()">⬇ 导出JSON</button>
             <label class="btn ghost">📥 导入JSON<input type="file" accept="application/json,.json" style="display:none" onchange="if(this.files[0])importUserBooksFile(this.files[0])"></label>
             <button class="btn" onclick="addUserBook()">＋ 新增</button>
+            <button class="btn" style="background:linear-gradient(135deg,#5B8FD0,#3a6fb0);color:#fff" onclick="openNetImport()">🌐 网盘导入</button>
           </div>
           <div class="mb-list" id="mbList"></div>
+          <div class="net-sec-h">🌐 网盘内容 <span class="net-clear" onclick="renderNetItems()">刷新</span></div>
+          <div class="mb-list" id="netList" style="margin-top:4px"></div>
           <div id="mbEditor" style="display:none" class="mb-form">
             <label>书名 *</label><input id="mbFTitle" placeholder="绘本名称">
             <div class="mb-two">
@@ -5332,6 +5390,35 @@
             <div class="mb-row" style="justify-content:flex-end;margin-top:10px">
               <button class="btn ghost" onclick="cancelEditBook()">取消</button>
               <button class="btn" id="mbFSaveBtn" onclick="saveUserBook()">💾 保存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 网盘导入弹窗（百度网盘 / 夸克网盘） -->
+    <div class="mb-mask" id="netImportPop" onclick="if(event.target===this)closeNetImport()">
+      <div class="mb-card" style="max-width:540px">
+        <div class="mb-head"><h3>🌐 网盘导入（百度 / 夸克）</h3><button class="mb-close" onclick="closeNetImport()">×</button></div>
+        <div class="mb-body">
+          <div class="mb-form">
+            <label>粘贴分享链接或直链（可一次粘贴多个，每行一个）</label>
+            <textarea id="netLinks" rows="5" placeholder="https://pan.baidu.com/s/xxxx  提取码: xxxx&#10;https://xxx.com/故事.mp3   （直接播放链接可本页收听）"></textarea>
+            <div class="mb-two">
+              <div><label>内容类型</label>
+                <select id="netKind">
+                  <option value="audio">音频 / 听故事</option>
+                  <option value="book">故事绘本</option>
+                  <option value="poem">古诗听故事</option>
+                  <option value="image">图片</option>
+                </select>
+              </div>
+              <div><label>默认标题（可选）</label><input id="netTitle" placeholder="留空自动取链接名"></div>
+            </div>
+            <div class="net-note">💡 登录你的网盘账号请在打开的网盘页面完成（本工具不保存网盘密码）。<br>· <b>直接播放链接</b>（.mp3/.m4a 等）可在此页直接用网盘地址收听；<br>· <b>分享页链接</b>会跳转到网盘页面收听/查看（可在那里登录）。<br>· 可一次粘贴一个文件夹里多个文件的链接，批量导入。</div>
+            <div class="mb-row" style="justify-content:flex-end;margin-top:10px">
+              <button class="btn ghost" onclick="closeNetImport()">取消</button>
+              <button class="btn" onclick="importNetLinks()">📥 导入到学习内容</button>
             </div>
           </div>
         </div>
