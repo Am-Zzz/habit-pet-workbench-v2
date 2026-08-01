@@ -867,6 +867,31 @@
   .bank-section{margin:14px 6px 10px}
   .bank-h{font-size:13px;font-weight:700;color:var(--ink-soft,#a08a7d);margin-bottom:8px;display:flex;align-items:center;gap:4px}
   .bank-h-sub{font-size:11px;font-weight:500;color:var(--ink-faint,#c9b3a8);margin-left:4px}
+  /* #4 闯关升级制 */
+  .level-track{display:flex;gap:6px;margin:8px 4px 14px}
+  .lv-card{flex:1;background:var(--surface,#fff);border:1.5px solid var(--line,#f0d9c8);border-radius:14px;padding:8px 4px 6px;text-align:center;position:relative;transition:all .2s;cursor:pointer}
+  .lv-card .lv-day{font-size:10px;color:var(--ink-faint,#c9b3a8);font-weight:600}
+  .lv-card .lv-ic{font-size:24px;line-height:1.1;margin:2px 0 4px;display:block;filter:grayscale(.6);opacity:.6}
+  .lv-card .lv-name{font-size:12px;font-weight:700;color:var(--ink-soft,#a08a7d)}
+  .lv-card .lv-tip{font-size:10px;color:var(--ink-faint,#c9b3a8);margin-top:2px;line-height:1.2}
+  .lv-card.cur{border-color:var(--brand,#DD5E86);background:#fff5f0;box-shadow:0 2px 6px rgba(221,94,134,.15)}
+  .lv-card.cur .lv-day{color:var(--brand,#DD5E86)}
+  .lv-card.cur .lv-ic{filter:none;opacity:1}
+  .lv-card.done{background:linear-gradient(135deg,#fce8d8,#f7d4c4);border-color:#e8b89a}
+  .lv-card.done .lv-ic{filter:none;opacity:1}
+  .lv-card.done::after{content:'✓';position:absolute;top:2px;right:4px;font-size:11px;color:#b86a4a;font-weight:800}
+  .lv-card.lock{opacity:.45}
+  .boss-card{margin:10px 4px;padding:14px;border-radius:16px;background:linear-gradient(135deg,#fff,#fff5f0);border:2px dashed var(--line,#f0d9c8);text-align:center;transition:all .3s}
+  .boss-card.win{background:linear-gradient(135deg,#fbd58e,#f7a86a);border:2px solid #e89152;color:#fff;box-shadow:0 6px 18px rgba(232,145,82,.3)}
+  .boss-card .boss-ic{font-size:42px;display:block;margin-bottom:4px;filter:grayscale(.8);opacity:.5}
+  .boss-card.win .boss-ic{filter:none;opacity:1;animation:bounce .8s ease}
+  .boss-card .boss-name{font-size:15px;font-weight:800;color:var(--ink-soft,#a08a7d)}
+  .boss-card.win .boss-name{color:#fff}
+  .boss-card .boss-reward{font-size:12px;color:var(--ink-faint,#c9b3a8);margin-top:2px}
+  .boss-card.win .boss-reward{color:#fff}
+  .boss-card .boss-note{font-size:10px;color:var(--ink-faint,#c9b3a8);margin-top:6px}
+  .boss-card.win .boss-note{color:rgba(255,255,255,.85)}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
   .bank-tagline{text-align:center;font-size:13px;color:var(--ink-soft,#a08a7d);margin:4px 0 14px;padding:0 8px;font-weight:600}
   .bank-howto{display:flex;align-items:center;gap:6px;margin:6px 0 4px}
   .bh-step{flex:1;background:var(--surface,#fff);border:1px solid var(--line,#f0d9c8);border-radius:12px;padding:10px 4px;text-align:center}
@@ -886,6 +911,26 @@
   .bt-row .bt-ic{font-size:18px;line-height:1.4}
   .bt-row b{color:var(--ink,#2C2C2A);font-size:13px}
   .bt-row span{color:var(--ink-soft,#a08a7d);font-size:11px}
+  .rich-board{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px;background:var(--surface,#fff);border-radius:18px;border:1px solid var(--line,#f0d9c8);margin-bottom:12px}
+  .rich-tile{aspect-ratio:1;display:grid;place-items:center;border-radius:12px;font-size:13px;font-weight:800;color:#fff;position:relative;transition:all .2s;box-shadow:0 2px 6px rgba(0,0,0,.08);cursor:default;text-align:center;padding:4px;line-height:1.1}
+  .rich-tile.cur{transform:scale(1.08);box-shadow:0 0 0 3px var(--brand,#DD5E86),0 6px 16px rgba(221,94,134,.45);z-index:2}
+  .rich-tile.own::after{content:'🏠';position:absolute;bottom:2px;right:2px;font-size:12px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
+  .rich-tile.lock{opacity:.55;filter:grayscale(.4)}
+  .rich-status{display:flex;justify-content:space-around;margin:12px 0 10px;padding:10px;background:var(--surface-2);border-radius:14px;border:1px solid var(--line)}
+  .rs-item{font-size:12px;color:var(--ink-soft)}
+  .rs-item b{color:var(--brand);font-size:16px;margin:0 3px;font-weight:800}
+  .rich-actions{display:flex;gap:10px;margin:10px 0}
+  .rich-btn{flex:1;padding:11px 0;border-radius:14px;border:none;font-size:13px;font-weight:800;cursor:pointer;transition:all .2s;color:#fff}
+  .rich-btn:active{transform:scale(.97)}
+  .rich-roll{background:linear-gradient(135deg,#F472B6,#EC4899);box-shadow:0 4px 12px rgba(244,114,182,.35)}
+  .rich-roll:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(244,114,182,.45)}
+  .rich-roll.spin{animation:diceShake .5s ease}
+  @keyframes diceShake{0%{transform:rotate(0)}25%{transform:rotate(-12deg) scale(1.05)}75%{transform:rotate(12deg) scale(1.05)}100%{transform:rotate(0) scale(1)}}
+  .rich-answer{background:linear-gradient(135deg,#34D399,#10B981);box-shadow:0 4px 12px rgba(52,211,153,.35)}
+  .rich-answer:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(52,211,153,.45)}
+  .rich-quest{min-height:60px;padding:12px;background:var(--surface-2);border-radius:14px;font-size:13px;color:var(--ink,#2C2C2A);text-align:center;border:1px dashed var(--line);line-height:1.6}
+  .rich-quest b{color:var(--brand);font-size:14px}
+  .rich-quest .rq-tip{color:var(--ink-soft);font-size:11px}
   .chest-room{background:linear-gradient(180deg,#2a1b3d,#1a1025);border-radius:26px;padding:22px;text-align:center;position:relative;overflow:hidden;min-height:320px}
   .chest-room h3{color:#FCE7F3;font-size:18px;font-weight:800;margin-bottom:4px}
   .chest-room .sub{color:#D8B4FE;font-size:12px;margin-bottom:20px}
@@ -1193,6 +1238,8 @@
             <div class="act" onclick="go('report')"><div class="e">📊</div><div class="t">报告</div></div>
             <div class="act" onclick="go('achievements')"><div class="e">🏅</div><div class="t">成就</div></div>
             <div class="act" onclick="go('bank')"><div class="e">🏦</div><div class="t">积分银行</div></div>
+            <div class="act" onclick="go('level')"><div class="e">🗡️</div><div class="t">闯关升级</div></div>
+            <div class="act" onclick="go('rich')"><div class="e">🎲</div><div class="t">大富翁</div></div>
           </div>
         </div>
           </div><!-- /grid3 -->
@@ -2093,6 +2140,81 @@
       </div>
     </div>
 
+    <!-- ==================== #4 闯关升级制 ==================== -->
+    <div class="screen" id="sc-level">
+      <div class="card" style="max-width:600px;margin:0 auto">
+        <div class="card-h"><span class="t">🗡️ 闯关升级制</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="bank-tagline">把一周学习目标拆成 5 关，每天过一关！</div>
+
+        <div class="bank-section">
+          <div class="bank-howto">
+            <div class="bh-step"><span class="bh-ic">📝</span><b>拆目标</b><br><span style="font-size:10px;color:var(--ink-faint)">5 个学习目标</span></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🗓️</span><b>每天一关</b><br><span style="font-size:10px;color:var(--ink-faint)">周一到周五</span></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🐲</span><b>周末 BOSS</b><br><span style="font-size:10px;color:var(--ink-faint)">通关领奖励</span></div>
+          </div>
+        </div>
+
+        <div class="bank-section">
+          <div class="bank-h">🗺️ 5 关进度</div>
+          <div class="level-track" id="levelTrack"></div>
+          <div id="bossSlot"></div>
+        </div>
+
+        <div class="bank-section">
+          <div class="bank-h">💡 懒妈技巧 <span class="bank-h-sub">——给家长的省力小窍门</span></div>
+          <div class="bank-tips">
+            <div class="bt-row"><span class="bt-ic">📌</span><div><b>用便利贴贴墙上</b><br><span>每关一张，一目了然</span></div></div>
+            <div class="bt-row"><span class="bt-ic">✂️</span><div><b>过一关撕一张</b><br><span>视觉成就感拉满</span></div></div>
+            <div class="bt-row"><span class="bt-ic">⏰</span><div><b>难度循序渐进</b><br><span>周一轻，周五稍难</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== #2 学习大富翁 ==================== -->
+    <div class="screen" id="sc-rich">
+      <div class="card" style="max-width:600px;margin:0 auto">
+        <div class="card-h"><span class="t">🎲 学习大富翁</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="bank-tagline">把知识点做成棋盘格，掷骰子学起来！</div>
+
+        <div class="bank-section">
+          <div class="bank-howto">
+            <div class="bh-step"><span class="bh-ic">📚</span><b>知识点</b><br><span style="font-size:10px;color:var(--ink-faint)">变成格子</span></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🎲</span><b>掷骰子</b><br><span style="font-size:10px;color:var(--ink-faint)">前进 N 格</span></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">✅</span><b>答对买地</b><br><span style="font-size:10px;color:var(--ink-faint)">盖房换积分</span></div>
+          </div>
+        </div>
+
+        <div class="bank-section">
+          <div class="bank-h">🏁 棋盘</div>
+          <div class="rich-board" id="richBoard"></div>
+          <div class="rich-status">
+            <span class="rs-item">📍 第 <b id="richPos">0</b> 格</span>
+            <span class="rs-item">🏘️ 已买地 <b id="richOwned">0</b> 块</span>
+            <span class="rs-item">⭐ 积分 <b id="richPoints">0</b></span>
+          </div>
+          <div class="rich-actions">
+            <button class="rich-btn rich-roll" id="richRollBtn" onclick="richRoll()">🎲 掷骰子</button>
+            <button class="rich-btn rich-answer" onclick="richAnswer()">✅ 答对买地</button>
+          </div>
+          <div class="rich-quest" id="richQuest">点击 🎲 掷骰子开始一局大富翁</div>
+        </div>
+
+        <div class="bank-section">
+          <div class="bank-h">💡 懒妈技巧 <span class="bank-h-sub">——给家长的省力小窍门</span></div>
+          <div class="bank-tips">
+            <div class="bt-row"><span class="bt-ic">📄</span><div><b>用 A4 纸手绘</b><br><span>一份棋盘反复用</span></div></div>
+            <div class="bt-row"><span class="bt-ic">🔁</span><div><b>数学/语文/英语都能改</b><br><span>换主题换玩法</span></div></div>
+            <div class="bt-row"><span class="bt-ic">⏱️</span><div><b>一局 20 分钟</b><br><span>碎片时间也能玩</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ==================== 我的屏 ==================== -->
     <div class="screen" id="sc-me">
       <div class="card" style="max-width:600px;margin:0 auto">
@@ -2483,7 +2605,7 @@
       english:'sc-english-hub',read:'sc-read',write:'sc-write',math:'sc-math',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
       science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',
-      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',
+      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',level:'sc-level',rich:'sc-rich',
       'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff'};
     let target=map[screen];
     if(!target){ target = document.getElementById(screen)? screen : 'sc-home'; }
@@ -2501,6 +2623,8 @@
     else if(target==='sc-report')initReport();
     else if(target==='sc-achievements')initAchievements();
     else if(target==='sc-bank')renderBank();
+    else if(target==='sc-level')renderLevel();
+    else if(target==='sc-rich')renderRich();
     else if(target==='sc-netdisk')renderNetHub();
     navSync(screen);
     window.scrollTo({top:0,behavior:'smooth'});
@@ -4423,7 +4547,10 @@
     document.getElementById('naTitle').textContent=title;
     const cookieBox=document.getElementById('naCookie');
     const note=document.getElementById('naNote');
-    if(netAcctTab==='aliyun'){
+    if(location.protocol==='file:'){
+      cookieBox.style.display='none';
+      note.innerHTML='⚠️ 你现在是<b>直接用文件打开</b>本页，保存/使用网盘账号必须走本地服务器（server.js）。请改用地址 <b>http://localhost:8124/v8.html</b> 打开本页后再保存。';
+    }else if(netAcctTab==='aliyun'){
       cookieBox.style.display='none';
       note.innerHTML='✅ 阿里云盘<b>公开分享免登录</b>：粘贴 <code>aliyundrive.com/s/xxx</code> 链接，点开即播，无需 cookie。';
     }else{
@@ -4434,14 +4561,16 @@
     const st=document.getElementById('naStatus'); st.textContent=has?'● 已配置':'○ 未配置'; st.className='na-status '+(has?'on':'off');
   }
   function saveNetAcct(){
+    if(location.protocol==='file:'){ toast('请改用 http://localhost:8124/v8.html 打开本页再保存'); return; }
     const cookie=document.getElementById('naCookie').value.trim();
+    if(typeof fetch!=='function'){ toast('当前环境不支持保存，请用本地服务器打开'); return; }
     fetch('/api/netdisk/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:netAcctTab,cookie:cookie})})
       .then(function(r){return r.json();}).then(function(j){
         netAcct[netAcctTab]=!!cookie;
         document.getElementById('naCookie').value='';
         renderNetAcct();
         toast(cookie?('已保存 '+netAcctTab+' cookie ✔'):('已清除 '+netAcctTab+' cookie'));
-      }).catch(function(e){toast('保存失败：'+String(e&&e.message||e));});
+      }).catch(function(e){toast('保存失败：请确认页面通过 http://localhost:8124 打开且 server.js 在运行（'+String(e&&e.message||e)+'）');});
   }
   function switchNetMode(m){
     netMode=m; try{localStorage.setItem('mp_net_mode',m);}catch(e){}
@@ -4946,6 +5075,29 @@
   let gachaQuestions=[],gachaWrong=[],gachaRewards=[],gachaCoins=0,gachaPoints=0,gachaCapacity=100,gachaStock=0,gachaDeco={};
   let gachaCur=null,gachaCurWrongRef=null,gachaRecent=[];
   const BANK_REWARDS=[{id:'cartoon',ic:'📺',name:'多看一集动画',cost:60,cur:'point',note:'周末奖励'},{id:'story',ic:'📖',name:'选睡前故事',cost:30,cur:'point',note:'妈妈讲'},{id:'sticker',ic:'⭐',name:'星星贴纸',cost:20,cur:'point',note:'即时满足'},{id:'game',ic:'🎮',name:'多玩一局游戏',cost:40,cur:'point',note:'挑战通过后'},{id:'toy',ic:'🧸',name:'周末小礼物',cost:100,cur:'point',note:'限定奖励'},{id:'trip',ic:'🚗',name:'周末出行特权',cost:120,cur:'point',note:'大目标'}];
+  // #4 闯关升级制 —— 一周 5 关 + 周末 BOSS
+  const LEVEL_QUESTS=[
+    {day:'周一',lv:1,ic:'📖',name:'识字关',tip:'认读 10 个字'},
+    {day:'周二',lv:2,ic:'🔤',name:'拼音关',tip:'拼读 5 组'},
+    {day:'周三',lv:3,ic:'🧮',name:'口算关',tip:'完成 10 题'},
+    {day:'周四',lv:4,ic:'🍎',name:'英语关',tip:'记住 5 个单词'},
+    {day:'周五',lv:5,ic:'📕',name:'绘本关',tip:'读完 1 本'}
+  ];
+  const LEVEL_BOSS={ic:'🐲',name:'周末 BOSS',reward:'🎁 解锁大宝箱',note:'5 关全过即点亮'};
+  const RICH_TILES=[
+    {i:0,col:'#FBBF24',name:'起点',cat:'start',q:'出发啦~'},
+    {i:1,col:'#34D399',name:'识字',cat:'chinese',q:'请读出这个字'},
+    {i:2,col:'#F472B6',name:'拼音',cat:'pinyin',q:'请拼读这个拼音'},
+    {i:3,col:'#60A5FA',name:'英语',cat:'english',q:'这个单词什么意思？'},
+    {i:4,col:'#A78BFA',name:'口算',cat:'math',q:'3 + 5 = ?'},
+    {i:5,col:'#F472B6',name:'古诗',cat:'poem',q:'床前明月光，下一句？'},
+    {i:6,col:'#FB923C',name:'百科',cat:'kb',q:'太阳从哪边升起？'},
+    {i:7,col:'#34D399',name:'绘本',cat:'book',q:'这本绘本讲了什么？'},
+    {i:8,col:'#60A5FA',name:'音乐',cat:'music',q:'跟着节奏拍手吧'},
+    {i:9,col:'#A78BFA',name:'迷宫',cat:'logic',q:'哪条路能走出去？'},
+    {i:10,col:'#F472B6',name:'推理',cat:'puzzle',q:'猜猜少了什么'},
+    {i:11,col:'#FBBF24',name:'终点',cat:'end',q:'通关啦！'}
+  ];
   const GACHA_CATS=[['arith','🧮 算术'],['english','🔤 英语'],['knowledge','🌍 百科'],['poem','📜 古诗词']];
   function escHTML(x){return String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
   function gachaGet(k,d){try{const r=localStorage.getItem(k);return r?JSON.parse(r):d;}catch(e){return d;}}
@@ -5437,7 +5589,7 @@
   function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(meta.ext)return;html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on&&!(MODULE_META[m.id]||{}).ext;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';renderMiniClass();}
   function renderMiniClass(){var g=document.getElementById('miniClassGrid');if(!g)return;var html='';MODULES.forEach(function(m){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(!meta.ext)return;html+='<div class="mini-mod" onclick="openMini(\''+m.screen+'\')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">'+esc(m.sub)+'</span>':'')+'<span class="ext" title="站外学习网站">🔗</span></div>';});g.innerHTML=html||'<div class="empty">暂无在线学习模块</div>';}
   function openMini(screen){var op=MODULE_OPENERS[screen];if(op)op();else if(screen)go(screen);else toast('该内容暂未开放');}
-  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');},bank:renderBank,netdisk:function(){go('netdisk');}};
+  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');},bank:renderBank,level:renderLevel,rich:renderRich,netdisk:function(){go('netdisk');}};
   function openModuleByIdx(idx){var m=MODULES[idx];if(!m)return;var op=MODULE_OPENERS[m.screen];if(op)op();else if(m.screen)go(m.screen);else toast('该内容暂未开放');}
   function renderStudies(){
     var box=document.getElementById('studyList');if(!box)return;
@@ -5669,6 +5821,96 @@
     toast('已兑换：'+r.name);
     renderBank();
     if(typeof initMe==='function')initMe();
+  }
+  // #4 闯关升级制 · 渲染
+  function levelGetWeekKey(){
+    var d=new Date();var day=d.getDay()||7;
+    d.setDate(d.getDate()-day+1); // 本周一
+    return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+  }
+  function levelLoad(){
+    try{var raw=localStorage.getItem('level_state_v1');if(raw){var s=JSON.parse(raw);if(s.week===levelGetWeekKey())return s;}}catch(e){}
+    return {week:levelGetWeekKey(),done:[false,false,false,false,false]};
+  }
+  function levelSave(s){try{localStorage.setItem('level_state_v1',JSON.stringify(s));}catch(e){}}
+  function levelToggle(i){
+    var s=levelLoad();s.done[i]=!s.done[i];levelSave(s);renderLevel();
+    if(s.done[i])toast('🎉 第 '+(i+1)+' 关达成！');
+    var all=s.done.every(function(x){return x;});
+    if(all&&typeof gachaSet==='function'){
+      var bonus=20;gachaPoints+=bonus;gachaSet(GACHA_KEYS.p,gachaPoints);
+      toast('🐲 BOSS 通关！奖励 +'+bonus+' 积分');
+      if(typeof checkAchievements==='function')checkAchievements();
+    }
+  }
+  function renderLevel(){
+    var track=document.getElementById('levelTrack');if(!track)return;
+    var s=levelLoad();var doneCount=s.done.filter(function(x){return x;}).length;
+    var today=new Date().getDay()||7; // 周一=1 ... 周五=5
+    var curIdx=today>=1&&today<=5?today-1:-1;
+    track.innerHTML=LEVEL_QUESTS.map(function(q,i){
+      var cls='lv-card';
+      if(s.done[i])cls+=' done';
+      else if(i===curIdx)cls+=' cur';
+      else if(i>curIdx&&!s.done[i])cls+=' lock';
+      return '<div class="'+cls+'" onclick="levelToggle('+i+')"><div class="lv-day">第'+q.lv+'关 · '+q.day+'</div><span class="lv-ic">'+q.ic+'</span><div class="lv-name">'+q.name+'</div><div class="lv-tip">'+q.tip+'</div></div>';
+    }).join('');
+    var bossEl=document.getElementById('bossSlot');if(!bossEl)return;
+    var win=doneCount===5;
+    bossEl.innerHTML='<div class="boss-card'+(win?' win':'')+'"><span class="boss-ic">'+LEVEL_BOSS.ic+'</span><div class="boss-name">'+LEVEL_BOSS.name+(win?' ✅':'')+'</div><div class="boss-reward">'+(win?LEVEL_BOSS.reward:'奖励待解锁')+'</div><div class="boss-note">已完成 '+doneCount+'/5 · '+(win?'已点亮！':'再过一关即可挑战')+'</div></div>';
+  }
+  var richPos=0,richOwned=0;
+  function renderRich(){
+    var bd=document.getElementById('richBoard');if(!bd)return;
+    richPos=0;richOwned=0;
+    bd.innerHTML=RICH_TILES.map(function(t,i){
+      var cls='rich-tile';
+      if(t.cat==='start')cls+=' start';
+      if(t.cat==='end')cls+=' end';
+      var pos='';
+      if(t.cat==='start')pos=';grid-column:1/2;grid-row:1/2';
+      else if(t.cat==='end')pos=';grid-column:4/5;grid-row:3/4';
+      return '<div class="'+cls+'" data-i="'+i+'" style="background:'+t.col+pos+'"><span>'+t.name+'</span></div>';
+    }).join('');
+    document.getElementById('richPos').textContent='0';
+    document.getElementById('richOwned').textContent='0';
+    document.getElementById('richPoints').textContent=gachaPoints;
+    document.getElementById('richQuest').innerHTML='点击 🎲 掷骰子开始一局大富翁';
+  }
+  function richRoll(){
+    var btn=document.getElementById('richRollBtn');
+    if(btn){btn.classList.remove('spin');void btn.offsetWidth;btn.classList.add('spin');}
+    var n=Math.floor(Math.random()*6)+1;
+    richPos=Math.min(richPos+n,11);
+    var tiles=document.querySelectorAll('.rich-tile');
+    tiles.forEach(function(t){t.classList.remove('cur');});
+    var cur=document.querySelector('.rich-tile[data-i="'+richPos+'"]');
+    if(cur)cur.classList.add('cur');
+    document.getElementById('richPos').textContent=richPos;
+    var t=RICH_TILES[richPos];
+    var questEl=document.getElementById('richQuest');
+    questEl.innerHTML='<b>🎲 走了 '+n+' 格，到达「'+t.name+'」</b><br><span class="rq-tip">题目：'+t.q+'</span>';
+    if(t.cat==='end'){
+      questEl.innerHTML+='<br><b style="color:var(--brand)">🎉 到达终点！奖励 30 积分</b>';
+      gachaPoints+=30;gachaSet();document.getElementById('richPoints').textContent=gachaPoints;
+      if(typeof checkAchievements==='function')checkAchievements();
+      toast('🎉 通关大富翁 +30 积分');
+    }
+  }
+  function richAnswer(){
+    var t=RICH_TILES[richPos];
+    if(!t){toast('先掷骰子哦');return;}
+    if(t.cat==='start'){toast('起点格不用答题');return;}
+    if(t.cat==='end'){toast('终点格已自动结算');return;}
+    var tileEl=document.querySelector('.rich-tile[data-i="'+richPos+'"]');
+    if(!tileEl)return;
+    if(tileEl.classList.contains('own')){toast('这格已经买过了');return;}
+    richOwned++;
+    tileEl.classList.add('own');
+    document.getElementById('richOwned').textContent=richOwned;
+    gachaPoints+=5;gachaSet();document.getElementById('richPoints').textContent=gachaPoints;
+    if(typeof checkAchievements==='function')checkAchievements();
+    toast('✅ 买地成功 +5 积分（🏠）');
   }
   function renderReport(tab){var done=loadCheckinDone();var mood=loadMoodLog();var time=loadStudyTime();
     var days=[];var today=getTodayKey();
