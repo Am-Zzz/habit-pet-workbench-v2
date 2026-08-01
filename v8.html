@@ -355,6 +355,9 @@
   .pcard .pp{font-size:11px;color:var(--ink-soft);margin-top:3px}
   .pcard .use{margin-top:9px;border:1px solid var(--brand-s);background:var(--brand-s);color:var(--brand-d);border-radius:10px;padding:6px;font-size:11px;font-weight:800;cursor:pointer}
   .pcard.owned .use{background:var(--surface);color:var(--ink-soft)}
+  .pcard-actions{display:flex;flex-direction:column;gap:6px;margin-top:9px}
+  .pcard-actions .use{margin-top:0;width:100%}
+  .pcard-actions .use.active{background:var(--brand);color:#fff;border-color:var(--brand)}
 
   .legend{display:flex;gap:14px;font-size:11px;color:var(--ink-soft);margin-top:16px;justify-content:center}
   .legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:middle}
@@ -1195,15 +1198,15 @@
           <button class="btn ghost">🛒 积分兑换</button>
         </div>
         <div class="grid-pet">
-          <div class="pcard owned"><span class="rib n">普通</span><div class="av">🐶</div><div class="pn">小萌</div><div class="pp">6 级成长</div><button class="use" onclick="showGrow('dog')">看成长</button></div>
-          <div class="pcard owned"><span class="rib n">普通</span><div class="av cat-av" style="cursor:pointer" title="设为出战" onclick="setPartner('cat',this)"><img src="pets/cat-l1.jpg" alt="咪咪"></div><div class="pn">咪咪</div><div class="pp">6 级成长</div><button class="use" onclick="showGrow('cat')">看成长</button></div>
+          <div class="pcard owned"><span class="rib n">普通</span><div class="av">🐶</div><div class="pn">小萌</div><div class="pp">6 级成长</div><div class="pcard-actions"><button class="use" onclick="showGrow('dog')">看成长</button><button class="use" data-set-partner="dog" onclick="setPartner('dog');go('home')">设为主页伙伴</button></div></div>
+          <div class="pcard owned"><span class="rib n">普通</span><div class="av cat-av"><img src="pets/cat-l1.jpg" alt="咪咪"></div><div class="pn">咪咪</div><div class="pp">6 级成长</div><div class="pcard-actions"><button class="use" onclick="showGrow('cat')">看成长</button><button class="use" data-set-partner="cat" onclick="setPartner('cat');go('home')">设为主页伙伴</button></div></div>
           <div class="pcard owned"><span class="rib n">普通</span><div class="av">🐰</div><div class="pn">团团</div><div class="pp">已拥有</div><button class="use">设为出战</button></div>
           <div class="pcard locked"><span class="rib r">稀有</span><div class="av">🦊</div><div class="pn">？？？</div><div class="pp">未解锁</div><button class="use" style="opacity:.5">抽盲盒</button></div>
           <div class="pcard locked"><span class="rib r">稀有</span><div class="av">🐧</div><div class="pn">？？？</div><div class="pp">未解锁</div><button class="use" style="opacity:.5">抽盲盒</button></div>
           <div class="pcard locked"><span class="rib l">传说</span><div class="av">🐲</div><div class="pn">？？？</div><div class="pp">⭐800 兑换</div><button class="use" style="opacity:.5">去兑换</button></div>
           <div class="pcard locked"><span class="rib l">传说</span><div class="av">🦄</div><div class="pn">？？？</div><div class="pp">⭐600 兑换</div><button class="use" style="opacity:.5">去兑换</button></div>
           <div class="pcard locked"><span class="rib n">普通</span><div class="av">🐻</div><div class="pn">？？？</div><div class="pp">未解锁</div><button class="use" style="opacity:.5">抽盲盒</button></div>
-          <div class="pcard owned"><span class="rib n">普通</span><div class="av snake-av"><img src="pets/snake-l3-baby.png" alt="小蛇蛇"></div><div class="pn">小蛇蛇</div><div class="pp">6 级成长</div><button class="use" onclick="showGrow('snake')">看成长</button></div>
+          <div class="pcard owned"><span class="rib n">普通</span><div class="av snake-av"><img src="pets/snake-l3-baby.png" alt="小蛇蛇"></div><div class="pn">小蛇蛇</div><div class="pp">6 级成长</div><div class="pcard-actions"><button class="use" onclick="showGrow('snake')">看成长</button><button class="use" data-set-partner="snake" onclick="setPartner('snake');go('home')">设为主页伙伴</button></div></div>
         </div>
         <div id="snakeGrow" style="display:none;margin-top:16px">
           <div class="sec-h" style="color:var(--brand-d)">🐍 小蛇蛇 · 6 级成长之路</div>
@@ -2274,11 +2277,22 @@
   function setPartner(p,el){
     currentPartner=p;
     document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('sel'));
-    (el||event.currentTarget).classList.add('sel');
+    if(el) el.classList.add('sel');
+    else if(typeof event!=='undefined' && event && event.currentTarget) event.currentTarget.classList.add('sel');
     if(p==='snake'){snakeLv=3;renderGrowthTrack();}
     if(p==='dog'){dogLv=3;renderGrowthTrack();}
     if(p==='cat'){catLv=catLv||3;renderGrowthTrack();}
     renderPet();
+    updatePetButtons();
+  }
+  function updatePetButtons(){
+    document.querySelectorAll('[data-set-partner]').forEach(btn=>{
+      const p=btn.dataset.setPartner;
+      const active=currentPartner===p;
+      btn.textContent=active?'✓ 出战中':'设为主页伙伴';
+      btn.classList.toggle('active',active);
+      btn.disabled=active;
+    });
   }
   function renderGrowGrid(partner){
     let g, data;
@@ -5226,7 +5240,7 @@
     loadContent();
     seedUserBooks();
     loadAiConfig();
-    renderPet(); renderGrowthTrack(); renderGrowGrid(currentPartner);
+    renderPet(); renderGrowthTrack(); renderGrowGrid(currentPartner); updatePetButtons();
     initCalendar(); initKeypad(); refreshPinNow(); initPsetCtrls();
     loadMgmt(); renderCheckins(); renderStudies();
     buildCharIndex(); loadStudy(); loadLearned(); loadPoemMastered(); updateStudyDisplays(); updateLearnedUI(); initHanzi();
