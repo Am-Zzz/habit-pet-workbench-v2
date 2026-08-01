@@ -77,11 +77,11 @@ E('me nav active', d.getElementById('nav-me').classList.contains('active'));
 
 // ---- learn grid + modules (习乐园仅含非外链模块，9 格；外链模块在小教室列) ----
 w.go('home');
-E('learn grid has 9 modules', d.getElementById('learnGrid').children.length === 9);
+E('learn grid has 9 modules', d.getElementById('learnGrid').children.length === 10);
 S('MODULES[0].on = false; renderLearnGrid();');
-E('learn grid hides off module', d.getElementById('learnGrid').children.length === 8);
+E('learn grid hides off module', d.getElementById('learnGrid').children.length === 9);
 S('MODULES[0].on = true; renderLearnGrid();');
-E('learn grid restores', d.getElementById('learnGrid').children.length === 9);
+E('learn grid restores', d.getElementById('learnGrid').children.length === 10);
 w.openModuleByIdx(0);
 E('openModuleByIdx opens chars screen', d.getElementById('sc-chars').classList.contains('on'));
 w.go('home');
@@ -164,7 +164,7 @@ E('home task list rendered (5)', d.getElementById('homeTaskList').children.lengt
 })();
 
 // ---- 主页学习乐园九宫格（旧版布局）----
-E('learn section header shows 9 modules', /学习乐园 · 9 大模块/.test(d.getElementById('sc-home').textContent));
+E('learn section header shows 9 modules', /学习乐园 · 10 大模块/.test(d.getElementById('sc-home').textContent));
 E('learn grid contains game center', /游戏中心/.test(d.getElementById('learnGrid').textContent));
 E('no separate games nav tab', !d.getElementById('nav-games'));
 w.go('home');

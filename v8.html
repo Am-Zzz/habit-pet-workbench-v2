@@ -856,6 +856,28 @@
   .challenge-card .btns{display:flex;gap:10px}
 
   /* ---- 3. 魔法宝箱 + 商店 ---- */
+
+  /* ---- 7. 积分银行（#1 游戏化学习法） ---- */
+  .bank-overview{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 6px 18px}
+  .bank-stat{background:var(--surface,#fff);border:1px solid var(--line,#f0d9c8);border-radius:14px;padding:10px 6px;display:flex;align-items:center;gap:8px;justify-content:center}
+  .bank-stat .bs-ic{font-size:20px}
+  .bank-stat b{display:block;font-size:18px;color:var(--brand,#DD5E86);line-height:1.2}
+  .bank-stat span{font-size:11px;color:var(--ink-soft,#a08a7d)}
+  .bank-stat.bank-age b{color:var(--ink,#2C2C2A);font-size:14px}
+  .bank-section{margin:14px 6px 10px}
+  .bank-h{font-size:13px;font-weight:700;color:var(--ink-soft,#a08a7d);margin-bottom:8px;display:flex;align-items:center;gap:4px}
+  .bank-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .bank-item{background:var(--surface,#fff);border:1px solid var(--line,#f0d9c8);border-radius:12px;padding:10px;cursor:pointer;transition:.2s;text-align:left;font-family:inherit}
+  .bank-item:hover{border-color:var(--brand,#DD5E86);transform:translateY(-1px);box-shadow:0 4px 12px rgba(221,94,134,.15)}
+  .bank-item .bi-ic{font-size:22px;display:block;margin-bottom:4px}
+  .bank-item .bi-name{font-weight:700;color:var(--ink,#2C2C2A);font-size:13px;display:block}
+  .bank-item .bi-cost{font-size:11px;color:var(--brand,#DD5E86);margin-top:2px;display:block}
+  .bank-item.disabled{opacity:.45;cursor:not-allowed}
+  .bank-tips{display:grid;gap:6px}
+  .bt-row{background:var(--surface,#fff);border:1px solid var(--line,#f0d9c8);border-radius:10px;padding:8px 10px;display:flex;gap:8px;align-items:flex-start}
+  .bt-row .bt-ic{font-size:18px;line-height:1.4}
+  .bt-row b{color:var(--ink,#2C2C2A);font-size:13px}
+  .bt-row span{color:var(--ink-soft,#a08a7d);font-size:11px}
   .chest-room{background:linear-gradient(180deg,#2a1b3d,#1a1025);border-radius:26px;padding:22px;text-align:center;position:relative;overflow:hidden;min-height:320px}
   .chest-room h3{color:#FCE7F3;font-size:18px;font-weight:800;margin-bottom:4px}
   .chest-room .sub{color:#D8B4FE;font-size:12px;margin-bottom:20px}
@@ -1050,6 +1072,25 @@
   .fs-actions{display:flex;gap:8px;margin-top:14px}
   .fs-actions .btn{flex:1;padding:9px;font-size:13px}
 
+  /* ===== 网盘内容中心（动画 / 绘本 / 故事 三板块）===== */
+  .net-tabs{display:flex;gap:8px;margin:6px 0 14px;flex-wrap:wrap}
+  .net-tab{padding:8px 14px;border-radius:20px;border:1px solid #e3e3e8;background:#fff;cursor:pointer;font-size:14px;font-weight:600;color:#666;transition:.15s}
+  .net-tab.active{background:linear-gradient(135deg,#5B8FD0,#3a6fb0);color:#fff;border-color:transparent}
+  .net-board-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .net-board-h span{font-weight:600;font-size:15px;color:#2a2a35}
+  .net-help{background:#fff8e8;border:1px solid #ffe2a8;border-radius:12px;padding:10px 12px;font-size:12.5px;color:#8a6d2f;line-height:1.7;margin-bottom:12px}
+  .net-help b{color:#7a5a1f}
+  .net-empty{text-align:center;color:#999;padding:30px 10px;font-size:14px;line-height:1.9}
+  .net-list2{display:flex;flex-direction:column;gap:10px}
+  .net-card{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e3e3e8;border-radius:14px;padding:12px;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+  .net-card .n-ic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;background:#eef4ff;flex:0 0 auto}
+  .net-card .n-info{flex:1;min-width:0}
+  .net-card .n-title{font-weight:600;font-size:15px;color:#2a2a35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .net-card .n-sub{font-size:12px;color:#8a8a96;margin-top:2px}
+  .net-card .n-media{width:100%;margin-top:8px}
+  .net-card video,.net-card audio{width:100%}
+  .net-card .n-act{display:flex;flex-direction:column;gap:6px;flex:0 0 auto}
+
 </style>
 </head>
 <body>
@@ -1133,6 +1174,7 @@
             <div class="act" onclick="go('timer')"><div class="e">⏰</div><div class="t">番茄钟</div></div>
             <div class="act" onclick="go('report')"><div class="e">📊</div><div class="t">报告</div></div>
             <div class="act" onclick="go('achievements')"><div class="e">🏅</div><div class="t">成就</div></div>
+            <div class="act" onclick="go('bank')"><div class="e">🏦</div><div class="t">积分银行</div></div>
           </div>
         </div>
           </div><!-- /grid3 -->
@@ -1688,7 +1730,7 @@
             <div class="bk-tools">
               <div class="bk-count">共 <b id="bookCount">0</b> 本</div>
               <button class="bk-shelf-btn" onclick="openMyBooks()">✏️ 我的绘本</button>
-              <button class="bk-shelf-btn" onclick="openNetImport()">🌐 网盘</button>
+              <button class="bk-shelf-btn" onclick="openNetImport('book')">🌐 网盘</button>
               <div class="bk-levels lrn-pill" id="bkLevelPill">
                 <button class="sel" data-level="all" onclick="switchBookLevel('all',this)">全部</button>
                 <button data-level="幼升小" onclick="switchBookLevel('幼升小',this)">AA级</button>
@@ -1997,6 +2039,29 @@
         </div>
         <div class="shop-grid" id="shopGrid"></div>
         <div style="margin-top:18px"><div class="card-h" style="margin-bottom:10px"><span class="t">🎁 基础兑换</span></div><div id="storeList"></div></div>
+      </div>
+    </div>
+
+    <div class="screen" id="sc-bank">
+      <div class="card" style="max-width:600px;margin:0 auto">
+        <div class="card-h"><span class="t">🏦 积分银行</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="bank-overview">
+          <div class="bank-stat"><span class="bs-ic">🪙</span><div><b id="bankCoins">0</b><span>硬币</span></div></div>
+          <div class="bank-stat"><span class="bs-ic">⭐</span><div><b id="bankPoints">0</b><span>积分</span></div></div>
+          <div class="bank-stat bank-age"><span class="bs-ic">🎂</span><div><b>5岁+</b><span>适合年龄</span></div></div>
+        </div>
+        <div class="bank-section">
+          <div class="bank-h">🎁 可兑换特权</div>
+          <div class="bank-list" id="bankList"></div>
+        </div>
+        <div class="bank-section">
+          <div class="bank-h">💡 懒妈技巧</div>
+          <div class="bank-tips">
+            <div class="bt-row"><span class="bt-ic">📊</span><div><b>Excel 或手写表格</b><br><span>记账本放显眼位置</span></div></div>
+            <div class="bt-row"><span class="bt-ic">✏️</span><div><b>让孩子自己记账</b><br><span>培养成就感与数感</span></div></div>
+            <div class="bt-row"><span class="bt-ic">📅</span><div><b>每周结算一次</b><br><span>约定兑换日更有仪式感</span></div></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2389,7 +2454,7 @@
     const map={home:'sc-home',parent:'sc-parent',pset:'sc-pset',pets:'sc-pets',checkin:'sc-checkin',store:'sc-store',me:'sc-me',
       english:'sc-english-hub',read:'sc-read',write:'sc-write',math:'sc-math',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
-      science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',
+      science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',
       timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',
       'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff'};
     let target=map[screen];
@@ -2407,6 +2472,7 @@
     else if(target==='sc-timer')initTimer();
     else if(target==='sc-report')initReport();
     else if(target==='sc-achievements')initAchievements();
+    else if(target==='sc-netdisk')renderNetHub();
     navSync(screen);
     window.scrollTo({top:0,behavior:'smooth'});
   }
@@ -4160,12 +4226,28 @@
     setTimeout(function(){URL.revokeObjectURL(a.href);},1000);toast('已导出 my_books.json');
   }
 
-  /* ===== 网盘导入（百度/夸克）===== */
+  /* ===== 网盘导入（百度/夸克）：动画 / 绘本 / 故事 三板块 ===== */
   const NET_ITEMS_KEY='mp_net_v1';
+  let netTab='book';
+  const NET_BOARDS={
+    video:{name:'动画片',icon:'📺',hint:'直接视频链接（.mp4 / .webm）可在此页直接播放；百度/夸克分享页需登录网盘后观看。'},
+    book :{name:'绘本图书',icon:'📚',hint:'粘贴绘本/图书的网盘分享链接，点「打开网盘」即可在网盘页阅读或下载。'},
+    audio:{name:'故事音频',icon:'🎧',hint:'直接音频链接（.mp3 / .m4a）可在此页直接收听；百度/夸克分享页需登录网盘后收听。'}
+  };
   function getNetItems(){try{return JSON.parse(localStorage.getItem(NET_ITEMS_KEY))||[];}catch(e){return [];}}
   function setNetItems(a){try{localStorage.setItem(NET_ITEMS_KEY,JSON.stringify(a));}catch(e){}}
+  function itemBoard(it){ if(it.board)return it.board;
+    if(it.kind==='book')return 'book';
+    if(it.kind==='poem')return 'audio';
+    if(it.kind==='image')return 'book';
+    return 'audio'; }
+  function isDirectVideo(u){return /\.(mp4|webm|ogg)(\?|$|#)/i.test(u);}
   function isDirectAudio(u){return /\.(mp3|m4a|aac|wav|ogg|oga|flac|webm)(\?|$|#)/i.test(u);}
-  function openNetImport(){document.getElementById('netLinks').value='';document.getElementById('netTitle').value='';document.getElementById('netKind').value='audio';document.getElementById('netImportPop').classList.add('on');}
+  function openNetImport(board){ if(board)netTab=board;
+    const sel=document.getElementById('netBoard'); if(sel)sel.value=netTab;
+    document.getElementById('netLinks').value='';
+    document.getElementById('netTitle').value='';
+    document.getElementById('netImportPop').classList.add('on'); }
   function closeNetImport(){document.getElementById('netImportPop').classList.remove('on');}
   function deriveNetTitle(url,code){
     if(/pan\.baidu\.com/.test(url))return '百度网盘内容'+(code?('('+code+')'):'');
@@ -4176,40 +4258,56 @@
   }
   function importNetLinks(){
     const raw=document.getElementById('netLinks').value.trim();
-    const kind=document.getElementById('netKind').value;
+    const board=document.getElementById('netBoard').value;
     const baseTitle=document.getElementById('netTitle').value.trim();
     if(!raw){toast('请粘贴至少一个链接');return;}
     const lines=raw.split(/\r?\n/).map(function(s){return s.trim();}).filter(Boolean);
     const items=getNetItems();let n=0;
     lines.forEach(function(line,idx){
       const m=line.match(/(https?:\/\/\S+)/);if(!m)return;
-      let url=m[0].replace(/[。，,）)]$/,'');
-      const cm=line.match(/提取码[\s:：]*([a-zA-Z0-9]{4})/);const code=cm?cm[1]:'';
+      let url=m[0].replace(/[。，,）)】\]]$/,'');
+      let code='';
+      const cm=line.match(/提取码[\s:：]*([a-zA-Z0-9]{4})/); if(cm)code=cm[1];
+      if(!code){ const pm=url.match(/[?&]pwd=([a-zA-Z0-9]{4})/i); if(pm)code=pm[1]; }
       if(!/^https?:\/\//.test(url))return;
-      const playable=isDirectAudio(url);
+      const playable = board==='video'?isDirectVideo(url):(board==='audio'?isDirectAudio(url):false);
       const title=baseTitle?(lines.length>1?baseTitle+' '+(idx+1):baseTitle):deriveNetTitle(url,code);
-      items.push({id:'net_'+Date.now()+'_'+idx+'_'+Math.random().toString(36).slice(2,6),title:title,url:url,code:code,kind:kind,playable:playable,added:Date.now()});
+      items.push({id:'net_'+Date.now()+'_'+idx+'_'+Math.random().toString(36).slice(2,6),title:title,url:url,code:code,board:board,kind:board,playable:playable,added:Date.now()});
       n++;
     });
     if(!n){toast('没有可导入的有效链接');return;}
-    setNetItems(items);closeNetImport();renderNetItems();toast('已导入 '+n+' 条到学习内容 ✔');
+    setNetItems(items);closeNetImport();
+    netTab=board; renderNetHub(); renderNetItems();
+    toast('已导入 '+n+' 条到「'+NET_BOARDS[board].name+'」✔');
   }
-  function renderNetItems(){
+  function netCardHTML(it){
+    const b=itemBoard(it);
+    let media='';
+    if(b==='video'&&it.playable){ media='<div class="n-media"><video controls preload="none" src="'+esc(it.url)+'"></video></div>'; }
+    else if(b==='audio'&&it.playable){ media='<div class="n-media"><audio controls preload="none" src="'+esc(it.url)+'"></audio></div>'; }
+    else { media='<div class="n-media"><button class="btn ghost" onclick="window.open('+JSON.stringify(it.url)+',\'_blank\')">🔗 打开网盘'+(it.code?('（提取码 '+it.code+'）'):'')+'</button></div>'; }
+    const meta={video:'动画片',book:'绘本图书',audio:'故事音频'}[b]||'内容';
+    return '<div class="net-card"><div class="n-ic">'+NET_BOARDS[b].icon+'</div>'+
+      '<div class="n-info"><div class="n-title">'+esc(it.title)+'</div><div class="n-sub">🌐 '+meta+(it.code?(' · 码 '+it.code):'')+(it.playable?' · 可直接播放':'')+'</div>'+media+'</div>'+
+      '<div class="n-act"><button class="mini-btn del" onclick="deleteNetItem(\''+it.id+'\')">删除</button></div></div>';
+  }
+  function renderNetHub(){
+    const box=document.getElementById('netHubList');if(!box)return;
+    const nm=document.getElementById('netBoardName'); if(nm)nm.textContent=NET_BOARDS[netTab].name;
+    const hp=document.getElementById('netHelp'); if(hp)hp.innerHTML='💡 '+NET_BOARDS[netTab].hint;
+    document.querySelectorAll('.net-tab').forEach(function(t){t.classList.toggle('active',t.dataset.board===netTab);});
+    const items=getNetItems().filter(function(x){return itemBoard(x)===netTab;});
+    if(!items.length){ box.innerHTML='<div class="net-empty">还没有「'+NET_BOARDS[netTab].name+'」内容～<br>点上方「＋ 导入到本板块」粘贴网盘链接吧 🌐</div>'; return; }
+    box.innerHTML='<div class="net-list2">'+items.slice().reverse().map(netCardHTML).join('')+'</div>';
+  }
+  function switchNetTab(b){ netTab=b; renderNetHub(); }
+  function renderNetItems(){ // 绘本「我的绘本」面板：仅显示绘本板块
     const box=document.getElementById('netList');if(!box)return;
-    const items=getNetItems();
-    if(!items.length){box.innerHTML='<div class="mb-hint" style="text-align:center;padding:10px">还没有网盘内容，点「🌐 网盘导入」粘贴链接吧～</div>';return;}
-    box.innerHTML='';
-    items.slice().reverse().forEach(function(it){
-      const d=document.createElement('div');d.className='mb-item';
-      let media='';
-      if(it.playable){media='<div class="mi-media"><audio controls src="'+esc(it.url)+'"></audio></div>';}
-      else{media='<div class="mi-media"><button class="mini-btn" onclick="window.open('+JSON.stringify(it.url)+',\'_blank\')">🔗 去网盘收听/查看'+(it.code?('（提取码 '+it.code+'）'):'')+'</button></div>';}
-      const kindLabel={audio:'音频',book:'绘本',poem:'古诗',image:'图片'}[it.kind]||'内容';
-      d.innerHTML='<div class="thumb">🌐</div><div class="mi-info"><div class="mi-title">'+esc(it.title)+'</div><div class="mi-sub">🌐 '+kindLabel+(it.code?(' · 码 '+it.code):'')+'</div></div>'+media+'<div class="mi-act"><button class="mini-btn del" onclick="deleteNetItem(\''+it.id+'\')">删除</button></div>';
-      box.appendChild(d);
-    });
+    const items=getNetItems().filter(function(x){return itemBoard(x)==='book';});
+    if(!items.length){box.innerHTML='<div class="mb-hint" style="text-align:center;padding:10px">还没有绘本类网盘内容，点「🌐 网盘导入」粘贴链接吧～</div>';return;}
+    box.innerHTML=items.slice().reverse().map(netCardHTML).join('');
   }
-  function deleteNetItem(id){if(!confirm('确定删除该网盘内容？'))return;setNetItems(getNetItems().filter(function(x){return x.id!==id;}));renderNetItems();}
+  function deleteNetItem(id){if(!confirm('确定删除该网盘内容？'))return;setNetItems(getNetItems().filter(function(x){return x.id!==id;}));renderNetHub();renderNetItems();}
 
 /* ================================================================
    逻辑思维数据
@@ -4707,6 +4805,7 @@
   const GACHA_KEYS={q:'gacha_questions',w:'gacha_wrong',r:'gacha_rewards',c:'gacha_coins',p:'gacha_points',cap:'gacha_capacity',stock:'gacha_stock',deco:'gacha_deco'};
   let gachaQuestions=[],gachaWrong=[],gachaRewards=[],gachaCoins=0,gachaPoints=0,gachaCapacity=100,gachaStock=0,gachaDeco={};
   let gachaCur=null,gachaCurWrongRef=null,gachaRecent=[];
+  const BANK_REWARDS=[{id:'cartoon',ic:'📺',name:'多看一集动画',cost:60,cur:'point',note:'周末奖励'},{id:'story',ic:'📖',name:'选睡前故事',cost:30,cur:'point',note:'妈妈讲'},{id:'sticker',ic:'⭐',name:'星星贴纸',cost:20,cur:'point',note:'即时满足'},{id:'game',ic:'🎮',name:'多玩一局游戏',cost:40,cur:'point',note:'挑战通过后'},{id:'toy',ic:'🧸',name:'周末小礼物',cost:100,cur:'point',note:'限定奖励'},{id:'trip',ic:'🚗',name:'周末出行特权',cost:120,cur:'point',note:'大目标'}];
   const GACHA_CATS=[['arith','🧮 算术'],['english','🔤 英语'],['knowledge','🌍 百科'],['poem','📜 古诗词']];
   function escHTML(x){return String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
   function gachaGet(k,d){try{const r=localStorage.getItem(k);return r?JSON.parse(r):d;}catch(e){return d;}}
@@ -5165,6 +5264,7 @@
     {id:'m_words',name:'英语',emoji:'🔤',screen:'words',on:true},
     {id:'m_poem',name:'古诗',emoji:'📜',screen:'poem',on:true},
     {id:'m_books',name:'绘本',emoji:'📚',screen:'books',on:true},
+    {id:'m_netdisk',name:'我的网盘',emoji:'🌐',screen:'netdisk',on:true},
     {id:'m_science',name:'科普阅读',emoji:'🔬',screen:'science',on:true},
     {id:'m_logic',name:'逻辑思维',emoji:'🧠',screen:'logic',on:true},
     {id:'m_games',name:'游戏中心',emoji:'🎮',screen:'games',on:true},
@@ -5174,7 +5274,7 @@
     {id:'m_web_engprac',name:'英语·词汇练习',emoji:'📘',screen:'web_engprac',on:true}
   ];}
   // 规范基础模块（学习乐园九宫格固定 9 格，游戏中心必须存在）
-  const CANON_MODULE_IDS=['m_chars','m_pinyin','m_math','m_words','m_poem','m_books','m_science','m_logic','m_games','m_web_math','m_web_chinese','m_web_engword','m_web_engprac'];
+  const CANON_MODULE_IDS=['m_chars','m_pinyin','m_math','m_words','m_poem','m_books','m_science','m_logic','m_games','m_web_math','m_web_chinese','m_web_engword','m_web_engprac','m_netdisk'];
   var CANON_MODULE_BY_ID={}; defaultModules().forEach(function(m){CANON_MODULE_BY_ID[m.id]=m;});
   function loadModules(){var raw=localStorage.getItem(MODULES_KEY);if(raw){try{var arr=JSON.parse(raw);if(Array.isArray(arr)&&arr.length){var ids=arr.map(function(m){return m&&m.id;});arr.forEach(function(m){var c=CANON_MODULE_BY_ID[m.id];if(c){m.emoji=c.emoji;m.screen=c.screen;}});var added=false;CANON_MODULE_IDS.forEach(function(id){if(ids.indexOf(id)<0){var c=CANON_MODULE_BY_ID[id];if(c){arr.push(JSON.parse(JSON.stringify(c)));added=true;}}});if(added)saveModules();MODULES=arr;return;}}catch(e){}}MODULES=defaultModules();saveModules();}
   function saveModules(){try{localStorage.setItem(MODULES_KEY,JSON.stringify(MODULES));}catch(e){}}
@@ -5191,12 +5291,13 @@
     m_web_math:{new:true,sub:'小教室·数学一下',ext:true},
     m_web_chinese:{new:true,sub:'小教室·语文一下',ext:true},
     m_web_engword:{new:true,sub:'Ogden 850 词',ext:true},
-    m_web_engprac:{new:true,sub:'850 词·5 类',ext:true}
+    m_web_engprac:{new:true,sub:'850 词·5 类',ext:true},
+    m_netdisk:{new:true,sub:'动画·绘本·故事'}
   };
   function renderLearnGrid(){var g=document.getElementById('learnGrid');if(!g)return;var html='';MODULES.forEach(function(m,idx){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(meta.ext)return;html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')+'</div>';});g.innerHTML=html;var cnt=MODULES.filter(function(m){return m.on&&!(MODULE_META[m.id]||{}).ext;}).length;var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';renderMiniClass();}
   function renderMiniClass(){var g=document.getElementById('miniClassGrid');if(!g)return;var html='';MODULES.forEach(function(m){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(!meta.ext)return;html+='<div class="mini-mod" onclick="openMini(\''+m.screen+'\')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">'+esc(m.sub)+'</span>':'')+'<span class="ext" title="站外学习网站">🔗</span></div>';});g.innerHTML=html||'<div class="empty">暂无在线学习模块</div>';}
   function openMini(screen){var op=MODULE_OPENERS[screen];if(op)op();else if(screen)go(screen);else toast('该内容暂未开放');}
-  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');}};
+  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');},bank:renderBank,netdisk:function(){go('netdisk');}};
   function openModuleByIdx(idx){var m=MODULES[idx];if(!m)return;var op=MODULE_OPENERS[m.screen];if(op)op();else if(m.screen)go(m.screen);else toast('该内容暂未开放');}
   function renderStudies(){
     var box=document.getElementById('studyList');if(!box)return;
@@ -5398,6 +5499,37 @@
   function logStudyTime(subject,minutes){var t=loadStudyTime();var k=getTodayKey();if(!t[k])t[k]={};if(!t[k][subject])t[k][subject]=0;t[k][subject]+=minutes;saveStudyTime(t);}
   function initReport(){switchReportTab('today',document.querySelector('#reportTabs span'))}
   function switchReportTab(tab,el){document.querySelectorAll('#reportTabs span').forEach(function(s){s.classList.remove('sel');});el.classList.add('sel');renderReport(tab);}
+  function renderBank(){
+    var bc=document.getElementById('bankCoins'),bp=document.getElementById('bankPoints');
+    if(bc)bc.textContent=gachaCoins;
+    if(bp)bp.textContent=gachaPoints;
+    var list=document.getElementById('bankList');
+    if(list){
+      list.innerHTML=BANK_REWARDS.map(function(r,i){
+        var have=r.cur==='coin'?gachaCoins:gachaPoints;
+        var enough=have>=r.cost;
+        return '<button class="bank-item'+(enough?'':' disabled')+'" onclick="redeemBank('+i+')">'+
+          '<span class="bi-ic">'+r.ic+'</span>'+
+          '<span class="bi-name">'+escHTML(r.name)+'</span>'+
+          '<span class="bi-cost">'+r.cost+' '+(r.cur==='coin'?'🪙':'⭐')+' · '+escHTML(r.note||'')+'</span>'+
+          '</button>';
+      }).join('');
+    }
+  }
+  function redeemBank(i){
+    var r=BANK_REWARDS[i];if(!r)return;
+    if(r.cur==='coin'){
+      if(gachaCoins<r.cost){toast('硬币不足');return;}
+      gachaCoins-=r.cost;gachaSet(GACHA_KEYS.c,gachaCoins);
+    }else{
+      if(gachaPoints<r.cost){toast('积分不足');return;}
+      gachaPoints-=r.cost;gachaSet(GACHA_KEYS.p,gachaPoints);
+      if(typeof checkAchievements==='function')checkAchievements();
+    }
+    toast('已兑换：'+r.name);
+    renderBank();
+    if(typeof initMe==='function')initMe();
+  }
   function renderReport(tab){var done=loadCheckinDone();var mood=loadMoodLog();var time=loadStudyTime();
     var days=[];var today=getTodayKey();
     if(tab==='today')days=[today];
@@ -5545,7 +5677,7 @@
             <button class="btn ghost" onclick="exportUserBooks()">⬇ 导出JSON</button>
             <label class="btn ghost">📥 导入JSON<input type="file" accept="application/json,.json" style="display:none" onchange="if(this.files[0])importUserBooksFile(this.files[0])"></label>
             <button class="btn" onclick="addUserBook()">＋ 新增</button>
-            <button class="btn" style="background:linear-gradient(135deg,#5B8FD0,#3a6fb0);color:#fff" onclick="openNetImport()">🌐 网盘导入</button>
+            <button class="btn" style="background:linear-gradient(135deg,#5B8FD0,#3a6fb0);color:#fff" onclick="openNetImport('book')">🌐 网盘导入</button>
           </div>
           <div class="mb-list" id="mbList"></div>
           <div class="net-sec-h">🌐 网盘内容 <span class="net-clear" onclick="renderNetItems()">刷新</span></div>
@@ -5579,22 +5711,21 @@
         <div class="mb-body">
           <div class="mb-form">
             <label>粘贴分享链接或直链（可一次粘贴多个，每行一个）</label>
-            <textarea id="netLinks" rows="5" placeholder="https://pan.baidu.com/s/xxxx  提取码: xxxx&#10;https://xxx.com/故事.mp3   （直接播放链接可本页收听）"></textarea>
+            <textarea id="netLinks" rows="5" placeholder="https://pan.baidu.com/s/xxxx  提取码: xxxx&#10;https://xxx.com/故事.mp4   （直接播放/视频链接可本页观看或收听）"></textarea>
             <div class="mb-two">
-              <div><label>内容类型</label>
-                <select id="netKind">
-                  <option value="audio">音频 / 听故事</option>
-                  <option value="book">故事绘本</option>
-                  <option value="poem">古诗听故事</option>
-                  <option value="image">图片</option>
+              <div><label>导入到板块</label>
+                <select id="netBoard">
+                  <option value="video">📺 动画片视频</option>
+                  <option value="book">📚 绘本图书</option>
+                  <option value="audio">🎧 故事音频</option>
                 </select>
               </div>
               <div><label>默认标题（可选）</label><input id="netTitle" placeholder="留空自动取链接名"></div>
             </div>
-            <div class="net-note">💡 登录你的网盘账号请在打开的网盘页面完成（本工具不保存网盘密码）。<br>· <b>直接播放链接</b>（.mp3/.m4a 等）可在此页直接用网盘地址收听；<br>· <b>分享页链接</b>会跳转到网盘页面收听/查看（可在那里登录）。<br>· 可一次粘贴一个文件夹里多个文件的链接，批量导入。</div>
+            <div class="net-note">💡 登录网盘账号请在打开的网盘页面完成（本工具不保存网盘密码）。<br>· <b>直接播放/视频链接</b>（.mp4/.webm/.mp3/.m4a 等）可在此页直接观看或收听；<br>· <b>分享页链接</b>（pan.baidu.com / pan.quark.cn）会跳转到网盘页面，登录后观看/收听/下载。<br>· 可一次粘贴一个文件夹里多个文件的链接，批量导入。</div>
             <div class="mb-row" style="justify-content:flex-end;margin-top:10px">
               <button class="btn ghost" onclick="closeNetImport()">取消</button>
-              <button class="btn" onclick="importNetLinks()">📥 导入到学习内容</button>
+              <button class="btn" onclick="importNetLinks()">📥 导入</button>
             </div>
           </div>
         </div>
@@ -5626,6 +5757,26 @@
           <button class="btn ghost" onclick="studyPrev()">‹ 上一张</button>
           <button class="btn" onclick="speakWord(studyList[studyIdx]?studyList[studyIdx].en:'')">🔊 听</button>
           <button class="btn ghost" onclick="studyNext()">下一张 ›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 网盘内容中心 ==================== -->
+    <div class="screen" id="sc-netdisk">
+      <div class="card" style="max-width:780px;margin:0 auto">
+        <div class="card-h"><span class="t">🌐 我的网盘</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="mb-form">
+          <div class="net-tabs">
+            <div class="net-tab" data-board="video" onclick="switchNetTab('video')">📺 动画片</div>
+            <div class="net-tab active" data-board="book" onclick="switchNetTab('book')">📚 绘本图书</div>
+            <div class="net-tab" data-board="audio" onclick="switchNetTab('audio')">🎧 故事音频</div>
+          </div>
+          <div class="net-board-h">
+            <span id="netBoardName">绘本图书</span>
+            <button class="btn" onclick="openNetImport(netTab)">＋ 导入到本板块</button>
+          </div>
+          <div class="net-help" id="netHelp"></div>
+          <div id="netHubList"></div>
         </div>
       </div>
     </div>
