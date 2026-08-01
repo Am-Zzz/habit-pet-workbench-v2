@@ -42,3 +42,6 @@ deploy_ios/
 
 # AI 密钥（不入库）
 ai_config.json
+
+# 网盘登录态 cookie（不入库，仅存本机）
+netdisk_config.json

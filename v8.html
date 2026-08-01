@@ -866,6 +866,14 @@
   .bank-stat.bank-age b{color:var(--ink,#2C2C2A);font-size:14px}
   .bank-section{margin:14px 6px 10px}
   .bank-h{font-size:13px;font-weight:700;color:var(--ink-soft,#a08a7d);margin-bottom:8px;display:flex;align-items:center;gap:4px}
+  .bank-h-sub{font-size:11px;font-weight:500;color:var(--ink-faint,#c9b3a8);margin-left:4px}
+  .bank-tagline{text-align:center;font-size:13px;color:var(--ink-soft,#a08a7d);margin:4px 0 14px;padding:0 8px;font-weight:600}
+  .bank-howto{display:flex;align-items:center;gap:6px;margin:6px 0 4px}
+  .bh-step{flex:1;background:var(--surface,#fff);border:1px solid var(--line,#f0d9c8);border-radius:12px;padding:10px 4px;text-align:center}
+  .bh-step .bh-ic{font-size:22px;display:block;margin-bottom:4px}
+  .bh-step b{font-size:12px;color:var(--ink,#2C2C2A);display:block;line-height:1.3}
+  .bh-step span{font-size:10px;color:var(--ink-soft,#a08a7d);display:block;margin-top:2px;line-height:1.3}
+  .bh-arrow{color:var(--brand,#DD5E86);font-size:20px;font-weight:800;flex:0 0 auto}
   .bank-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
   .bank-item{background:var(--surface,#fff);border:1px solid var(--line,#f0d9c8);border-radius:12px;padding:10px;cursor:pointer;transition:.2s;text-align:left;font-family:inherit}
   .bank-item:hover{border-color:var(--brand,#DD5E86);transform:translateY(-1px);box-shadow:0 4px 12px rgba(221,94,134,.15)}
@@ -1090,6 +1098,16 @@
   .net-card .n-media{width:100%;margin-top:8px}
   .net-card video,.net-card audio{width:100%}
   .net-card .n-act{display:flex;flex-direction:column;gap:6px;flex:0 0 auto}
+  .ch-actions{display:flex;align-items:center}
+  .net-modes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+  .nm-mode{border:1px solid #e3e3e8;color:#555}
+  .nm-mode.active{background:linear-gradient(135deg,#5B8FD0,#3a6fb0);color:#fff;border-color:transparent}
+  .na-tabs{margin-bottom:4px}
+  .na-status{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:600;padding:2px 10px;border-radius:12px}
+  .na-status.on{background:#e8f7ee;color:#1c9d54}
+  .na-status.off{background:#f2f2f4;color:#9a9aa3}
+  #naCookie{width:100%;font-family:monospace;font-size:12px}
+  #naNote code{background:#eef4ff;padding:1px 5px;border-radius:5px;font-size:12px}
 
 </style>
 </head>
@@ -2044,20 +2062,30 @@
 
     <div class="screen" id="sc-bank">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🏦 积分银行</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="card-h"><span class="t">🏦 积分银行制</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="bank-tagline">让学习和家务变成一场有趣的游戏！</div>
         <div class="bank-overview">
           <div class="bank-stat"><span class="bs-ic">🪙</span><div><b id="bankCoins">0</b><span>硬币</span></div></div>
           <div class="bank-stat"><span class="bs-ic">⭐</span><div><b id="bankPoints">0</b><span>积分</span></div></div>
-          <div class="bank-stat bank-age"><span class="bs-ic">🎂</span><div><b>5岁+</b><span>适合年龄</span></div></div>
+        </div>
+        <div class="bank-section">
+          <div class="bank-h">🎯 玩法说明</div>
+          <div class="bank-howto">
+            <div class="bh-step"><span class="bh-ic">📚🧹</span><div><b>学习/家务</b><br><span>完成任务赚积分</span></div></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">⭐</span><div><b>赚积分</b><br><span>积分累积在银行</span></div></div>
+            <div class="bh-arrow">→</div>
+            <div class="bh-step"><span class="bh-ic">🎁</span><div><b>兑换特权</b><br><span>用积分换孩子的愿望</span></div></div>
+          </div>
         </div>
         <div class="bank-section">
           <div class="bank-h">🎁 可兑换特权</div>
           <div class="bank-list" id="bankList"></div>
         </div>
         <div class="bank-section">
-          <div class="bank-h">💡 懒妈技巧</div>
+          <div class="bank-h">💡 懒妈技巧 <span class="bank-h-sub">——给家长的省力小窍门</span></div>
           <div class="bank-tips">
-            <div class="bt-row"><span class="bt-ic">📊</span><div><b>Excel 或手写表格</b><br><span>记账本放显眼位置</span></div></div>
+            <div class="bt-row"><span class="bt-ic">📊</span><div><b>Excel 或手写表格</b><br><span>简单高效，记账本放显眼位置</span></div></div>
             <div class="bt-row"><span class="bt-ic">✏️</span><div><b>让孩子自己记账</b><br><span>培养成就感与数感</span></div></div>
             <div class="bt-row"><span class="bt-ic">📅</span><div><b>每周结算一次</b><br><span>约定兑换日更有仪式感</span></div></div>
           </div>
@@ -4263,33 +4291,55 @@
     const baseTitle=document.getElementById('netTitle').value.trim();
     if(!raw){toast('请粘贴至少一个链接');return;}
     const lines=raw.split(/\r?\n/).map(function(s){return s.trim();}).filter(Boolean);
-    const items=getNetItems();let n=0;
-    lines.forEach(function(line,idx){
-      const m=line.match(/(https?:\/\/\S+)/);if(!m)return;
+    const parsed=lines.map(function(line,idx){
+      const m=line.match(/(https?:\/\/\S+)/);if(!m)return null;
       let url=m[0].replace(/[。，,）)】\]]$/,'');
       let code='';
       const cm=line.match(/提取码[\s:：]*([a-zA-Z0-9]{4})/); if(cm)code=cm[1];
       if(!code){ const pm=url.match(/[?&]pwd=([a-zA-Z0-9]{4})/i); if(pm)code=pm[1]; }
-      if(!/^https?:\/\//.test(url))return;
-      const playable = board==='video'?isDirectVideo(url):(board==='audio'?isDirectAudio(url):false);
+      if(!/^https?:\/\//.test(url))return null;
+      const provider=detectNetProvider(url);
       const title=baseTitle?(lines.length>1?baseTitle+' '+(idx+1):baseTitle):deriveNetTitle(url,code);
-      items.push({id:'net_'+Date.now()+'_'+idx+'_'+Math.random().toString(36).slice(2,6),title:title,url:url,code:code,board:board,kind:board,playable:playable,added:Date.now()});
-      n++;
+      return {url:url,code:code,provider:provider,title:title};
+    }).filter(Boolean);
+    if(!parsed.length){toast('没有可导入的有效链接');return;}
+    // 同步建卡（直链立即可播放），解析结果后台补完
+    const items=getNetItems();
+    const added=parsed.map(function(it){
+      const playable = board==='video'?isDirectVideo(it.url):(board==='audio'?isDirectAudio(it.url):false);
+      const item={id:'net_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),title:it.title,url:it.url,code:it.code,board:board,kind:board,provider:it.provider,resolved:false,playable:playable,added:Date.now()};
+      items.push(item); return item;
     });
-    if(!n){toast('没有可导入的有效链接');return;}
     setNetItems(items);closeNetImport();
     netTab=board; renderNetHub(); renderNetItems();
-    toast('已导入 '+n+' 条到「'+NET_BOARDS[board].name+'」✔');
+    toast('已导入 '+parsed.length+' 条到「'+NET_BOARDS[board].name+'」✔');
+    // 自动解析：后台解析分享链接，成功后刷新为内联播放
+    if(netMode==='auto'){
+      added.forEach(function(it){
+        if(!it.provider)return;
+        tryResolve(it.provider,it.url,it.code).then(function(ok){
+          if(!ok)return;
+          const all=getNetItems(); const idx=all.findIndex(function(x){return x.id===it.id;});
+          if(idx<0)return; all[idx].resolved=true; all[idx].playable=true; setNetItems(all);
+          if(netTab===it.board)renderNetHub(); renderNetItems();
+        });
+      });
+    }
   }
   function netCardHTML(it){
     const b=itemBoard(it);
     let media='';
-    if(b==='video'&&it.playable){ media='<div class="n-media"><video controls preload="none" src="'+esc(it.url)+'"></video></div>'; }
+    if(it.resolved && it.provider){
+      const src='/api/netdisk/stream?provider='+encodeURIComponent(it.provider)+'&share='+encodeURIComponent(it.url)+'&pwd='+encodeURIComponent(it.code||'');
+      if(b==='video'){ media='<div class="n-media"><video controls preload="none" src="'+esc(src)+'" onerror="netFallback(\''+it.id+'\')"></video></div>'; }
+      else if(b==='audio'){ media='<div class="n-media"><audio controls preload="none" src="'+esc(src)+'" onerror="netFallback(\''+it.id+'\')"></audio></div>'; }
+    }
+    else if(b==='video'&&it.playable){ media='<div class="n-media"><video controls preload="none" src="'+esc(it.url)+'"></video></div>'; }
     else if(b==='audio'&&it.playable){ media='<div class="n-media"><audio controls preload="none" src="'+esc(it.url)+'"></audio></div>'; }
     else { media='<div class="n-media"><button class="btn ghost" onclick="netOpen(\''+it.id+'\')">🔗 打开网盘'+(it.code?('（提取码 '+it.code+'）'):'')+'</button></div>'; }
     const meta={video:'动画片',book:'绘本图书',audio:'故事音频'}[b]||'内容';
     return '<div class="net-card"><div class="n-ic">'+NET_BOARDS[b].icon+'</div>'+
-      '<div class="n-info"><div class="n-title">'+esc(it.title)+'</div><div class="n-sub">🌐 '+meta+(it.code?(' · 码 '+it.code):'')+(it.playable?' · 可直接播放':'')+'</div>'+media+'</div>'+
+      '<div class="n-info"><div class="n-title">'+esc(it.title)+'</div><div class="n-sub">🌐 '+meta+(it.code?(' · 码 '+it.code):'')+(it.resolved?' · 已解析直播':(it.playable?' · 可直接播放':''))+'</div>'+media+'</div>'+
       '<div class="n-act"><button class="mini-btn" onclick="editNetItem(\''+it.id+'\')">编辑</button><button class="mini-btn del" onclick="deleteNetItem(\''+it.id+'\')">删除</button></div></div>';
   }
   function renderNetHub(){
@@ -4335,6 +4385,68 @@
     items[idx]=Object.assign({},items[idx],{title:title||'网盘内容',url:url,code:code,board:board,kind:board,playable:playable});
     setNetItems(items); closeNetEdit(); renderNetHub(); renderNetItems();
     toast('已保存修改 ✔');
+  }
+
+  // ===== 解析模式 / 网盘账号设置 =====
+  let netMode='auto'; try{ netMode=localStorage.getItem('mp_net_mode')||'auto'; }catch(e){}
+  let netAcct={}; let netAcctTab='baidu';
+  function detectNetProvider(u){
+    if(/aliyundrive\.com\/s\/|alywp\.net\/s\//.test(u))return 'aliyun';
+    if(/pan\.baidu\.com/.test(u))return 'baidu';
+    if(/quark\.cn|pan\.quark\.cn/.test(u))return 'quark';
+    return '';
+  }
+  function tryResolve(provider,url,code){
+    if(typeof fetch!=='function')return Promise.resolve(null);
+    return fetch('/api/netdisk/resolve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:provider,url:url,pwd:code})})
+      .then(function(r){return r.json();}).then(function(j){return j&&j.ok?provider:null;})
+      .catch(function(e){return null;});
+  }
+  function netFallback(id){
+    const items=getNetItems(); const idx=items.findIndex(function(x){return x.id===id;});
+    if(idx>=0){ items[idx].resolved=false; setNetItems(items); }
+    renderNetHub(); renderNetItems();
+    toast('解析失效，已切回「打开网盘」（可能网盘 cookie 过期）');
+  }
+  function loadNetAcct(){ if(typeof fetch!=='function')return Promise.resolve(); return fetch('/api/netdisk/config').then(function(r){return r.json();}).then(function(j){netAcct=j||{};}).catch(function(e){}); }
+  function openNetAcct(){
+    document.querySelectorAll('.nm-mode').forEach(function(b){b.classList.toggle('active',b.dataset.mode===netMode);});
+    netAcctTab='baidu'; renderNetAcct();
+    loadNetAcct().then(renderNetAcct).catch(function(){});
+    document.getElementById('netAcctPop').classList.add('on');
+  }
+  function closeNetAcct(){ document.getElementById('netAcctPop').classList.remove('on'); }
+  function switchNetAcctTab(p){ netAcctTab=p; renderNetAcct(); }
+  function renderNetAcct(){
+    document.querySelectorAll('.na-tab').forEach(function(t){t.classList.toggle('active',t.dataset.p===netAcctTab);});
+    const title={baidu:'百度网盘',quark:'夸克网盘',aliyun:'阿里云盘'}[netAcctTab];
+    document.getElementById('naTitle').textContent=title;
+    const cookieBox=document.getElementById('naCookie');
+    const note=document.getElementById('naNote');
+    if(netAcctTab==='aliyun'){
+      cookieBox.style.display='none';
+      note.innerHTML='✅ 阿里云盘<b>公开分享免登录</b>：粘贴 <code>aliyundrive.com/s/xxx</code> 链接，点开即播，无需 cookie。';
+    }else{
+      cookieBox.style.display='block';
+      note.innerHTML='把你的 <b>'+title+'</b> 网页版登录后的 Cookie 粘贴到这里（仅存本机 server.js 所在目录）。解析模式为「自动解析」时，分享链接会由本地服务用该 cookie 解析后直接播放；cookie 过期需重新粘贴。';
+    }
+    const has=!!netAcct[netAcctTab];
+    const st=document.getElementById('naStatus'); st.textContent=has?'● 已配置':'○ 未配置'; st.className='na-status '+(has?'on':'off');
+  }
+  function saveNetAcct(){
+    const cookie=document.getElementById('naCookie').value.trim();
+    fetch('/api/netdisk/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:netAcctTab,cookie:cookie})})
+      .then(function(r){return r.json();}).then(function(j){
+        netAcct[netAcctTab]=!!cookie;
+        document.getElementById('naCookie').value='';
+        renderNetAcct();
+        toast(cookie?('已保存 '+netAcctTab+' cookie ✔'):('已清除 '+netAcctTab+' cookie'));
+      }).catch(function(e){toast('保存失败：'+String(e&&e.message||e));});
+  }
+  function switchNetMode(m){
+    netMode=m; try{localStorage.setItem('mp_net_mode',m);}catch(e){}
+    document.querySelectorAll('.nm-mode').forEach(function(b){b.classList.toggle('active',b.dataset.mode===netMode);});
+    toast('解析模式：'+(m==='auto'?'自动解析（点开即播）':'仅直链（保持原样）'));
   }
 
 /* ================================================================
@@ -5630,6 +5742,7 @@
     loadContent();
     seedUserBooks();
     seedFlash();
+    loadNetAcct();
     loadAiConfig();
     renderPet(); renderGrowthTrack(); renderGrowGrid(currentPartner); updatePetButtons();
     initCalendar(); initKeypad(); refreshPinNow(); initPsetCtrls();
@@ -5750,7 +5863,7 @@
               </div>
               <div><label>默认标题（可选）</label><input id="netTitle" placeholder="留空自动取链接名"></div>
             </div>
-            <div class="net-note">💡 登录网盘账号请在打开的网盘页面完成（本工具不保存网盘密码）。<br>· <b>直接播放/视频链接</b>（.mp4/.webm/.mp3/.m4a 等）可在此页直接观看或收听；<br>· <b>分享页链接</b>（pan.baidu.com / pan.quark.cn）会跳转到网盘页面，登录后观看/收听/下载。<br>· 可一次粘贴一个文件夹里多个文件的链接，批量导入。</div>
+            <div class="net-note">💡 解析模式为「🚀 自动解析」且已配置网盘账号时，<b>百度/夸克分享链接会直接在本页播放</b>（由本地 server 用你的登录态解析，无需再跳网盘）。<br>· <b>阿里云盘公开分享</b>（aliyundrive.com/s/xxx）免登录，点开即播。<br>· <b>直链</b>（.mp4/.webm/.mp3/.m4a 等）始终可本页播放。<br>· 未配置/未登录时，分享链接显示「打开网盘」按钮，点一下去网盘页登录观看。<br>· 账号与解析模式在右上角「⚙️ 账号/解析」设置。</div>
             <div class="mb-row" style="justify-content:flex-end;margin-top:10px">
               <button class="btn ghost" onclick="closeNetImport()">取消</button>
               <button class="btn" onclick="importNetLinks()">📥 导入</button>
@@ -5791,6 +5904,37 @@
       </div>
     </div>
 
+    <!-- 网盘账号 / 解析设置 -->
+    <div class="mb-mask" id="netAcctPop" onclick="if(event.target===this)closeNetAcct()">
+      <div class="mb-card" style="max-width:560px">
+        <div class="mb-head"><h3>⚙️ 网盘账号 / 解析设置</h3><button class="mb-close" onclick="closeNetAcct()">×</button></div>
+        <div class="mb-body">
+          <div class="mb-form">
+            <label>解析模式</label>
+            <div class="net-modes">
+              <button class="nm-mode btn ghost" data-mode="auto" onclick="switchNetMode('auto')">🚀 自动解析（点开即播）</button>
+              <button class="nm-mode btn ghost" data-mode="direct" onclick="switchNetMode('direct')">🔗 仅直链（保持原样）</button>
+            </div>
+            <label style="margin-top:8px">选择网盘</label>
+            <div class="net-tabs na-tabs">
+              <div class="na-tab net-tab" data-p="baidu" onclick="switchNetAcctTab('baidu')">🟢 百度网盘</div>
+              <div class="na-tab net-tab" data-p="quark" onclick="switchNetAcctTab('quark')">🔵 夸克网盘</div>
+              <div class="na-tab net-tab" data-p="aliyun" onclick="switchNetAcctTab('aliyun')">🟠 阿里云盘</div>
+            </div>
+            <div id="naTitle" style="font-weight:600;margin-top:10px"></div>
+            <div id="naStatus" class="na-status off"></div>
+            <label style="margin-top:8px">Cookie / 登录态（百度、夸克需要）</label>
+            <textarea id="naCookie" rows="3" placeholder="粘贴网盘网页版登录后的 Cookie（BDUSS=... 或完整 cookie 串）"></textarea>
+            <div class="net-note" id="naNote"></div>
+            <div class="mb-row" style="justify-content:flex-end;margin-top:10px">
+              <button class="btn ghost" onclick="closeNetAcct()">取消</button>
+              <button class="btn" onclick="saveNetAcct()">💾 保存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ==================== 英语闪卡屏 ==================== -->
     <div class="screen" id="sc-flash">
       <div class="card" style="max-width:760px;margin:0 auto">
@@ -5823,7 +5967,7 @@
     <!-- ==================== 网盘内容中心 ==================== -->
     <div class="screen" id="sc-netdisk">
       <div class="card" style="max-width:780px;margin:0 auto">
-        <div class="card-h"><span class="t">🌐 我的网盘</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="card-h"><span class="t">🌐 我的网盘</span><span class="ch-actions"><span class="s" onclick="openNetAcct()" style="cursor:pointer;margin-right:12px">⚙️ 账号/解析</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></span></div>
         <div class="mb-form">
           <div class="net-tabs">
             <div class="net-tab" data-board="video" onclick="switchNetTab('video')">📺 动画片</div>
