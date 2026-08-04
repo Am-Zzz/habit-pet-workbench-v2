@@ -2144,6 +2144,14 @@
           <p style="font-size:12px;color:var(--ink-soft);margin:6px 0 0">当前密码：<b id="pinNow">1111</b>（进入家长模式时输入）</p>
         </div>
         <button class="btn butter" style="width:100%;margin-top:16px" onclick="openLibrary()">📚 进入素材库（增删改 / 导入导出 JSON）</button>
+        <div class="sec" style="margin-top:16px">
+          <div class="sec-h">💾 数据迁移（换设备 / 换链接用）</div>
+          <p style="font-size:12px;color:var(--ink-soft);margin:0 0 8px">「导出」把本机全部进度（打卡、宠物、关卡、星星…）复制成一段文本，<b>不影响本机</b>；到另一端（如公网链接）打开家长设置 → 点「导入」粘贴即可同步。</p>
+          <div class="sync-row">
+            <button class="btn ghost" onclick="exportAppData()">📤 导出全部数据</button>
+            <button class="btn ghost" onclick="importAppData()">📥 导入全部数据</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -7780,6 +7788,66 @@ let phonicsTopicIdx=-1;
     document.getElementById('wbDlgCancel').textContent=o.cancelText||'取消';
     var ok=document.getElementById('wbDlgOk');ok.textContent=o.okText||'确定';
     ok.onclick=function(){closeDlg(true);};
+    m.style.display='flex';
+  }
+/* ---- 数据迁移：导出 / 导入（独立 modal，不干扰 wbDlg） ---- */
+  function _ensureDataDlg(){
+    var m=document.getElementById('wbDataDlg');
+    if(m)return m;
+    m=document.createElement('div');m.id='wbDataDlg';
+    m.style.cssText='display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.42);align-items:center;justify-content:center;padding:16px';
+    m.innerHTML=
+      '<div style="background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,.25)">'+
+        '<div id="wbDataTitle" style="padding:16px 18px 0;font-size:16px;font-weight:800;color:#3a3340"></div>'+
+        '<div id="wbDataMsg" style="padding:8px 18px 0;font-size:13px;color:#6b6470;line-height:1.5;white-space:pre-line"></div>'+
+        '<textarea id="wbDataArea" style="margin:12px 18px 0;flex:1;min-height:200px;width:calc(100% - 36px);box-sizing:border-box;padding:10px 12px;border:1.5px solid #e3dde2;border-radius:10px;font-size:12px;font-family:ui-monospace,Menlo,Consolas,monospace;resize:vertical"></textarea>'+
+        '<div id="wbDataErr" style="display:none;padding:6px 18px 0;color:#D9534F;font-size:12px"></div>'+
+        '<div style="display:flex;gap:10px;padding:14px 18px">'+
+          '<button id="wbDataCancel" style="flex:1;padding:10px;border:1.5px solid #e3dde2;background:#fff;border-radius:10px;font-size:14px;font-weight:700;color:#6b6470;cursor:pointer">取消</button>'+
+          '<button id="wbDataCopy" style="flex:1;padding:10px;border:none;background:#9ccc65;border-radius:10px;font-size:14px;font-weight:800;color:#274e13;cursor:pointer;display:none">复制</button>'+
+          '<button id="wbDataOk" style="flex:1;padding:10px;border:none;background:#FFB74D;border-radius:10px;font-size:14px;font-weight:800;color:#5a3d00;cursor:pointer">确定</button>'+
+        '</div>'+
+      '</div>';
+    document.body.appendChild(m);
+    m.addEventListener('click',function(e){if(e.target===m)closeDataDlg(null);});
+    return m;
+  }
+  function closeDataDlg(v){var m=document.getElementById('wbDataDlg');if(m){m.style.display='none';var cb=m._cb;m._cb=null;if(cb)cb(v);}}
+  function exportAppData(){
+    var data={};
+    for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);try{data[k]=localStorage.getItem(k);}catch(e){}}
+    var json=JSON.stringify(data);
+    var m=_ensureDataDlg();
+    document.getElementById('wbDataTitle').textContent='📤 导出全部数据';
+    document.getElementById('wbDataMsg').textContent='以下是本机全部进度（只读）。全选复制，到另一端（如公网链接）打开家长设置 → 点「导入全部数据」粘贴即可。本机数据不受影响。';
+    var area=document.getElementById('wbDataArea');area.value=json;area.readOnly=true;area.style.background='#faf7f5';
+    document.getElementById('wbDataErr').style.display='none';
+    var copy=document.getElementById('wbDataCopy');copy.style.display='block';copy.textContent='复制';
+    copy.onclick=function(){area.focus();area.select();try{document.execCommand('copy');copy.textContent='已复制 ✔';setTimeout(function(){copy.textContent='复制';},1500);}catch(e){}};
+    var ok=document.getElementById('wbDataOk');ok.textContent='关闭';ok.onclick=function(){closeDataDlg(null);};
+    document.getElementById('wbDataCancel').style.display='none';
+    m.style.display='flex';
+    setTimeout(function(){area.focus();area.select();},50);
+  }
+  function importAppData(){
+    var m=_ensureDataDlg();
+    document.getElementById('wbDataTitle').textContent='📥 导入全部数据';
+    document.getElementById('wbDataMsg').textContent='把另一端「导出」得到的文本粘贴到下面，点「导入」即可覆盖本端进度。导入后页面会自动刷新。';
+    var area=document.getElementById('wbDataArea');area.value='';area.readOnly=false;area.style.background='#fff';area.focus();
+    document.getElementById('wbDataErr').style.display='none';
+    var copy=document.getElementById('wbDataCopy');copy.style.display='none';
+    var cancel=document.getElementById('wbDataCancel');cancel.style.display='block';cancel.textContent='取消';cancel.onclick=function(){closeDataDlg(null);};
+    var ok=document.getElementById('wbDataOk');ok.textContent='导入';
+    ok.onclick=function(){
+      var t=area.value.trim();
+      if(!t){var e=document.getElementById('wbDataErr');e.textContent='请先粘贴导出的数据';e.style.display='block';return;}
+      try{
+        var data=JSON.parse(t);var n=0;
+        for(var k in data){ if(Object.prototype.hasOwnProperty.call(data,k)){ try{localStorage.setItem(k,data[k]);n++;}catch(e){} } }
+        ok.textContent='导入中…';
+        setTimeout(function(){location.reload();},400);
+      }catch(e){var er=document.getElementById('wbDataErr');er.textContent='导入失败：JSON 格式错误，请确认粘贴完整';er.style.display='block';}
+    };
     m.style.display='flex';
   }
   function addCheckin(){
