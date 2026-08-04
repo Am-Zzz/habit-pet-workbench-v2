@@ -1,10 +1,10 @@
-// 自动生成：绘本故事内容（公版 + bedbook MIT 精选）+ 逐字拼音标注。由 gen_books.py / gen_books_bedbook.py 生成，勿手改。
 window.BOOK_CONTENT = [
   {
     "id": "guitu",
     "cat": "classic",
     "icon": "🐢",
     "title": "龟兔赛跑",
+    "cover": "assets/books/guitu.png",
     "tag": "幼升小",
     "age": "幼升小",
     "grade": "幼小衔接",
@@ -790,7 +790,7 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": "assets/books/guitu.png"
+    "coverPy": "guī tù sài pǎo"
   },
   {
     "id": "three_pigs",
@@ -1506,7 +1506,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": "assets/books/three_pigs.png"
+    "cover": "assets/books/three_pigs.png",
+    "coverPy": "sān zhǐ xiǎo zhū"
   },
   {
     "id": "redhood",
@@ -2270,7 +2271,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": "assets/books/redhood.png"
+    "cover": "assets/books/redhood.png",
+    "coverPy": "xiǎo hóng mào"
   },
   {
     "id": "uglyduck",
@@ -3062,7 +3064,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": "assets/books/uglyduck.png"
+    "cover": "assets/books/uglyduck.png",
+    "coverPy": "chǒu xiǎo yā"
   },
   {
     "id": "wolf_comes",
@@ -3822,7 +3825,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": "assets/books/wolf_comes.png"
+    "cover": "assets/books/wolf_comes.png",
+    "coverPy": "láng lái le"
   },
   {
     "id": "wind_sun",
@@ -4570,7 +4574,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": "assets/books/wind_sun.png"
+    "cover": "assets/books/wind_sun.png",
+    "coverPy": "běi fēng tài yáng"
   },
   {
     "id": "sleeping",
@@ -5290,7 +5295,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": "assets/books/sleeping.png"
+    "cover": "assets/books/sleeping.png",
+    "coverPy": "shuì měi rén"
   },
   {
     "id": "cinderella",
@@ -6090,7 +6096,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": "assets/books/cinderella.png"
+    "cover": "assets/books/cinderella.png",
+    "coverPy": "huī gū niáng"
   },
   {
     "id": "mermaid",
@@ -6970,7 +6977,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": "assets/books/mermaid.png"
+    "cover": "assets/books/mermaid.png",
+    "coverPy": "hǎi de nǚ ér"
   },
   {
     "id": "bb_chouxiaoya",
@@ -8865,7 +8873,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "chǒu xiǎo yā"
   },
   {
     "id": "bb_muzhiguniang",
@@ -10555,7 +10564,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "mǔ zhǐ gū niáng"
   },
   {
     "id": "bb_jiekeyumodou",
@@ -12346,7 +12356,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "jié kè mó dòu"
   },
   {
     "id": "bb_tangguowulixianji",
@@ -14455,7 +14466,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "táng guǒ wū lì xiǎn jì"
   },
   {
     "id": "bb_shouzhudaitu",
@@ -17442,7 +17454,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "shǒu zhū dài tù"
   },
   {
     "id": "bb_yugongyishan",
@@ -20079,7 +20092,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "yú gōng yí shān"
   },
   {
     "id": "bb_yanerdaoling",
@@ -22564,7 +22578,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "yǎn ěr dào líng"
   },
   {
     "id": "bb_hujiahuwei",
@@ -26439,7 +26454,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "hú jiǎ hǔ wēi"
   },
   {
     "id": "bb_wangyangbulao",
@@ -29165,7 +29181,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "wáng yáng bǔ láo"
   },
   {
     "id": "bb_huashetianzu",
@@ -32314,7 +32331,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "huà shé tiān zú"
   },
   {
     "id": "bb_simaguangzagang",
@@ -34354,7 +34372,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "sī mǎ guāng zá gāng"
   },
   {
     "id": "bb_mengmusanqian",
@@ -36274,7 +36293,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "mèng mǔ sān qiān"
   },
   {
     "id": "bb_yuefeijingzhongbaoguo",
@@ -38022,7 +38042,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "yuè fēi jīng zhōng bào guó"
   },
   {
     "id": "bb_caochongchengxiang",
@@ -40937,7 +40958,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "cáo chōng chēng xiàng"
   },
   {
     "id": "bb_nezhanaohai",
@@ -43234,7 +43256,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "nǎ zhā nào hǎi"
   },
   {
     "id": "bb_nvwabutian",
@@ -44956,7 +44979,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "nǚ wā bǔ tiān"
   },
   {
     "id": "bb_jingweitianhai",
@@ -47104,7 +47128,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "jīng wèi tián hǎi"
   },
   {
     "id": "bb_houyisheri",
@@ -49200,7 +49225,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "hòu yì shè rì"
   },
   {
     "id": "bb_wohuizijishuijiao",
@@ -51127,7 +51153,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "wǒ huì zì jǐ shuì jué"
   },
   {
     "id": "bb_diyicishangxue",
@@ -53240,7 +53267,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "dì yī cì shàng xué"
   },
   {
     "id": "bb_butiaoshidehaohaizi",
@@ -55357,7 +55385,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "bù tiāo shí de hǎo hái zi"
   },
   {
     "id": "bb_xiaokedouzhaomama",
@@ -58375,7 +58404,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "xiǎo kē dǒu zhǎo mā mā"
   },
   {
     "id": "bb_weishenmehuiyoubaitianheheiye",
@@ -61412,7 +61442,8 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "wèi shén me huì yǒu bái tiān hé hēi yè"
   },
   {
     "id": "bb_caihongshizenmexingchengde",
@@ -64715,6 +64746,2566 @@ window.BOOK_CONTENT = [
         ]
       }
     ],
-    "cover": null
+    "cover": null,
+    "coverPy": "cǎi hóng shì zěn me xíng chéng de"
+  },
+  {
+    "id": "swdt_qiaozhi",
+    "cat": "learn",
+    "icon": "🧠",
+    "title": "儿童思维导图启蒙",
+    "cover": "/covers/swdt/swdt_01.png",
+    "tag": "思维训练",
+    "age": "幼小衔接",
+    "grade": "幼小衔接",
+    "ready": true,
+    "desc": "用可爱手绘认识九种思维导图",
+    "pages": [
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "欢",
+            "p": null
+          },
+          {
+            "t": "迎",
+            "p": null
+          },
+          {
+            "t": "来",
+            "p": null
+          },
+          {
+            "t": "到",
+            "p": null
+          },
+          {
+            "t": "儿",
+            "p": null
+          },
+          {
+            "t": "童",
+            "p": null
+          },
+          {
+            "t": "思",
+            "p": null
+          },
+          {
+            "t": "维",
+            "p": null
+          },
+          {
+            "t": "导",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "启",
+            "p": null
+          },
+          {
+            "t": "蒙",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "这",
+            "p": null
+          },
+          {
+            "t": "里",
+            "p": null
+          },
+          {
+            "t": "有",
+            "p": null
+          },
+          {
+            "t": "很",
+            "p": null
+          },
+          {
+            "t": "多",
+            "p": null
+          },
+          {
+            "t": "好",
+            "p": null
+          },
+          {
+            "t": "玩",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "形",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "帮",
+            "p": null
+          },
+          {
+            "t": "助",
+            "p": null
+          },
+          {
+            "t": "我",
+            "p": null
+          },
+          {
+            "t": "们",
+            "p": null
+          },
+          {
+            "t": "整",
+            "p": null
+          },
+          {
+            "t": "理",
+            "p": null
+          },
+          {
+            "t": "想",
+            "p": null
+          },
+          {
+            "t": "法",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "共",
+            "p": null
+          },
+          {
+            "t": "有",
+            "p": null
+          },
+          {
+            "t": "九",
+            "p": null
+          },
+          {
+            "t": "种",
+            "p": null
+          },
+          {
+            "t": "思",
+            "p": null
+          },
+          {
+            "t": "维",
+            "p": null
+          },
+          {
+            "t": "导",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "每",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "种",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "形",
+            "p": null
+          },
+          {
+            "t": "都",
+            "p": null
+          },
+          {
+            "t": "有",
+            "p": null
+          },
+          {
+            "t": "不",
+            "p": null
+          },
+          {
+            "t": "同",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "本",
+            "p": null
+          },
+          {
+            "t": "领",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "就",
+            "p": null
+          },
+          {
+            "t": "像",
+            "p": null
+          },
+          {
+            "t": "我",
+            "p": null
+          },
+          {
+            "t": "们",
+            "p": null
+          },
+          {
+            "t": "每",
+            "p": null
+          },
+          {
+            "t": "个",
+            "p": null
+          },
+          {
+            "t": "人",
+            "p": null
+          },
+          {
+            "t": "都",
+            "p": null
+          },
+          {
+            "t": "有",
+            "p": null
+          },
+          {
+            "t": "不",
+            "p": null
+          },
+          {
+            "t": "同",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "特",
+            "p": null
+          },
+          {
+            "t": "长",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "这",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "圆",
+            "p": null
+          },
+          {
+            "t": "圈",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "它",
+            "p": null
+          },
+          {
+            "t": "像",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "个",
+            "p": null
+          },
+          {
+            "t": "甜",
+            "p": null
+          },
+          {
+            "t": "甜",
+            "p": null
+          },
+          {
+            "t": "圈",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "中",
+            "p": null
+          },
+          {
+            "t": "间",
+            "p": null
+          },
+          {
+            "t": "写",
+            "p": null
+          },
+          {
+            "t": "主",
+            "p": null
+          },
+          {
+            "t": "题",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "外",
+            "p": null
+          },
+          {
+            "t": "面",
+            "p": null
+          },
+          {
+            "t": "写",
+            "p": null
+          },
+          {
+            "t": "和",
+            "p": null
+          },
+          {
+            "t": "这",
+            "p": null
+          },
+          {
+            "t": "个",
+            "p": null
+          },
+          {
+            "t": "主",
+            "p": null
+          },
+          {
+            "t": "题",
+            "p": null
+          },
+          {
+            "t": "有",
+            "p": null
+          },
+          {
+            "t": "关",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "想",
+            "p": null
+          },
+          {
+            "t": "法",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "比",
+            "p": null
+          },
+          {
+            "t": "如",
+            "p": null
+          },
+          {
+            "t": "主",
+            "p": null
+          },
+          {
+            "t": "题",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "星",
+            "p": null
+          },
+          {
+            "t": "星",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "我",
+            "p": null
+          },
+          {
+            "t": "们",
+            "p": null
+          },
+          {
+            "t": "可",
+            "p": null
+          },
+          {
+            "t": "以",
+            "p": null
+          },
+          {
+            "t": "想",
+            "p": null
+          },
+          {
+            "t": "到",
+            "p": null
+          },
+          {
+            "t": "亮",
+            "p": null
+          },
+          {
+            "t": "亮",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "黄",
+            "p": null
+          },
+          {
+            "t": "色",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "晚",
+            "p": null
+          },
+          {
+            "t": "上",
+            "p": null
+          },
+          {
+            "t": "出",
+            "p": null
+          },
+          {
+            "t": "现",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "会",
+            "p": null
+          },
+          {
+            "t": "眨",
+            "p": null
+          },
+          {
+            "t": "眼",
+            "p": null
+          },
+          {
+            "t": "睛",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "这",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "气",
+            "p": null
+          },
+          {
+            "t": "泡",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "中",
+            "p": null
+          },
+          {
+            "t": "间",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "个",
+            "p": null
+          },
+          {
+            "t": "小",
+            "p": null
+          },
+          {
+            "t": "朋",
+            "p": null
+          },
+          {
+            "t": "友",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "周",
+            "p": null
+          },
+          {
+            "t": "围",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "气",
+            "p": null
+          },
+          {
+            "t": "泡",
+            "p": null
+          },
+          {
+            "t": "里",
+            "p": null
+          },
+          {
+            "t": "写",
+            "p": null
+          },
+          {
+            "t": "上",
+            "p": null
+          },
+          {
+            "t": "她",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "样",
+            "p": null
+          },
+          {
+            "t": "子",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "帮",
+            "p": null
+          },
+          {
+            "t": "助",
+            "p": null
+          },
+          {
+            "t": "我",
+            "p": null
+          },
+          {
+            "t": "们",
+            "p": null
+          },
+          {
+            "t": "描",
+            "p": null
+          },
+          {
+            "t": "述",
+            "p": null
+          },
+          {
+            "t": "事",
+            "p": null
+          },
+          {
+            "t": "物",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "中",
+            "p": null
+          },
+          {
+            "t": "间",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "只",
+            "p": null
+          },
+          {
+            "t": "大",
+            "p": null
+          },
+          {
+            "t": "熊",
+            "p": null
+          },
+          {
+            "t": "猫",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "旁",
+            "p": null
+          },
+          {
+            "t": "边",
+            "p": null
+          },
+          {
+            "t": "可",
+            "p": null
+          },
+          {
+            "t": "以",
+            "p": null
+          },
+          {
+            "t": "写",
+            "p": null
+          },
+          {
+            "t": "圆",
+            "p": null
+          },
+          {
+            "t": "圆",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "黑",
+            "p": null
+          },
+          {
+            "t": "白",
+            "p": null
+          },
+          {
+            "t": "相",
+            "p": null
+          },
+          {
+            "t": "间",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "爱",
+            "p": null
+          },
+          {
+            "t": "吃",
+            "p": null
+          },
+          {
+            "t": "竹",
+            "p": null
+          },
+          {
+            "t": "子",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "很",
+            "p": null
+          },
+          {
+            "t": "可",
+            "p": null
+          },
+          {
+            "t": "爱",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "这",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "双",
+            "p": null
+          },
+          {
+            "t": "气",
+            "p": null
+          },
+          {
+            "t": "泡",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "它",
+            "p": null
+          },
+          {
+            "t": "有",
+            "p": null
+          },
+          {
+            "t": "两",
+            "p": null
+          },
+          {
+            "t": "个",
+            "p": null
+          },
+          {
+            "t": "圆",
+            "p": null
+          },
+          {
+            "t": "圈",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "中",
+            "p": null
+          },
+          {
+            "t": "间",
+            "p": null
+          },
+          {
+            "t": "重",
+            "p": null
+          },
+          {
+            "t": "叠",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "部",
+            "p": null
+          },
+          {
+            "t": "分",
+            "p": null
+          },
+          {
+            "t": "写",
+            "p": null
+          },
+          {
+            "t": "相",
+            "p": null
+          },
+          {
+            "t": "同",
+            "p": null
+          },
+          {
+            "t": "点",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "两",
+            "p": null
+          },
+          {
+            "t": "边",
+            "p": null
+          },
+          {
+            "t": "写",
+            "p": null
+          },
+          {
+            "t": "不",
+            "p": null
+          },
+          {
+            "t": "同",
+            "p": null
+          },
+          {
+            "t": "点",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "比",
+            "p": null
+          },
+          {
+            "t": "如",
+            "p": null
+          },
+          {
+            "t": "比",
+            "p": null
+          },
+          {
+            "t": "较",
+            "p": null
+          },
+          {
+            "t": "两",
+            "p": null
+          },
+          {
+            "t": "个",
+            "p": null
+          },
+          {
+            "t": "熊",
+            "p": null
+          },
+          {
+            "t": "猫",
+            "p": null
+          },
+          {
+            "t": "蛋",
+            "p": null
+          },
+          {
+            "t": "糕",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "相",
+            "p": null
+          },
+          {
+            "t": "同",
+            "p": null
+          },
+          {
+            "t": "点",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "都",
+            "p": null
+          },
+          {
+            "t": "很",
+            "p": null
+          },
+          {
+            "t": "甜",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "不",
+            "p": null
+          },
+          {
+            "t": "同",
+            "p": null
+          },
+          {
+            "t": "点",
+            "p": null
+          },
+          {
+            "t": "可",
+            "p": null
+          },
+          {
+            "t": "能",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "大",
+            "p": null
+          },
+          {
+            "t": "小",
+            "p": null
+          },
+          {
+            "t": "和",
+            "p": null
+          },
+          {
+            "t": "颜",
+            "p": null
+          },
+          {
+            "t": "色",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "这",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "树",
+            "p": null
+          },
+          {
+            "t": "形",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "它",
+            "p": null
+          },
+          {
+            "t": "像",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "棵",
+            "p": null
+          },
+          {
+            "t": "大",
+            "p": null
+          },
+          {
+            "t": "树",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "把",
+            "p": null
+          },
+          {
+            "t": "东",
+            "p": null
+          },
+          {
+            "t": "西",
+            "p": null
+          },
+          {
+            "t": "分",
+            "p": null
+          },
+          {
+            "t": "成",
+            "p": null
+          },
+          {
+            "t": "几",
+            "p": null
+          },
+          {
+            "t": "类",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "帮",
+            "p": null
+          },
+          {
+            "t": "助",
+            "p": null
+          },
+          {
+            "t": "我",
+            "p": null
+          },
+          {
+            "t": "们",
+            "p": null
+          },
+          {
+            "t": "整",
+            "p": null
+          },
+          {
+            "t": "理",
+            "p": null
+          },
+          {
+            "t": "和",
+            "p": null
+          },
+          {
+            "t": "归",
+            "p": null
+          },
+          {
+            "t": "纳",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "比",
+            "p": null
+          },
+          {
+            "t": "如",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "个",
+            "p": null
+          },
+          {
+            "t": "礼",
+            "p": null
+          },
+          {
+            "t": "物",
+            "p": null
+          },
+          {
+            "t": "盒",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "可",
+            "p": null
+          },
+          {
+            "t": "以",
+            "p": null
+          },
+          {
+            "t": "分",
+            "p": null
+          },
+          {
+            "t": "成",
+            "p": null
+          },
+          {
+            "t": "气",
+            "p": null
+          },
+          {
+            "t": "球",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "星",
+            "p": null
+          },
+          {
+            "t": "星",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "爱",
+            "p": null
+          },
+          {
+            "t": "心",
+            "p": null
+          },
+          {
+            "t": "和",
+            "p": null
+          },
+          {
+            "t": "圆",
+            "p": null
+          },
+          {
+            "t": "形",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "按",
+            "p": null
+          },
+          {
+            "t": "形",
+            "p": null
+          },
+          {
+            "t": "状",
+            "p": null
+          },
+          {
+            "t": "分",
+            "p": null
+          },
+          {
+            "t": "类",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "这",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "括",
+            "p": null
+          },
+          {
+            "t": "号",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "它",
+            "p": null
+          },
+          {
+            "t": "像",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "把",
+            "p": null
+          },
+          {
+            "t": "大",
+            "p": null
+          },
+          {
+            "t": "伞",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "左",
+            "p": null
+          },
+          {
+            "t": "边",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "整",
+            "p": null
+          },
+          {
+            "t": "体",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "右",
+            "p": null
+          },
+          {
+            "t": "边",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "大",
+            "p": null
+          },
+          {
+            "t": "括",
+            "p": null
+          },
+          {
+            "t": "号",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "里",
+            "p": null
+          },
+          {
+            "t": "面",
+            "p": null
+          },
+          {
+            "t": "写",
+            "p": null
+          },
+          {
+            "t": "部",
+            "p": null
+          },
+          {
+            "t": "分",
+            "p": null
+          },
+          {
+            "t": "组",
+            "p": null
+          },
+          {
+            "t": "成",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "比",
+            "p": null
+          },
+          {
+            "t": "如",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "盆",
+            "p": null
+          },
+          {
+            "t": "植",
+            "p": null
+          },
+          {
+            "t": "物",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "可",
+            "p": null
+          },
+          {
+            "t": "以",
+            "p": null
+          },
+          {
+            "t": "分",
+            "p": null
+          },
+          {
+            "t": "为",
+            "p": null
+          },
+          {
+            "t": "根",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "茎",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "叶",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "花",
+            "p": null
+          },
+          {
+            "t": "和",
+            "p": null
+          },
+          {
+            "t": "果",
+            "p": null
+          },
+          {
+            "t": "实",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "每",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "部",
+            "p": null
+          },
+          {
+            "t": "分",
+            "p": null
+          },
+          {
+            "t": "都",
+            "p": null
+          },
+          {
+            "t": "很",
+            "p": null
+          },
+          {
+            "t": "重",
+            "p": null
+          },
+          {
+            "t": "要",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "这",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "流",
+            "p": null
+          },
+          {
+            "t": "程",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "它",
+            "p": null
+          },
+          {
+            "t": "用",
+            "p": null
+          },
+          {
+            "t": "箭",
+            "p": null
+          },
+          {
+            "t": "头",
+            "p": null
+          },
+          {
+            "t": "把",
+            "p": null
+          },
+          {
+            "t": "步",
+            "p": null
+          },
+          {
+            "t": "骤",
+            "p": null
+          },
+          {
+            "t": "连",
+            "p": null
+          },
+          {
+            "t": "起",
+            "p": null
+          },
+          {
+            "t": "来",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "告",
+            "p": null
+          },
+          {
+            "t": "诉",
+            "p": null
+          },
+          {
+            "t": "我",
+            "p": null
+          },
+          {
+            "t": "们",
+            "p": null
+          },
+          {
+            "t": "先",
+            "p": null
+          },
+          {
+            "t": "做",
+            "p": null
+          },
+          {
+            "t": "哪",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "步",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "后",
+            "p": null
+          },
+          {
+            "t": "做",
+            "p": null
+          },
+          {
+            "t": "哪",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "步",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "比",
+            "p": null
+          },
+          {
+            "t": "如",
+            "p": null
+          },
+          {
+            "t": "小",
+            "p": null
+          },
+          {
+            "t": "飞",
+            "p": null
+          },
+          {
+            "t": "机",
+            "p": null
+          },
+          {
+            "t": "旅",
+            "p": null
+          },
+          {
+            "t": "行",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "第",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "步",
+            "p": null
+          },
+          {
+            "t": "起",
+            "p": null
+          },
+          {
+            "t": "飞",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "第",
+            "p": null
+          },
+          {
+            "t": "二",
+            "p": null
+          },
+          {
+            "t": "步",
+            "p": null
+          },
+          {
+            "t": "穿",
+            "p": null
+          },
+          {
+            "t": "过",
+            "p": null
+          },
+          {
+            "t": "云",
+            "p": null
+          },
+          {
+            "t": "朵",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "第",
+            "p": null
+          },
+          {
+            "t": "三",
+            "p": null
+          },
+          {
+            "t": "步",
+            "p": null
+          },
+          {
+            "t": "到",
+            "p": null
+          },
+          {
+            "t": "达",
+            "p": null
+          },
+          {
+            "t": "目",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "地",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "这",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "复",
+            "p": null
+          },
+          {
+            "t": "流",
+            "p": null
+          },
+          {
+            "t": "程",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "中",
+            "p": null
+          },
+          {
+            "t": "间",
+            "p": null
+          },
+          {
+            "t": "写",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "件",
+            "p": null
+          },
+          {
+            "t": "事",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "左",
+            "p": null
+          },
+          {
+            "t": "边",
+            "p": null
+          },
+          {
+            "t": "写",
+            "p": null
+          },
+          {
+            "t": "原",
+            "p": null
+          },
+          {
+            "t": "因",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "右",
+            "p": null
+          },
+          {
+            "t": "边",
+            "p": null
+          },
+          {
+            "t": "写",
+            "p": null
+          },
+          {
+            "t": "结",
+            "p": null
+          },
+          {
+            "t": "果",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "比",
+            "p": null
+          },
+          {
+            "t": "如",
+            "p": null
+          },
+          {
+            "t": "看",
+            "p": null
+          },
+          {
+            "t": "电",
+            "p": null
+          },
+          {
+            "t": "视",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "原",
+            "p": null
+          },
+          {
+            "t": "因",
+            "p": null
+          },
+          {
+            "t": "可",
+            "p": null
+          },
+          {
+            "t": "能",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "想",
+            "p": null
+          },
+          {
+            "t": "休",
+            "p": null
+          },
+          {
+            "t": "息",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "想",
+            "p": null
+          },
+          {
+            "t": "看",
+            "p": null
+          },
+          {
+            "t": "动",
+            "p": null
+          },
+          {
+            "t": "画",
+            "p": null
+          },
+          {
+            "t": "片",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "结",
+            "p": null
+          },
+          {
+            "t": "果",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "眼",
+            "p": null
+          },
+          {
+            "t": "睛",
+            "p": null
+          },
+          {
+            "t": "累",
+            "p": null
+          },
+          {
+            "t": "了",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "学",
+            "p": null
+          },
+          {
+            "t": "到",
+            "p": null
+          },
+          {
+            "t": "了",
+            "p": null
+          },
+          {
+            "t": "知",
+            "p": null
+          },
+          {
+            "t": "识",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "这",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "桥",
+            "p": null
+          },
+          {
+            "t": "形",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "它",
+            "p": null
+          },
+          {
+            "t": "像",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "座",
+            "p": null
+          },
+          {
+            "t": "小",
+            "p": null
+          },
+          {
+            "t": "桥",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "上",
+            "p": null
+          },
+          {
+            "t": "面",
+            "p": null
+          },
+          {
+            "t": "和",
+            "p": null
+          },
+          {
+            "t": "下",
+            "p": null
+          },
+          {
+            "t": "面",
+            "p": null
+          },
+          {
+            "t": "写",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "对",
+            "p": null
+          },
+          {
+            "t": "相",
+            "p": null
+          },
+          {
+            "t": "似",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "事",
+            "p": null
+          },
+          {
+            "t": "物",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "比",
+            "p": null
+          },
+          {
+            "t": "如",
+            "p": null
+          },
+          {
+            "t": "波",
+            "p": null
+          },
+          {
+            "t": "浪",
+            "p": null
+          },
+          {
+            "t": "和",
+            "p": null
+          },
+          {
+            "t": "山",
+            "p": null
+          },
+          {
+            "t": "脉",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "它",
+            "p": null
+          },
+          {
+            "t": "们",
+            "p": null
+          },
+          {
+            "t": "都",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "上",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "下",
+            "p": null
+          },
+          {
+            "t": "、",
+            "p": null
+          },
+          {
+            "t": "连",
+            "p": null
+          },
+          {
+            "t": "绵",
+            "p": null
+          },
+          {
+            "t": "不",
+            "p": null
+          },
+          {
+            "t": "断",
+            "p": null
+          },
+          {
+            "t": "的",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "样",
+            "p": null
+          },
+          {
+            "t": "子",
+            "p": null
+          },
+          {
+            "t": "很",
+            "p": null
+          },
+          {
+            "t": "相",
+            "p": null
+          },
+          {
+            "t": "似",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      },
+      {
+        "role": "旁白",
+        "chars": [
+          {
+            "t": "这",
+            "p": null
+          },
+          {
+            "t": "是",
+            "p": null
+          },
+          {
+            "t": "心",
+            "p": null
+          },
+          {
+            "t": "智",
+            "p": null
+          },
+          {
+            "t": "图",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          },
+          {
+            "t": "它",
+            "p": null
+          },
+          {
+            "t": "像",
+            "p": null
+          },
+          {
+            "t": "一",
+            "p": null
+          },
+          {
+            "t": "只",
+            "p": null
+          },
+          {
+            "t": "八",
+            "p": null
+          },
+          {
+            "t": "爪",
+            "p": null
+          },
+          {
+            "t": "鱼",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "把",
+            "p": null
+          },
+          {
+            "t": "知",
+            "p": null
+          },
+          {
+            "t": "识",
+            "p": null
+          },
+          {
+            "t": "和",
+            "p": null
+          },
+          {
+            "t": "想",
+            "p": null
+          },
+          {
+            "t": "象",
+            "p": null
+          },
+          {
+            "t": "结",
+            "p": null
+          },
+          {
+            "t": "合",
+            "p": null
+          },
+          {
+            "t": "起",
+            "p": null
+          },
+          {
+            "t": "来",
+            "p": null
+          },
+          {
+            "t": "，",
+            "p": null
+          },
+          {
+            "t": "帮",
+            "p": null
+          },
+          {
+            "t": "助",
+            "p": null
+          },
+          {
+            "t": "我",
+            "p": null
+          },
+          {
+            "t": "们",
+            "p": null
+          },
+          {
+            "t": "全",
+            "p": null
+          },
+          {
+            "t": "面",
+            "p": null
+          },
+          {
+            "t": "思",
+            "p": null
+          },
+          {
+            "t": "考",
+            "p": null
+          },
+          {
+            "t": "问",
+            "p": null
+          },
+          {
+            "t": "题",
+            "p": null
+          },
+          {
+            "t": "。",
+            "p": null
+          }
+        ]
+      }
+    ],
+    "source": "乔智大叔工作室",
+    "coverPy": "ér sī tú"
   }
 ];

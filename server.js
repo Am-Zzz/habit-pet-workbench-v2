@@ -68,7 +68,7 @@ async function resolveQuark(cookie,shareUrl,pwd){
   return {dlink:durl,headers:{Cookie:cookie}};
 }
 // 带 Range 的流式代理，绕开网盘防盗链
-function proxyStream(res,dlink,extraHeaders,req){
+function proxyStream(res,dlink,extraHeaders,req,forceInline){
   const rng=req.headers['range'];
   let origin='https://pan.baidu.com/';
   try{origin=new URL(dlink).origin;}catch(e){}
@@ -78,6 +78,7 @@ function proxyStream(res,dlink,extraHeaders,req){
   fetch(dlink,{headers:hd,redirect:'follow'}).then(function(up){
     const status=up.status; const h={};
     ['content-type','content-length','content-range','accept-ranges','cache-control','content-disposition'].forEach(function(k){const v=up.headers.get(k);if(v)h[k]=v;});
+    if(forceInline)h['Content-Disposition']='inline';
     res.writeHead(status,h);
     const body=up.body; if(!body){res.end();return;}
     const reader=body.getReader();
@@ -96,8 +97,8 @@ const server=http.createServer((req,res)=>{
     setCORS(res);
     const sub=p.replace('/api/ai/','').split('?')[0];
     if(sub==='config'){
-      if(req.method==='GET'){const c=readAiCfg();return sendJSON(res,200,{configured:!!(c&&c.key),endpoint:c&&c.endpoint||'',model:c&&c.model||''});}
-      if(req.method==='POST'){return readBody(req).then(function(d){const cfg={endpoint:(d.endpoint||'').replace(/\/+$/,''),key:d.key||'',model:d.model||''};fs.writeFileSync(AI_CFG,JSON.stringify(cfg,null,2));return sendJSON(res,200,{ok:true});}).catch(e=>sendJSON(res,400,{ok:false,err:String(e&&e.message||e)}));}
+      if(req.method==='GET'){const c=readAiCfg();return sendJSON(res,200,{configured:!!(c&&c.key),provider:c&&c.provider||'openai',endpoint:c&&c.endpoint||'',chatModel:c&&c.chatModel||'',imageModel:c&&c.imageModel||''});}
+      if(req.method==='POST'){return readBody(req).then(function(d){const cfg={provider:d.provider||'openai',endpoint:(d.endpoint||'').replace(/\/+$/,''),key:d.key||'',chatModel:d.chatModel||d.model||'',imageModel:d.imageModel||''};fs.writeFileSync(AI_CFG,JSON.stringify(cfg,null,2));return sendJSON(res,200,{ok:true});}).catch(e=>sendJSON(res,400,{ok:false,err:String(e&&e.message||e)}));}
       return sendJSON(res,405,{ok:false});
     }
     // 需要 key 的接口
@@ -105,20 +106,27 @@ const server=http.createServer((req,res)=>{
     if(!cfg||!cfg.key){return sendJSON(res,501,{ok:false,err:'未配置 AI：在家长设置填写 endpoint/key/model 并 node server.js'});}
     if(req.method!=='POST')return sendJSON(res,405,{ok:false});
     return readBody(req).then(function(body){
-      const base=cfg.endpoint||'https://api.openai.com/v1';
+      const provider=cfg.provider||'openai';
+      const base=cfg.endpoint||(provider==='doubao'?'https://ark.cn-beijing.volces.com/api/v3':'https://api.openai.com/v1');
       if(sub==='chat'){
-        const payload={model:body.model||cfg.model||'gpt-4o-mini',messages:body.messages||[],temperature:body.temperature||0.8,stream:false};
+        const chatModel=body.model||cfg.chatModel||cfg.model||(provider==='doubao'?'doubao-seed-1-6-250615':'gpt-4o-mini');
+        const payload={model:chatModel,messages:body.messages||[],temperature:body.temperature||0.8,stream:false};
         return fetch(base+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.key},body:JSON.stringify(payload)})
           .then(r=>r.json()).then(d=>{const reply=(d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content)||'';sendJSON(res,200,{reply:reply,raw:d});})
           .catch(e=>sendJSON(res,502,{ok:false,err:String(e&&e.message||e)}));
       }
       if(sub==='image'){
-        const payload={model:body.model||cfg.model||'',prompt:body.prompt||'',n:1,size:body.size||'512x512'};
-        let imgUrl=base+'/images/generations';
-        // 部分厂商用 /v1/images/generations（base 已是 /v1 时避免重复）
-        if(/\/v1$/.test(base))imgUrl=base+'/images/generations';
+        const size=body.size||'1024x1024';
+        const imgUrl=base+'/images/generations';
+        const imgModel=body.model||cfg.imageModel||(provider==='doubao'?'doubao-seedream-3-0-t2i-250415':'dall-e-3');
+        const payload={model:imgModel,prompt:body.prompt||'',n:1,size:size,response_format:'url'};
         return fetch(imgUrl,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.key},body:JSON.stringify(payload)})
-          .then(r=>r.json()).then(d=>{const it=(d.data&&d.data[0])||{};const out=it.url?{url:it.url}:(it.b64_json?{b64:it.b64_json}:{});sendJSON(res,200,out);})
+          .then(r=>r.json()).then(function(d){
+            const it=(d.data&&d.data[0])||{};
+            if(it.url)return sendJSON(res,200,{url:it.url});
+            if(it.b64_json)return sendJSON(res,200,{b64:it.b64_json});
+            return sendJSON(res,502,{ok:false,err:'生图接口未返回图片：'+((d.error&&d.error.message)||JSON.stringify(d).slice(0,200))});
+          })
           .catch(e=>sendJSON(res,502,{ok:false,err:String(e&&e.message||e)}));
       }
       if(sub==='fetch'){
@@ -194,10 +202,13 @@ const server=http.createServer((req,res)=>{
   if(p==='/')p='/index.html';
   const fp=path.normalize(path.join(root,p));
   if(fp!==root && !fp.startsWith(root+path.sep)){res.writeHead(403);res.end('forbidden');return;}
-  fs.readFile(fp,(e,data)=>{
-    if(e){res.writeHead(404);res.end('not found');return;}
-    res.writeHead(200,{'Content-Type':types[path.extname(fp)]||'application/octet-stream'});
-    res.end(data);
+    fs.readFile(fp,(e,data)=>{
+      if(e){res.writeHead(404);res.end('not found');return;}
+      res.writeHead(200,{
+        'Content-Type':types[path.extname(fp)]||'application/octet-stream',
+        'Cache-Control':'no-cache'
+      });
+      res.end(data);
   });
 });
 server.listen(8124,'0.0.0.0',()=>console.log('SERVING_ON_8124_LAN + AI proxy'));
