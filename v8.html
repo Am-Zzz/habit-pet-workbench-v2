@@ -1957,6 +1957,28 @@
 </style>
 </head>
 <body>
+<style id="gateStyle">
+#gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(165deg,#FDF8F4 0%,#FBF1EC 58%,#F9ECEC 100%);display:flex;align-items:center;justify-content:center;font-family:var(--font),system-ui,sans-serif}
+.gate-box{width:300px;max-width:84vw;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:30px 24px 26px;text-align:center}
+.gate-logo{font-size:40px;line-height:1}
+.gate-title{font-size:22px;font-weight:800;margin:8px 0 4px;color:var(--ink)}
+.gate-sub{font-size:13px;color:#8A8079;margin-bottom:18px}
+#gatePwd,#gatePwd2{width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:15px;margin-bottom:10px;outline:none}
+#gatePwd:focus,#gatePwd2:focus{border-color:var(--brand)}
+#gateBtn{width:100%;padding:12px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-d));color:#fff;font-size:15px;font-weight:800;cursor:pointer}
+.gate-tip{color:#DD5E86;font-size:12px;min-height:16px;margin-top:8px}
+</style>
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-logo">🐾</div>
+    <div class="gate-title">萌宠小屋</div>
+    <div class="gate-sub" id="gateSub">私人空间 · 首次使用请设置访问密码</div>
+    <input id="gatePwd" type="password" placeholder="请输入密码（至少4位）" autocomplete="off">
+    <input id="gatePwd2" type="password" placeholder="再次输入确认" autocomplete="off" style="display:none">
+    <button id="gateBtn">设置并进入</button>
+    <div class="gate-tip" id="gateTip"></div>
+  </div>
+</div>
 <script>
   // 从「自然拼读大闯关」返回（v8.html#games）时，先把整页藏住，
   // 等末尾同步切好游戏中心屏再显示，彻底避免「先闪主页再跳游戏中心」
@@ -9342,6 +9364,37 @@ let phonicsTopicIdx=-1;
       }
     }
   })();
+</script>
+<script>
+(function(){
+  var PWD_KEY='v8_pwd_hash', OK_KEY='v8_gate_ok';
+  var gate=document.getElementById('gate');
+  if(!gate) return;
+  var pwd=document.getElementById('gatePwd');
+  var pwd2=document.getElementById('gatePwd2');
+  var btn=document.getElementById('gateBtn');
+  var sub=document.getElementById('gateSub');
+  var tip=document.getElementById('gateTip');
+  function hash(s){var h=0;s=String(s);for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0;}return 'h'+h.toString(16);}
+  var saved=localStorage.getItem(PWD_KEY);
+  if(saved){sub.textContent='私人空间 · 请输入访问密码';pwd2.style.display='none';btn.textContent='进入';}
+  if(localStorage.getItem(OK_KEY)==='1'){gate.style.display='none';return;}
+  function unlock(){gate.style.display='none';localStorage.setItem(OK_KEY,'1');}
+  btn.onclick=function(){
+    var v=pwd.value;
+    if(!saved){
+      var v2=pwd2.value;
+      if(v.length<4){tip.textContent='密码至少4位';return;}
+      if(v!==v2){tip.textContent='两次输入不一致';return;}
+      localStorage.setItem(PWD_KEY,hash(v));tip.textContent='';unlock();
+    } else {
+      if(hash(v)===saved){tip.textContent='';unlock();}
+      else{tip.textContent='密码错误';}
+    }
+  };
+  pwd.addEventListener('keydown',function(e){if(e.key==='Enter')btn.click();});
+  pwd2.addEventListener('keydown',function(e){if(e.key==='Enter')btn.click();});
+})();
 </script>
 </body>
 </html>
