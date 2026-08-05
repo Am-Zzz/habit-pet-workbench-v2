@@ -9388,7 +9388,15 @@ let phonicsTopicIdx=-1;
   var tip=document.getElementById('gateTip');
   function hash(s){var h=0;s=String(s);for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))>>>0;}return 'h'+h.toString(16);}
   var saved=localStorage.getItem(PWD_KEY);
-  if(saved){sub.textContent='私人空间 · 请输入访问密码';pwd2.style.display='none';btn.textContent='进入';}
+  if(saved){
+    sub.textContent='私人空间 · 请输入访问密码';
+    pwd2.style.display='none';
+    btn.textContent='进入';
+  } else {
+    sub.textContent='私人空间 · 首次使用请设置访问密码';
+    pwd2.style.display='block';
+    btn.textContent='设置并进入';
+  }
   if(localStorage.getItem(OK_KEY)==='1'){gate.style.display='none';return;}
   function unlock(){gate.style.display='none';localStorage.setItem(OK_KEY,'1');}
   btn.onclick=function(){
