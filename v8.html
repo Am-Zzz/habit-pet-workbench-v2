@@ -2276,6 +2276,23 @@
     .reader[data-rtheme] .cover-title .py{font-size:20px}
   }
 
+  /* ===== 绘本横屏锁定（iPad 横屏为主·排版大小固定不随设备漂移） ===== */
+  @media (orientation:landscape) and (min-width:1024px){
+    .reader-mask{align-items:center;padding:18px}
+    .reader[data-rtheme]{max-width:1200px;width:100%;max-height:92vh;height:auto;display:flex;flex-direction:column}
+    .reader[data-rtheme] .r-stage{flex:1;min-height:0;display:flex}
+    .reader[data-rtheme] .r-screen.active{flex:1;display:flex;min-height:0}
+    .reader[data-rtheme] .page-screen{flex-direction:row;gap:24px;align-items:stretch}
+    .reader[data-rtheme] .page-left{flex:0 0 40%;max-width:40%;min-height:0}
+    .reader[data-rtheme] .page-right{flex:1;display:flex;flex-direction:column;min-height:0}
+    .reader[data-rtheme] .text-block{flex:1;min-height:0;max-height:none;overflow:auto;padding:26px 32px}
+    .reader[data-rtheme] .reader-page{font-size:23px;line-height:2.15;letter-spacing:.5px}
+    .reader[data-rtheme] .cz .ch,.reader[data-rtheme] .cz .punct{font-size:26px}
+    .reader[data-rtheme] .cz .py{font-size:13px}
+    .reader[data-rtheme] .reader-nav{margin-top:auto}
+    .reader[data-rtheme] .chip.cont{background:var(--brand-s);color:var(--brand-d);opacity:.85}
+  }
+
     /* 阅读进度条（对照 book-A-cloud-themes 补回） */
     .reader[data-rtheme] .reader-progress{position:relative;z-index:3;padding:0 18px 6px;}
     .reader[data-rtheme] .reader-progress .bar{height:8px;background:var(--cloud);border-radius:30px;box-shadow:var(--shadow);overflow:hidden;}
@@ -7297,12 +7314,36 @@ let phonicsTopicIdx=-1;
       list.innerHTML=mcError('绘本加载失败','数据可能读取异常','<button class="btn" onclick="renderBookList()">重试</button>');
     }
   }
+  function splitLongBookPages(book){
+    if(!book||!book.pages)return book;
+    var MAX=5; /* 每页最多 5 个句子，超出自动翻到下一页 */
+    var out=[];
+    (book.pages||[]).forEach(function(pg){
+      if(pg.media && (!pg.chars||!pg.chars.length)){ out.push(pg); return; }
+      if(!pg.chars||!pg.chars.length){ out.push(pg); return; }
+      var sents=[],cur=[];
+      pg.chars.forEach(function(c){ cur.push(c); if(/[。！？!?；;]/.test(c.t)){ sents.push(cur); cur=[]; } });
+      if(cur.length) sents.push(cur);
+      if(sents.length<=MAX){ out.push(pg); return; }
+      var chunks=Math.ceil(sents.length/MAX);
+      for(var k=0;k<chunks;k++){
+        var part=sents.slice(k*MAX,(k+1)*MAX);
+        var flat=[]; part.forEach(function(s){ flat=flat.concat(s); });
+        var np=Object.assign({},pg); np.chars=flat;
+        if(k>0){ np._cont=true; delete np.media; }
+        out.push(np);
+      }
+    });
+    book.pages=out;
+    return book;
+  }
   function openBookReader(id){
     curBook=findBook(id);
     if(!curBook){toast('故事没找到');return;}
     curBook=Object.assign({},curBook);
     if(curBook.pages)curBook.pages=curBook.pages.map(function(p){return Object.assign({},p);});
     attachBookMedia(curBook);
+    splitLongBookPages(curBook);
     stopBookSpeech();resetBookRec();
     curPage=0;pinyinOn=true;setPinyin(true);
     quizState={list:[],i:0};
@@ -7389,7 +7430,12 @@ let phonicsTopicIdx=-1;
     var ps2=document.querySelector('.page-screen'); if(ps2)ps2.classList.remove('has-media');
     box.innerHTML='<div class="text-row">'+html+'</div>';
     var chipsEl=document.getElementById('rdChips');
-    if(chipsEl)chipsEl.innerHTML=pg.role?('<span class="chip">🗣️ '+esc(pg.role)+'</span>'):'';
+    if(chipsEl){
+      var chipHtml='';
+      if(pg._cont)chipHtml+='<span class="chip cont">↩ 接上页</span>';
+      if(pg.role)chipHtml+='<span class="chip">🗣️ '+esc(pg.role)+'</span>';
+      chipsEl.innerHTML=chipHtml;
+    }
     var thinkEl=document.getElementById('rdThink');
     if(thinkEl){
       var r=pg.role;
