@@ -81,7 +81,7 @@
 
   /* 宠物卡 */
   .pet-face{display:grid;place-items:center;margin:4px 0 6px}
-  .pet-stage{width:140px;height:140px;border-radius:50%;background:#FFEAF2;display:grid;place-items:center;overflow:hidden;border:5px solid #fff;box-shadow:0 6px 16px rgba(221,94,134,.18)}
+  .pet-stage{width:140px;height:140px;border-radius:50%;background:#FFEAF2;display:grid;place-items:center;overflow:hidden;border:5px solid #fff;box-shadow:0 6px 16px rgba(221,94,134,.18);position:relative}.pet-stage::before{content:"🐾";position:absolute;font-size:58px;opacity:.18;z-index:0}
   .name-row{display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:12px}
   .pet-name{font-size:18px;font-weight:800}
   .edit-name{width:24px;height:24px;border-radius:7px;background:var(--surface-2);display:grid;place-items:center;font-size:12px;color:var(--ink-soft);cursor:pointer}
@@ -96,7 +96,7 @@
   .mood-pick button.sel{border-color:var(--brand);background:var(--brand-s);box-shadow:0 2px 8px rgba(221,94,134,.15)}
   /* 我的伙伴：小动物切换 tab（复用 .ptab 视觉） + 升级/心情 同风格分组条 */
   .ptab-row{display:flex;justify-content:center;gap:8px;margin-bottom:10px}
-  .ptab-row .ptab{width:auto;height:30px;padding:0 12px;border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-soft)}
+  .ptab-row .ptab{width:auto;height:30px;padding:0 12px;border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-soft);white-space:nowrap;flex-shrink:0}
   .stat-block{display:flex;flex-direction:column;gap:10px;margin:2px 0 10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
   .stat-row{display:flex;flex-direction:column;gap:5px}
   .stat-top{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-soft)}
@@ -1046,7 +1046,7 @@
   /* ====== 绘本乐园（新版：书库网格 + 阅读器） ====== */
   .btn.sm{padding:6px 12px;font-size:12px}
   /* 绘本乐园新版布局 */
-  .bk-layout{display:flex;flex-direction:column;height:100%;max-width:860px;margin:0 auto;background:var(--surface);border-radius:22px;overflow:hidden;box-shadow:var(--shadow-sm)}
+  .bk-layout{display:flex;flex-direction:column;height:calc(100dvh - 44px);max-width:860px;margin:0 auto;background:var(--surface);border-radius:22px;overflow:hidden;box-shadow:var(--shadow-sm)}
   .bk-topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border-bottom:1px solid var(--line)}
   .bk-back{font-size:20px;color:var(--ink-soft);cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:.15s}
   .bk-back:hover{background:var(--surface-2)}
@@ -1084,6 +1084,7 @@
     .bk-layout{max-width:1280px}
     .bk-sidebar{width:150px;padding:14px 10px}
     .book-grid{grid-template-columns:repeat(4,1fr);gap:16px}
+    .bc-cover{aspect-ratio:auto;height:150px}
     .bk-pg-btn{padding:11px 22px;font-size:14px}
     .bk-pg-info{font-size:14px;padding:8px 16px}
   }
@@ -4532,7 +4533,7 @@
     const bubbleEl=document.getElementById('bubble');
     if(currentPartner==='cat'){
       const c=CAT_GROWTH[catLv-1];
-      face.innerHTML=`<img src="${c.img}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+      face.innerHTML=`<img src="${c.img}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;position:relative;z-index:1" onerror="this.style.display='none'">`;
       if(growthBox)growthBox.style.display='block';
       if(snakeLvEl)snakeLvEl.textContent=c.lv;
       if(snakeStageEl)snakeStageEl.textContent=c.name;
@@ -4540,7 +4541,7 @@
       if(bubbleEl)bubbleEl.textContent=c.say;
     } else if(currentPartner==='snake'){
       const s=SNAKE_GROWTH[snakeLv-1];
-      face.innerHTML=`<img src="${s.img}" alt="${s.name}" style="width:118px;height:118px;object-fit:contain">`;
+      face.innerHTML=`<img src="${s.img}" alt="${s.name}" style="width:118px;height:118px;object-fit:contain;position:relative;z-index:1" onerror="this.style.display='none'">`;
       if(growthBox)growthBox.style.display='block';
       if(snakeLvEl)snakeLvEl.textContent=s.lv;
       if(snakeStageEl)snakeStageEl.textContent=s.name;
@@ -4552,7 +4553,7 @@
       const m = showMood ? (DOG_MOODS[currentFace]||DOG_MOODS.sad) : null;
       const imgSrc = showMood ? m.img : d.img;
       const imgAlt = showMood ? m.label : d.name;
-      face.innerHTML=`<img src="${imgSrc}" alt="${imgAlt}" style="width:100%;height:100%;object-fit:contain">`;
+      face.innerHTML=`<img src="${imgSrc}" alt="${imgAlt}" style="width:100%;height:100%;object-fit:contain;position:relative;z-index:1" onerror="this.style.display='none'">`;
       if(growthBox)growthBox.style.display='block';
       if(petNameEl){petNameEl.textContent='小萌'; if(window.PET_NAME)petNameEl.textContent=window.PET_NAME;}
       if(snakeLvEl)snakeLvEl.textContent=d.lv;
@@ -7317,7 +7318,14 @@ let phonicsTopicIdx=-1;
         return;
       }
       const landscape=window.innerWidth>window.innerHeight;
-      const pageSize=landscape?18:12;
+      let bkCols=3;
+      if(window.innerWidth<=520)bkCols=2;
+      if(landscape){
+        if(window.innerWidth>=1300)bkCols=6;
+        else if(window.innerWidth>=1100)bkCols=5;
+        else bkCols=4;
+      }
+      const pageSize=bkCols*2;
       if(bookPage<0)bookPage=0;
       const totalPages=Math.max(1,Math.ceil(books.length/pageSize));
       if(bookPage>totalPages-1)bookPage=totalPages-1;
