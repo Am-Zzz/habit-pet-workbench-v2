@@ -1062,23 +1062,30 @@
   .bk-nav-item.sel{background:#fff7e6;color:#8b5a00;font-weight:800;box-shadow:inset 3px 0 0 #ffc107}
   .bk-nav-item.shelf{color:var(--brand-d)}
   .bk-nav-item.sel.shelf{background:#fff0f5;box-shadow:inset 3px 0 0 var(--brand)}
-  .bk-content{flex:1;overflow-y:auto;padding:14px 16px 20px;background:var(--surface)}
-  .bk-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+  .bk-content{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;padding:14px 16px 20px;background:var(--surface)}
+  .bk-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap;flex-shrink:0}
   .bk-count{font-size:13px;color:var(--ink-soft);font-weight:700}
   .bk-count b{color:var(--ink);font-size:15px}
   .bk-levels{flex:1;justify-content:center}
   .bk-levels button{padding:5px 12px!important}
   .bk-shelf-btn{border:none;background:#ffc107;color:#5c3d00;font-size:12px;font-weight:800;padding:7px 12px;border-radius:999px;cursor:pointer;box-shadow:0 2px 6px rgba(255,193,7,.35);transition:.15s;white-space:nowrap}
   .bk-shelf-btn:hover{background:#ffb300;transform:translateY(-1px)}
-  .bk-search{margin-bottom:12px}
+  .bk-search{margin-bottom:12px;flex-shrink:0}
   .bk-search .form-input{width:100%;padding:10px 14px;border-radius:999px;font-size:13px;border:1px solid var(--line)}
-  .book-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .book-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;flex:1;min-height:0;overflow-y:auto;align-content:start}
   @media(max-width:520px){.book-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+  .bk-pager{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);flex-shrink:0}
+  .bk-pg-btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:13px;font-weight:700;padding:9px 18px;border-radius:999px;cursor:pointer}
+  .bk-pg-btn:hover:not([disabled]){background:var(--brand);color:#fff;border-color:var(--brand)}
+  .bk-pg-btn[disabled]{opacity:.4;cursor:not-allowed}
+  .bk-pg-info{font-size:13px;font-weight:800;color:var(--ink);padding:6px 14px;background:#f3f1ea;border-radius:999px}
   /* 绘本库 · iPad 横屏锁版（竖屏维持原手机样式不变） */
   @media (orientation:landscape) and (min-width:900px){
     .bk-layout{max-width:1280px}
     .bk-sidebar{width:150px;padding:14px 10px}
     .book-grid{grid-template-columns:repeat(4,1fr);gap:16px}
+    .bk-pg-btn{padding:11px 22px;font-size:14px}
+    .bk-pg-info{font-size:14px;padding:8px 16px}
   }
   @media (orientation:landscape) and (min-width:1100px){
     .book-grid{grid-template-columns:repeat(5,1fr);gap:18px}
@@ -3393,11 +3400,12 @@
             </div>
 
             <div class="bk-search" id="bookSearchBox" style="display:none">
-              <input type="text" class="form-input" id="bookSearchInput" placeholder="搜索绘本名称..." oninput="renderBookList()">
+              <input type="text" class="form-input" id="bookSearchInput" placeholder="搜索绘本名称..." oninput="bookPage=0;renderBookList()">
             </div>
 
             <!-- 书库网格 -->
             <div class="book-grid" id="bookList"></div>
+            <div class="bk-pager" id="bookPager"></div>
           </div>
         </div>
       </div>
@@ -3470,9 +3478,9 @@
                   <div id="rdFollow"></div>
                 </div>
                 <div class="reader-nav">
-                  <button class="btn ghost" onclick="bookPage(-1)">◀ 上一页</button>
+                  <button class="btn ghost" onclick="readerFlipPage(-1)">◀ 上一页</button>
                   <span class="cp-now" id="rdPageNo">1 / 1</span>
-                  <button class="btn ghost" onclick="bookPage(1)">下一页 ▶</button>
+                  <button class="btn ghost" onclick="readerFlipPage(1)">下一页 ▶</button>
                 </div>
               </div>
             </div>
@@ -6805,7 +6813,7 @@ let phonicsTopicIdx=-1;
   const BOOK_REFRESH_URL=''; // 留空=未配置联网代理；配置后 refreshBooks 会从此拉取新书
   const BOOK_DONE_KEY='mp_books_done_v1';
   const BOOK_SHELF_KEY='mp_book_shelf_v1';
-  let bookNav='all', bookLevel='all', bookLang='cn', bookSearch='';
+  let bookNav='all', bookLevel='all', bookLang='cn', bookSearch='', bookPage=0;
   let curBook=null, curPage=0, pinyinOn=false;
   let bookVoices=[], bookMediaRec=null, bookRecChunks=[], bookClipURL=null, bookRecStream=null, bookRecording=false;
   let tapReadOn=false, bookRecStopCb=null, bookRecStartT=0;
@@ -6841,19 +6849,19 @@ let phonicsTopicIdx=-1;
     let h=0;for(let i=0;i<role.length;i++)h=(h*31+role.charCodeAt(i))>>>0;
     return 1+(h%3)*0.18;
   }
-  function openBooks(){bookNav='all';bookLevel='all';bookLang='cn';bookSearch='';
+  function openBooks(){bookNav='all';bookLevel='all';bookLang='cn';bookSearch='';bookPage=0;
     document.querySelectorAll('#bkSidebar .bk-nav-item').forEach(b=>b.classList.toggle('sel',b.dataset.nav==='all'));
     document.querySelectorAll('#bkLevelPill button').forEach(b=>b.classList.toggle('sel',b.dataset.level==='all'));
     document.querySelectorAll('#bookLangTabs button').forEach(b=>b.classList.toggle('sel',b.dataset.lang==='cn'));
     document.getElementById('bookSearchBox').style.display='none';
     document.getElementById('bookSearchInput').value='';
     renderBookList();go('books');}
-  function switchBookNav(n,btn){bookNav=n;
+  function switchBookNav(n,btn){bookNav=n;bookPage=0;
     document.querySelectorAll('#bkSidebar .bk-nav-item').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');
     renderBookList();}
-  function switchBookLevel(l,btn){bookLevel=l;
+  function switchBookLevel(l,btn){bookLevel=l;bookPage=0;
     document.querySelectorAll('#bkLevelPill button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');renderBookList();}
-  function switchBookLang(l,btn){bookLang=l;
+  function switchBookLang(l,btn){bookLang=l;bookPage=0;
     document.querySelectorAll('#bookLangTabs button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');
     renderBookList();}
   function toggleBookSearch(){const box=document.getElementById('bookSearchBox');const on=box.style.display==='none';box.style.display=on?'block':'none';if(on){document.getElementById('bookSearchInput').focus();}}
@@ -7302,12 +7310,19 @@ let phonicsTopicIdx=-1;
       });
       document.getElementById('bookCount').textContent=books.length;
       if(!books.length){
+        const _pg0=document.getElementById('bookPager');if(_pg0)_pg0.innerHTML='';
         if(bookNav==='shelf') list.innerHTML=mcEmpty('📚','书架还是空的','把喜欢的故事加入书架，随时翻开陪读吧～','<button class="btn" onclick="openBooks()">去逛绘本</button>');
         else if(bookNav==='mine') list.innerHTML=mcEmpty('✍️','还没有自己上传的故事','在「全部」里挑喜欢的，点 + 加入书架，或在家长模式新增', '<button class="btn" onclick="openBooks()">去逛绘本</button>');
         else list.innerHTML=mcEmpty('🔍','这个分类还没有故事哦','换个分类看看吧～','<button class="btn" onclick="openBooks()">看全部</button>');
         return;
       }
-      books.forEach(function(b){
+      const landscape=window.innerWidth>window.innerHeight;
+      const pageSize=landscape?18:12;
+      if(bookPage<0)bookPage=0;
+      const totalPages=Math.max(1,Math.ceil(books.length/pageSize));
+      if(bookPage>totalPages-1)bookPage=totalPages-1;
+      const pageBooks=books.slice(bookPage*pageSize,(bookPage+1)*pageSize);
+      pageBooks.forEach(function(b){
         const card=document.createElement('div');card.className='book-card'+(b.ready?'':' notready');
         const isDone=done.indexOf(b.id)>=0;const isShelf=inBookShelf(b.id);
         const bcov=getBookCover(b.id);
@@ -7322,10 +7337,21 @@ let phonicsTopicIdx=-1;
         card.onclick=function(){openBookReader(b.id);};
         list.appendChild(card);
       });
+      const _pg=document.getElementById('bookPager');
+      if(_pg){
+        if(books.length>pageSize){
+          _pg.innerHTML='<button class="bk-pg-btn" '+(bookPage<=0?'disabled':'onclick="bookGoPage(-1)"')+'>&lsaquo; 上一页</button>'
+            +'<span class="bk-pg-info">第 '+(bookPage+1)+' / '+totalPages+' 页</span>'
+            +'<button class="bk-pg-btn" '+(bookPage>=totalPages-1?'disabled':'onclick="bookGoPage(1)"')+'>下一页 &rsaquo;</button>';
+        }else{
+          _pg.innerHTML='<span class="bk-pg-info">共 '+books.length+' 本</span>';
+        }
+      }
     }catch(e){
       list.innerHTML=mcError('绘本加载失败','数据可能读取异常','<button class="btn" onclick="renderBookList()">重试</button>');
     }
   }
+  function bookGoPage(dir){bookPage=Math.max(0,bookPage+(dir||0));renderBookList();const _l=document.getElementById('bookList');if(_l)_l.scrollTop=0;}
   function splitLongBookPages(book){
     if(!book||!book.pages)return book;
     var MAX=5; /* 每页最多 5 个句子，超出自动翻到下一页 */
@@ -7651,7 +7677,7 @@ let phonicsTopicIdx=-1;
     }
   }
   function clearReaderCanvas(){if(rCtx)rCtx.clearRect(0,0,(rCvs?rCvs.width:0),(rCvs?rCvs.height:0));}
-  function bookPage(d){
+  function readerFlipPage(d){
     if(!curBook||!curBook.ready)return;
     curPage=Math.max(0,Math.min(curBook.pages.length-1,curPage+d));
     renderBookPage();
