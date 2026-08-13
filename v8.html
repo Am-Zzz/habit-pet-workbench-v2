@@ -9,12 +9,12 @@
 <meta name="apple-mobile-web-app-title" content="萌宠小屋">
 <meta name="application-name" content="萌宠小屋">
 <meta name="theme-color" content="#F26D92">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
-<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png?v=3">
-<link rel="icon" type="image/png" sizes="180x180" href="/apple-touch-icon.png?v=3">
-<link rel="icon" type="image/png" sizes="167x167" href="/apple-touch-icon-167x167.png?v=3">
-<link rel="icon" type="image/png" sizes="152x152" href="/apple-touch-icon-152x152.png?v=3">
-<link rel="icon" type="image/png" sizes="120x120" href="/apple-touch-icon-120x120.png?v=3">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4">
+<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png?v=4">
+<link rel="icon" type="image/png" sizes="180x180" href="/apple-touch-icon.png?v=4">
+<link rel="icon" type="image/png" sizes="167x167" href="/apple-touch-icon-167x167.png?v=4">
+<link rel="icon" type="image/png" sizes="152x152" href="/apple-touch-icon-152x152.png?v=4">
+<link rel="icon" type="image/png" sizes="120x120" href="/apple-touch-icon-120x120.png?v=4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -7525,16 +7525,26 @@ let phonicsTopicIdx=-1;
     var pg=curBook&&curBook.pages[curPage];
     renderPageMediaIll(pg);
   }
+  function videoEmbedUrl(u){
+    var s=String(u||'');var m;
+    if((m=s.match(/bilibili\.com\/video\/(BV[\w]+)/))) return 'https://player.bilibili.com/player.html?bvid='+m[1]+'&autoplay=1&high_quality=1';
+    if((m=s.match(/youku\.com\/v_show\/id_([\w=]+)/))) return 'https://player.youku.com/embed/'+m[1];
+    if((m=s.match(/v\.qq\.com\/(?:x\/cover\/[\w]+\/|x\/page\/)([\w]+)\.html/))) return 'https://v.qq.com/txp/iframe/player.html?vid='+m[1];
+    return '';
+  }
+  function buildMediaEmbed(url,kind){
+    var u=String(url||'');var low=u.toLowerCase();
+    if(/\.(mp4|webm|ogg|mov|m4v)(\?|#|$)/.test(low)) return '<video class="mf-video" src="'+attrEsc(u)+'" controls autoplay playsinline></video>';
+    if(/\.(pptx|ppt|pptm|key|pdf)(\?|#|$)/.test(low)){var v='https://view.officeapps.live.com/op/view.aspx?src='+encodeURIComponent(u);return '<iframe class="mf-frame" src="'+attrEsc(v)+'" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer"></iframe>';}
+    if(kind==='video'){var emb=videoEmbedUrl(u);if(emb)return '<iframe class="mf-frame" src="'+attrEsc(emb)+'" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer"></iframe>';}
+    return '<iframe class="mf-frame" src="'+attrEsc(u)+'" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer"></iframe>';
+  }
   function openMediaFullscreen(){
     var pg=curBook&&curBook.pages[curPage]; if(!pg||!pg.media)return;
     var m=pg.media;
     var mask=document.getElementById('mediaFullMask'); if(!mask)return;
     var host=document.getElementById('mediaFullHost'); if(!host)return;
-    if(m.kind==='video'){
-      host.innerHTML='<video class="mf-video" src="'+attrEsc(m.url)+'" controls autoplay playsinline></video>';
-    }else{
-      host.innerHTML='<iframe class="mf-frame" src="'+attrEsc(m.url)+'" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer"></iframe>';
-    }
+    host.innerHTML=buildMediaEmbed(m.url,m.kind);
     var t=document.getElementById('mediaFullTitle'); if(t)t.textContent=(m.title?m.title:kindLabel2(m.kind));
     var jb=document.getElementById('mediaFullJump'); if(jb)jb.onclick=function(){window.open(m.url,'_blank');};
     mask.style.display='flex';
