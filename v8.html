@@ -7165,6 +7165,7 @@ let phonicsTopicIdx=-1;
       if(!src){toast('找不到原始绘本');return;}
       const cloned=JSON.parse(JSON.stringify(src));
       cloned.user=true;
+      cloned.builtinSrcId=src.id;            /* v6-1：标父书 id，方便笔记回退查找 */
       cloned.id='u_clone_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
       const books=getUserBooks();
       books.push(cloned);
@@ -7188,6 +7189,7 @@ let phonicsTopicIdx=-1;
     if(!src){toast('找不到原始绘本');return false;}
     const cloned=JSON.parse(JSON.stringify(src));
     cloned.user=true;
+    cloned.builtinSrcId=src.id;            /* v6-1：标父书 id，方便笔记回退查找 */
     cloned.id='u_clone_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
     users.push(cloned);
     setUserBooks(users);
@@ -7297,7 +7299,20 @@ let phonicsTopicIdx=-1;
   }
   function saveNoteAll(data){try{LS.setItem(NOTE_DATA_KEY,JSON.stringify(data));}catch(e){}}
   function findNote(id){return NOTE_TEMPLATES.find(function(t){return t.id===id;});}
-  function getBookNotes(bookId){const all=loadNoteData();return all[bookId]||{};}
+  function getBookNotes(bookId){
+    const all=loadNoteData();
+    if(all[bookId])return all[bookId];
+    /* v6-1：当前 bookId 是克隆副本（懒克隆产生）时，回退到原内置书笔记（兼容旧孤儿数据） */
+    const users=getUserBooks()||[];
+    const book=users.find(function(b){return b.id===bookId;});
+    if(book){
+      if(book.builtinSrcId && all[book.builtinSrcId])return all[book.builtinSrcId];
+      /* 老克隆未带 builtinSrcId：按 title 反查原书笔记（笔记原本是写在原内置书 id 下） */
+      const src=(window.BOOK_CONTENT||[]).find(function(b){return b.title===book.title;});
+      if(src && all[src.id])return all[src.id];
+    }
+    return {};
+  }
   function countBookNotes(bookId){const n=getBookNotes(bookId);return Object.keys(n).filter(function(k){return noteHasContent(n[k]);}).length;}
   let curNoteBook=null, curNote=null, noteView='picker';
   let noteVoiceData={}, noteDrawDirty={};
