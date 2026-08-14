@@ -2501,13 +2501,21 @@
     .reader[data-rtheme] .reader-page{font-size:23px;line-height:2.15;letter-spacing:.5px}
     .reader[data-rtheme] .cz .ch,.reader[data-rtheme] .cz .punct{font-size:26px}
     .reader[data-rtheme] .cz .py{font-size:13px}
-    .reader[data-rtheme] .reader-nav{margin-top:auto}
+    .reader[data-rtheme] .reader-nav{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:nowrap;margin-top:auto;}
     .reader[data-rtheme] .chip.cont{background:var(--brand-s);color:var(--brand-d);opacity:.85}
   }
   /* v4-10 排版收尾：缩小顶部按钮、放大正文、互动/笔记页可滚动完整显示 */
   .reader[data-rtheme] .page-actions-top .btn-pill{padding:6px 13px;font-size:12px;border-radius:16px;gap:4px;}
-  .reader[data-rtheme] .reader-nav .btn{padding:6px 15px;font-size:13px;border-radius:16px;}
-  .reader[data-rtheme] .reader-nav .cp-now{font-size:13px;}
+  .reader[data-rtheme] .reader-nav .btn{padding:4px 11px;font-size:12px;border-radius:13px;}
+  .reader[data-rtheme] .reader-nav .cp-now{font-size:12px;white-space:nowrap;}
+  .reader[data-rtheme] .reader-nav .nav-arr{font-size:11px;line-height:1;}
+  /* v10-3：空白绘本占位提示（封面/插图虚线框 + 标题/简介/正文小字备注） */
+  .reader.blank .cover-ill{outline:2px dashed var(--line);outline-offset:-12px;}
+  .reader.blank .page-ill{outline:2px dashed var(--line);outline-offset:-12px;}
+  .reader.blank .bk-ph{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(255,255,255,.82);color:var(--muted);font-size:12px;font-weight:700;padding:5px 13px;border-radius:999px;pointer-events:none;z-index:6;white-space:nowrap;}
+  .reader.blank .bk-ph-txt{color:var(--muted);opacity:.55;font-weight:600;}
+  .reader.blank .cover-title .ch.bk-ph-txt{font-size:26px;}
+  .reader.blank .text-block .empty{color:var(--muted);opacity:.6;font-size:15px;}
   .reader[data-rtheme] .text-block{font-size:19px;line-height:2;overflow:auto;}
   .reader[data-rtheme] .quiz-screen{overflow:auto;}
   .reader[data-rtheme] .draw-area{min-height:200px;}
@@ -3624,7 +3632,6 @@
                 <div class="bk-count">共 <b id="bookCount">0</b> 本</div>
                 <span class="bk-spacer"></span>
                 <!-- v6-2：主页 ⋰ 按钮已删，独立按钮（＋新增/♻️回收/🌐网盘）直接外露 -->
-                <button type="button" class="bk-iconbtn edit-only pm-only" onclick="addUserBook();openMyBooks()" title="新增绘本（家长模式）">＋</button>
                 <button type="button" class="bk-iconbtn edit-only pm-only" onclick="openRecycleBin()" title="回收站（家长模式）">♻️</button>
                 <button type="button" class="bk-iconbtn" onclick="openNetImport('book')" title="网盘导入">🌐</button>
               </div>
@@ -3719,9 +3726,9 @@
                   <div id="rdFollow"></div>
                 </div>
             <div class="reader-nav">
-              <button class="btn ghost" onclick="readerFlipPage(-1)">◀ 上一页</button>
+              <button class="btn ghost" onclick="readerFlipPage(-1)"><span class="nav-arr">◀</span> 上一页</button>
               <span class="cp-now" id="rdPageNo">1 / 1</span>
-              <button class="btn ghost" onclick="readerFlipPage(1)">下一页 ▶</button>
+              <button class="btn ghost" onclick="readerFlipPage(1)">下一页 <span class="nav-arr">▶</span></button>
             </div>
           </div>
             </div>
@@ -7668,7 +7675,7 @@ let phonicsTopicIdx=-1;
           list.innerHTML=mcEmpty('✍️','这个分类还没有故事','家长模式下可直接新增绘本');
           const c=document.createElement('div');c.className='book-card bc-add-card bc-add-card-first';
           c.innerHTML='<div class="bc-add-inner"><div class="bc-plus">＋</div><div class="bc-add-tip">新增故事<br><span>点此添加绘本</span></div></div>';
-          c.onclick=function(){addUserBook();openMyBooks();};
+          c.onclick=function(){addUserBook();};
           list.appendChild(c);
           return;
         }
@@ -7699,7 +7706,7 @@ let phonicsTopicIdx=-1;
         if(b&&b.__addcard){
           const c=document.createElement('div');c.className='book-card bc-add-card bc-add-card-first';
           c.innerHTML='<div class="bc-add-inner"><div class="bc-plus">＋</div><div class="bc-add-tip">新增故事<br><span>点此添加绘本</span></div></div>';
-          c.onclick=function(){addUserBook();openMyBooks();};
+          c.onclick=function(){addUserBook();};
           list.appendChild(c);return;
         }
         const card=document.createElement('div');card.className='book-card'+(b.ready?'':' notready');
@@ -7814,6 +7821,7 @@ let phonicsTopicIdx=-1;
     const wT=document.getElementById('rPoemWordToggle');if(wT)wT.classList.remove('on');
     const wEl=document.getElementById('rPoemWords');if(wEl)wEl.classList.remove('on');
     showReaderTab(0);
+    if(curBook&&curBook.blank)applyBlankHints();
   }
   function showReaderTab(i,btn){
     const tab=readerTabList[i];
@@ -7836,7 +7844,34 @@ let phonicsTopicIdx=-1;
   var BOOK_TABS_KEY='mp_book_tabs_v1';
   var BOOK_CUSTOM_KEY='mp_book_custom_v1';
   var READER_DEFAULT_TABS=[{type:'cover',name:'封面'},{type:'page',name:'正文'},{type:'poem',name:'诗歌'},{type:'quiz',name:'互动'},{type:'notes',name:'笔记'}];
+  /* v10-3：新建空白绘本默认板块（只封面+正文，其余家长模式「＋」自行添加） */
+  var READER_BLANK_TABS=[{type:'cover',name:'封面'},{type:'page',name:'正文'}];
   var readerTabList=[];
+  /* v10-3：新建空白绘本的占位提示（封面/插图虚线框 + 标题/简介/正文小字备注） */
+  function saveBlankBook(){
+    if(!curBook)return;
+    var books=getUserBooks();
+    for(var i=0;i<books.length;i++){if(books[i].id===curBook.id){books[i]=Object.assign({},books[i],curBook);break;}}
+    setUserBooks(books);
+  }
+  function applyBlankHints(){
+    var r=document.getElementById('reader');if(!r||!curBook)return;
+    r.classList.add('blank');
+    var ci=document.getElementById('rCoverIll');
+    if(ci && !ci.querySelector('img') && !ci.querySelector('.bk-ph')){var nc=document.createElement('div');nc.className='bk-ph';nc.innerHTML='点击「+」插入封面图';ci.appendChild(nc);}
+    var ch=document.getElementById('rCoverCh');
+    if(ch){if(!ch.textContent.trim())ch.textContent='绘本名（点这里填写）';ch.classList.add('bk-ph-txt');
+      ch.onclick=function(){if(!editMode)return;ch.setAttribute('contenteditable','true');ch.focus();};
+      ch.onblur=function(){ch.removeAttribute('contenteditable');curBook.title=ch.textContent.trim();if(!curBook.title){ch.textContent='绘本名（点这里填写）';}else{ch.classList.remove('bk-ph-txt');}saveBlankBook();};}
+    var de=document.getElementById('rCoverDesc');
+    if(de){if(!de.textContent.trim())de.textContent='一句话简介（适合年龄 / 分类）';de.classList.add('bk-ph-txt');
+      de.onclick=function(){if(!editMode)return;de.setAttribute('contenteditable','true');de.focus();};
+      de.onblur=function(){de.removeAttribute('contenteditable');curBook.desc=de.textContent.trim();if(!curBook.desc){de.textContent='一句话简介（适合年龄 / 分类）';}else{de.classList.remove('bk-ph-txt');}saveBlankBook();};}
+    var pi=document.getElementById('rPageIll');
+    if(pi && !pi.querySelector('img') && !pi.querySelector('.bk-ph')){var ni=document.createElement('div');ni.className='bk-ph';ni.innerHTML='点击「+」插入插图';pi.appendChild(ni);}
+    var pt=document.getElementById('rdPage');
+    if(pt){pt.classList.add('tapread');if(!pt.textContent.trim()){pt.innerHTML='<div class="empty">在这里写这一页的故事内容，点一下即可编辑…</div>';}}
+  }
   /* v6-5：家长模式编辑"暂存态"——任何 tab ± / 自定义页内容编辑，先入内存 staging，不写盘；
          在暂存条点 💾 保存才持久化；点 ↩ 放弃则重渲染读真实持久层 */
   var pmStagingTabs={};    /* { bookId: tabsArr } */
@@ -9480,11 +9515,16 @@ let phonicsTopicIdx=-1;
     const tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp;
     renderMbSections();
   }
-  function addUserBook(){editBookId=null;mbSecWorking=READER_DEFAULT_TABS.slice();document.getElementById('mbEditor').style.display='block';document.getElementById('mbList').style.display='none';
-    ['mbFTitle','mbFIcon','mbFCover','mbFDesc','mbFTags','mbFContent'].forEach(function(id2){document.getElementById(id2).value='';});
-    document.getElementById('mbFCat').value='classic';document.getElementById('mbFAge').value='幼升小';document.getElementById('mbFSaveBtn').textContent='💾 保存';
-    document.getElementById('mbFPy').checked=true;document.getElementById('mbFSrc').value='';
-    renderMbSections();initMbIcons();
+  function addUserBook(){
+  var books=getUserBooks();
+  var newId='u_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);
+  var book={id:newId,cat:'classic',icon:'📖',title:'',tag:'',age:'幼升小',grade:'',ready:true,desc:'',cover:'',srcUrl:'',blank:true,
+    pages:[{role:'旁白',chars:[]}],difficulty:1,pyDefault:true,tags:[]};
+  books.push(book);setUserBooks(books);
+  /* v10-3：新建空白绘本默认只挂封面+正文两个板块（诗歌/互动/笔记由家长模式「＋」自行添加）；笔记 tab 沿用现有 8 张固定模板 */
+  setBookTabs(newId,READER_BLANK_TABS.slice());
+  renderBookList();
+  openBookReader(newId);
   }
   function editUserBook(id){
     let b=getUserBooks().filter(function(x){return x.id===id;})[0];
