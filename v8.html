@@ -2208,6 +2208,11 @@
   .reader[data-rtheme] .page-ill .play:hover{transform:scale(1.08);}
   .reader[data-rtheme] .ill-add-pill{position:absolute;right:14px;bottom:14px;background:var(--primary);color:#fff;font-size:12px;font-weight:700;padding:6px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;box-shadow:0 3px 10px rgba(0,0,0,.2);cursor:pointer;z-index:3;border:none;font-family:inherit;line-height:1.4;}
   .reader[data-rtheme] .ill-add-pill:hover{filter:brightness(1.05);}
+  .reader[data-rtheme] .ill-switch-row{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:10px;z-index:3;}
+  .reader[data-rtheme] .ill-switch{display:inline-flex;align-items:center;gap:5px;background:rgba(20,20,30,.55);color:#fff;font-size:13px;font-weight:800;padding:8px 15px;border-radius:999px;border:none;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.28);font-family:inherit;line-height:1.1;transition:.2s;}
+  .reader[data-rtheme] .ill-switch .ill-switch-ico{font-size:18px;}
+  .reader[data-rtheme] .ill-switch .play{position:static;width:auto;height:auto;background:none;color:#fff;font-size:13px;margin:0;box-shadow:none;}
+  .reader[data-rtheme] .ill-switch:hover{filter:brightness(1.12);transform:scale(1.04);}
   .reader[data-rtheme] .page-right{flex:1;display:flex;flex-direction:column;gap:12px;padding:18px 22px;justify-content:flex-start;min-height:0;overflow:hidden;}
   .reader[data-rtheme] .page-actions-top{margin-bottom:2px;display:flex;gap:10px;justify-content:center;flex-wrap:nowrap;flex:none;}
   .reader[data-rtheme] .btn-pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;padding:9px 16px;border-radius:30px;border:none;cursor:pointer;box-shadow:0 5px 14px rgba(0,0,0,.08);transition:.2s,background .3s,color .3s;white-space:nowrap;}
@@ -3612,7 +3617,7 @@
       <div class="reader-mask media-picker" id="mediaPickerMask" style="display:none" onclick="if(event.target===this)closeInsertMedia()">
         <div class="rip-card">
           <div class="rip-head"><h3>📎 给当前页加 PPT / 视频</h3><button class="rip-close" onclick="closeInsertMedia()">✕</button></div>
-          <div class="mp-intro"><span class="mp-iico">💡</span><span>这页加完后，<b>插图区会换成封面图</b>，点 ▶ 全屏播放；想换回插图点底部「移除」。可随时覆盖/移除。</span></div>
+          <div class="mp-intro"><span class="mp-iico">💡</span><span>这页加视频 / PPT 后，插图区会出现对应的切换按钮（🎬视频 / 📄PPT），<b>想看哪个点哪个</b>；都没加时显示封面大图。视频和 PPT 可<b>分别保存、互不覆盖</b>。</span></div>
           <div class="mp-tab-row">
             <button class="mp-tab active" id="mpTabVideo" onclick="switchMpTab('video')"><span class="mp-tico">🎬</span><span class="mp-ttxt">视频</span></button>
             <button class="mp-tab" id="mpTabPpt" onclick="switchMpTab('ppt')"><span class="mp-tico">📄</span><span class="mp-ttxt">PPT / 网页</span></button>
@@ -3621,17 +3626,18 @@
             <input class="rip-input" id="mediaUrlInput" placeholder="粘贴视频直链 .mp4 / .webm / .m4v（iPad 上最稳）或 B站/腾讯/优酷视频页链接">
             <input class="rip-input" id="mediaTitleInput" placeholder="视频标题（可选）">
             <input class="rip-input" id="mediaCoverInput" placeholder="封面图链接（可选，留空用默认封面）">
-            <button class="rip-btn rip-btn-primary" onclick="confirmInsertMedia()">✅ 加到当前页</button>
+            <button class="rip-btn rip-btn-primary" onclick="confirmInsertMedia()">✅ 保存视频到当前页</button>
+            <button class="rip-btn rip-btn-danger mp-remove" id="mpRemoveBtnVideo" style="display:none" onclick="removeInsertedMedia('video')">🗑️ 移除本页视频</button>
             <p class="mp-hint">.mp4 / .webm 直链会在 iPad 上本页直接播放；B站 / 腾讯 / 优酷等网页链接会自动改用内嵌播放，被平台拦掉时点右上角「↗ 跳转网页观看」。</p>
           </div>
           <div class="mp-pane" id="mpPanePpt">
             <input class="rip-input" id="mediaUrlInput2" placeholder="粘贴 PPT 网页链接（B站 / 腾讯 / 优酷 / 网盘 / 钉钉 / 自己服务器都行）">
             <input class="rip-input" id="mediaTitleInput2" placeholder="PPT 标题（可选）">
             <input class="rip-input" id="mediaCoverInput2" placeholder="封面图链接（可选）">
-            <button class="rip-btn rip-btn-primary" onclick="confirmInsertMedia()">✅ 加到当前页</button>
+            <button class="rip-btn rip-btn-primary" onclick="confirmInsertMedia()">✅ 保存 PPT 到当前页</button>
+            <button class="rip-btn rip-btn-danger mp-remove" id="mpRemoveBtnPpt" style="display:none" onclick="removeInsertedMedia('ppt')">🗑️ 移除本页 PPT</button>
             <p class="mp-hint">PPT / 网页链接以 iframe 内嵌播放，平台拦截时点「↗ 跳转网页观看」。建议优先用能直接播放的链接（自家服务器、永久直链）；网盘分享链需先展开成直链。</p>
           </div>
-          <button class="rip-btn rip-btn-danger mp-remove" id="mpRemoveBtn" style="display:none" onclick="removeInsertedMedia()">🗑️ 移除这页的媒体，还原成插图</button>
         </div>
       </div>
       </div>
@@ -7604,43 +7610,46 @@ let phonicsTopicIdx=-1;
     if(!ill)return;
     var icon=(curBook&&curBook.icon)?curBook.icon:'📖';
     var head=document.getElementById('rPageIllHead');
-    /* 头部按媒体状态切：无媒体 → 整段隐藏（不留标签+不留空白）；有媒体 → 显示并写文案 */
     if(head){head.style.display='none';head.innerHTML='';}
-    if(pg&&pg.media){
-      var m=pg.media;
-      var kindLabel=m.kind==='video'?'视频':'PPT';
-      if(head){head.style.display='';head.innerHTML='<span class="ill-head-label">'+(m.kind==='video'?'有视频素材 · 点插图全屏播放':'有 PPT 素材 · 点插图全屏播放')+'</span><span class="ill-tag">'+kindLabel+'</span>';}
-      var coverHtml = m.cover
-        ? '<img class="ill-cover-img" src="'+attrEsc(m.cover)+'" alt="封面" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;z-index:1;" onerror="this.style.display=\'none\'">'
-        : '';
-      ill.innerHTML=coverHtml+'<span class="bear" id="rPageEmoji">'+icon+'</span><span class="play" onclick="openMediaFullscreen()" title="点击看视频/PPT">▶</span><button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>';
-      updateIllEmoji('page');
+    var addPill='<button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>';
+    var imgBtn='<button class="ill-img-btn" onclick="openReaderImgPicker(\'page\')" title="自定义插图">+</button>';
+    var mv=pg&&pg.media&&pg.media.video;
+    var mp=pg&&pg.media&&pg.media.ppt;
+    /* 兼容老插图视频缓存（reader_vid_*，已废弃入口但老数据仍在） */
+    if(!mv){ var oldv=getReaderCustomVid('page'); if(oldv)mv={kind:oldv.kind,url:oldv.url,title:oldv.title||'',cover:oldv.cover||''}; }
+    function bg(){ var fb=getPageFallbackIll(); return fb?'<img class="ill-custom-img" src="'+attrEsc(fb)+'" alt="封面默认插图" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:12px;z-index:1" onerror="this.style.display=\'none\'">':''; }
+    if(mv && mp){
+      if(head){head.style.display='';head.innerHTML='<span class="ill-head-label">有视频 + PPT 素材 · 点 ▶ 播放</span><span class="ill-tag">视频/PPT</span>';}
+      ill.innerHTML=bg()+'<span class="bear" style="display:none">'+icon+'</span>'
+        +'<div class="ill-switch-row">'
+        +'<button class="ill-switch" onclick="playPageMediaByType(\'video\')"><span class="ill-switch-ico">🎬</span><span class="play">▶</span> 视频</button>'
+        +'<button class="ill-switch" onclick="playPageMediaByType(\'ppt\')"><span class="ill-switch-ico">📄</span><span class="play">▶</span> PPT</button>'
+        +'</div>'
+        +addPill;
       return;
     }
-    var vid=getReaderCustomVid('page');
-    if(vid){
-      if(head){head.style.display='';head.innerHTML='<span class="ill-head-label">插图视频 · 点插图全屏播放</span><span class="ill-tag">视频</span>';}
-      ill.innerHTML='<span class="bear" style="display:none">'+icon+'</span><span class="ill-vid-emoji" style="position:absolute;font-size:40px;opacity:.92">🎬</span><span class="play" onclick="playIllVideo(\'page\')" title="点击视频">▶</span><button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>';
-      updateIllEmoji('page');
+    if(mv){
+      if(head){head.style.display='';head.innerHTML='<span class="ill-head-label">有视频素材 · 点 ▶ 全屏播放</span><span class="ill-tag">视频</span>';}
+      ill.innerHTML=bg()+'<span class="bear" style="display:none">'+icon+'</span><span class="play" onclick="playPageMediaByType(\'video\')" title="点击看视频">▶</span>'+addPill;
       return;
     }
-    /* 无媒体：head 已经在函数开头 hide+clear，这里只渲插图本体 */
-    ill.innerHTML='<span class="bear" id="rPageEmoji">'+icon+'</span><span class="play" onclick="openMediaFullscreen()" title="点击看视频/PPT" style="opacity:.45">▶</span><button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button><button class="ill-img-btn" onclick="openReaderImgPicker(\'page\')" title="自定义插图">+</button>';
+    if(mp){
+      if(head){head.style.display='';head.innerHTML='<span class="ill-head-label">有 PPT 素材 · 点 ▶ 全屏播放</span><span class="ill-tag">PPT</span>';}
+      ill.innerHTML=bg()+'<span class="bear" style="display:none">'+icon+'</span><span class="play" onclick="playPageMediaByType(\'ppt\')" title="点击看 PPT">▶</span>'+addPill;
+      return;
+    }
+    /* 无媒体：显示大图（封面默认图 / emoji）+ 自定义图按钮 */
+    ill.innerHTML='<span class="bear" id="rPageEmoji">'+icon+'</span>'+addPill+imgBtn;
     var saved=_ripType; _ripType='page';
-    var url=getReaderCustomImg();
-    if(url)applyReaderImgToDom(url);
+    var custom=getReaderCustomImg();
+    applyReaderImgToDom(custom); /* custom 非 null 显示自定义图；null 时内部回退封面默认图或 emoji */
     _ripType=saved;
     updateIllEmoji('page');
   }
   function playPageMedia(){
     var pg=curBook&&curBook.pages[curPage]; if(!pg||!pg.media)return;
-    if(pg.media.kind==='video')return;
-    var frame=document.getElementById('rPageMediaFrame');
-    var close=document.getElementById('rPageMediaClose');
-    var prev=document.querySelector('#rPageMediaIll .media-ill-preview');
-    if(frame){frame.src=pg.media.url;frame.style.display='block';}
-    if(close)close.style.display='block';
-    if(prev)prev.style.display='none';
+    var m=pg.media.video||pg.media.ppt; if(!m)return;
+    openMediaFullscreenWith(m);
   }
   function resetPageMediaIll(){
     var pg=curBook&&curBook.pages[curPage];
@@ -7671,8 +7680,15 @@ let phonicsTopicIdx=-1;
   }
   function openMediaFullscreen(){
     var pg=curBook&&curBook.pages[curPage]; if(!pg||!pg.media)return;
-    openMediaFullscreenWith(pg.media);
+    var m = pg.media.video || pg.media.ppt;
+    if(m)openMediaFullscreenWith(m);
   }
+  function playPageMediaByType(t){
+    var pg=curBook&&curBook.pages[curPage]; if(!pg||!pg.media)return;
+    var m = (t==='video') ? pg.media.video : pg.media.ppt;
+    if(m)openMediaFullscreenWith(m);
+  }
+  window.playPageMediaByType=playPageMediaByType;
   function kindLabel2(k){return k==='video'?'动画视频':'PPT 课件';}
   function closeMediaFullscreen(){var m=document.getElementById('mediaFullMask');if(m)m.style.display='none';var h=document.getElementById('mediaFullHost');if(h)h.innerHTML='';}
   function updateReaderProgress(){
@@ -7960,9 +7976,15 @@ let phonicsTopicIdx=-1;
     var list=media[book.id]; if(!list||!list.length)return;
     list.forEach(function(m){
       var page=(typeof m.page==='number')?m.page:((typeof m.at==='number')?m.at:-1);
-      if(page>=0&&page<book.pages.length){
-        book.pages[page].media={kind:m.kind,url:m.url,title:m.title||'',cover:m.cover||''};
+      if(page<0||page>=book.pages.length)return;
+      var video=null,ppt=null;
+      if(m.kind){ /* 旧格式：单 kind 互斥 */
+        if(m.kind==='video')video={kind:'video',url:m.url,title:m.title||'',cover:m.cover||''};
+        else ppt={kind:'embed',url:m.url,title:m.title||'',cover:m.cover||''};
+      }else{ /* 新格式：video/ppt 双字段独立存 */
+        video=m.video||null; ppt=m.ppt||null;
       }
+      book.pages[page].media={video:video,ppt:ppt};
     });
   }
   var _mpActive='video'; /* 当前激活的 tab：video | ppt */
@@ -7986,28 +8008,30 @@ let phonicsTopicIdx=-1;
   }
   function openInsertMedia(){
     if(!curBook){toast('请先打开一本绘本');return;}
-    /* 默认进 视频 tab；如当前页已存的是 PPT，自动切到 PPT tab */
     var pg=curBook.pages&&curBook.pages[curPage];
-    var existed=pg&&pg.media;
-    var initKind=(existed&&existed.kind==='embed')?'ppt':'video';
-    switchMpTab(initKind);
+    var m=pg&&pg.media;
     /* 清两个 pane 输入 */
     ['mediaUrlInput','mediaUrlInput2'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
     ['mediaTitleInput','mediaTitleInput2'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
     ['mediaCoverInput','mediaCoverInput2'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
-    /* 若当前页已有媒体：预填到对应 tab 并显示「移除」按钮 */
-    var rb=document.getElementById('mpRemoveBtn');
-    if(existed){
-      var useVideo=existed.kind==='video';
-      switchMpTab(useVideo?'video':'ppt');
-      var ids=_mpCurrentIds();
-      if(ids.url)ids.url.value=existed.url||'';
-      if(ids.title)ids.title.value=existed.title||'';
-      if(ids.cover)ids.cover.value=existed.cover||'';
-      if(rb)rb.style.display='';
-    }else{
-      if(rb)rb.style.display='none';
+    /* 视频 tab 预填 + 移除按钮显隐 */
+    var v=m&&m.video;
+    if(v){
+      var uv=document.getElementById('mediaUrlInput'); if(uv)uv.value=v.url||'';
+      var tv=document.getElementById('mediaTitleInput'); if(tv)tv.value=v.title||'';
+      var cv=document.getElementById('mediaCoverInput'); if(cv)cv.value=v.cover||'';
     }
+    var rbV=document.getElementById('mpRemoveBtnVideo'); if(rbV)rbV.style.display=v?'':'none';
+    /* PPT tab 预填 + 移除按钮显隐 */
+    var p=m&&m.ppt;
+    if(p){
+      var up=document.getElementById('mediaUrlInput2'); if(up)up.value=p.url||'';
+      var tp=document.getElementById('mediaTitleInput2'); if(tp)tp.value=p.title||'';
+      var cp=document.getElementById('mediaCoverInput2'); if(cp)cp.value=p.cover||'';
+    }
+    var rbP=document.getElementById('mpRemoveBtnPpt'); if(rbP)rbP.style.display=p?'':'none';
+    /* 默认 tab：若只有 ppt 没有 video，进 ppt；否则进 video */
+    switchMpTab((p&&!v)?'ppt':'video');
     document.getElementById('mediaPickerMask').style.display='flex';
   }
   function closeInsertMedia(){
@@ -8024,35 +8048,44 @@ let phonicsTopicIdx=-1;
     var cover=(ids.cover&&ids.cover.value||'').trim();
     if(!url){toast('没找到以 http(s):// 开头的链接，请检查粘贴内容');return;}
     var low=url.toLowerCase();
-    var kind=ids.kind;
-    /* .mp4/.webm 等视频直链 → 强制 kind=video */
+    var kind=ids.kind; /* 当前 tab：video | embed */
     if(/\.(mp4|webm|ogg|mov|m4v)(\?|#|$)/.test(low))kind='video';
     if(!Array.isArray(curBook.pages)||curPage<0||curPage>=curBook.pages.length){toast('当前绘本暂不支持插入');return;}
-    curBook.pages[curPage].media={kind:kind,url:url,title:title,cover:cover};
+    if(!curBook.pages[curPage].media)curBook.pages[curPage].media={video:null,ppt:null};
+    var pgMedia=curBook.pages[curPage].media;
+    var entry={kind:kind,url:url,title:title,cover:cover};
+    if(kind==='video')pgMedia.video=entry; else pgMedia.ppt=entry;
+    /* 持久化：每页一条 {video,ppt} 合并记录 */
     var all={}; try{all=JSON.parse(LS.getItem(BOOK_MEDIA_KEY))||{};}catch(e){all={};}
     if(!all[curBook.id])all[curBook.id]=[];
     all[curBook.id]=all[curBook.id].filter(function(m){var p=(typeof m.page==='number')?m.page:((typeof m.at==='number')?m.at:-1);return p!==curPage;});
-    all[curBook.id].push({kind:kind,url:url,title:title,cover:cover,page:curPage});
+    all[curBook.id].push({video:pgMedia.video,ppt:pgMedia.ppt,page:curPage});
     try{LS.setItem(BOOK_MEDIA_KEY,JSON.stringify(all));}catch(e){}
     closeInsertMedia();
     renderBookPage();
-    toast('已给当前页加上 '+(kind==='video'?'视频':'PPT')+' 📎');
+    toast('已保存 '+(kind==='video'?'视频':'PPT')+' 到当前页 📎');
   }
-  function removeInsertedMedia(){
+  function removeInsertedMedia(type){
     if(!curBook||!Array.isArray(curBook.pages)){closeInsertMedia();return;}
     if(curPage<0||curPage>=curBook.pages.length){closeInsertMedia();return;}
     var pg=curBook.pages[curPage];
-    if(pg&&pg.media){delete pg.media;}
+    if(!pg.media){closeInsertMedia();return;}
+    if(type==='video'){ pg.media.video=null; toast('已移除本页视频 ✔'); }
+    else { pg.media.ppt=null; toast('已移除本页 PPT ✔'); }
+    if(!pg.media.video&&!pg.media.ppt)pg.media=null;
     try{
       var all={}; all=JSON.parse(LS.getItem(BOOK_MEDIA_KEY))||{};
       if(all[curBook.id]){
-        all[curBook.id]=all[curBook.id].filter(function(m){var p=(typeof m.page==='number')?m.page:((typeof m.at==='number')?m.at:-1);return p!==curPage;});
-        try{LS.setItem(BOOK_MEDIA_KEY,JSON.stringify(all));}catch(e){}
+        var rec=all[curBook.id].filter(function(m){var p=(typeof m.page==='number')?m.page:((typeof m.at==='number')?m.at:-1);return p===curPage;})[0];
+        if(rec){
+          if(type==='video')rec.video=null; else rec.ppt=null;
+          if(!rec.video&&!rec.ppt)all[curBook.id]=all[curBook.id].filter(function(m){var p=(typeof m.page==='number')?m.page:((typeof m.at==='number')?m.at:-1);return p!==curPage;});
+          try{LS.setItem(BOOK_MEDIA_KEY,JSON.stringify(all));}catch(e){}
+        }
       }
     }catch(e){}
     closeInsertMedia();
     renderBookPage();
-    toast('已还原成插图 ✔');
   }
   window.removeInsertedMedia=removeInsertedMedia;
   function toggleTapRead(btn){
@@ -8280,6 +8313,18 @@ let phonicsTopicIdx=-1;
     try{var v=LS.getItem(_ripKey());if(v)return JSON.parse(v);}catch(e){}
     return _readerImgCache[_ripKey()]||null;
   }
+  /* 取指定类型（cover/page）的自定义图，不改变当前 _ripType */
+  function getReaderCustomImgOf(type){
+    var saved=_ripType; _ripType=type||'cover';
+    var v=getReaderCustomImg();
+    _ripType=saved; return v;
+  }
+  /* 正文插图默认图 = 封面自定义图 > 书自带封面 > null（用户希望正文默认跟封面同一张） */
+  function getPageFallbackIll(){
+    var coverImg=getReaderCustomImgOf('cover'); if(coverImg)return coverImg;
+    if(curBook&&curBook.id){ var bc=getBookCover(curBook.id); if(bc)return bc; }
+    return null;
+  }
   function setReaderCustomImg(url){
     /* 先确保画面立即显示，再尽力持久化；localStorage 受限时抛错也不能阻断显示 */
     applyReaderImgToDom(url);
@@ -8351,7 +8396,8 @@ let phonicsTopicIdx=-1;
     var emojiId=(type==='cover')?'rCoverEmoji':'rPageEmoji';
     var emoji=document.getElementById(emojiId);
     if(!emoji)return;
-    var hasImg=!!getReaderCustomImg(type);
+    var hasImg=!!getReaderCustomImgOf(type);
+    if(type==='page'){ var fb=getPageFallbackIll(); if(fb)hasImg=true; }
     var hasVid=!!getReaderCustomVid(type);
     emoji.style.display=(hasImg||hasVid)?'none':'';
   }
@@ -8383,6 +8429,17 @@ let phonicsTopicIdx=-1;
       ill.appendChild(img);
       if(emoji)emoji.style.display='none';
     }else{
+      if(_ripType==='page'){
+        var fb=getPageFallbackIll();
+        if(fb){
+          var fbimg=document.createElement('img');fbimg.className='ill-custom-img';
+          fbimg.src=fb;fbimg.alt='封面默认插图';fbimg.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;z-index:2';
+          fbimg.onerror=function(){this.style.display='none';if(emoji)emoji.style.display='';};
+          ill.appendChild(fbimg);
+          if(emoji)emoji.style.display='none';
+          return;
+        }
+      }
       if(emoji)emoji.style.display='';
     }
   }
