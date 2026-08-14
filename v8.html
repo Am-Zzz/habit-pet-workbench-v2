@@ -1097,7 +1097,10 @@
   .bk-empty{text-align:center;color:var(--ink-faint);font-size:13px;padding:40px 10px}
   .bk-empty .big{font-size:42px;margin-bottom:8px}
   .book-card{background:#fff;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:.18s;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-  .book-card:hover{border-color:var(--brand-s);box-shadow:0 8px 20px rgba(244,130,155,.18);transform:translateY(-2px)}
+  .book-card:hover{border-color:var(--brand-s);box-shadow:0 8px 20px rgba(244,130,155,.18);transform:translateY(-2px)} /* v3-α-3 移除 .bc-add 后保留 hover 抬升 */
+  /* v3-α-3：移除单书右上"＋/−"加入/移除书架按钮（用户反馈意义不大，与 ⋯ 菜单/顶部 nav 重复）；保留 .bc-shelf 标签作为"已在书架"视觉提示 */
+  /* 编辑态：书卡上的编辑/删除按钮（仅用户书，受 editMode 控制） */
+  .book-card .bc-edit,.book-card .bc-del{position:absolute;top:8px;width:26px;height:26px;border-radius:50%;border:none;font-size:14px;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.18);z-index:3;}
   .bc-cover{position:relative;width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,#FFF0F5,#FFE3EC);display:flex;align-items:center;justify-content:center;overflow:hidden}
   .bc-cover img{width:100%;height:100%;object-fit:cover;display:block}
   .rd-cover-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px}
@@ -1111,14 +1114,12 @@
   .bc-foot{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:auto}
   .bc-soon{font-size:10px;color:#b08968;background:#fff3e6;padding:2px 8px;border-radius:999px;font-weight:700}
   .book-card.notready{opacity:.92}
-  .book-card .bc-add{display:none;position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:rgba(255,193,7,.95);color:#5c3d00;border:none;font-size:16px;font-weight:900;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-  .book-card:hover .bc-add{display:flex}
+  /* v3-α-3：移除 .bc-add hover 浮出规则；bc-add 整块已删 */
   /* 编辑态：书卡上的编辑/删除按钮（仅用户书，受 editMode 控制） */
   .book-card .bc-edit,.book-card .bc-del{position:absolute;top:8px;width:26px;height:26px;border-radius:50%;border:none;font-size:14px;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.18);z-index:3;}
   .book-card .bc-edit{right:40px;background:rgba(255,255,255,.96);color:#E8607A;}
   .book-card .bc-del{right:8px;background:rgba(232,96,122,.95);color:#fff;}
-  body.edit .book-card .bc-add{display:none !important;}
-  .book-card .bc-add:hover{background:#ffb300;transform:scale(1.08)}
+  /* v3-α-3 移除 .bc-add hover 浮出 + body.edit 覆盖规则（bc-add 整块删除） */
   /* 新增故事 / 空白故事 占位卡（与书卡同尺寸，居中＋号） */
   .book-card.bc-add-card,.book-card.bc-blank{border:2px dashed #FFC4D2;background:linear-gradient(135deg,#FFF7FA,#FFF0F4);cursor:pointer;align-items:center;justify-content:center;min-height:200px;box-shadow:none;transition:.18s;}
   .book-card.bc-add-card:hover,.book-card.bc-blank:hover{border-color:#E8607A;background:#FFF0F4;transform:translateY(-2px);box-shadow:0 8px 20px rgba(244,130,155,.18);}
@@ -7541,11 +7542,11 @@ let phonicsTopicIdx=-1;
         const cover=bcov?('<img src="'+bcov+'" alt="'+esc(b.title)+'">'
           +'<div class="rd-cover-ph" style="display:none">'+b.icon+'</div>'):'';
         const ph=bcov?'':'<div class="rd-cover-ph" style="background:'+bookCoverBg(b.id)+'">'+b.icon+'</div>';
-        const addBtn='<button class="bc-add" title="'+(isShelf?'移除书架':'加入书架')+'" onclick="toggleBookShelf(\''+b.id+'\',event)">'+(isShelf?'−':'+')+'</button>';
+        /* v3-α-3：移除 bc-add（单书右上 +/− 按钮） */
         const isUser=userIds.indexOf(b.id)>=0;
         const editBtn=isUser?'<button class="bc-edit edit-only" onclick="event.stopPropagation();editUserBook(\''+b.id+'\')" title="编辑这本绘本">✏️</button>':'';
         const delBtn=isUser?'<button class="bc-del edit-only" onclick="event.stopPropagation();deleteUserBook(\''+b.id+'\')" title="删除这本绘本">🗑</button>':'';
-        card.innerHTML='<div class="bc-cover">'+cover+ph+doneBadge+(isShelf&&!isDone?'<span class="bc-shelf">★ 书架</span>':'')+addBtn+editBtn+delBtn+'</div>'+
+        card.innerHTML='<div class="bc-cover">'+cover+ph+doneBadge+(isShelf&&!isDone?'<span class="bc-shelf">★ 书架</span>':'')+editBtn+delBtn+'</div>'+
           '<div class="bc-body"><div class="bc-title">'+esc(b.title)+'</div>'+
           '<div class="bc-desc">'+esc(b.desc)+'</div>'+
           '<div class="bc-foot"><span class="bi-tag">'+esc(b.age)+'</span>'+(b.ready?'':'<span class="bc-soon">内容整理中</span>')+'</div></div>';
