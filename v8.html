@@ -2198,9 +2198,11 @@
   /* 正文左侧插图卡 · 确认版（粉描边+米黄底+插图为主 · 尺寸比例保留） */
   .reader[data-rtheme] .page-left{flex:1.1;padding:8px;background:#FFF6E7;border:2px solid #F2C6CE;border-radius:18px;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;position:relative;min-height:340px;overflow:hidden;box-shadow:none;backdrop-filter:none;}
   .reader[data-rtheme] .cover-left,.reader[data-rtheme] .page-left{position:relative;}
-  .reader[data-rtheme] .page-ill-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:12px;color:var(--ink);flex-shrink:0;font-weight:600;gap:8px;}
-  .reader[data-rtheme] .page-ill-head .ill-head-label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .reader[data-rtheme] .page-ill-head .ill-tag{background:var(--primary);color:#fff;font-size:11px;padding:3px 10px;border-radius:999px;font-weight:700;flex:none;}
+  .reader[data-rtheme] .page-ill-head{position:absolute;top:12px;right:12px;z-index:4;display:none;align-items:center;justify-content:flex-end;gap:6px;flex:none;pointer-events:none;}
+  .reader[data-rtheme] .ill-media-tag{background:rgba(20,20,30,.55);color:#fff;font-size:12.5px;font-weight:800;padding:7px 14px;border-radius:999px;border:none;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.28);font-family:inherit;line-height:1.2;display:inline-flex;align-items:center;gap:4px;pointer-events:auto;transition:.2s;user-select:none;-webkit-tap-highlight-color:transparent;}
+  .reader[data-rtheme] .ill-media-tag::after{content:"⇅";font-size:11px;margin-left:2px;color:rgba(255,255,255,.75);font-weight:700;}
+  .reader[data-rtheme] .ill-media-tag:hover{filter:brightness(1.15);transform:scale(1.04);}
+  .reader[data-rtheme] .ill-media-tag:active{transform:scale(.97);}
   .reader[data-rtheme] .page-ill{flex:1;width:100%;border-radius:12px;background:linear-gradient(160deg,#CFE3F2,#E7D7F0);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:0;box-shadow:none;transition:background .3s;}
   .reader[data-rtheme] .page-ill .sun,.reader[data-rtheme] .page-ill .grass{display:none;}
   .reader[data-rtheme] .page-ill .bear{font-size:200px;line-height:1;z-index:2;filter:drop-shadow(0 6px 10px rgba(0,0,0,.14));transition:transform .3s;}
@@ -3515,10 +3517,7 @@
             <!-- 正文 -->
             <div class="r-screen page-screen">
               <div class="card page-left">
-                <div class="page-ill-head" id="rPageIllHead">
-                  <span class="ill-head-label">有视频素材 · 点插图全屏播放</span>
-                  <span class="ill-tag">视频</span>
-                </div>
+                <div class="page-ill-head" id="rPageIllHead"></div>
                 <div class="page-ill" id="rPageIll">
                   <span class="bear" id="rPageEmoji">📖</span>
                   <span class="play" id="rPagePlay" onclick="openMediaFullscreen()" title="点击看视频/PPT">▶</span>
@@ -7610,7 +7609,6 @@ let phonicsTopicIdx=-1;
     if(!ill)return;
     var icon=(curBook&&curBook.icon)?curBook.icon:'📖';
     var head=document.getElementById('rPageIllHead');
-    if(head){head.style.display='none';head.innerHTML='';}
     var addPill='<button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>';
     var imgBtn='<button class="ill-img-btn" onclick="openReaderImgPicker(\'page\')" title="自定义插图">+</button>';
     var mv=pg&&pg.media&&pg.media.video;
@@ -7618,27 +7616,32 @@ let phonicsTopicIdx=-1;
     /* 兼容老插图视频缓存（reader_vid_*，已废弃入口但老数据仍在） */
     if(!mv){ var oldv=getReaderCustomVid('page'); if(oldv)mv={kind:oldv.kind,url:oldv.url,title:oldv.title||'',cover:oldv.cover||''}; }
     function bg(){ var fb=getPageFallbackIll(); return fb?'<img class="ill-custom-img" src="'+attrEsc(fb)+'" alt="封面默认插图" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:12px;z-index:1" onerror="this.style.display=\'none\'">':''; }
+
+    /* 双素材：右上角胶囊显示当前激活的类型，点击后切到另一种（中央 ▶ 跟着一起切） */
     if(mv && mp){
-      if(head){head.style.display='';head.innerHTML='<span class="ill-head-label">有视频 + PPT 素材 · 点 ▶ 播放</span><span class="ill-tag">视频/PPT</span>';}
-      ill.innerHTML=bg()+'<span class="bear" style="display:none">'+icon+'</span>'
-        +'<div class="ill-switch-row">'
-        +'<button class="ill-switch" onclick="playPageMediaByType(\'video\')"><span class="ill-switch-ico">🎬</span><span class="play">▶</span> 视频</button>'
-        +'<button class="ill-switch" onclick="playPageMediaByType(\'ppt\')"><span class="ill-switch-ico">📄</span><span class="play">▶</span> PPT</button>'
-        +'</div>'
+      if(_pageMediaCur!=='ppt')_pageMediaCur='video';
+      var curLabel=_pageMediaCur==='video'?'🎬 视频':'📄 PPT';
+      if(head){head.style.display='flex';head.innerHTML='<button class="ill-media-tag" onclick="togglePageMediaTag()" title="点击切换">'+curLabel+'</button>';}
+      ill.innerHTML=bg()
+        +'<span class="bear" style="display:none">'+icon+'</span>'
+        +'<span class="play" onclick="playPageMediaByType(\''+_pageMediaCur+'\')" title="点击看'+(_pageMediaCur==='video'?'视频':'PPT')+'">▶</span>'
         +addPill;
       return;
     }
+    /* 单视频：右上角胶囊"🎬 视频"点击直接全屏 */
     if(mv){
-      if(head){head.style.display='';head.innerHTML='<span class="ill-head-label">有视频素材 · 点 ▶ 全屏播放</span><span class="ill-tag">视频</span>';}
+      if(head){head.style.display='flex';head.innerHTML='<button class="ill-media-tag" onclick="playPageMediaByType(\'video\')" title="点击全屏播放">🎬 视频</button>';}
       ill.innerHTML=bg()+'<span class="bear" style="display:none">'+icon+'</span><span class="play" onclick="playPageMediaByType(\'video\')" title="点击看视频">▶</span>'+addPill;
       return;
     }
+    /* 单 PPT：右上角胶囊"📄 PPT"点击直接全屏 */
     if(mp){
-      if(head){head.style.display='';head.innerHTML='<span class="ill-head-label">有 PPT 素材 · 点 ▶ 全屏播放</span><span class="ill-tag">PPT</span>';}
+      if(head){head.style.display='flex';head.innerHTML='<button class="ill-media-tag" onclick="playPageMediaByType(\'ppt\')" title="点击全屏播放">📄 PPT</button>';}
       ill.innerHTML=bg()+'<span class="bear" style="display:none">'+icon+'</span><span class="play" onclick="playPageMediaByType(\'ppt\')" title="点击看 PPT">▶</span>'+addPill;
       return;
     }
-    /* 无媒体：显示大图（封面默认图 / emoji）+ 自定义图按钮 */
+    /* 无媒体：右上胶囊隐藏，仅显示大图（封面默认 / emoji）+ 加媒体页 + 自定义插图按钮 */
+    if(head){head.style.display='none';head.innerHTML='';}
     ill.innerHTML='<span class="bear" id="rPageEmoji">'+icon+'</span>'+addPill+imgBtn;
     var saved=_ripType; _ripType='page';
     var custom=getReaderCustomImg();
@@ -7646,6 +7649,14 @@ let phonicsTopicIdx=-1;
     _ripType=saved;
     updateIllEmoji('page');
   }
+  /* 切换双素材时的"激活类型"：点一下 video↔ppt，中央 ▶ 跟着切 */
+  function togglePageMediaTag(){
+    if(_pageMediaCur==='video')_pageMediaCur='ppt';else _pageMediaCur='video';
+    var pg=curBook&&curBook.pages[curPage]; if(!pg)return;
+    renderPageMediaIll(pg);
+  }
+  var _pageMediaCur='video';
+  window.togglePageMediaTag=togglePageMediaTag;
   function playPageMedia(){
     var pg=curBook&&curBook.pages[curPage]; if(!pg||!pg.media)return;
     var m=pg.media.video||pg.media.ppt; if(!m)return;
@@ -7838,6 +7849,8 @@ let phonicsTopicIdx=-1;
   function readerFlipPage(d){
     if(!curBook||!curBook.ready)return;
     curPage=Math.max(0,Math.min(curBook.pages.length-1,curPage+d));
+    /* 翻页重置正文插图的双素材切换态：每页默认回到视频 */
+    if(typeof _pageMediaCur!=='undefined')_pageMediaCur='video';
     renderBookPage();
   }
   function closeReader(){
