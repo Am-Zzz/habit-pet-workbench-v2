@@ -2311,18 +2311,17 @@
   .ac-cancel{background:#F2F2F5;color:var(--ink);}
   .ac-yes{background:var(--brand);color:#fff;}
   .ac-yes.danger{background:#E8607A;}
-  /* 列表页工具行拆分 + 更多菜单 */
+  /* 列表页工具行拆分 */
   .bk-tools-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
   .bk-spacer{flex:1 1 auto;}
+  /* v6-2：删 ⋰ 按钮，.bk-more/.bk-menu 不再使用，保留空类兼容 CSSOM */
   .bk-more{position:relative;}
-  .bk-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:60;background:#fff;border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,.16);padding:6px;display:flex;flex-direction:column;min-width:150px;}
+  .bk-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:60;background:#fff;border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,.16);padding:6px;display:none;flex-direction:column;min-width:150px;}
   .bk-menu button{border:none;background:#fff;border-radius:10px;padding:9px 12px;text-align:left;font-size:13px;cursor:pointer;color:var(--ink);font-family:inherit;}
-  /* v5-7：主页工具行 3 个独立快捷按钮（与 ⋯ 菜单并排，⋯ 菜单空） */
+  /* v5-7：主页工具行 3 个独立快捷按钮 */
   .bk-iconbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);transition:.18s;font-family:inherit;flex:none;-webkit-tap-highlight-color:transparent;}
   .bk-iconbtn:hover{background:var(--surface-2);transform:scale(1.06);}
   body.edit .bk-iconbtn.pm-only{background:rgba(40,180,120,.92);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(40,180,120,.35);}
-  .bk-menu button:hover{background:#FFF0F4;}
-  .bk-menu button.edit-only{color:#E8607A;}
   /* 家长密码弹窗（解锁编辑态） */
   .edit-pin-mask{position:fixed;inset:0;background:rgba(20,20,30,.5);display:none;align-items:center;justify-content:center;z-index:10000;}
   .edit-pin-mask .ep-card{background:#fff;border-radius:22px;padding:26px 28px;width:min(320px,88vw);text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25);}
@@ -3617,16 +3616,10 @@
               <div class="bk-tools-row">
                 <div class="bk-count">共 <b id="bookCount">0</b> 本</div>
                 <span class="bk-spacer"></span>
-                <!-- v5-7：3 个独立快捷按钮，⋯ 菜单留兜底空项 -->
+                <!-- v6-2：主页 ⋰ 按钮已删，独立按钮（＋新增/♻️回收/🌐网盘）直接外露 -->
                 <button type="button" class="bk-iconbtn edit-only pm-only" onclick="addUserBook();openMyBooks()" title="新增绘本（家长模式）">＋</button>
                 <button type="button" class="bk-iconbtn edit-only pm-only" onclick="openRecycleBin()" title="回收站（家长模式）">♻️</button>
                 <button type="button" class="bk-iconbtn" onclick="openNetImport('book')" title="网盘导入">🌐</button>
-                <div class="bk-more">
-                  <button class="bk-iconbtn" onclick="toggleBookMenu()" title="更多">⋯</button>
-                  <div class="bk-menu" id="bookMenu" style="display:none">
-                    <!-- v5-7：独立按钮已上提到工具行，菜单空做兜底 -->
-                  </div>
-                </div>
               </div>
               <div class="bk-tools-row">
                 <div class="bk-levels lrn-pill" id="bkLevelPill">
@@ -8096,17 +8089,7 @@ let phonicsTopicIdx=-1;
   function updateEditBtns(){ /* v3-α-10 齿轮颜色由 body.edit 驱动；v4-8 家长模式切换时刷新阅读器板块行（显隐笔记/增删按钮/自定义页可编辑） */
     if(curBook&&document.querySelector('.r-tabs')){ renderReaderTabs(curBook); ensureCustomScreens(curBook); }
   }
-  /* v3-α-8 ⋯按钮已删除：原 bkMenu 4 个功能（我的绘本/网盘导入/回收站/家长模式）均有独立入口，不再需要此菜单 */
-  function toggleBookMenu(){
-    var m=document.getElementById('bookMenu');
-    if(!m)return;
-    m.style.display=(m.style.display==='none'||!m.style.display)?'flex':'none';
-  }
-  document.addEventListener('click',function(e){
-    var m=document.getElementById('bookMenu');
-    var more=document.querySelector('.bk-more');
-    if(m && m.style.display!=='none' && more && !more.contains(e.target) && !m.contains(e.target)) m.style.display='none';
-  },true);
+  /* v6-2：主页 ⋰ 按钮+菜单彻底删除（用户多次要求），toggleBookMenu/click 监听一并清理 */
   /* ===== 阅读器内正文页增删（编辑态，仅用户书） ===== */
   function isCurrentUserBook(){ if(!curBook)return false; return getUserBooks().some(function(b){return b.id===curBook.id;}); }
   function persistCurBookPages(){
