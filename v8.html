@@ -7096,7 +7096,13 @@ let phonicsTopicIdx=-1;
   const BOOK_SHELF_KEY='mp_book_shelf_v1';
   let bookNav='all', bookLevel='all', bookLang='cn', bookSearch='', bookPage=0;
   let curBook=null, curPage=0, pinyinOn=false;
+  /* v9-2：阅读器偏好持久化（拼音 / 逐句点读开关，跨会话记住，避免每次开书都强制开） */
+  const READER_PREFS_KEY='mp_reader_prefs_v1';
+  function loadReaderPrefs(){try{return JSON.parse(LS.getItem(READER_PREFS_KEY))||{};}catch(e){return {};}}
+  function saveReaderPrefs(o){try{LS.setItem(READER_PREFS_KEY,JSON.stringify(o));}catch(e){}}
   let bookVoices=[], bookMediaRec=null, bookRecChunks=[], bookClipURL=null, bookRecStream=null, bookRecording=false;
+  /* v9-3：跟读 RMS 响度分析（用 AudioContext+AnalyserNode 实时采样峰值，评分看“读得响不响”而非只读时长） */
+  let bookAudioCtx=null, bookAnalyser=null, bookRecRmsTimer=null, bookRecPeakRms=0;
   let tapReadOn=true, bookRecStopCb=null, bookRecStartT=0;
   let quizState={list:[], i:0};
   const BOOK_MEDIA_KEY='mp_book_media_v1';
@@ -7764,9 +7770,9 @@ let phonicsTopicIdx=-1;
     attachBookMedia(curBook);
     splitLongBookPages(curBook);
     stopBookSpeech();resetBookRec();
-    curPage=0;pinyinOn=true;setPinyin(true);
+    curPage=0;pinyinOn=(loadReaderPrefs().pinyin!==false);setPinyin(pinyinOn);
     quizState={list:[],i:0};
-    tapReadOn=true;
+    tapReadOn=(loadReaderPrefs().tap!==false);
     /* v6-5：切换绘本时清掉旧暂存（每本书独立暂存） */
     var prevStaging={};Object.keys(pmStagingTabs).forEach(function(k){if(k!==id)delete pmStagingTabs[k];else prevStaging.tabs=pmStagingTabs[k];});
     Object.keys(pmStagingCustom).forEach(function(k){if(k!==id)delete pmStagingCustom[k];});
@@ -7978,6 +7984,7 @@ let phonicsTopicIdx=-1;
   function pageText(pg){return pg.chars.map(function(c){return c.t;}).join('');}
   function setPinyin(on){
     pinyinOn=!!on;
+    var rp=loadReaderPrefs();rp.pinyin=pinyinOn;saveReaderPrefs(rp);
     var pt=document.getElementById('rPagePyToggle'); if(pt)pt.classList.toggle('on',pinyinOn);
     var ct=document.getElementById('rCoverPyToggle'); if(ct)ct.classList.toggle('on',pinyinOn);
     var py=document.getElementById('rCoverPy'); if(py)py.style.display=pinyinOn?'':'none';
@@ -7991,6 +7998,9 @@ let phonicsTopicIdx=-1;
     var out=[];
     raw.forEach(function(c){
       var t=String(c.t||''), p=String(c.p||'');
+      /* v9-1：兜底——p 不应包含中文字符/中文标点（出现即数据源错位，如“了”的 p 被填成逗号）。
+         强制视为无拼音，避免渲染出“挂错/挂标点”的离谱拼音标签。合法拼音只含字母/声调/数字/空格/连字符。 */
+      if(p && /[一-鿿、，。！？；：""''（）…—·]/.test(p)) p='';
       if(t.length<=1){out.push({t:t,p:p});return;}
       /* 拆分一串拼音为数组（按空白分割） */
       var pys=p.split(/\s+/).filter(Boolean);
@@ -8015,15 +8025,10 @@ let phonicsTopicIdx=-1;
         chs.forEach(function(it){out.push({t:it.t,p:''});});
       }
     });
-    /* 去重保护：合并连续重复的字（防止书数据重复导致“双字”显示） */
-    var dedup=[];
-    for(var k=0;k<out.length;k++){
-      var cur=out[k];
-      var prev=dedup[dedup.length-1];
-      if(prev && prev.t===cur.t && prev.p===cur.p) continue;
-      dedup.push(cur);
-    }
-    return dedup;
+    /* v9-1：取消“连续同字同音去重”——内置书里“妈妈/婆婆/爸爸”等叠词本是独立合法字，
+       原去重逻辑会把第二个“妈”字丢掉（用户图里看到“mā 妈 对小红帽说”而非“mā妈 妈 对…”）。
+       真正的重复数据应由数据源修正，渲染层只负责透传。 */
+    return out;
   }
   function renderBookPage(){
     if(!curBook||!curBook.ready)return;
@@ -8594,7 +8599,25 @@ let phonicsTopicIdx=-1;
     const supported=navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&typeof MediaRecorder!=='undefined';
     if(!supported){toast('当前环境不支持录音（请用 localhost 或 https 打开）');return;}
     navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
-      bookRecStream=stream;bookRecChunks=[];
+      bookRecStream=stream;bookRecChunks=[];bookRecPeakRms=0;
+      /* v9-3：接 AnalyserNode 实时采样 RMS 峰值（仅分析，不连 destination 避免回声） */
+      try{
+        const AC=window.AudioContext||window.webkitAudioContext;
+        if(AC){
+          bookAudioCtx=new AC();
+          const src=bookAudioCtx.createMediaStreamSource(stream);
+          bookAnalyser=bookAudioCtx.createAnalyser();bookAnalyser.fftSize=1024;
+          src.connect(bookAnalyser);
+          const buf=new Uint8Array(bookAnalyser.fftSize);
+          bookRecRmsTimer=setInterval(function(){
+            if(!bookAnalyser)return;
+            bookAnalyser.getByteTimeDomainData(buf);
+            let sum=0;for(let i=0;i<buf.length;i++){const v=(buf[i]-128)/128;sum+=v*v;}
+            const rms=Math.sqrt(sum/buf.length);
+            if(rms>bookRecPeakRms)bookRecPeakRms=rms;
+          },120);
+        }
+      }catch(e){bookAnalyser=null;}
       try{bookMediaRec=new MediaRecorder(stream);}catch(e){stopBookStream();toast('录音初始化失败');return;}
       bookMediaRec.ondataavailable=function(e){if(e.data&&e.data.size)bookRecChunks.push(e.data);};
       bookMediaRec.onstop=function(){
@@ -8611,6 +8634,8 @@ let phonicsTopicIdx=-1;
   function stopBookRec(){
     bookRecording=false;
     const btn=document.getElementById('rdRecBtn');btn.textContent='🎙️ 录音';btn.classList.remove('rec');
+    if(bookRecRmsTimer){clearInterval(bookRecRmsTimer);bookRecRmsTimer=null;}
+    if(bookAudioCtx){try{bookAudioCtx.close();}catch(e){}bookAudioCtx=null;bookAnalyser=null;}
     if(bookMediaRec&&bookMediaRec.state!=='inactive'){try{bookMediaRec.stop();}catch(e){}}
   }
   function resetBookRec(){
@@ -8754,6 +8779,7 @@ let phonicsTopicIdx=-1;
   window.removeInsertedMedia=removeInsertedMedia;
   function toggleTapRead(btn){
     tapReadOn=!tapReadOn;
+    var rp=loadReaderPrefs();rp.tap=tapReadOn;saveReaderPrefs(rp);
     var box=document.getElementById('rdPage');
     if(box){box.classList.toggle('tapread',tapReadOn); if(!tapReadOn)box.querySelectorAll('.sent.hl').forEach(function(s){s.classList.remove('hl');});}
     if(btn){btn.classList.toggle('on',tapReadOn);btn.textContent=tapReadOn?'👆 逐句点读：开':'👆 逐句点读：关';}
@@ -8797,7 +8823,13 @@ let phonicsTopicIdx=-1;
   function showFollowStars(){
     if(!bookClipURL){toast('没录到声音，再试一次吧～');return;}
     var dur=(bookRecStartT?((Date.now()-bookRecStartT)/1000):0);
-    var stars = dur>=2?5 : dur>=1?4 : dur>=0.4?3 : 2;
+    var peak=bookRecPeakRms||0;
+    /* v9-3：综合“响度峰值 + 时长”评星——读得响、读得够久才算好，单纯按住不出声不再给高分 */
+    var stars = 2;
+    if(peak>=0.25 && dur>=1.5) stars=5;
+    else if(peak>=0.15 && dur>=0.8) stars=4;
+    else if(peak>=0.08 || dur>=0.4) stars=3;
+    else stars=2;
     var wrap=document.getElementById('rdFollow');
     if(wrap){
       var s='';for(var i=0;i<stars;i++)s+='⭐';for(var j=stars;j<5;j++)s+='☆';
