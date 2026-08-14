@@ -7816,7 +7816,8 @@ let phonicsTopicIdx=-1;
       const rem=(editMode&&t.type!=='cover'&&t.type!=='page')?'<button type="button" class="rtab-x" onclick="event.stopPropagation();removeReaderTab('+idx+',\''+book.id+'\')" title="移除这个板块">−</button>':'';
       const nameEditable=(editMode&&t.type!=='cover'&&t.type!=='page');
       const nameHtml=nameEditable?('<span class="rtab-name" contenteditable="true" onclick="event.stopPropagation();this.focus()" onblur="renameReaderTab('+idx+',\''+book.id+'\',this)">'+esc(t.name)+'</span>'):esc(t.name);
-      html+='<span class="rtab-wrap'+(isNotes?' edit-only':'')+'"><button type="button" class="rtab'+(idx===0?' active':'')+(isNotes?' rtab-note':'')+'" data-screen="'+idx+'"'+(isNotes?' id="rTabNote"':'')+' onclick="showReaderTab('+idx+',this)">'+nameHtml+'</button>'+rem+'</span>';
+      /* v5-2：笔记 tab 永远显示（去掉 edit-only），儿童模式也能看自己的笔记 */
+      html+='<span class="rtab-wrap"><button type="button" class="rtab'+(idx===0?' active':'')+(isNotes?' rtab-note':'')+'" data-screen="'+idx+'"'+(isNotes?' id="rTabNote"':'')+' onclick="showReaderTab('+idx+',this)">'+nameHtml+'</button>'+rem+'</span>';
     });
     if(editMode)html+='<button type="button" class="rtab rtab-add" onclick="addReaderTab(\''+book.id+'\')" title="新增一个页面">＋</button>';
     tabsEl.innerHTML=html;
