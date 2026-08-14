@@ -1101,7 +1101,9 @@
   .bc-cover{position:relative;width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,#FFF0F5,#FFE3EC);display:flex;align-items:center;justify-content:center;overflow:hidden}
   .bc-cover img{width:100%;height:100%;object-fit:cover;display:block}
   .rd-cover-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px}
-  .bc-done{position:absolute;top:8px;right:8px;background:rgba(16,185,129,.92);color:#fff;font-size:10px;font-weight:800;padding:3px 8px;border-radius:999px}
+  .bc-done{position:absolute;top:8px;left:8px;background:rgba(232,96,122,.95);color:#fff;font-size:11px;padding:3px 8px;border-radius:999px;font-weight:800;display:flex;align-items:center;gap:4px;cursor:default;}
+  .bc-done-x{display:none;border:none;background:rgba(255,255,255,.3);color:#fff;width:16px;height:16px;border-radius:50%;font-size:11px;line-height:1;cursor:pointer;align-items:center;justify-content:center;padding:0;}
+  body.edit .bc-done-x{display:flex;}
   .bc-shelf{position:absolute;top:8px;left:8px;background:rgba(255,193,7,.95);color:#5c3d00;font-size:10px;font-weight:800;padding:3px 8px;border-radius:999px}
   .bc-body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1;text-align:center}
   .bc-title{font-size:14px;font-weight:800;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -3661,7 +3663,7 @@
           </div>
 
           <div class="reader-controls">
-            <button class="btn" onclick="markBookDone()">✅ 读完啦</button>
+            <button class="btn" id="rdDoneBtn" onclick="toggleBookDone()">🔲 标记已读</button>
           </div>
         </div>
         <div class="reader-mascot" id="readerMascot">
@@ -7527,6 +7529,7 @@ let phonicsTopicIdx=-1;
         }
         const card=document.createElement('div');card.className='book-card'+(b.ready?'':' notready');
         const isDone=done.indexOf(b.id)>=0;const isShelf=inBookShelf(b.id);
+        const doneBadge=isDone?('<span class="bc-done" onclick="event.stopPropagation()">✓ 已读完'+(editMode?'<button class="bc-done-x" onclick="event.stopPropagation();unmarkBookDone(\''+b.id+'\');renderBookList()">×</button>':'')+'</span>'):'';
         const bcov=getBookCover(b.id);
         const cover=bcov?('<img src="'+bcov+'" alt="'+esc(b.title)+'">'
           +'<div class="rd-cover-ph" style="display:none">'+b.icon+'</div>'):'';
@@ -7535,7 +7538,7 @@ let phonicsTopicIdx=-1;
         const isUser=userIds.indexOf(b.id)>=0;
         const editBtn=isUser?'<button class="bc-edit edit-only" onclick="event.stopPropagation();editUserBook(\''+b.id+'\')" title="编辑这本绘本">✏️</button>':'';
         const delBtn=isUser?'<button class="bc-del edit-only" onclick="event.stopPropagation();deleteUserBook(\''+b.id+'\')" title="删除这本绘本">🗑</button>':'';
-        card.innerHTML='<div class="bc-cover">'+cover+ph+(isDone?'<span class="bc-done">✓ 已读完</span>':'')+(isShelf&&!isDone?'<span class="bc-shelf">★ 书架</span>':'')+addBtn+editBtn+delBtn+'</div>'+
+        card.innerHTML='<div class="bc-cover">'+cover+ph+doneBadge+(isShelf&&!isDone?'<span class="bc-shelf">★ 书架</span>':'')+addBtn+editBtn+delBtn+'</div>'+
           '<div class="bc-body"><div class="bc-title">'+esc(b.title)+'</div>'+
           '<div class="bc-desc">'+esc(b.desc)+'</div>'+
           '<div class="bc-foot"><span class="bi-tag">'+esc(b.age)+'</span>'+(b.ready?'':'<span class="bc-soon">内容整理中</span>')+'</div></div>';
@@ -7626,7 +7629,7 @@ let phonicsTopicIdx=-1;
       showReaderTab(0);
       return;
     }
-    renderBookPage();renderReaderPoem();renderReaderQuiz();
+    renderBookPage();renderReaderPoem();renderReaderQuiz();updateDoneBtn();
     const pyT=document.getElementById('rPoemPyToggle');if(pyT)pyT.classList.add('on');
     const pcard=document.getElementById('rPoemCard');if(pcard)pcard.classList.add('py-on');
     const wT=document.getElementById('rPoemWordToggle');if(wT)wT.classList.remove('on');
@@ -8239,7 +8242,24 @@ let phonicsTopicIdx=-1;
     notifyDrawnTask('books');
     document.getElementById('readerStatus').textContent='✓ 已读完';
     toast('太棒了！《'+curBook.title+'》读完啦 🎉');
-    renderBookList();
+    updateDoneBtn();renderBookList();
+  }
+  function unmarkBookDone(id){
+    if(!id)return;
+    var a=getBookDone();var i=a.indexOf(id);if(i>=0)a.splice(i,1);
+    try{LS.setItem(BOOK_DONE_KEY,JSON.stringify(a));}catch(e){}
+    updateDoneBtn();renderBookList();
+  }
+  function toggleBookDone(){
+    if(!curBook)return;
+    if(getBookDone().indexOf(curBook.id)>=0)unmarkBookDone(curBook.id);
+    else markBookDone();
+  }
+  function updateDoneBtn(){
+    var btn=document.getElementById('rdDoneBtn'); if(!btn||!curBook)return;
+    var done=getBookDone().indexOf(curBook.id)>=0;
+    btn.textContent=done?'✅ 已读完 · 再读一次':'🔲 标记已读';
+    btn.className='btn'+(done?' on':'');
   }
   /* 录音：复用 MediaRecorder（需 localhost/https 才有麦克风权限） */
   function toggleBookRec(){
