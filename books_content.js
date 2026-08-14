@@ -128,7 +128,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "快",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -160,7 +160,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "的",
-            "p": "！”"
+            "p": null
           }
         ]
       },
@@ -237,7 +237,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "慢",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -273,7 +273,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "下",
-            "p": "。”"
+            "p": null
           }
         ]
       },
@@ -459,7 +459,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "慢",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -495,7 +495,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "迟",
-            "p": "。”"
+            "p": null
           },
           {
             "t": "。",
@@ -543,7 +543,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "大",
-            "p": "。"
+            "p": null
           }
         ]
       },
@@ -892,7 +892,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -924,7 +924,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "吧",
-            "p": "。”"
+            "p": null
           }
         ]
       },
@@ -1561,19 +1561,19 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "外",
-            "p": "pó"
+            "p": "wài"
           },
           {
             "t": "婆",
-            "p": "bìng"
+            "p": "pó"
           },
           {
             "t": "病",
-            "p": "le"
+            "p": "bìng"
           },
           {
             "t": "了",
-            "p": "，"
+            "p": "le"
           },
           {
             "t": "，",
@@ -1581,31 +1581,31 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "把",
-            "p": "zhè"
+            "p": "bǎ"
           },
           {
             "t": "这",
-            "p": "lán"
+            "p": "zhè"
           },
           {
             "t": "篮",
-            "p": "diǎn"
+            "p": "lán"
           },
           {
             "t": "点",
-            "p": "xīn"
+            "p": "diǎn"
           },
           {
             "t": "心",
-            "p": "sòng"
+            "p": "xīn"
           },
           {
             "t": "送",
-            "p": "qù"
+            "p": "sòng"
           },
           {
             "t": "去",
-            "p": "，"
+            "p": "qù"
           },
           {
             "t": "，",
@@ -1613,43 +1613,43 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "路",
-            "p": "shàng"
+            "p": "lù"
           },
           {
             "t": "上",
-            "p": "bú"
+            "p": "shàng"
           },
           {
             "t": "不",
-            "p": "yào"
+            "p": "bù"
           },
           {
             "t": "要",
-            "p": "hé"
+            "p": "yào"
           },
           {
             "t": "和",
-            "p": "mò"
+            "p": "hé"
           },
           {
             "t": "陌",
-            "p": "shēng"
+            "p": "mò"
           },
           {
             "t": "生",
-            "p": "rén"
+            "p": "shēng"
           },
           {
             "t": "人",
-            "p": "shuō"
+            "p": "rén"
           },
           {
             "t": "说",
-            "p": "huà"
+            "p": "shuō"
           },
           {
             "t": "话",
-            "p": "。”"
+            "p": "huà"
           }
         ]
       },
@@ -1815,7 +1815,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "娘",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -1835,7 +1835,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "呀",
-            "p": "？”"
+            "p": null
           },
           {
             "t": "？",
@@ -1855,7 +1855,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "帽",
-            "p": "：“"
+            "p": null
           },
           {
             "t": "说",
@@ -1875,7 +1875,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "看",
-            "p": "。”"
+            "p": null
           },
           {
             "t": "外",
@@ -1915,7 +1915,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "到",
-            "p": "。"
+            "p": null
           }
         ]
       },
@@ -2954,7 +2954,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "鹅",
-            "p": "！"
+            "p": null
           }
         ]
       },
@@ -3248,7 +3248,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": "！"
+            "p": null
           },
           {
             "t": "！",
@@ -3264,7 +3264,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": "！”"
+            "p": null
           },
           {
             "t": "！",
@@ -3312,7 +3312,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "帮",
-            "p": "。"
+            "p": null
           }
         ]
       },
@@ -3441,7 +3441,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "哈",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -3457,7 +3457,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "啦",
-            "p": "！”"
+            "p": null
           }
         ]
       },
@@ -3550,7 +3550,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -3594,7 +3594,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": "。"
+            "p": null
           }
         ]
       },
@@ -3711,7 +3711,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "他",
-            "p": "。"
+            "p": null
           }
         ]
       },
@@ -3985,7 +3985,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "的",
-            "p": "！"
+            "p": null
           },
           {
             "t": "！",
@@ -4013,7 +4013,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "掉",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -4033,7 +4033,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "赢",
-            "p": "。”"
+            "p": null
           },
           {
             "t": "。",
@@ -4057,7 +4057,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "一",
-            "p": "，"
+            "p": null
           },
           {
             "t": "吹",
@@ -4105,7 +4105,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "更",
-            "p": "。"
+            "p": null
           }
         ]
       },
@@ -4271,7 +4271,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": "。”"
+            "p": null
           },
           {
             "t": "。",
@@ -4299,7 +4299,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "照",
-            "p": "，"
+            "p": null
           },
           {
             "t": "着",
@@ -4323,7 +4323,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "得",
-            "p": "，"
+            "p": null
           },
           {
             "t": "热",
@@ -4355,7 +4355,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "外",
-            "p": "。"
+            "p": null
           }
         ]
       },
@@ -4802,7 +4802,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "伤",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -4822,7 +4822,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "着",
-            "p": "！”"
+            "p": null
           }
         ]
       },
@@ -4879,7 +4879,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "去",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -4895,7 +4895,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "睡",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -4931,7 +4931,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "醒",
-            "p": "。”"
+            "p": null
           }
         ]
       },
@@ -5499,7 +5499,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "会",
-            "p": "！”"
+            "p": null
           },
           {
             "t": "！",
@@ -5535,7 +5535,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "哭",
-            "p": "。"
+            "p": null
           }
         ]
       },
@@ -5737,7 +5737,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "效",
-            "p": "，"
+            "p": null
           },
           {
             "t": "，",
@@ -5761,7 +5761,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "家",
-            "p": "。”"
+            "p": null
           },
           {
             "t": "。",
@@ -5777,7 +5777,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "会",
-            "p": "，"
+            "p": null
           },
           {
             "t": "上",
@@ -5821,7 +5821,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "跳",
-            "p": "。"
+            "p": null
           }
         ]
       },
@@ -6554,7 +6554,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "吧",
-            "p": "！”"
+            "p": null
           },
           {
             "t": "！",
@@ -6570,7 +6570,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "婆",
-            "p": "：“"
+            "p": null
           },
           {
             "t": "说",
@@ -6598,7 +6598,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "声",
-            "p": "，"
+            "p": null
           },
           {
             "t": "音",
@@ -6654,7 +6654,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "刀",
-            "p": "。”"
+            "p": null
           }
         ]
       },
