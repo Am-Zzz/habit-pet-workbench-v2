@@ -1099,8 +1099,7 @@
   .book-card{background:#fff;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:.18s;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.04)}
   .book-card:hover{border-color:var(--brand-s);box-shadow:0 8px 20px rgba(244,130,155,.18);transform:translateY(-2px)} /* v3-α-3 移除 .bc-add 后保留 hover 抬升 */
   /* v3-α-3：移除单书右上"＋/−"加入/移除书架按钮（用户反馈意义不大，与 ⋯ 菜单/顶部 nav 重复）；保留 .bc-shelf 标签作为"已在书架"视觉提示 */
-  /* 编辑态：书卡上的编辑/删除按钮（仅用户书，受 editMode 控制） */
-  .book-card .bc-edit,.book-card .bc-del{position:absolute;top:8px;width:26px;height:26px;border-radius:50%;border:none;font-size:14px;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.18);z-index:3;}
+  /* v6-3：书卡 ✏️ 删除后只剩 🗑，统一规则见下（仅一处） */
   .bc-cover{position:relative;width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,#FFF0F5,#FFE3EC);display:flex;align-items:center;justify-content:center;overflow:hidden}
   .bc-cover img{width:100%;height:100%;object-fit:cover;display:block}
   .rd-cover-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:54px}
@@ -1119,11 +1118,7 @@
   .bc-soon{font-size:10px;color:#b08968;background:#fff3e6;padding:2px 8px;border-radius:999px;font-weight:700}
   .book-card.notready{opacity:.92}
   /* v3-α-3：移除 .bc-add hover 浮出规则；bc-add 整块已删 */
-  /* 编辑态：书卡上的编辑/删除按钮（仅用户书，受 editMode 控制） */
-  .book-card .bc-edit,.book-card .bc-del{position:absolute;top:8px;width:26px;height:26px;border-radius:50%;border:none;font-size:14px;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.18);z-index:3;}
-  .book-card .bc-edit{right:40px;background:rgba(255,255,255,.96);color:#E8607A;}
-  .book-card .bc-del{right:8px;background:rgba(232,96,122,.95);color:#fff;}
-  /* v3-α-3 移除 .bc-add hover 浮出 + body.edit 覆盖规则（bc-add 整块删除） */
+  /* v6-3：书卡 ✏️ 按钮已删，.bc-edit 整段移除（.bc-del 见上） */
   /* 新增故事 / 空白故事 占位卡（与书卡同尺寸，居中＋号） */
   /* v3-α-4：移除 .bc-blank（空白故事卡，v2 设计未保留到 v3）；bc-add-card 兼任首位/末尾"新增故事"卡 */
   /* === v3-α-5 回收站 === */
@@ -7696,14 +7691,13 @@ let phonicsTopicIdx=-1;
         const ph=bcov?'':'<div class="rd-cover-ph" style="background:'+bookCoverBg(b.id)+'">'+b.icon+'</div>';
         /* v4-4 ★ 书架徽章变按钮：家长模式 + 未在书架时显示 "+ 书架" 按钮（绿色）；已在书架显示 "★ 书架" 按钮（黄色）。点击 toggleBookShelfByBadge */
         const isUser=userIds.indexOf(b.id)>=0;
-        const editBtn='<button class="bc-edit edit-only" onclick="event.stopPropagation();editUserBook(\''+b.id+'\')" title="编辑这本绘本（内置书自动克隆一份再改）">✏️</button>';
-        /* v3-α-5：bc-del 改为所有书都可删除（移动到回收站） */
+        /* v6-3：书卡右上 ✏️ 笔按钮删除（用户多次说"笔没用"）；只保留 🗑 移到回收站 */
         const delBtn='<button class="bc-del edit-only" onclick="event.stopPropagation();askMoveBookToTrash(\''+b.id+'\',\''+esc(b.title).replace(/'/g,"\\'")+'\')" title="移到回收站">🗑</button>';
         const isDoneShelf=isDone;
         const shelfLabel=isShelf?'★ 书架':'+ 书架';
         const shelfClass='bc-shelf'+(isShelf?'':' shelf-add');
         const shelfBadge=(isShelf||editMode)?'<button type="button" class="'+shelfClass+'" onclick="event.stopPropagation();toggleBookShelfByBadge(\''+b.id+'\')" title="'+(isShelf?'移除书架':'加入书架')+'">'+shelfLabel+'</button>':'';
-        card.innerHTML='<div class="bc-cover">'+cover+ph+doneBadge+shelfBadge+editBtn+delBtn+'</div>'+
+        card.innerHTML='<div class="bc-cover">'+cover+ph+doneBadge+shelfBadge+delBtn+'</div>'+
           '<div class="bc-body"><div class="bc-title">'+esc(b.title)+'</div>'+
           '<div class="bc-desc">'+esc(b.desc)+'</div>'+
           '<div class="bc-foot"><span class="bi-tag">'+esc(b.age)+'</span>'+(b.ready?'':'<span class="bc-soon">内容整理中</span>')+'</div></div>';
