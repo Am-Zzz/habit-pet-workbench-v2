@@ -2329,6 +2329,8 @@
   .bk-iconbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);transition:.18s;font-family:inherit;flex:none;-webkit-tap-highlight-color:transparent;}
   .bk-iconbtn:hover{background:var(--surface-2);transform:scale(1.06);}
   body.edit .bk-iconbtn.pm-only{background:rgba(40,180,120,.92);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(40,180,120,.35);}
+  /* v10-5：顶部 ⚙️ 家长模式开关（始终可见；开启时和 .pm-only 同款绿色，关闭时为白底） */
+  body.edit .bk-iconbtn.pm-on{background:rgba(40,180,120,.92);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(40,180,120,.35);}
   /* 家长密码弹窗（解锁编辑态） */
   .edit-pin-mask{position:fixed;inset:0;background:rgba(20,20,30,.5);display:none;align-items:center;justify-content:center;z-index:10000;}
   .edit-pin-mask .ep-card{background:#fff;border-radius:22px;padding:26px 28px;width:min(320px,88vw);text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25);}
@@ -3631,8 +3633,8 @@
               <div class="bk-tools-row">
                 <div class="bk-count">共 <b id="bookCount">0</b> 本</div>
                 <span class="bk-spacer"></span>
-                <!-- v6-2：主页 ⋰ 按钮已删，独立按钮（＋新增/♻️回收/🌐网盘）直接外露 -->
-                <button type="button" class="bk-iconbtn edit-only pm-only" onclick="openRecycleBin()" title="回收站（家长模式）">♻️</button>
+                <!-- v6-2：主页 ⋰ 按钮已删，独立按钮（⚙️ 家长模式 / 🌐 网盘）直接外露；v10-5：顶部 ♻️ 回收站已删（与左下角导航重复） -->
+                <button type="button" class="bk-iconbtn pm-on" id="bkPmGear" onclick="toggleEditMode()" title="家长模式开关（点一下开启，再点关闭）">⚙️</button>
                 <button type="button" class="bk-iconbtn" onclick="openNetImport('book')" title="网盘导入">🌐</button>
               </div>
               <div class="bk-tools-row">
