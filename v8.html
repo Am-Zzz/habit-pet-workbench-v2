@@ -2174,12 +2174,19 @@
 
   /* 正文 */
   .reader[data-rtheme] .page-screen{gap:18px;align-items:stretch;}
-  .reader[data-rtheme] .page-left{flex:1.1;padding:18px;display:flex;align-items:center;justify-content:center;position:relative;min-height:340px;}
-  .reader[data-rtheme] .page-ill{width:100%;height:100%;border-radius:24px;background:linear-gradient(180deg,var(--ill-a) 0%,var(--ill-b) 55%,var(--ill-c) 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:background .3s;}
-  .reader[data-rtheme] .page-ill .sun{position:absolute;width:54px;height:54px;background:#FFE6A8;border-radius:50%;top:12%;right:14%;box-shadow:0 0 30px rgba(255,214,130,.55);}
-  .reader[data-rtheme] .page-ill .bear{font-size:150px;line-height:1;z-index:2;filter:drop-shadow(0 8px 14px rgba(80,110,120,.2));transition:transform .3s;}
-  .reader[data-rtheme] .page-ill .grass{position:absolute;bottom:0;left:0;right:0;height:48px;background:linear-gradient(180deg,transparent,#A8E0B8);}
+  /* 正文左侧插图卡 · 确认版（粉描边+米黄底+插图为主 · 尺寸比例保留） */
+  .reader[data-rtheme] .page-left{flex:1.1;padding:14px;background:#FFF6E7;border:2px solid #F2C6CE;border-radius:18px;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;position:relative;min-height:340px;overflow:hidden;box-shadow:none;backdrop-filter:none;}
   .reader[data-rtheme] .cover-left,.reader[data-rtheme] .page-left{position:relative;}
+  .reader[data-rtheme] .page-ill-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:12px;color:var(--ink);flex-shrink:0;font-weight:600;gap:8px;}
+  .reader[data-rtheme] .page-ill-head .ill-head-label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .reader[data-rtheme] .page-ill-head .ill-tag{background:var(--primary);color:#fff;font-size:11px;padding:3px 10px;border-radius:999px;font-weight:700;flex:none;}
+  .reader[data-rtheme] .page-ill{flex:1;width:100%;border-radius:12px;background:linear-gradient(160deg,#CFE3F2,#E7D7F0);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:0;box-shadow:none;transition:background .3s;}
+  .reader[data-rtheme] .page-ill .sun,.reader[data-rtheme] .page-ill .grass{display:none;}
+  .reader[data-rtheme] .page-ill .bear{font-size:120px;line-height:1;z-index:2;filter:drop-shadow(0 6px 10px rgba(0,0,0,.14));transition:transform .3s;}
+  .reader[data-rtheme] .page-ill .play{position:absolute;width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;z-index:3;transition:transform .2s;}
+  .reader[data-rtheme] .page-ill .play:hover{transform:scale(1.08);}
+  .reader[data-rtheme] .ill-add-pill{position:absolute;right:14px;bottom:14px;background:var(--primary);color:#fff;font-size:12px;font-weight:700;padding:6px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;box-shadow:0 3px 10px rgba(0,0,0,.2);cursor:pointer;z-index:3;border:none;font-family:inherit;line-height:1.4;}
+  .reader[data-rtheme] .ill-add-pill:hover{filter:brightness(1.05);}
   .reader[data-rtheme] .page-right{flex:1;display:flex;flex-direction:column;gap:12px;padding:18px 22px;justify-content:flex-start;min-height:0;overflow:hidden;}
   .reader[data-rtheme] .page-actions-top{margin-bottom:2px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
   .reader[data-rtheme] .btn-pill{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:800;padding:11px 22px;border-radius:30px;border:none;cursor:pointer;box-shadow:0 5px 14px rgba(0,0,0,.08);transition:.2s,background .3s,color .3s;}
@@ -3458,11 +3465,14 @@
             <!-- 正文 -->
             <div class="r-screen page-screen">
               <div class="card page-left">
+                <div class="page-ill-head" id="rPageIllHead">
+                  <span class="ill-head-label">有视频素材 · 点插图全屏播放</span>
+                  <span class="ill-tag">视频</span>
+                </div>
                 <div class="page-ill" id="rPageIll">
-                  <span class="sun"></span>
                   <span class="bear" id="rPageEmoji">📖</span>
-                  <span class="grass"></span>
-                  <button class="ill-img-btn" onclick="openReaderImgPicker('page')" title="自定义正文插图">+</button>
+                  <span class="play" id="rPagePlay" onclick="openMediaFullscreen()" title="点击看视频/PPT">▶</span>
+                  <button class="ill-add-pill" onclick="openReaderImgPicker('page')" title="加媒体页">＋ 加媒体页</button>
                 </div>
               </div>
               <div class="card page-right">
@@ -7496,16 +7506,19 @@ let phonicsTopicIdx=-1;
     var ill=document.getElementById('rPageIll');
     if(!ill)return;
     var icon=(curBook&&curBook.icon)?curBook.icon:'📖';
+    var head=document.getElementById('rPageIllHead');
     if(pg&&pg.media){
       var m=pg.media;
-      var kindLabel=(m.kind==='video'?'动画视频':'PPT 课件');
+      var kindLabel=m.kind==='video'?'视频':'PPT';
+      if(head)head.innerHTML='<span class="ill-head-label">有视频素材 · 点插图全屏播放</span><span class="ill-tag">'+kindLabel+'</span>';
       var coverHtml = m.cover
-        ? '<img class="media-cover-img" src="'+attrEsc(m.cover)+'" alt="封面" onerror="this.style.display=\'none\';this.parentNode.classList.add(\'no-cover\')">'
-        : '<div class="media-cover-ph"></div>';
-      ill.innerHTML='<div class="media-cover" onclick="openMediaFullscreen()">'+coverHtml+'<div class="media-cover-mask"></div><div class="media-cover-play"><div class="mcp-tri"></div></div><div class="media-cover-label">'+(m.title?esc(m.title):kindLabel)+'</div></div><button class="ill-img-btn" onclick="openReaderImgPicker(\'page\')" title="自定义正文插图">+</button>';
+        ? '<img class="ill-cover-img" src="'+attrEsc(m.cover)+'" alt="封面" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;z-index:1;" onerror="this.style.display=\'none\'">'
+        : '';
+      ill.innerHTML=coverHtml+'<span class="bear" id="rPageEmoji">'+icon+'</span><span class="play" onclick="openMediaFullscreen()" title="点击看视频/PPT">▶</span><button class="ill-add-pill" onclick="openReaderImgPicker(\'page\')" title="加媒体页">＋ 加媒体页</button>';
       return;
     }
-    ill.innerHTML='<span class="sun"></span><span class="bear" id="rPageEmoji">'+icon+'</span><span class="grass"></span><button class="ill-img-btn" onclick="openReaderImgPicker(\'page\')" title="自定义正文插图">+</button>';
+    if(head)head.innerHTML='<span class="ill-head-label">这一页是插图 · 没有视频素材</span><span class="ill-tag" style="background:var(--muted);opacity:.7">插图</span>';
+    ill.innerHTML='<span class="bear" id="rPageEmoji">'+icon+'</span><span class="play" onclick="openMediaFullscreen()" title="点击看视频/PPT" style="opacity:.45">▶</span><button class="ill-add-pill" onclick="openReaderImgPicker(\'page\')" title="加媒体页">＋ 加媒体页</button>';
     var saved=_ripType; _ripType='page';
     var url=getReaderCustomImg();
     if(url)applyReaderImgToDom(url);
