@@ -2065,6 +2065,17 @@
   .mb-form textarea{min-height:96px;resize:vertical}
   .mb-two{display:flex;gap:8px}
   .mb-two>*{flex:1}
+  /* v4-9 绘本编辑浮窗：板块配置 */
+  .mb-sec-box{margin-top:10px;border:1px dashed var(--line);border-radius:12px;padding:10px 12px;background:rgba(255,255,255,.5);}
+  .mb-sections{display:flex;flex-direction:column;gap:6px;margin-top:6px;}
+  .mb-sec{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:9px;background:#fff;border:1px solid var(--line);}
+  .mb-sec.locked{background:#FBF6F8;color:#a98;}
+  .mb-sec-chk{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;flex:1;cursor:pointer;}
+  .mb-sec-chk input{width:16px;height:16px;}
+  .mb-sec-mv{display:flex;gap:4px;}
+  .mb-sec-mv button{width:26px;height:26px;border:1px solid var(--line);border-radius:7px;background:#fff;cursor:pointer;font-size:13px;font-weight:900;}
+  .mb-sec-mv button:hover{border-color:#E8607A;color:#E8607A;}
+  .mb-sec-lk{font-size:11px;color:#b08;background:#F4E8EE;padding:2px 8px;border-radius:8px;}
   /* AI 对话 */
   .ai-msgs{display:flex;flex-direction:column;gap:10px;max-height:46vh;overflow:auto;padding:4px}
   .ai-msg{max-width:84%;padding:9px 12px;border-radius:14px;font-size:13.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
@@ -3635,6 +3646,7 @@
             <button class="rtheme-dot" data-t="cream" style="background:#E9D9C2" onclick="setReaderTheme('cream',this)" title="奶油绘本"></button>
           </div>
           <button class="pm-gear" id="rdEditBtn" onclick="toggleEditMode()" title="家长模式开关（点一下开启，再点关闭）">⚙️</button>
+          <button class="rtool edit-only" onclick="editUserBook(curBook.id)" title="编辑这本绘本（内置书会自动克隆一份再改）">✏️</button>
           <button class="rtool" id="rdShelfIco" onclick="toggleReaderShelf()" title="加入书架">☆</button>
           <button class="rtool" onclick="toggleReaderMore()" title="更多">⋯</button>
           <div class="rmore" id="readerMore" style="display:none">
@@ -7641,7 +7653,7 @@ let phonicsTopicIdx=-1;
         const ph=bcov?'':'<div class="rd-cover-ph" style="background:'+bookCoverBg(b.id)+'">'+b.icon+'</div>';
         /* v4-4 ★ 书架徽章变按钮：家长模式 + 未在书架时显示 "+ 书架" 按钮（绿色）；已在书架显示 "★ 书架" 按钮（黄色）。点击 toggleBookShelfByBadge */
         const isUser=userIds.indexOf(b.id)>=0;
-        const editBtn=isUser?'<button class="bc-edit edit-only" onclick="event.stopPropagation();editUserBook(\''+b.id+'\')" title="编辑这本绘本">✏️</button>':'';
+        const editBtn='<button class="bc-edit edit-only" onclick="event.stopPropagation();editUserBook(\''+b.id+'\')" title="编辑这本绘本（内置书自动克隆一份再改）">✏️</button>';
         /* v3-α-5：bc-del 改为所有书都可删除（移动到回收站） */
         const delBtn='<button class="bc-del edit-only" onclick="event.stopPropagation();askMoveBookToTrash(\''+b.id+'\',\''+esc(b.title).replace(/'/g,"\\'")+'\')" title="移到回收站">🗑</button>';
         const isDoneShelf=isDone;
@@ -9263,21 +9275,69 @@ let phonicsTopicIdx=-1;
   }
   function openBookFromMine(id){closeMyBooks();openBookReader(id);}
   /* v3-α-4：createBlankBook 已删除（v2 空白故事卡不再暴露入口） */
-  function addUserBook(){editBookId=null;document.getElementById('mbEditor').style.display='block';document.getElementById('mbList').style.display='none';
+  var mbSecWorking=[];
+  var MB_SEC_NAMES={cover:'封面',page:'正文',poem:'诗歌',quiz:'互动',notes:'笔记',custom:'新页面'};
+  var MB_ALL_SECS=[{type:'cover',name:'封面'},{type:'page',name:'正文'},{type:'poem',name:'诗歌'},{type:'quiz',name:'互动'},{type:'notes',name:'笔记'}];
+  function cloneBuiltinBook(id){
+    const src=(window.BOOK_CONTENT||[]).filter(function(x){return x.id===id;})[0];
+    if(!src)return null;
+    const cb=JSON.parse(JSON.stringify(src)); cb.id='u_clone_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+    const books=getUserBooks(); books.push(cb); setUserBooks(books);
+    const cm=getBookCoverMap(); if(cm[id]){ cm[cb.id]=cm[id]; try{LS.setItem(BOOK_COVER_KEY,JSON.stringify(cm));}catch(e){} }
+    const tm=getBookTabsMap(); if(tm[id]){ tm[cb.id]=tm[id]; try{LS.setItem(BOOK_TABS_KEY,JSON.stringify(tm));}catch(e){} }
+    if(inBookShelf(id)){ toggleBookShelf(id,null); toggleBookShelf(cb.id,null); }
+    return cb.id;
+  }
+  function renderMbSections(){
+    const box=document.getElementById('mbSections'); if(!box)return; box.innerHTML='';
+    const inc=mbSecWorking.map(function(t){return t.type;});
+    const ordered=mbSecWorking.concat(MB_ALL_SECS.filter(function(s){return inc.indexOf(s.type)<0;}));
+    ordered.forEach(function(s){
+      const on=inc.indexOf(s.type)>=0; const locked=(s.type==='cover'||s.type==='page');
+      const row=document.createElement('div'); row.className='mb-sec'+(locked?' locked':'');
+      let mv='';
+      if(!locked){ mv='<span class="mb-sec-mv"><button type="button" onclick="mbSecMove(\''+s.type+'\',-1)" title="上移">↑</button><button type="button" onclick="mbSecMove(\''+s.type+'\',1)" title="下移">↓</button></span>'; }
+      else { mv='<span class="mb-sec-lk">固定</span>'; }
+      row.innerHTML='<label class="mb-sec-chk"><input type="checkbox" '+(on?'checked':'')+(locked?' disabled':'')+' onchange="mbSecToggle(\''+s.type+'\')"> '+esc(s.name)+'</label>'+mv;
+      box.appendChild(row);
+    });
+  }
+  function mbSecToggle(type){
+    if(type==='cover'||type==='page')return;
+    const arr=mbSecWorking; const i=arr.map(function(t){return t.type;}).indexOf(type);
+    if(i>=0)arr.splice(i,1);
+    else arr.splice(2,0,{type:type,name:MB_SEC_NAMES[type]});
+    renderMbSections();
+  }
+  function mbSecMove(type,dir){
+    const arr=mbSecWorking; const i=arr.map(function(t){return t.type;}).indexOf(type); if(i<0)return;
+    const j=i+dir; if(j<0||j>=arr.length)return;
+    if(arr[j].type==='cover'||arr[j].type==='page')return;
+    const tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp;
+    renderMbSections();
+  }
+  function addUserBook(){editBookId=null;mbSecWorking=READER_DEFAULT_TABS.slice();document.getElementById('mbEditor').style.display='block';document.getElementById('mbList').style.display='none';
     ['mbFTitle','mbFIcon','mbFCover','mbFDesc','mbFTags','mbFContent'].forEach(function(id2){document.getElementById(id2).value='';});
     document.getElementById('mbFCat').value='classic';document.getElementById('mbFAge').value='幼升小';document.getElementById('mbFSaveBtn').textContent='💾 保存';
-    initMbIcons();
+    document.getElementById('mbFPy').checked=true;document.getElementById('mbFSrc').value='';
+    renderMbSections();initMbIcons();
   }
   function editUserBook(id){
-    const b=getUserBooks().filter(function(x){return x.id===id;})[0];if(!b)return;editBookId=id;
+    let b=getUserBooks().filter(function(x){return x.id===id;})[0];
+    if(!b){ const nid=cloneBuiltinBook(id); if(!nid){toast('未找到这本绘本');return;} editBookId=nid; b=getUserBooks().filter(function(x){return x.id===nid;})[0]; }
+    else editBookId=id;
+    if(!b)return;
+    mbSecWorking=getBookTabs(editBookId);
     document.getElementById('mbFTitle').value=b.title||'';document.getElementById('mbFIcon').value=b.icon||'📖';
     document.getElementById('mbFAge').value=b.age||'幼升小';document.getElementById('mbFCat').value=b.cat||'classic';
     document.getElementById('mbFCover').value=b.cover||'';
     document.getElementById('mbFDesc').value=b.desc||'';document.getElementById('mbFTags').value=(b.tags||[]).join('，');
     document.getElementById('mbFContent').value=b.pages?b.pages.map(function(p){return p.chars.map(function(c){return c.t;}).join('');}).join(''):'';
+    document.getElementById('mbFPy').checked=(b.pyDefault!==false);
+    document.getElementById('mbFSrc').value=b.srcUrl||'';
     document.getElementById('mbEditor').style.display='block';document.getElementById('mbList').style.display='none';
     document.getElementById('mbFSaveBtn').textContent='💾 保存修改';
-    initMbIcons();
+    renderMbSections();initMbIcons();
   }
   const MB_ICONS=['📖','🐛','🐰','🦖','🌈','🚀','🌟','🍎','🌼','🐱','🧸','🌙'];
   function initMbIcons(){
@@ -9299,12 +9359,15 @@ let phonicsTopicIdx=-1;
     const desc=document.getElementById('mbFDesc').value.trim();
     const tags=document.getElementById('mbFTags').value.split(/[,，]/).map(function(s){return s.trim();}).filter(Boolean);
     const content=document.getElementById('mbFContent').value;const pages=splitStory(content);
-    const books=getUserBooks();let newId=null;
-    if(editBookId){const b=books.filter(function(x){return x.id===editBookId;})[0];if(b){b.title=title;b.age=age;b.grade=age;b.cat=cat;b.icon=icon;b.desc=desc;b.tags=tags;b.pages=pages;b.ready=true;b.difficulty=age;if(cover)b.cover=cover;}}
-    else{newId='u_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);
+    const pyDefault=document.getElementById('mbFPy').checked;const srcUrl=document.getElementById('mbFSrc').value.trim();
+    const books=getUserBooks();let newId=null;let saveId=editBookId;
+    if(editBookId){const b=books.filter(function(x){return x.id===editBookId;})[0];if(b){b.title=title;b.age=age;b.grade=age;b.cat=cat;b.icon=icon;b.desc=desc;b.tags=tags;b.pages=pages;b.ready=true;b.difficulty=age;b.pyDefault=pyDefault;if(cover)b.cover=cover;if(srcUrl)b.srcUrl=srcUrl;}}
+    else{newId='u_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);saveId=newId;
       if(!icon){const h=newId.split('').reduce(function(a,c){return a+c.charCodeAt(0);},0);icon=MB_ICONS[h%MB_ICONS.length];}
-      books.push({id:newId,cat:cat,icon:icon,title:title,tag:tags[0]||'',age:age,grade:age,ready:true,desc:desc,cover:cover,pages:pages,difficulty:age,tags:tags});}
-    setUserBooks(books);document.getElementById('mbEditor').style.display='none';document.getElementById('mbList').style.display='block';
+      books.push({id:newId,cat:cat,icon:icon,title:title,tag:tags[0]||'',age:age,grade:age,ready:true,desc:desc,cover:cover,srcUrl:srcUrl,pages:pages,difficulty:age,pyDefault:pyDefault,tags:tags});}
+    setUserBooks(books);
+    setBookTabs(saveId, mbSecWorking);
+    document.getElementById('mbEditor').style.display='none';document.getElementById('mbList').style.display='block';
     renderMyBooks();renderBookList();
     if(newId){toast('已保存，进入阅读 📖');closeMyBooks();openBookReader(newId);}
     else toast('已保存修改 ✔');
@@ -12591,6 +12654,14 @@ let phonicsTopicIdx=-1;
             <label>简介</label><input id="mbFDesc" placeholder="一句话简介">
             <label>标签(逗号分隔)</label><input id="mbFTags" placeholder="亲情, 习惯养成">
             <label>正文(按句自动分页)</label><textarea id="mbFContent" placeholder="把故事正文粘贴到这里，系统会按句号自动分页"></textarea>
+            <div class="mb-sec-box">
+              <label>板块设置（勾选要包含的板块，可排序；封面/正文固定不可关）</label>
+              <div id="mbSections" class="mb-sections"></div>
+            </div>
+            <div class="mb-two">
+              <div><label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="mbFPy" checked> 默认显示拼音</label></div>
+              <div><label>来源链接（可选）</label><input id="mbFSrc" placeholder="https://..."></div>
+            </div>
             <div class="mb-row" style="justify-content:flex-end;margin-top:10px">
               <button class="btn ghost" onclick="cancelEditBook()">取消</button>
               <button class="btn" id="mbFSaveBtn" onclick="saveUserBook()">💾 保存</button>
