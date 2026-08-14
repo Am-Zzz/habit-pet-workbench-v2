@@ -1231,6 +1231,10 @@
   .reader{width:100%;max-width:480px;background:var(--surface);border-radius:22px;padding:14px 16px 18px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
   .reader-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;position:relative}
   .reader-status{font-size:12px;color:var(--ink-soft);font-weight:700}
+  .note-top{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);}
+  .note-top .reader-status{flex:1;text-align:center;font-weight:800;color:var(--ink);}
+  .r-tabs button#rTabNote{color:var(--sage);border-color:var(--sage);}
+  .r-tabs button#rTabNote.active{background:var(--sage);color:#fff;}
   .reader-cover{position:relative;width:100%;max-height:230px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#FFF0F5,#FFE3EC);display:flex;align-items:center;justify-content:center}
   .reader-cover img{width:100%;max-height:230px;object-fit:cover}
   .reader-cover .rd-cover-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px}
@@ -2417,6 +2421,11 @@
     .reader[data-rtheme] .cover-screen{flex-direction:row;gap:24px;align-items:stretch;height:100%}
     .reader[data-rtheme] .cover-left{flex:0 0 40%;max-width:40%;min-height:0;height:100%;padding:14px}
     .reader[data-rtheme] .cover-right{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;height:100%;padding:24px 28px;gap:18px;overflow:hidden}
+    /* v2-5 读书笔记 tab 内嵌：与正文等屏幕同页、可滚动 */
+    .reader[data-rtheme] .notes-screen{flex-direction:column;align-items:stretch;overflow:auto;padding:16px;}
+    .reader[data-rtheme] .note-card{flex:none;width:100%;max-width:800px;margin:0 auto;display:flex;flex-direction:column;padding:0;box-shadow:0 6px 22px rgba(0,0,0,.07);}
+    .reader[data-rtheme] .note-card #notePickerView{padding:18px;}
+    .reader[data-rtheme] .note-card #noteEditorView{padding:0 18px 18px;}
     /* ★ 文字框永远是固定 box：flex:1 撑满 page-right 剩余空间，多字内部滚，不会撑高整页 */
     .reader[data-rtheme] .text-block{flex:1 1 0;min-height:0;height:auto;max-height:100%;overflow:auto;padding:22px 28px}
     .reader[data-rtheme] .reader-page{font-size:23px;line-height:2.15;letter-spacing:.5px}
@@ -3576,7 +3585,7 @@
             <button data-screen="1" onclick="showReaderTab(1,this)">正文</button>
             <button data-screen="2" onclick="showReaderTab(2,this)">诗歌</button>
             <button data-screen="3" onclick="showReaderTab(3,this)">互动</button>
-            <button id="rTabNote" class="edit-only" onclick="openNotePicker()">笔记</button>
+            <button id="rTabNote" class="edit-only" data-screen="4" onclick="openNotePicker()">笔记</button>
           </div>
 
           <div class="r-stage">
@@ -3657,6 +3666,33 @@
                   <button data-tool="eraser" onclick="setReaderDrawTool('eraser',this)">🧽 橡皮</button>
                   <button onclick="clearReaderCanvas()">🗑 清空</button>
                   <button onclick="speakPoemHint()">🔊 讲一讲</button>
+                </div>
+              </div>
+            </div>
+            <!-- 读书笔记（内嵌阅读器，与正文等屏幕同页同尺寸 · v2-5） -->
+            <div class="r-screen notes-screen" id="notesScreen">
+              <div class="card note-card">
+                <div class="note-top">
+                  <button class="btn ghost sm" onclick="noteBack()">← 返回</button>
+                  <span class="reader-status" id="noteStatus">读书笔记</span>
+                  <span style="flex:1"></span>
+                  <button class="btn sm" id="noteSaveBtn" onclick="saveNoteStay()">💾 保存</button>
+                </div>
+                <div id="notePickerView">
+                  <div class="note-pick-head">
+                    <div class="note-pick-title">📝 为《<span id="noteBookTitle"></span>》做笔记</div>
+                    <div class="note-pick-sub">选一个喜欢的模板，记录你的阅读收获吧～</div>
+                  </div>
+                  <div class="note-picker" id="notePickerGrid"></div>
+                </div>
+                <div id="noteEditorView" style="display:none">
+                  <div class="note-sheet">
+                    <div class="note-illu" id="noteIllu"></div>
+                    <div class="note-title" id="noteTitle"></div>
+                    <div class="note-subtitle" id="noteSubtitle"></div>
+                    <button type="button" class="note-speak" style="margin-left:0;margin-top:4px" onclick="speak((document.getElementById('noteTitle').textContent||'')+'。'+(document.getElementById('noteSubtitle').textContent||''),'zh')">🔊 听一听</button>
+                    <div class="note-fields" id="noteFields"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -3768,37 +3804,7 @@
         </div>
       </div>
 
-      <!-- 读书笔记浮层（内嵌于每本绘本） -->
-      <div class="reader-mask" id="noteMask" style="display:none" onclick="if(event.target===this)noteBack()">
-        <div class="reader note-editor">
-          <div class="reader-top">
-            <button class="btn ghost sm" onclick="noteBack()">← 返回</button>
-            <span class="reader-status" id="noteStatus">读书笔记</span>
-            <span style="flex:1"></span>
-            <button class="btn sm" id="noteSaveBtn" onclick="saveNoteStay()">💾 保存</button>
-          </div>
-
-          <!-- 模板选择视图 -->
-          <div id="notePickerView">
-            <div class="note-pick-head">
-              <div class="note-pick-title">📝 为《<span id="noteBookTitle"></span>》做笔记</div>
-              <div class="note-pick-sub">选一个喜欢的模板，记录你的阅读收获吧～</div>
-            </div>
-            <div class="note-picker" id="notePickerGrid"></div>
-          </div>
-
-          <!-- 模板编辑视图 -->
-          <div id="noteEditorView" style="display:none">
-            <div class="note-sheet">
-              <div class="note-illu" id="noteIllu"></div>
-              <div class="note-title" id="noteTitle"></div>
-              <div class="note-subtitle" id="noteSubtitle"></div>
-              <button type="button" class="note-speak" style="margin-left:0;margin-top:4px" onclick="speak((document.getElementById('noteTitle').textContent||'')+'。'+(document.getElementById('noteSubtitle').textContent||''),'zh')">🔊 听一听</button>
-              <div class="note-fields" id="noteFields"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- 读书笔记已内嵌至阅读器「笔记」tab（notes-screen），不再使用独立全屏浮层 · v2-5 -->
     </div>
 
     <!-- ==================== 逻辑思维屏 ==================== -->
@@ -7177,7 +7183,7 @@ let phonicsTopicIdx=-1;
     document.getElementById('notePickerView').style.display='block';
     document.getElementById('noteEditorView').style.display='none';
     document.getElementById('noteSaveBtn').style.display='none';
-    document.getElementById('noteMask').style.display='flex';
+    showReaderTab(4, document.getElementById('rTabNote'));
     var nb=document.getElementById('rTabNote');if(nb)nb.classList.add('active');
   }
 
@@ -7331,7 +7337,7 @@ let phonicsTopicIdx=-1;
   }
 
   function updateCkTip(g){const n=g.querySelectorAll('.ck-cell.on').length;const tip=g.parentElement.querySelector('#ckTip');if(tip)tip.textContent='已打卡 '+n+' / 21 天 🌟';}
-  function closeNoteEditor(){document.getElementById('noteMask').style.display='none';var nb=document.getElementById('rTabNote');if(nb)nb.classList.remove('active');curNoteBook=null;curNote=null;noteView='picker';noteVoiceData={};noteDrawDirty={};if(noteRec&&noteRec.rec)noteRecStop();}
+  function closeNoteEditor(){showReaderTab(1, document.querySelectorAll('.r-tabs button[data-screen]')[1]);var nb=document.getElementById('rTabNote');if(nb)nb.classList.remove('active');curNoteBook=null;curNote=null;noteView='picker';noteVoiceData={};noteDrawDirty={};if(noteRec&&noteRec.rec)noteRecStop();}
 
   /* ---- 绘画画布 ---- */
   function initNoteCanvas(cid,saved){
