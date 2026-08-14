@@ -2222,6 +2222,21 @@
   .reader[data-rtheme] .r-stage{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;min-height:0;padding:0 18px 14px;}
   .reader[data-rtheme] .r-screen{flex:1;display:none;min-height:0;}
   .reader[data-rtheme] .r-screen.active{display:flex;}
+  /* v4-8 阅读器板块 tab 数据驱动：增删/改名（仅家长模式） */
+  .reader[data-rtheme] .r-tabs .rtab-wrap{display:inline-flex;align-items:center;gap:2px;}
+  .reader[data-rtheme] .r-tabs .rtab-x{width:20px;height:20px;line-height:18px;padding:0;border:0;border-radius:50%;background:#E8607A;color:#fff;font-size:15px;font-weight:900;cursor:pointer;box-shadow:var(--shadow);}
+  .reader[data-rtheme] .r-tabs .rtab-x:hover{background:#d24a66;}
+  .reader[data-rtheme] .r-tabs .rtab-add{border:2px dashed #9ED9B0;background:rgba(158,217,176,.18);color:#3f9e6b;font-size:14px;font-weight:900;padding:6px 14px;border-radius:20px;}
+  .reader[data-rtheme] .r-tabs .rtab-add:hover{background:rgba(158,217,176,.34);}
+  .reader[data-rtheme] .r-tabs .rtab-name{outline:none;border-bottom:1px dashed transparent;}
+  .reader[data-rtheme] .r-tabs .rtab-name:focus{border-bottom-color:#E8607A;}
+  /* 自定义新增页 */
+  .reader[data-rtheme] .custom-screen{align-items:stretch;justify-content:center;}
+  .reader[data-rtheme] .custom-card{max-width:760px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:12px;padding:22px 26px;overflow:auto;}
+  .reader[data-rtheme] .custom-h{margin:0;font-size:20px;color:var(--brand);}
+  .reader[data-rtheme] .custom-body{min-height:200px;line-height:1.9;font-size:17px;color:#4a4048;outline:none;border-radius:14px;padding:14px 16px;background:rgba(255,255,255,.5);}
+  .reader[data-rtheme] .custom-body:empty:before{content:attr(data-ph);color:#b8aab2;}
+  .reader[data-rtheme] .custom-body[contenteditable="true"]{box-shadow:0 0 0 2px rgba(232,96,122,.25) inset;}
 
   /* 卡片 */
   .reader[data-rtheme] .card{background:rgba(255,255,255,.92);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line);backdrop-filter:blur(4px);transition:border-color .3s,background .3s;}
@@ -3631,17 +3646,11 @@
           <button class="rtheme-btn" onclick="toggleReaderThemePop()" aria-label="切换主题">🎨</button>
         </div>
         <div class="reader-progress"><div class="bar"><i id="rProgressBar"></i></div></div>
-        <div class="r-tabs">
-            <button class="active" data-screen="0" onclick="showReaderTab(0,this)">封面</button>
-            <button data-screen="1" onclick="showReaderTab(1,this)">正文</button>
-            <button data-screen="2" onclick="showReaderTab(2,this)">诗歌</button>
-            <button data-screen="3" onclick="showReaderTab(3,this)">互动</button>
-            <button id="rTabNote" class="edit-only" data-screen="4" onclick="openNotePicker()">笔记</button>
-          </div>
+        <div class="r-tabs" id="rTabs"></div>
 
           <div class="r-stage">
             <!-- 封面 -->
-            <div class="r-screen cover-screen active">
+            <div class="r-screen cover-screen active" data-stype="cover">
               <div class="card cover-left">
                 <div class="cover-ill" id="rCoverIll">
                   <span class="sun"></span>
@@ -3655,11 +3664,11 @@
                   <div class="cover-title" style="padding-right:66px;"><span class="py" id="rCoverPy"></span><span class="ch" id="rCoverCh"></span></div>
                   <div class="cover-meta" id="rCoverMeta"></div>
                   <p class="cover-desc" id="rCoverDesc"></p>
-                  <button class="start" onclick="showReaderTab(1,document.querySelectorAll('.r-tabs button')[1])">开始阅读 →</button>
+                  <button class="start" onclick="showReaderTabByType('page')">开始阅读 →</button>
                 </div>
             </div>
             <!-- 正文 -->
-            <div class="r-screen page-screen">
+            <div class="r-screen page-screen" data-stype="page">
               <div class="card page-left">
                 <div class="page-ill-head" id="rPageIllHead"></div>
                 <div class="page-ill" id="rPageIll">
@@ -3695,7 +3704,7 @@
             </div>
 
             <!-- 诗歌 -->
-            <div class="r-screen poem-screen">
+            <div class="r-screen poem-screen" data-stype="poem">
               <div class="card poem-card" id="rPoemCard"></div>
               <div class="poem-tools">
                 <button type="button" class="toggle on" id="rPoemPyToggle" onclick="event.stopPropagation();togglePoemPy(this)"><span class="sw"></span><span>显示拼音</span></button>
@@ -3705,7 +3714,7 @@
             </div>
 
             <!-- 互动 -->
-            <div class="r-screen quiz-screen">
+            <div class="r-screen quiz-screen" data-stype="quiz">
               <div class="quiz-q" id="rQuizQ"></div>
               <div class="quiz-grid" id="rQuizGrid"></div>
               <div class="quiz-fb" id="rQuizFb"></div>
@@ -3721,7 +3730,7 @@
               </div>
             </div>
             <!-- 读书笔记（内嵌阅读器，与正文等屏幕同页同尺寸 · v2-5） -->
-            <div class="r-screen notes-screen" id="notesScreen">
+            <div class="r-screen notes-screen" id="notesScreen" data-stype="notes">
               <div class="card note-card">
                 <div class="note-top">
                   <button class="btn ghost sm" onclick="noteBack()">← 返回</button>
@@ -7254,6 +7263,8 @@ let phonicsTopicIdx=-1;
 
   function openNotePicker(){
     if(!curBook){toast('请先打开一本绘本');return;}
+    var idx=-1; readerTabList.forEach(function(t,i){if(t.type==='notes')idx=i;});
+    if(idx<0){toast('当前绘本未启用笔记页，请在家长模式「＋」添加');return;}
     curNoteBook=curBook;curNote=null;noteVoiceData={};noteDrawDirty={};noteView='picker';
     document.getElementById('noteStatus').textContent='读书笔记';
     document.getElementById('noteBookTitle').textContent=curBook.title;
@@ -7261,8 +7272,7 @@ let phonicsTopicIdx=-1;
     document.getElementById('notePickerView').style.display='block';
     document.getElementById('noteEditorView').style.display='none';
     document.getElementById('noteSaveBtn').style.display='none';
-    showReaderTab(4, document.getElementById('rTabNote'));
-    var nb=document.getElementById('rTabNote');if(nb)nb.classList.add('active');
+    showReaderTab(idx);
   }
 
   function renderNotePicker(){
@@ -7415,7 +7425,7 @@ let phonicsTopicIdx=-1;
   }
 
   function updateCkTip(g){const n=g.querySelectorAll('.ck-cell.on').length;const tip=g.parentElement.querySelector('#ckTip');if(tip)tip.textContent='已打卡 '+n+' / 21 天 🌟';}
-  function closeNoteEditor(){showReaderTab(1, document.querySelectorAll('.r-tabs button[data-screen]')[1]);var nb=document.getElementById('rTabNote');if(nb)nb.classList.remove('active');curNoteBook=null;curNote=null;noteView='picker';noteVoiceData={};noteDrawDirty={};if(noteRec&&noteRec.rec)noteRecStop();}
+  function closeNoteEditor(){showReaderTabByType('page');var nb=document.getElementById('rTabNote');if(nb)nb.classList.remove('active');curNoteBook=null;curNote=null;noteView='picker';noteVoiceData={};noteDrawDirty={};if(noteRec&&noteRec.rec)noteRecStop();}
 
   /* ---- 绘画画布 ---- */
   function initNoteCanvas(cid,saved){
@@ -7707,6 +7717,7 @@ let phonicsTopicIdx=-1;
     var trb=document.getElementById('rdTapReadBtn'); if(trb){trb.classList.add('on');trb.textContent='👆 逐句点读：开';}
     var fbEl=document.getElementById('rdFollow'); if(fbEl)fbEl.innerHTML='';
     updateReaderShelfBtn();updateReaderNoteBtn();
+    renderReaderTabs(curBook);ensureCustomScreens(curBook);
     const icon=(curBook.icon)||'📖';
     const ce=document.getElementById('rCoverEmoji');if(ce)ce.textContent=icon;
     const pe=document.getElementById('rPageEmoji');if(pe)pe.textContent=icon;
@@ -7737,11 +7748,90 @@ let phonicsTopicIdx=-1;
     showReaderTab(0);
   }
   function showReaderTab(i,btn){
-    document.querySelectorAll('.r-screen').forEach(function(s,idx){s.classList.toggle('active',idx===i);});
-    document.querySelectorAll('.r-tabs button[data-screen]').forEach(function(b,idx){b.classList.toggle('active',idx===i);});
-    if(i===0)updateIllEmoji('cover');
-    if(i===1)updateIllEmoji('page');
-    if(i===3)initReaderCanvas();
+    const tab=readerTabList[i];
+    document.querySelectorAll('.r-screen').forEach(function(s){s.classList.remove('active');});
+    if(tab){
+      const sel = tab.type==='custom' ? '.r-screen[data-stype="custom"][data-cid="'+tab.cid+'"]' : '.r-screen[data-stype="'+tab.type+'"]';
+      const sc=document.querySelector(sel); if(sc)sc.classList.add('active');
+    } else {
+      document.querySelectorAll('.r-screen').forEach(function(s,idx){if(idx===i)s.classList.add('active');});
+    }
+    document.querySelectorAll('.r-tabs .rtab').forEach(function(b,idx){b.classList.toggle('active',idx===i);});
+    if(tab&&tab.type==='cover')updateIllEmoji('cover');
+    if(tab&&tab.type==='page')updateIllEmoji('page');
+    if(tab&&tab.type==='quiz')initReaderCanvas();
+  }
+  function showReaderTabByType(type){let idx=-1;readerTabList.forEach(function(t,i){if(t.type===type)idx=i;});if(idx>=0)showReaderTab(idx);}
+  /* ===== v4-8 阅读器 tab 数据驱动：板块可显隐/增删/改名（仅家长模式） ===== */
+  var BOOK_TABS_KEY='mp_book_tabs_v1';
+  var BOOK_CUSTOM_KEY='mp_book_custom_v1';
+  var READER_DEFAULT_TABS=[{type:'cover',name:'封面'},{type:'page',name:'正文'},{type:'poem',name:'诗歌'},{type:'quiz',name:'互动'},{type:'notes',name:'笔记'}];
+  var readerTabList=[];
+  function getBookTabsMap(){try{return JSON.parse(localStorage.getItem(BOOK_TABS_KEY)||'{}');}catch(e){return {};}}
+  function getBookTabs(id){const m=getBookTabsMap();return m[id]||READER_DEFAULT_TABS.slice();}
+  function setBookTabs(id,arr){const m=getBookTabsMap();m[id]=arr;localStorage.setItem(BOOK_TABS_KEY,JSON.stringify(m));}
+  function getBookCustomMap(){try{return JSON.parse(localStorage.getItem(BOOK_CUSTOM_KEY)||'{}');}catch(e){return {};}}
+  function setBookCustomMap(m){localStorage.setItem(BOOK_CUSTOM_KEY,JSON.stringify(m));}
+  function renderReaderTabs(book){
+    const tabsEl=document.querySelector('.r-tabs');if(!tabsEl||!book)return;
+    const tabs=getBookTabs(book.id);
+    readerTabList=tabs.map(function(t){return {type:t.type,name:t.name,cid:t.cid};});
+    let html='';
+    tabs.forEach(function(t,idx){
+      const isNotes=t.type==='notes';
+      const rem=(editMode&&t.type!=='cover'&&t.type!=='page')?'<button type="button" class="rtab-x" onclick="event.stopPropagation();removeReaderTab('+idx+',\''+book.id+'\')" title="移除这个板块">−</button>':'';
+      const nameEditable=(editMode&&t.type!=='cover'&&t.type!=='page');
+      const nameHtml=nameEditable?('<span class="rtab-name" contenteditable="true" onclick="event.stopPropagation();this.focus()" onblur="renameReaderTab('+idx+',\''+book.id+'\',this)">'+esc(t.name)+'</span>'):esc(t.name);
+      html+='<span class="rtab-wrap'+(isNotes?' edit-only':'')+'"><button type="button" class="rtab'+(idx===0?' active':'')+(isNotes?' rtab-note':'')+'" data-screen="'+idx+'"'+(isNotes?' id="rTabNote"':'')+' onclick="showReaderTab('+idx+',this)">'+nameHtml+'</button>'+rem+'</span>';
+    });
+    if(editMode)html+='<button type="button" class="rtab rtab-add" onclick="addReaderTab(\''+book.id+'\')" title="新增一个页面">＋</button>';
+    tabsEl.innerHTML=html;
+  }
+  function ensureCustomScreens(book){
+    const stage=document.querySelector('.r-stage');if(!stage||!book)return;
+    stage.querySelectorAll('.r-screen[data-stype="custom"]').forEach(function(s){s.remove();});
+    const tabs=getBookTabs(book.id);const cm=getBookCustomMap();
+    tabs.forEach(function(t){
+      if(t.type!=='custom')return;
+      const data=(cm[book.id]&&cm[book.id][t.cid])||{content:''};
+      const sc=document.createElement('div');sc.className='r-screen custom-screen';sc.setAttribute('data-stype','custom');sc.setAttribute('data-cid',t.cid);
+      sc.innerHTML='<div class="card custom-card"><h3 class="custom-h">'+esc(t.name)+'</h3><div class="custom-body text-block" contenteditable="'+(editMode?'true':'false')+'" data-ph="点此输入这一页的内容…" onblur="saveCustomPage(\''+book.id+'\',\''+t.cid+'\',this)">'+data.content+'</div></div>';
+      stage.appendChild(sc);
+    });
+  }
+  function addReaderTab(bookId){
+    const tabs=getBookTabs(bookId);
+    const cid='cust_'+Date.now();
+    const n='新页面'+(tabs.filter(function(t){return t.type==='custom';}).length+1);
+    tabs.push({type:'custom',name:n,cid:cid});
+    setBookTabs(bookId,tabs);
+    ensureCustomScreens(curBook||{id:bookId});
+    renderReaderTabs(curBook);
+    showReaderTab(tabs.length-1);
+  }
+  function removeReaderTab(idx,bookId){
+    idx=parseInt(idx,10);
+    const tabs=getBookTabs(bookId);
+    if(idx<0||idx>=tabs.length)return;
+    const t=tabs[idx];
+    if(t.type==='cover'||t.type==='page'){toast('封面和正文不可移除');return;}
+    if(t.type==='custom'){
+      const cm=getBookCustomMap();if(cm[bookId]){delete cm[bookId][t.cid];setBookCustomMap(cm);}
+      const sc=document.querySelector('.r-screen[data-stype="custom"][data-cid="'+t.cid+'"]');if(sc)sc.remove();
+    }
+    tabs.splice(idx,1);setBookTabs(bookId,tabs);
+    renderReaderTabs(curBook);showReaderTab(0);
+  }
+  function renameReaderTab(idx,bookId,span){
+    idx=parseInt(idx,10);
+    const tabs=getBookTabs(bookId);if(!tabs[idx])return;
+    let nm=(span.textContent||'').trim();if(!nm)nm='板块'+(idx+1);
+    tabs[idx].name=nm;setBookTabs(bookId,tabs);span.textContent=nm;
+    const sc=document.querySelector('.r-screen[data-stype="custom"][data-cid="'+(tabs[idx].cid||'')+'"] .custom-h');if(sc)sc.textContent=nm;
+  }
+  function saveCustomPage(bookId,cid,el){
+    const cm=getBookCustomMap();if(!cm[bookId])cm[bookId]={};if(!cm[bookId][cid])cm[bookId][cid]={content:''};
+    cm[bookId][cid].content=el.innerHTML||'';setBookCustomMap(cm);
   }
   function updateReaderShelfBtn(){
     if(!curBook)return;
@@ -7946,7 +8036,9 @@ let phonicsTopicIdx=-1;
     if(editMode)exitEditMode();
     else enterEditMode();
   }
-  function updateEditBtns(){ /* v3-α-10 齿轮颜色由 body.edit 驱动，无需改文字；保留空函数兼容 */ }
+  function updateEditBtns(){ /* v3-α-10 齿轮颜色由 body.edit 驱动；v4-8 家长模式切换时刷新阅读器板块行（显隐笔记/增删按钮/自定义页可编辑） */
+    if(curBook&&document.querySelector('.r-tabs')){ renderReaderTabs(curBook); ensureCustomScreens(curBook); }
+  }
   /* v3-α-8 ⋯按钮已删除：原 bkMenu 4 个功能（我的绘本/网盘导入/回收站/家长模式）均有独立入口，不再需要此菜单 */
   function toggleBookMenu(){
     var m=document.getElementById('bookMenu');
