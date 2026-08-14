@@ -3698,8 +3698,8 @@
             <div class="r-screen poem-screen">
               <div class="card poem-card" id="rPoemCard"></div>
               <div class="poem-tools">
-                <label class="toggle on" id="rPoemPyToggle" onclick="togglePoemPy(this)"><span class="sw"></span><span>显示拼音</span></label>
-                <label class="toggle" id="rPoemWordToggle" onclick="togglePoemWord(this)"><span class="sw"></span><span>图文词</span></label>
+                <button type="button" class="toggle on" id="rPoemPyToggle" onclick="event.stopPropagation();togglePoemPy(this)"><span class="sw"></span><span>显示拼音</span></button>
+                <button type="button" class="toggle" id="rPoemWordToggle" onclick="event.stopPropagation();togglePoemWord(this)"><span class="sw"></span><span>图文词</span></button>
               </div>
               <div class="poem-words" id="rPoemWords"></div>
             </div>
@@ -8146,13 +8146,19 @@ let phonicsTopicIdx=-1;
     if(!el)return;
     el.classList.toggle('on');
     const card=document.getElementById('rPoemCard');
-    if(card)card.classList.toggle('py-on',el.classList.contains('on'));
+    const poem=card?card.querySelector('.poem'):null;
+    if(poem)poem.classList.toggle('py-on',el.classList.contains('on'));
+    /* v4-5：兜底：若诗中无拼音数据，toggle on 时给个轻提示，证明开发生效 */
+    if(el.classList.contains('on') && poem && !poem.querySelector('.py'))toast('本首诗歌暂无拼音数据（开关已打开）');
   }
   function togglePoemWord(el){
     if(!el)return;
     el.classList.toggle('on');
     const w=document.getElementById('rPoemWords');
-    if(w)w.classList.toggle('on',el.classList.contains('on'));
+    if(w){
+      w.classList.toggle('on',el.classList.contains('on'));
+      if(el.classList.contains('on')&&!w.children.length)toast('本首暂无生词卡（开关已打开）');
+    }
   }
   window.togglePoemPy=togglePoemPy;
   window.togglePoemWord=togglePoemWord;
