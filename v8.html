@@ -2510,8 +2510,8 @@
   .reader[data-rtheme] .reader-nav .cp-now{font-size:12px;white-space:nowrap;}
   .reader[data-rtheme] .reader-nav .nav-arr{font-size:11px;line-height:1;}
   /* v10-3：空白绘本占位提示（封面/插图虚线框 + 标题/简介/正文小字备注） */
-  .reader.blank .cover-ill{outline:2px dashed var(--line);outline-offset:-12px;}
-  .reader.blank .page-ill{outline:2px dashed var(--line);outline-offset:-12px;}
+  .reader.blank .cover-ill:not(:has(img)){outline:2px dashed var(--line);outline-offset:-12px;}
+  .reader.blank .page-ill:not(:has(img)){outline:2px dashed var(--line);outline-offset:-12px;}
   .reader.blank .bk-ph{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(255,255,255,.82);color:var(--muted);font-size:12px;font-weight:700;padding:5px 13px;border-radius:999px;pointer-events:none;z-index:6;white-space:nowrap;}
   .reader.blank .bk-ph-txt{color:var(--muted);opacity:.55;font-weight:600;}
   .reader.blank .cover-title .ch.bk-ph-txt{font-size:26px;}
@@ -3699,6 +3699,7 @@
                   <div class="cover-meta" id="rCoverMeta"></div>
                   <p class="cover-desc" id="rCoverDesc"></p>
                   <button class="start" onclick="showReaderTabByType('page')">开始阅读 →</button>
+                  <button class="edit-only" style="margin-top:12px;padding:8px 16px;border:1.5px solid #E0BC8A;background:#fff;color:#993556;border-radius:22px;font-size:14px;cursor:pointer;" onclick="openBookInfoEditor()">📝 填写绘本资料</button>
                 </div>
             </div>
             <!-- 正文 -->
@@ -3718,6 +3719,7 @@
                   <button class="btn-pill" id="rPagePyToggle" onclick="togglePagePy(this)">🔤 拼音</button>
                   <button class="btn-pill" id="rdTapReadBtn" onclick="toggleTapRead(this)">👆 逐句点读：开</button>
                   <button class="btn-pill warn" onclick="startFollowRead()">🎤 跟读</button>
+                  <button class="btn-pill edit-only" onclick="openBookInfoEditor()">📝 资料</button>
                 </div>
                 <div class="text-block" id="rdPage"></div>
                 <div class="page-foot">
@@ -7796,7 +7798,7 @@ let phonicsTopicIdx=-1;
     const icon=(curBook.icon)||'📖';
     const ce=document.getElementById('rCoverEmoji');if(ce)ce.textContent=icon;
     const pe=document.getElementById('rPageEmoji');if(pe)pe.textContent=icon;
-    const ch=document.getElementById('rCoverCh');if(ch)ch.textContent=curBook.title||'故事';
+    const ch=document.getElementById('rCoverCh');if(ch)ch.textContent=curBook.title||(curBook.blank?'':'故事');
     const cpy=document.getElementById('rCoverPy');if(cpy)cpy.textContent=curBook.coverPy||'';
     const meta=document.getElementById('rCoverMeta');
     if(meta){
@@ -9455,7 +9457,7 @@ let phonicsTopicIdx=-1;
   function loadAiChat(id){try{return JSON.parse(LS.getItem(BOOK_CHAT_KEY))[id]||[];}catch(e){return [];}}
   function saveAiChat(id,msgs){try{const all=JSON.parse(LS.getItem(BOOK_CHAT_KEY))||{};all[id]=msgs;LS.setItem(BOOK_CHAT_KEY,JSON.stringify(all));}catch(e){}}
   /* ---- 我的绘本管理 ---- */
-  let editBookId=null;
+  let editBookId=null; var bookInfoEditorReturnReader=false;
   function openMyBooks(){renderMyBooks();renderNetItems();document.getElementById('myBooksPop').classList.add('on');}
   function closeMyBooks(){document.getElementById('myBooksPop').classList.remove('on');}
   function renderMyBooks(){
@@ -9526,6 +9528,13 @@ let phonicsTopicIdx=-1;
   renderBookList();
   openBookReader(newId);
   }
+  /* v10-4：从阅读器内打开原添加/编辑表单（预填当前书），保存/取消直接回到阅读器 */
+  function openBookInfoEditor(){
+    if(!curBook||!curBook.id)return;
+    if(getUserBooks().filter(function(x){return x.id===curBook.id;}).length===0){toast('内置绘本请在「我的绘本」里克隆后再编辑');return;}
+    bookInfoEditorReturnReader=true;
+    openMyBooks();editUserBook(curBook.id);
+  }
   function editUserBook(id){
     let b=getUserBooks().filter(function(x){return x.id===id;})[0];
     if(!b){ const nid=cloneBuiltinBook(id); if(!nid){toast('未找到这本绘本');return;} editBookId=nid; b=getUserBooks().filter(function(x){return x.id===nid;})[0]; }
@@ -9555,7 +9564,7 @@ let phonicsTopicIdx=-1;
     var sel=cur?Array.prototype.slice.call(box.children).filter(function(c){return c.textContent===cur;})[0]:box.children[0];
     if(sel)sel.classList.add('on');
   }
-  function cancelEditBook(){document.getElementById('mbEditor').style.display='none';document.getElementById('mbList').style.display='block';renderMyBooks();}
+  function cancelEditBook(){if(bookInfoEditorReturnReader){bookInfoEditorReturnReader=false;closeMyBooks();if(editBookId)openBookReader(editBookId);return;}document.getElementById('mbEditor').style.display='none';document.getElementById('mbList').style.display='block';renderMyBooks();}
   function saveUserBook(){
     const title=document.getElementById('mbFTitle').value.trim();if(!title){toast('请填写书名');return;}
     const age=document.getElementById('mbFAge').value;const cat=document.getElementById('mbFCat').value;
@@ -9571,6 +9580,11 @@ let phonicsTopicIdx=-1;
       books.push({id:newId,cat:cat,icon:icon,title:title,tag:tags[0]||'',age:age,grade:age,ready:true,desc:desc,cover:cover,srcUrl:srcUrl,pages:pages,difficulty:age,pyDefault:pyDefault,tags:tags});}
     setUserBooks(books);
     setBookTabs(saveId, mbSecWorking);
+    if(bookInfoEditorReturnReader){
+      bookInfoEditorReturnReader=false;
+      closeMyBooks();renderBookList();openBookReader(editBookId);
+      toast('已保存修改 ✔');return;
+    }
     document.getElementById('mbEditor').style.display='none';document.getElementById('mbList').style.display='block';
     renderMyBooks();renderBookList();
     if(newId){toast('已保存，进入阅读 📖');closeMyBooks();openBookReader(newId);}
