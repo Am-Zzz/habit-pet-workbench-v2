@@ -2859,6 +2859,17 @@
             <span>🔊 音效（奖励音 / 点击音）</span>
             <label class="switch"><input type="checkbox" id="aaSound" onchange="aaSave()"><span class="slider"></span></label>
           </div>
+          <div class="sec-sub" style="margin-top:14px">🔓 每次解锁加多少时间（找爸爸妈妈延长）</div>
+          <div class="seg" id="aaUnlockMinSeg">
+            <button data-v="5" onclick="aaSetUnlockMin(5)">5 分钟</button>
+            <button data-v="10" onclick="aaSetUnlockMin(10)">10 分钟</button>
+            <button data-v="15" onclick="aaSetUnlockMin(15)">15 分钟</button>
+            <button data-v="30" onclick="aaSetUnlockMin(30)">30 分钟</button>
+          </div>
+          <div class="sync-row" style="align-items:center;margin-top:10px">
+            <span><b>🔒 关闭「+时间」解锁</b><br><span style="font-size:11px;color:var(--ink-faint);font-weight:400">打开后，到点/到晚上都没有「找爸爸妈妈解锁」按钮，孩子需等明天自动恢复（更严格的护眼设置）</span></span>
+            <label class="switch"><input type="checkbox" id="aaUnlockOff" onchange="aaSave()"><span class="slider"></span></label>
+          </div>
           <div class="sync-row" style="align-items:center;margin-top:10px">
             <span>🎵 背景音乐 BGM（轻音乐循环）</span>
             <label class="switch"><input type="checkbox" id="bgmOn" onchange="bgmToggleSetting(this.checked)"><span class="slider"></span></label>
@@ -13129,9 +13140,10 @@ window.__monoBack = function () {
     var pin=(inp&&inp.value)||'';
     var real=(typeof getParentPin==='function')?getParentPin():'1111';
     if(pin===real){
-      if(ext.count<2){ ext.count++; ext.extra+=15*60; lsSet(K.ext,ext); }
+      var addMin=(typeof cfg!=='undefined'&&cfg&&(cfg.unlockMin==5||cfg.unlockMin==10||cfg.unlockMin==15||cfg.unlockMin==30))?cfg.unlockMin:15;
+      if(ext.count<2){ ext.count++; ext.extra+=addMin*60; lsSet(K.ext,ext); }
       document.getElementById('aaPin').style.display='none';
-      if(window.toast)toast('已解锁 +15 分钟，记得保护好眼睛哦');
+      if(window.toast)toast('已解锁 +'+addMin+' 分钟，记得保护好眼睛哦');
       hideAA();
     } else {
       if(window.toast)toast('密码不对哦，请爸爸妈妈来输入');
@@ -13219,10 +13231,19 @@ window.__monoBack = function () {
   }
   function triggerDayLock(){
     var usedM=Math.floor(day.used/60);
+    if(cfg.unlockOff){
+      showAA({emo:'🎉',title:'今天玩够啦',text:'你已经完成 '+usedM+' 分钟的学习游戏时间，把剩下的时间留给户外跑跳和好梦吧~ 明天再一起玩哈，记得保护好眼睛哦。'});
+      return;
+    }
+    var addMin=(cfg.unlockMin==5||cfg.unlockMin==10||cfg.unlockMin==30)?cfg.unlockMin:15;
     showAA({emo:'🎉',title:'今天玩够啦',text:'你已经完成 '+usedM+' 分钟的学习游戏时间，把剩下的时间留给户外跑跳和好梦吧~ 需要继续请找爸爸妈妈解锁（明天自动恢复）。',
-      btn:'找爸爸妈妈解锁 +15 分钟',pin:true,onBtn:function(){ document.getElementById('aaPin').style.display='flex'; }});
+      btn:'找爸爸妈妈解锁 +'+addMin+' 分钟',pin:true,onBtn:function(){ document.getElementById('aaPin').style.display='flex'; }});
   }
   function triggerBed(){
+    if(cfg.unlockOff){
+      showAA({emo:'🌙',title:'该睡觉啦',text:'已经到晚上休息时间咯，'+petName()+'也要钻进被窝啦。明天再一起玩吧~ 好梦🌟'});
+      return;
+    }
     showAA({emo:'🌙',title:'该睡觉啦',text:'已经到晚上休息时间咯，'+petName()+'也要钻进被窝啦。明天再一起玩吧~ 如有需要请家长解锁。',
       btn:'家长解锁',pin:true,onBtn:function(){ document.getElementById('aaPin').style.display='flex'; }});
   }
@@ -13230,16 +13251,40 @@ window.__monoBack = function () {
   /* ---------- 家长设置 UI ---------- */
   function markSeg(id,v){ var seg=document.getElementById(id); if(!seg)return; seg.querySelectorAll('button').forEach(function(b){ b.classList.toggle('sel', parseInt(b.getAttribute('data-v'),10)===v); }); }
   function aaSet(key,val){ cfg[key]=val; saveCfg(); aaRender(); }
-  function aaSave(){ cfg.on=document.getElementById('aaOn').checked; cfg.pet=document.getElementById('aaPet').checked; cfg.bed=document.getElementById('aaBed').checked; cfg.bedTime=document.getElementById('aaBedTime').value; cfg.sound=document.getElementById('aaSound').checked; saveCfg(); }
+  function aaSetUnlockMin(val){ cfg.unlockMin=(val==30?30:(val==5?5:(val==10?10:15))); saveCfg(); aaRender(); }
+  function aaSave(){
+    cfg.on=document.getElementById('aaOn').checked;
+    cfg.pet=document.getElementById('aaPet').checked;
+    cfg.bed=document.getElementById('aaBed').checked;
+    cfg.bedTime=document.getElementById('aaBedTime').value;
+    cfg.sound=document.getElementById('aaSound').checked;
+    var offEl=document.getElementById('aaUnlockOff');
+    if(offEl)cfg.unlockOff=offEl.checked;
+    var minEl=document.querySelector('#aaUnlockMinSeg button.sel');
+    if(minEl)cfg.unlockMin=parseInt(minEl.getAttribute('data-v'),10)||15;
+    /* 旧缓存兜底：unlockMin 不允许为 0/NaN/undefined，默认 15 */
+    if(!cfg.unlockMin||cfg.unlockMin<=0)cfg.unlockMin=15;
+    cfg.unlockOff=!!cfg.unlockOff;
+    saveCfg();
+  }
   function aaRender(){
     var a=document.getElementById('aaOn'); if(a)a.checked=cfg.on;
     var p=document.getElementById('aaPet'); if(p)p.checked=cfg.pet;
     var b=document.getElementById('aaBed'); if(b)b.checked=cfg.bed;
     var s=document.getElementById('aaSound'); if(s)s.checked=cfg.sound;
     var bt=document.getElementById('aaBedTime'); if(bt)bt.value=cfg.bedTime;
-    markSeg('aaDailySeg',cfg.daily); markSeg('aaBreakSeg',cfg.breakEvery); markSeg('aaRestSeg',cfg.rest);
+    /* unlockMin 兜底（用户旧缓存可能没这个字段） */
+    if(!cfg.unlockMin||cfg.unlockMin<=0)cfg.unlockMin=15;
+    cfg.unlockOff=!!cfg.unlockOff;
+    markSeg('aaDailySeg',cfg.daily);
+    markSeg('aaBreakSeg',cfg.breakEvery);
+    markSeg('aaRestSeg',cfg.rest);
+    markSeg('aaUnlockMinSeg',cfg.unlockMin);
+    var off=document.getElementById('aaUnlockOff'); if(off)off.checked=cfg.unlockOff;
   }
-  window.aaSet=aaSet; window.aaSave=aaSave; window.aaRender=aaRender; window.aaGetSound=function(){return !!(typeof cfg!=='undefined'&&cfg&&cfg.sound);};
+  window.aaSet=aaSet;
+  window.aaSetUnlockMin=aaSetUnlockMin;
+  window.aaSave=aaSave; window.aaRender=aaRender; window.aaGetSound=function(){return !!(typeof cfg!=='undefined'&&cfg&&cfg.sound);};
 
   /* ===== 背景音乐 BGM（WebAudio 程序合成，零素材，可一键开关） ===== */
   var BGM_KEY='mc_bgm_on';
