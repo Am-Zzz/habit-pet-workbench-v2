@@ -1122,6 +1122,23 @@
   /* v3-α-3 移除 .bc-add hover 浮出 + body.edit 覆盖规则（bc-add 整块删除） */
   /* 新增故事 / 空白故事 占位卡（与书卡同尺寸，居中＋号） */
   /* v3-α-4：移除 .bc-blank（空白故事卡，v2 设计未保留到 v3）；bc-add-card 兼任首位/末尾"新增故事"卡 */
+  /* === v3-α-5 回收站 === */
+  .recycle-toolbar{display:flex;align-items:center;gap:8px;max-width:680px;margin:0 auto 12px;padding:0 4px}
+  .recycle-toolbar .spacer{flex:1}
+  .recycle-list{display:flex;flex-direction:column;gap:10px;max-width:680px;margin:0 auto;padding:0 4px}
+  .recycle-item{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border:1.5px solid var(--line);border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:.18s}
+  .recycle-item:hover{border-color:var(--brand-s);box-shadow:0 4px 12px rgba(244,130,155,.18)}
+  .recycle-item .ri-cover{width:62px;height:80px;border-radius:10px;flex:none;overflow:hidden;background:linear-gradient(135deg,#FFE3EC,#FFF0F5);display:flex;align-items:center;justify-content:center;font-size:32px}
+  .recycle-item .ri-cover img{width:100%;height:100%;object-fit:cover;display:block}
+  .recycle-item .ri-info{flex:1;min-width:0}
+  .recycle-item .ri-title{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .recycle-item .ri-meta{font-size:11.5px;color:var(--ink-faint);font-weight:600}
+  .recycle-item .ri-act{display:flex;gap:6px;flex:none}
+  .recycle-item .mini-btn{padding:7px 12px;font-size:12px;font-weight:700;border-radius:9px;border:none;cursor:pointer;font-family:inherit;transition:.15s}
+  .recycle-item .mini-btn.restore{background:var(--sage,#4FB58F);color:#fff}
+  .recycle-item .mini-btn.restore:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .recycle-item .mini-btn.purge{background:#fff;color:var(--ink-soft);border:1.5px solid var(--line)}
+  .recycle-item .mini-btn.purge:hover{background:#FFF0F4;border-color:var(--brand-s);color:var(--brand)}
   .book-card.bc-add-card,.book-card.bc-add-card-first{border:2px dashed #FFC4D2;background:linear-gradient(135deg,#FFF7FA,#FFF0F4);cursor:pointer;align-items:center;justify-content:center;min-height:200px;box-shadow:none;transition:.18s;}
   .book-card.bc-add-card:hover,.book-card.bc-add-card-first:hover{border-color:#E8607A;background:#FFF0F4;transform:translateY(-2px);box-shadow:0 8px 20px rgba(244,130,155,.18);}
   .bc-add-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#E8607A;text-align:center;padding:18px;}
@@ -3017,6 +3034,20 @@
       </div>
     </div>
 
+    <!-- 屏幕：回收站（家长模式专属，v3-α-5） -->
+    <div class="screen" id="sc-recycle">
+      <div class="card" style="max-width:680px;margin:0 auto">
+        <div class="card-h"><span class="t">♻️ 回收站</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <p style="font-size:12px;color:var(--ink-soft);margin:2px 0 10px">误删的绘本在这里暂存。可一键恢复或彻底删除。仅家长模式可见。</p>
+        <div class="recycle-toolbar">
+          <span id="recycleCount" class="muted" style="font-size:12px;font-weight:700;color:var(--ink-soft)">共 0 项</span>
+          <span class="spacer"></span>
+          <button class="btn ghost sm" onclick="emptyBookTrash()" id="recycleEmptyBtn" style="display:none">🧹 清空回收站</button>
+        </div>
+        <div id="recycleList" class="recycle-list">加载中…</div>
+      </div>
+    </div>
+
     <!-- 屏幕：宠物图鉴 -->
     <div class="screen" id="sc-pets">
         <div class="card" style="max-width:680px;margin:0 auto">
@@ -4855,7 +4886,7 @@
       english:'sc-english-hub',phonics:'sc-phonics',read:'sc-read',write:'sc-write',math:'sc-math',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
       science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',
-      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',qbank:'sc-qbank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',challenge:'sc-challenge',role:'sc-role',quiz:'sc-quiz',script:'sc-script',playbook:'sc-playbook',
+      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',qbank:'sc-qbank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',challenge:'sc-challenge',role:'sc-role',quiz:'sc-quiz',script:'sc-script',playbook:'sc-playbook',recycle:'sc-recycle',
       'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff','game-phonics':'sc-game-phonics'};
     let target=map[screen];
     if(!target){ target = document.getElementById(screen)? screen : 'sc-home'; }
@@ -4892,6 +4923,7 @@
     else if(target==='sc-qbank'){ renderQBank(); }
     else if(target==='sc-home'){renderGrowthTrack();updateHomePartnerIcon();renderHomeTasks();}
     else if(target==='sc-pset'){renderCheckins();renderStudies();renderPerm();renderBankTabs();renderBankList();}
+    else if(target==='sc-recycle'){renderRecycle();}
     navSync(screen);
     window.scrollTo({top:0,behavior:'smooth'});
   }
@@ -7545,7 +7577,8 @@ let phonicsTopicIdx=-1;
         /* v3-α-3：移除 bc-add（单书右上 +/− 按钮） */
         const isUser=userIds.indexOf(b.id)>=0;
         const editBtn=isUser?'<button class="bc-edit edit-only" onclick="event.stopPropagation();editUserBook(\''+b.id+'\')" title="编辑这本绘本">✏️</button>':'';
-        const delBtn=isUser?'<button class="bc-del edit-only" onclick="event.stopPropagation();deleteUserBook(\''+b.id+'\')" title="删除这本绘本">🗑</button>':'';
+        /* v3-α-5：bc-del 改为所有书都可删除（移动到回收站） */
+        const delBtn='<button class="bc-del edit-only" onclick="event.stopPropagation();askMoveBookToTrash(\''+b.id+'\',\''+esc(b.title).replace(/'/g,"\\'")+'\')" title="移到回收站">🗑</button>';
         card.innerHTML='<div class="bc-cover">'+cover+ph+doneBadge+(isShelf&&!isDone?'<span class="bc-shelf">★ 书架</span>':'')+editBtn+delBtn+'</div>'+
           '<div class="bc-body"><div class="bc-title">'+esc(b.title)+'</div>'+
           '<div class="bc-desc">'+esc(b.desc)+'</div>'+
@@ -8489,6 +8522,112 @@ let phonicsTopicIdx=-1;
   const BOOK_COVER_KEY='mp_book_cover_v1';
   const BOOK_CHAT_KEY='mp_book_chat_v1';
   const BOOK_SEED_KEY='mp_book_seed_v1';
+  /* v3-α-5 回收站数据 */
+  const BOOK_TRASH_KEY='mp_book_trash_v1';
+  const BOOK_HIDDEN_KEY='mp_book_hidden_v1';
+  function getBookTrash(){try{return JSON.parse(LS.getItem(BOOK_TRASH_KEY))||[];}catch(e){return [];}}
+  function setBookTrash(arr){try{LS.setItem(BOOK_TRASH_KEY,JSON.stringify(arr));}catch(e){}}
+  function getBookHidden(){try{return JSON.parse(LS.getItem(BOOK_HIDDEN_KEY))||[];}catch(e){return [];}}
+  function setBookHidden(arr){try{LS.setItem(BOOK_HIDDEN_KEY,JSON.stringify(arr));}catch(e){}}
+  function moveBookToTrash(id){
+    const ub=getUserBooks();
+    const ui=ub.findIndex(function(b){return b.id===id;});
+    if(ui>=0){
+      const snap=JSON.parse(JSON.stringify(ub[ui]));
+      ub.splice(ui,1);setUserBooks(ub);
+      const trash=getBookTrash();
+      trash.unshift({id:id,kind:'user',snapshot:snap,deletedAt:Date.now()});
+      setBookTrash(trash);return true;
+    }
+    const sys=(window.BOOK_CONTENT||[]).find(function(b){return b.id===id;});
+    if(sys){
+      const hidden=getBookHidden();
+      if(hidden.indexOf(id)<0)hidden.push(id);
+      setBookHidden(hidden);
+      const trash=getBookTrash();
+      const sysSnap={id:sys.id,title:sys.title,icon:sys.icon,desc:sys.desc,age:sys.age,cover:getBookCover(id)};
+      trash.unshift({id:id,kind:'system',snapshot:sysSnap,deletedAt:Date.now()});
+      setBookTrash(trash);return true;
+    }
+    return false;
+  }
+  function restoreBookFromTrash(id){
+    const trash=getBookTrash();
+    const idx=trash.findIndex(function(t){return t.id===id;});
+    if(idx<0)return;
+    const item=trash[idx];
+    if(item.kind==='user'){
+      const ub=getUserBooks();
+      if(!ub.some(function(b){return b.id===id;})){
+        ub.push(item.snapshot);setUserBooks(ub);
+      }
+    }else{
+      const hidden=getBookHidden();
+      const hi=hidden.indexOf(id);
+      if(hi>=0){hidden.splice(hi,1);setBookHidden(hidden);}
+    }
+    trash.splice(idx,1);setBookTrash(trash);toast('已恢复 ✔');
+  }
+  function purgeBook(id){
+    const trash=getBookTrash();
+    const idx=trash.findIndex(function(t){return t.id===id;});
+    if(idx<0)return;
+    const title=(trash[idx].snapshot&&trash[idx].snapshot.title)||id;
+    if(!confirm('确定彻底删除《'+title+'》？此操作无法恢复。'))return;
+    trash.splice(idx,1);setBookTrash(trash);
+    const hidden=getBookHidden();
+    const hi=hidden.indexOf(id);
+    if(hi>=0){hidden.splice(hi,1);setBookHidden(hidden);}
+    toast('已彻底删除');
+    renderRecycle();
+  }
+  function emptyBookTrash(){
+    const trash=getBookTrash();
+    if(!trash.length){toast('回收站已经是空的');return;}
+    if(!confirm('确定清空回收站？'+trash.length+' 项将全部彻底删除，无法恢复。'))return;
+    setBookTrash([]);setBookHidden([]);toast('已清空回收站 ✔');
+    renderRecycle();
+  }
+  function askMoveBookToTrash(id,title){
+    if(!confirm('确定把《'+title+'》移到回收站？\n\n可随时在家长模式 → 顶栏 ⋯ → ♻️ 回收站 恢复。'))return;
+    if(moveBookToTrash(id)){toast('已移到回收站 ♻️');renderBookList();}else{toast('移动失败');}
+  }
+  function renderRecycle(){
+    const trash=getBookTrash();
+    const list=document.getElementById('recycleList');
+    const cnt=document.getElementById('recycleCount');
+    const eb=document.getElementById('recycleEmptyBtn');
+    if(!list)return;
+    cnt.textContent='共 '+trash.length+' 项';
+    eb.style.display=trash.length?'inline-flex':'none';
+    if(!trash.length){
+      list.innerHTML=mcEmpty('♻️','回收站空空如也','误删的书会出现在这里，可以一键恢复','<button class="btn" onclick="goBack()">返回</button>');
+      return;
+    }
+    list.innerHTML=trash.map(function(t){
+      const s=t.snapshot||{};
+      const cv=getBookCover(t.id)||s.cover||'';
+      const cov=cv?('<img src="'+attrEsc(cv)+'" alt="'+attrEsc(s.title||'')+'">')
+        :'<div style="background:'+bookCoverBg(t.id)+';width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:32px">'+esc(s.icon||'📚')+'</div>';
+      const dt=new Date(t.deletedAt||Date.now());
+      const ds=(dt.getMonth()+1)+'/'+dt.getDate()+' '+dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');
+      return '<div class="recycle-item">'
+        +'<div class="ri-cover">'+cov+'</div>'
+        +'<div class="ri-info"><div class="ri-title">'+esc(s.title||'未命名')+'</div>'
+        +'<div class="ri-meta">'+(s.age?esc(s.age)+' · ':'')+(t.kind==='user'?'用户绘本':'内置绘本')+' · '+ds+' 删除</div></div>'
+        +'<div class="ri-act">'
+          +'<button class="mini-btn restore" onclick="restoreBookFromTrash(\''+t.id+'\');renderBookList();renderRecycle();">↺ 恢复</button>'
+          +'<button class="mini-btn purge" onclick="purgeBook(\''+t.id+'\');">✕ 彻底删</button>'
+        +'</div></div>';
+    }).join('');
+  }
+  function openRecycleBin(){
+    if(!editMode){toast('请先进入家长模式');return;}
+    go('recycle');
+  }
+  window.openRecycleBin=openRecycleBin;
+  window.moveBookToTrash=moveBookToTrash;
+  window.renderRecycle=renderRecycle;
   const SEED_BOOK_RAW=[
     {icon:"🐛",title:"好饿的毛毛虫",intro:"一颗小小的虫卵孵化出毛毛虫，毛毛虫不停吃东西，最后变成美丽蝴蝶。认识数字、星期、水果，感受生命蜕变。",storyContent:"月光下，一颗小小的蛋躺在叶子上。星期天早上，暖和的太阳升起来，“啵”一声，一条又小又饿的毛毛虫从蛋里爬了出来。他要去找一些东西来吃。星期一，他吃了一个苹果，还是好饿。星期二，他吃了两个梨子，还是好饿。星期三，他吃了三个李子，还是好饿。星期四，他吃了四个草莓，还是好饿。星期五，他吃了五个橘子，还是好饿。星期六，他吃了巧克力蛋糕、冰淇淋、黄瓜、奶酪、火腿、棒棒糖、樱桃派、香肠、纸杯蛋糕和西瓜。到了晚上，毛毛虫肚子疼。第二天又是星期天，毛毛虫啃了一片又嫩又绿的叶子，舒服多了。现在毛毛虫不饿了，他长得又大又胖。他造了一间小房子，叫做茧，在里面住了两个多星期。然后，他咬破茧，钻了出来，变成一只漂亮的蝴蝶！",difficulty:"低幼启蒙",tags:["认知启蒙","自然科普","数字","洞洞书"]},
     {icon:"🐰",title:"猜猜我有多爱你",intro:"小兔子和大兔子用各种方式比拼谁的爱更多，温柔讲述亲子之间满满的爱意，适合睡前共读。",storyContent:"小兔子该上床睡觉了，可是他紧紧抓住大兔子的长耳朵不放。他要大兔子好好听他说：“猜猜我有多爱你。”大兔子说：“喔，这我可猜不出来。”小兔子把手臂张开，开得不能再开：“我爱你有这么多。”大兔子张开更长的手臂：“我爱你，有这么多。”小兔子想：嗯，这真的很多。小兔子把手高高举起：“我的手举得有多高，我就有多爱你。”大兔子也举起手：“我的手举得有多高，我就有多爱你。”小兔子又有了新主意，他倒立起来，把脚撑在树干上：“我爱你一直到我的脚趾头。”大兔子把小兔子抱起来，甩过头顶：“我爱你一直到你的脚趾头。”小兔子大喊：“我跳得有多高就有多爱你！”他不停地蹦跳。大兔子微微一笑，轻轻一跳，耳朵都碰到树枝。“我跳得有多高，就有多爱你。”小兔子心想，要是我能跳得更高就好了。小兔子望着小路尽头：“我爱你，从这条小路一直到小河边。”“我爱你，跨过小河，再翻过山丘。”小兔子太困了，想不出更多东西。他望着夜空，没有比黑沉沉的天空更远的地方了。“我爱你，从这里一直到月亮。”说完，小兔子闭上了眼睛。“噢，那真的非常远。”大兔子把小兔子放到叶子床上，低下头，亲吻小兔子。“我爱你，从这里一直到月亮，再绕回来。”",difficulty:"低幼启蒙",tags:["亲情","爱的表达","睡前故事"]},
@@ -8514,7 +8653,10 @@ let phonicsTopicIdx=-1;
   function getUserBooks(){try{return JSON.parse(LS.getItem(BOOK_USER_KEY))||[];}catch(e){return [];}}
   function setUserBooks(arr){try{LS.setItem(BOOK_USER_KEY,JSON.stringify(arr));}catch(e){}}
   function getBookCoverMap(){try{return JSON.parse(LS.getItem(BOOK_COVER_KEY))||{};}catch(e){return {};}}
-  function mergeBooks(){return (window.BOOK_CONTENT||[]).concat(getUserBooks());}
+  function mergeBooks(){
+    const hidden=getBookHidden();
+    return (window.BOOK_CONTENT||[]).filter(function(b){return hidden.indexOf(b.id)<0;}).concat(getUserBooks());
+  }
   function findBook(id){return mergeBooks().filter(function(b){return b.id===id;})[0];}
   function getBookCover(id){const m=getBookCoverMap();if(m[id])return m[id];const b=findBook(id);return b?b.cover:'';}
   function bookCoverBg(id){
