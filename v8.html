@@ -2268,6 +2268,16 @@
   .pm-entry:hover{background:#FFF7FA;color:#E8607A;border-color:#FFC4D2;transform:scale(1.06);}
   body.edit .pm-entry{background:rgba(40,180,120,.92);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(40,180,120,.35);}
   body.edit .pm-entry:hover{background:rgba(40,180,120,1);}
+  /* v3-α-9 App 内确认浮层：替代原生 confirm（iPad 受限 webview 禁用原生 confirm 导致删除点不动） */
+  .app-confirm-mask{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:9999;}
+  .app-confirm-mask.show{display:flex;}
+  .app-confirm{background:#fff;border-radius:16px;padding:20px;max-width:320px;width:84%;box-shadow:0 12px 40px rgba(0,0,0,.28);}
+  .ac-msg{font-size:14px;color:var(--ink);line-height:1.55;margin-bottom:16px;text-align:center;white-space:pre-line;}
+  .ac-btns{display:flex;gap:10px;}
+  .ac-cancel,.ac-yes{flex:1;border:none;border-radius:11px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;font-weight:800;}
+  .ac-cancel{background:#F2F2F5;color:var(--ink);}
+  .ac-yes{background:var(--brand);color:#fff;}
+  .ac-yes.danger{background:#E8607A;}
   /* v3-α-8 家长模式状态小提示：开启时显示，再点 🔓 退出 */
   .bk-tip{display:none;font-size:11.5px;color:#fff;background:rgba(40,180,120,.85);padding:3px 9px;border-radius:999px;line-height:1.2;font-weight:700;white-space:nowrap;}
   body.edit .bk-tip{display:inline-flex;align-items:center;}
@@ -8563,24 +8573,47 @@ let phonicsTopicIdx=-1;
     const idx=trash.findIndex(function(t){return t.id===id;});
     if(idx<0)return;
     const title=(trash[idx].snapshot&&trash[idx].snapshot.title)||id;
-    if(!confirm('确定彻底删除《'+title+'》？此操作无法恢复。'))return;
-    trash.splice(idx,1);setBookTrash(trash);
-    const hidden=getBookHidden();
-    const hi=hidden.indexOf(id);
-    if(hi>=0){hidden.splice(hi,1);setBookHidden(hidden);}
-    toast('已彻底删除');
-    renderRecycle();
+    appConfirm('彻底删除《'+title+'》？\n此操作无法恢复。', function(){
+      trash.splice(idx,1);setBookTrash(trash);
+      const hidden=getBookHidden();
+      const hi=hidden.indexOf(id);
+      if(hi>=0){hidden.splice(hi,1);setBookHidden(hidden);}
+      toast('已彻底删除');
+      renderRecycle();
+    }, {yesText:'彻底删除',danger:true});
   }
   function emptyBookTrash(){
     const trash=getBookTrash();
     if(!trash.length){toast('回收站已经是空的');return;}
-    if(!confirm('确定清空回收站？'+trash.length+' 项将全部彻底删除，无法恢复。'))return;
-    setBookTrash([]);setBookHidden([]);toast('已清空回收站 ✔');
-    renderRecycle();
+    appConfirm('清空回收站？\n'+trash.length+' 项将全部彻底删除，无法恢复。', function(){
+      setBookTrash([]);setBookHidden([]);toast('已清空回收站 ✔');
+      renderRecycle();
+    }, {yesText:'清空',danger:true});
   }
+  /* v3-α-9 App 内确认浮层：替代原生 confirm（iPad 受限 webview 会静默禁用原生 confirm，导致删除点不动） */
+  function appConfirm(msg,onYes,opt){
+    opt=opt||{};
+    var overlay=document.getElementById('appConfirmMask');
+    if(!overlay){
+      overlay=document.createElement('div');
+      overlay.id='appConfirmMask';overlay.className='app-confirm-mask';
+      overlay.innerHTML='<div class="app-confirm"><div class="ac-msg"></div><div class="ac-btns"><button type="button" class="ac-cancel">取消</button><button type="button" class="ac-yes">确定</button></div></div>';
+      document.body.appendChild(overlay);
+      overlay.addEventListener('click',function(e){ if(e.target===overlay)overlay.classList.remove('show'); });
+      overlay.querySelector('.ac-cancel').addEventListener('click',function(){ overlay.classList.remove('show'); });
+    }
+    overlay.querySelector('.ac-msg').textContent=msg;
+    var yesBtn=overlay.querySelector('.ac-yes');
+    yesBtn.textContent=opt.yesText||'确定';
+    yesBtn.className='ac-yes'+(opt.danger?' danger':'');
+    yesBtn.onclick=function(){ overlay.classList.remove('show'); if(onYes)onYes(); };
+    overlay.classList.add('show');
+  }
+  window.appConfirm=appConfirm;
   function askMoveBookToTrash(id,title){
-    if(!confirm('确定把《'+title+'》移到回收站？\n\n可随时在家长模式 → 顶栏 ⋯ → ♻️ 回收站 恢复。'))return;
-    if(moveBookToTrash(id)){toast('已移到回收站 ♻️');renderBookList();}else{toast('移动失败');}
+    appConfirm('把《'+title+'》移到回收站？\n可随时在家长模式里恢复。', function(){
+      if(moveBookToTrash(id)){toast('已移到回收站 ♻️');renderBookList();}else{toast('移动失败');}
+    }, {yesText:'移到回收站'});
   }
   function renderRecycle(){
     const trash=getBookTrash();
@@ -9116,10 +9149,11 @@ let phonicsTopicIdx=-1;
     else toast('已保存修改 ✔');
   }
   function deleteUserBook(id){
-    if(!confirm('确定删除这本绘本？'))return;
-    setUserBooks(getUserBooks().filter(function(b){return b.id!==id;}));
-    const m=getBookCoverMap();if(m[id]){delete m[id];try{LS.setItem(BOOK_COVER_KEY,JSON.stringify(m));}catch(e){}}
-    renderMyBooks();renderBookList();
+    appConfirm('删除这本绘本？\n删除后可在家长模式回收站恢复。', function(){
+      setUserBooks(getUserBooks().filter(function(b){return b.id!==id;}));
+      const m=getBookCoverMap();if(m[id]){delete m[id];try{LS.setItem(BOOK_COVER_KEY,JSON.stringify(m));}catch(e){}}
+      renderMyBooks();renderBookList();
+    }, {yesText:'删除',danger:true});
   }
   function exportUserBooks(){
     const books=getUserBooks();if(!books.length){toast('还没有我的绘本');return;}
