@@ -8529,13 +8529,18 @@ let phonicsTopicIdx=-1;
   }
   function onTapReadSent(e){
     if(!tapReadOn)return;
+    if(e&&e.stopPropagation)e.stopPropagation();
     var sent=e.target.closest&&e.target.closest('.sent'); if(!sent)return;
     var text=sent.getAttribute('data-text'); if(!text)return;
     /* 点哪句哪句高亮：移除其它句的高亮，给当前句加 .hl */
     var box=document.getElementById('rdPage');
     if(box)box.querySelectorAll('.sent.hl').forEach(function(s){if(s!==sent)s.classList.remove('hl');});
     sent.classList.add('hl');
-    speak(text,'zh');
+    /* v4-6：iPad 受限 webview TTS 可能静默失败 — 包裹 mute，失败时弹 toast，不弹家长模式提示 */
+    try{
+      speak(text,'zh');
+      setTimeout(function(){if(window.speechSynthesis&&!window.speechSynthesis.speaking)toast('本设备未启用朗读，点 🔊 听这一页整页朗读');},260);
+    }catch(err){toast('本设备未启用朗读');}
   }
   function startFollowRead(){
     if(typeof MediaRecorder==='undefined'){toast('当前环境不支持录音，可先点「听这一页」模仿哦');return;}
