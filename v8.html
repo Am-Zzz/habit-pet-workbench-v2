@@ -2226,15 +2226,18 @@
   body.edit .edit-only{display:inline-flex !important;}
   body.edit .edit-only.b-block{display:flex !important;}
   body.edit .edit-only.b-block-c{display:flex !important;align-items:center;justify-content:center;}
-  /* 编辑中状态条 */
-  .edit-banner{position:fixed;left:50%;top:10px;transform:translateX(-50%);z-index:9999;display:none;align-items:center;gap:10px;background:linear-gradient(90deg,#FF8FA3,#FFB3C1);color:#fff;font-size:13px;font-weight:800;padding:8px 16px;border-radius:999px;box-shadow:0 4px 16px rgba(255,143,163,.4);}
-  body.edit .edit-banner{display:flex;}
-  .edit-banner .eb-done{background:#fff;color:#E8607A;border:none;border-radius:999px;font-weight:800;font-size:12px;padding:5px 12px;cursor:pointer;font-family:inherit;}
-  .edit-banner .eb-exit{background:rgba(255,255,255,.25);color:#fff;border:none;border-radius:999px;font-size:12px;padding:5px 10px;cursor:pointer;font-family:inherit;}
-  /* 绘本列表页 / 阅读器顶部「✏️编辑」按钮 */
-  .edit-toggle-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.85);color:#E8607A;border:1.5px solid #FFB3C1;border-radius:999px;font-weight:800;font-size:12.5px;padding:7px 14px;cursor:pointer;font-family:inherit;line-height:1.2;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:.2s;}
+  /* 绘本列表页 / 阅读器顶部「🔒家长模式」紧凑按钮 */
+  .edit-toggle-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.85);color:#E8607A;border:1.5px solid #FFB3C1;border-radius:999px;font-weight:800;font-size:12.5px;padding:7px 14px;cursor:pointer;font-family:inherit;line-height:1.2;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:.2s;white-space:nowrap;}
   .edit-toggle-btn:hover{filter:brightness(1.03);transform:translateY(-1px);}
   .edit-toggle-btn.on{background:#E8607A;color:#fff;border-color:#E8607A;}
+  /* 列表页工具行拆分 + 更多菜单 */
+  .bk-tools-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .bk-spacer{flex:1 1 auto;}
+  .bk-more{position:relative;}
+  .bk-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:60;background:#fff;border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,.16);padding:6px;display:flex;flex-direction:column;min-width:150px;}
+  .bk-menu button{border:none;background:#fff;border-radius:10px;padding:9px 12px;text-align:left;font-size:13px;cursor:pointer;color:var(--ink);font-family:inherit;}
+  .bk-menu button:hover{background:#FFF0F4;}
+  .bk-menu button.edit-only{color:#E8607A;}
   /* 家长密码弹窗（解锁编辑态） */
   .edit-pin-mask{position:fixed;inset:0;background:rgba(20,20,30,.5);display:none;align-items:center;justify-content:center;z-index:10000;}
   .edit-pin-mask .ep-card{background:#fff;border-radius:22px;padding:26px 28px;width:min(320px,88vw);text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25);}
@@ -3492,18 +3495,26 @@
           <!-- 右侧内容区 -->
           <div class="bk-content">
             <div class="bk-tools">
-              <button class="edit-toggle-btn" id="bkEditBtn" onclick="toggleEditMode()">✏️ 编辑</button>
-              <button class="edit-toggle-btn edit-only" onclick="addUserBook()" title="新增一本绘本故事">＋ 新增故事</button>
-              <div class="bk-count">共 <b id="bookCount">0</b> 本</div>
-              <button class="bk-shelf-btn" onclick="openMyBooks()">✏️ 我的绘本</button>
-              <button class="bk-shelf-btn" onclick="openNetImport('book')">🌐 网盘</button>
-              <div class="bk-levels lrn-pill" id="bkLevelPill">
-                <button class="sel" data-level="all" onclick="switchBookLevel('all',this)">全部</button>
-                <button data-level="幼升小" onclick="switchBookLevel('幼升小',this)">AA级</button>
-                <button data-level="小学1-3" onclick="switchBookLevel('小学1-3',this)">A级</button>
-                <button data-level="小学3-6" onclick="switchBookLevel('小学3-6',this)">B级</button>
+              <div class="bk-tools-row">
+                <div class="bk-count">共 <b id="bookCount">0</b> 本</div>
+                <span class="bk-spacer"></span>
+                <button class="edit-toggle-btn" id="bkEditBtn" onclick="toggleEditMode()" title="家长模式（需验证）">🔒 家长模式</button>
+                <button class="rtool bk-more" onclick="toggleBookMenu()" title="更多">⋯</button>
+                <div class="bk-menu" id="bookMenu" style="display:none">
+                  <button onclick="openMyBooks();toggleBookMenu()">✏️ 我的绘本</button>
+                  <button onclick="openNetImport('book');toggleBookMenu()">🌐 网盘导入</button>
+                  <button onclick="switchBookNav('shelf',document.querySelector('#bkSidebar .bk-nav-item[data-nav=shelf]'));toggleBookMenu()">+ 加入书架</button>
+                  <button class="edit-only" onclick="exitEditMode();toggleBookMenu()">ⓧ 退出家长模式</button>
+                </div>
               </div>
-              <button class="bk-shelf-btn" id="bkAddShelfBtn" onclick="switchBookNav('shelf',document.querySelector('#bkSidebar .bk-nav-item[data-nav=shelf]'))">+ 加入书架</button>
+              <div class="bk-tools-row">
+                <div class="bk-levels lrn-pill" id="bkLevelPill">
+                  <button class="sel" data-level="all" onclick="switchBookLevel('all',this)">全部</button>
+                  <button data-level="幼升小" onclick="switchBookLevel('幼升小',this)">AA级</button>
+                  <button data-level="小学1-3" onclick="switchBookLevel('小学1-3',this)">A级</button>
+                  <button data-level="小学3-6" onclick="switchBookLevel('小学3-6',this)">B级</button>
+                </div>
+              </div>
             </div>
 
             <div class="bk-search" id="bookSearchBox" style="display:none">
@@ -3531,12 +3542,14 @@
             <button class="rtheme-dot" data-t="mint" style="background:#6FC9B4" onclick="setReaderTheme('mint',this)" title="薄荷青绿"></button>
             <button class="rtheme-dot" data-t="cream" style="background:#E9D9C2" onclick="setReaderTheme('cream',this)" title="奶油绘本"></button>
           </div>
-          <button class="edit-toggle-btn" id="rdEditBtn" onclick="toggleEditMode()">✏️ 编辑</button>
+          <button class="edit-toggle-btn" id="rdEditBtn" onclick="toggleEditMode()" title="家长模式（需验证）">🔒 家长模式</button>
           <button class="rtool" id="rdShelfIco" onclick="toggleReaderShelf()" title="加入书架">☆</button>
           <button class="rtool" onclick="toggleReaderMore()" title="更多工具">⋯</button>
           <div class="rmore" id="readerMore" style="display:none">
+            <button onclick="openMyBooks()">✏️ 我的绘本</button>
             <button class="edit-only" onclick="openInsertMedia()">📎 插入页</button>
             <button class="edit-only" onclick="openNotePicker()">📝 做笔记</button>
+            <button class="edit-only" onclick="exitEditMode()">ⓧ 退出家长模式</button>
           </div>
           <button class="rtheme-btn" onclick="toggleReaderThemePop()" aria-label="切换主题">🎨</button>
         </div>
@@ -3708,12 +3721,7 @@
         </div>
       </div>
 
-      <!-- 家长模式 inline 编辑：编辑中状态条 + 密码弹窗 -->
-      <div class="edit-banner" id="editBanner">
-        ✏️ 编辑中 · 当前页面可直接改图 / 加内容
-        <button class="eb-done" onclick="exitEditMode()">完成</button>
-        <button class="eb-exit" onclick="exitEditMode()">✕</button>
-      </div>
+      <!-- 家长模式 inline 编辑：密码弹窗（不再用顶部 banner 浮条，避免变形） -->
       <div class="edit-pin-mask" id="editPinMask" onclick="if(event.target===this)closeEditPin()">
         <div class="ep-card" onclick="event.stopPropagation()">
           <div class="ep-title">家长验证</div>
@@ -7807,8 +7815,16 @@ let phonicsTopicIdx=-1;
   function updateEditBtns(){
     var b1=document.getElementById('bkEditBtn');
     var b2=document.getElementById('rdEditBtn');
-    [b1,b2].forEach(function(b){ if(!b)return; if(editMode){b.classList.add('on');b.textContent='✅ 完成编辑';} else {b.classList.remove('on');b.textContent='✏️ 编辑';} });
+    [b1,b2].forEach(function(b){ if(!b)return; if(editMode){b.classList.add('on');b.textContent='🔓 完成编辑';} else {b.classList.remove('on');b.textContent='🔒 家长模式';} });
   }
+  function toggleBookMenu(){
+    var m=document.getElementById('bookMenu'); if(!m)return;
+    m.style.display = (m.style.display==='none'||!m.style.display)?'flex':'none';
+  }
+  document.addEventListener('click',function(e){
+    var m=document.getElementById('bookMenu');
+    if(m && m.style.display!=='none' && !m.contains(e.target) && !e.target.closest('.bk-more')) m.style.display='none';
+  },true);
   /* ===== 阅读器内正文页增删（编辑态，仅用户书） ===== */
   function isCurrentUserBook(){ if(!curBook)return false; return getUserBooks().some(function(b){return b.id===curBook.id;}); }
   function persistCurBookPages(){
