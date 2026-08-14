@@ -2017,6 +2017,9 @@
   .unlock-pop .btns .btn{flex:1;margin:0}
   /* ====== 绘本：封面 / AI 创作 / 我的绘本 ====== */
   .bk-nav-item[data-nav="mine"]{background:linear-gradient(135deg,var(--brand),var(--sky));color:#fff;border-color:transparent}
+  /* v3-α-11 左侧导航栏分隔 + 动作项（我的绘本/网盘导入/回收站） */
+  .bk-nav-sep{height:1px;background:var(--line);margin:6px 4px;}
+  .bk-nav-item.bk-nav-act{background:rgba(244,109,146,.10);color:var(--brand);}
   .bk-nav-item[data-nav="mine"].sel{box-shadow:0 4px 12px rgba(242,109,146,.35)}
   /* 通用浮层 */
   .mb-mask{position:fixed;inset:0;background:rgba(40,30,45,.45);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
@@ -3559,7 +3562,10 @@
             <div class="bk-nav-item" data-nav="小学1-3" onclick="switchBookNav('小学1-3',this)">小学1-3年级</div>
             <div class="bk-nav-item" data-nav="小学3-6" onclick="switchBookNav('小学3-6',this)">小学3-6年级</div>
             <div class="bk-nav-item" data-nav="shelf" onclick="switchBookNav('shelf',this)">我的书架</div>
-            <div class="bk-nav-item" data-nav="mine" onclick="switchBookNav('mine',this)">✏️ 我的绘本</div>
+            <div class="bk-nav-sep"></div>
+            <div class="bk-nav-item" data-nav="mine" onclick="switchBookNav('mine',this)">我的绘本</div>
+            <div class="bk-nav-item bk-nav-act" onclick="openNetImport('book')">🌐 网盘导入</div>
+            <div class="bk-nav-item bk-nav-act" onclick="openRecycleBin()">♻️ 回收站</div>
           </div>
 
           <!-- 右侧内容区 -->
@@ -8645,7 +8651,7 @@ let phonicsTopicIdx=-1;
     }).join('');
   }
   function openRecycleBin(){
-    if(!editMode){toast('请先进入家长模式');return;}
+    if(!editMode)enterEditMode();
     go('recycle');
   }
   window.openRecycleBin=openRecycleBin;
