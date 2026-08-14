@@ -2299,14 +2299,16 @@
     .reader .r-stage{min-height:80vh}
     .reader[data-rtheme] .page-left{flex:1;min-height:520px}
     .reader[data-rtheme] .page-right{flex:1}
-    .reader[data-rtheme] .cover-left{flex:1}
-    .reader[data-rtheme] .cover-right{flex:1}
+    .reader[data-rtheme] .cover-left{flex:1;min-height:520px}
+    .reader[data-rtheme] .cover-right{flex:1;min-height:520px}
     .reader[data-rtheme] .page-ill .bear{font-size:240px}
-    .reader[data-rtheme] .cover-ill .bear{font-size:170px}
+    .reader[data-rtheme] .cover-ill .bear{font-size:220px}
     .reader[data-rtheme] .text-block{min-height:440px;max-height:76vh;padding:28px 34px}
     .reader[data-rtheme] .cz .ch,.reader[data-rtheme] .cz .punct{font-size:clamp(22px,3.2vh,34px)}
-    .reader[data-rtheme] .cover-title .ch{font-size:46px}
-    .reader[data-rtheme] .cover-title .py{font-size:20px}
+    .reader[data-rtheme] .cover-title .ch{font-size:54px}
+    .reader[data-rtheme] .cover-title .py{font-size:22px}
+    .reader[data-rtheme] .start{font-size:19px;padding:15px 42px}
+    .reader[data-rtheme] .cover-desc{font-size:16px}
   }
 
   /* ===== 绘本横屏锁定（iPad 横屏为主·排版大小固定不随设备漂移） ===== */
@@ -2318,6 +2320,9 @@
     .reader[data-rtheme] .page-screen{flex-direction:row;gap:24px;align-items:stretch}
     .reader[data-rtheme] .page-left{flex:0 0 40%;max-width:40%;min-height:0}
     .reader[data-rtheme] .page-right{flex:1;display:flex;flex-direction:column;min-height:0}
+    .reader[data-rtheme] .cover-screen{flex-direction:row;gap:24px;align-items:stretch;min-height:520px}
+    .reader[data-rtheme] .cover-left{flex:0 0 40%;max-width:40%;min-height:520px;padding:14px}
+    .reader[data-rtheme] .cover-right{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:520px;padding:24px 28px;gap:18px}
     .reader[data-rtheme] .text-block{flex:1;min-height:0;max-height:none;overflow:auto;padding:26px 32px}
     .reader[data-rtheme] .reader-page{font-size:23px;line-height:2.15;letter-spacing:.5px}
     .reader[data-rtheme] .cz .ch,.reader[data-rtheme] .cz .punct{font-size:26px}
