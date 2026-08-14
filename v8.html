@@ -3494,6 +3494,7 @@
                   <span class="bear" id="rPageEmoji">📖</span>
                   <span class="play" id="rPagePlay" onclick="openMediaFullscreen()" title="点击看视频/PPT">▶</span>
                   <button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>
+                  <button class="ill-img-btn" onclick="openReaderImgPicker('page')" title="自定义插图">+</button>
                 </div>
               </div>
               <div class="card page-right">
@@ -7467,6 +7468,8 @@ let phonicsTopicIdx=-1;
   function showReaderTab(i,btn){
     document.querySelectorAll('.r-screen').forEach(function(s,idx){s.classList.toggle('active',idx===i);});
     document.querySelectorAll('.r-tabs button[data-screen]').forEach(function(b,idx){b.classList.toggle('active',idx===i);});
+    if(i===0)updateIllEmoji('cover');
+    if(i===1)updateIllEmoji('page');
     if(i===3)initReaderCanvas();
   }
   function updateReaderShelfBtn(){
@@ -7582,20 +7585,23 @@ let phonicsTopicIdx=-1;
         ? '<img class="ill-cover-img" src="'+attrEsc(m.cover)+'" alt="封面" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;z-index:1;" onerror="this.style.display=\'none\'">'
         : '';
       ill.innerHTML=coverHtml+'<span class="bear" id="rPageEmoji">'+icon+'</span><span class="play" onclick="openMediaFullscreen()" title="点击看视频/PPT">▶</span><button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>';
+      updateIllEmoji('page');
       return;
     }
     var vid=getReaderCustomVid('page');
     if(vid){
       if(head)head.innerHTML='<span class="ill-head-label">插图视频 · 点插图全屏播放</span><span class="ill-tag">视频</span>';
-      ill.innerHTML='<span class="bear" style="display:none">'+icon+'</span><span class="ill-vid-emoji" style="position:absolute;font-size:40px;opacity:.92">🎬</span><span class="play" onclick="playIllVideo(\'page\')" title="点击看视频">▶</span><button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>';
+      ill.innerHTML='<span class="bear" style="display:none">'+icon+'</span><span class="ill-vid-emoji" style="position:absolute;font-size:40px;opacity:.92">🎬</span><span class="play" onclick="playIllVideo(\'page\')" title="点击视频">▶</span><button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>';
+      updateIllEmoji('page');
       return;
     }
     if(head)head.innerHTML='<span class="ill-head-label">这一页是插图 · 没有视频素材</span><span class="ill-tag" style="background:var(--muted);opacity:.7">插图</span>';
-    ill.innerHTML='<span class="bear" id="rPageEmoji">'+icon+'</span><span class="play" onclick="openMediaFullscreen()" title="点击看视频/PPT" style="opacity:.45">▶</span><button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>';
+    ill.innerHTML='<span class="bear" id="rPageEmoji">'+icon+'</span><span class="play" onclick="openMediaFullscreen()" title="点击看视频/PPT" style="opacity:.45">▶</span><button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button><button class="ill-img-btn" onclick="openReaderImgPicker(\'page\')" title="自定义插图">+</button>';
     var saved=_ripType; _ripType='page';
     var url=getReaderCustomImg();
     if(url)applyReaderImgToDom(url);
     _ripType=saved;
+    updateIllEmoji('page');
   }
   function playPageMedia(){
     var pg=curBook&&curBook.pages[curPage]; if(!pg||!pg.media)return;
@@ -8191,11 +8197,13 @@ let phonicsTopicIdx=-1;
     applyReaderImgToDom(url);
     _readerImgCache[_ripKey()]=url;
     try{LS.setItem(_ripKey(),JSON.stringify(url));}catch(e){}
+    updateIllEmoji(_ripType);
   }
   function removeReaderCustomImg(){
     try{LS.removeItem(_ripKey());}catch(e){}
     delete _readerImgCache[_ripKey()];
     applyReaderImgToDom(null);renderRipPreview();toast('已还原默认插图 ✔');
+    updateIllEmoji(_ripType);
   }
   window.removeReaderCustomImg=removeReaderCustomImg;
   /* ===== 插图视频（封面 / 正文插图都能加视频链接） ===== */
@@ -8210,14 +8218,14 @@ let phonicsTopicIdx=-1;
     _readerImgCache['vid_'+k]=v;
     try{LS.setItem(k,JSON.stringify(v));}catch(e){}
     renderIllVideo(_ripType);
+    updateIllEmoji(_ripType);
   }
   function removeReaderCustomVid(){
     var k=_ripVidKeyOf();
     try{LS.removeItem(k);}catch(e){}
     delete _readerImgCache['vid_'+k];
-    var url=getReaderCustomImg();
-    applyReaderImgToDom(url);
     renderIllVideo(_ripType);
+    updateIllEmoji(_ripType);
   }
   function renderIllVideo(type){
     type=type||_ripType;
@@ -8245,6 +8253,21 @@ let phonicsTopicIdx=-1;
     openMediaFullscreenWith({kind:v.kind,url:v.url,title:v.title||'',cover:v.cover||''});
   }
   window.playIllVideo=playIllVideo;
+  /* ===== emoji 显隐 = 数据驱动 =====
+     只要插图容器里有自定义图或自定义视频就把 emoji 藏起来；
+     插入点（renderPageMediaIll / applyReaderImgAll / showReaderTab）和
+     写入/移除点（setReaderCustom* / removeReaderCustom*）都要校准一次。 */
+  function updateIllEmoji(type){
+    type=type||_ripType;
+    if(type!=='cover'&&type!=='page')return;
+    var emojiId=(type==='cover')?'rCoverEmoji':'rPageEmoji';
+    var emoji=document.getElementById(emojiId);
+    if(!emoji)return;
+    var hasImg=!!getReaderCustomImg(type);
+    var hasVid=!!getReaderCustomVid(type);
+    emoji.style.display=(hasImg||hasVid)?'none':'';
+  }
+  window.updateIllEmoji=updateIllEmoji;
   function applyReaderVidUrl(){
     var el=document.getElementById('ripVidInput');if(!el){toast('请输入视频链接');return;}
     var val=el.value.trim();
@@ -8267,6 +8290,7 @@ let phonicsTopicIdx=-1;
     applyReaderImgToDom(null);
     renderIllVideo(_ripType);
     renderRipPreview();toast('已还原默认插图 ✔');
+    updateIllEmoji(_ripType);
   }
   window.removeReaderCustomAll=removeReaderCustomAll;
   function applyReaderImgToDom(url){
@@ -8291,6 +8315,9 @@ let phonicsTopicIdx=-1;
     var c=getReaderCustomImg();if(c)applyReaderImgToDom(c);
     var saved=_ripType;_ripType='cover';var cv=getReaderCustomImg();if(cv)applyReaderImgToDom(cv);_ripType='page';var pg=getReaderCustomImg();if(pg)applyReaderImgToDom(pg);_ripType=saved;
     renderIllVideo('cover');
+    renderIllVideo('page');
+    updateIllEmoji('cover');
+    updateIllEmoji('page');
   }
   function renderRipPreview(){
     var pv=document.getElementById('ripPreview');var rb=document.getElementById('ripRemoveBtn');
