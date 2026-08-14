@@ -8069,7 +8069,9 @@ let phonicsTopicIdx=-1;
     }
     var pn=document.getElementById('rdPageNo');if(pn)pn.textContent=(curPage+1)+' / '+curBook.pages.length;
     box.scrollTop=0;
-    if(editMode){box.style.cursor='pointer';box.onclick=editPageText;}else{box.style.cursor='';box.onclick=null;}
+    /* v7-1：不再按 editMode 把 box.onclick 清掉/换成 editPageText — 否则儿童模式的逐句点读委托失效。
+       一律保留 onTapReadSent；onTapReadSent 内部按 editMode 决定点空白的语义（家长模式=进编辑，儿童=忽略）。 */
+    box.style.cursor=(editMode?'pointer':'');box.onclick=onTapReadSent;
     updateReaderProgress();
   }
   function renderPageMediaIll(pg){
@@ -8748,9 +8750,14 @@ let phonicsTopicIdx=-1;
     if(btn){btn.classList.toggle('on',tapReadOn);btn.textContent=tapReadOn?'👆 逐句点读：开':'👆 逐句点读：关';}
   }
   function onTapReadSent(e){
-    if(!tapReadOn)return;
     if(e&&e.stopPropagation)e.stopPropagation();
-    var sent=e.target.closest&&e.target.closest('.sent'); if(!sent)return;
+    /* v7-1：tapReadOn 关时也要响应家长模式点击正文=打开编辑；点中句子则继续朗读 */
+    var sent=e.target.closest&&e.target.closest('.sent');
+    if(!sent){
+      if(editMode){ editPageText(); }
+      return;
+    }
+    if(!tapReadOn)return;
     var text=sent.getAttribute('data-text'); if(!text)return;
     /* v5-6：去除 emoji/特殊符号（iPad webkit TTS 遇 emoji 会静默失败） */
     text=text.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}\u{1F100}-\u{1F1FF}\u{1F200}-\u{1F2FF}]/gu,'').replace(/\s+/g,'');
