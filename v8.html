@@ -2266,11 +2266,11 @@
   body.edit .edit-only{display:inline-flex !important;}
   body.edit .edit-only.b-block{display:flex !important;}
   body.edit .edit-only.b-block-c{display:flex !important;align-items:center;justify-content:center;}
-  /* v3-α-7 家长模式入口小符号：始终可见（淡灰融入背景）/ 家长模式变绿色凸起 */
-  .pm-entry{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--ink-faint);font-size:15px;cursor:pointer;font-family:inherit;line-height:1;transition:.18s;-webkit-tap-highlight-color:transparent;flex:none;}
-  .pm-entry:hover{background:#FFF7FA;color:#E8607A;border-color:#FFC4D2;transform:scale(1.06);}
-  body.edit .pm-entry{background:rgba(40,180,120,.92);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(40,180,120,.35);}
-  body.edit .pm-entry:hover{background:rgba(40,180,120,1);}
+  /* v3-α-10 家长模式开关 = 齿轮 ⚙️：灰=儿童模式 / 绿=家长模式，点击切换，无文字 */
+  .pm-gear{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--ink-faint);font-size:17px;cursor:pointer;font-family:inherit;line-height:1;transition:.18s;-webkit-tap-highlight-color:transparent;flex:none;}
+  .pm-gear:hover{background:#FFF7FA;color:#E8607A;border-color:#FFC4D2;transform:scale(1.06);}
+  body.edit .pm-gear{background:rgba(40,180,120,.92);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(40,180,120,.35);}
+  body.edit .pm-gear:hover{background:rgba(40,180,120,1);}
   /* v3-α-9 App 内确认浮层：替代原生 confirm（iPad 受限 webview 禁用原生 confirm 导致删除点不动） */
   .app-confirm-mask{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:9999;}
   .app-confirm-mask.show{display:flex;}
@@ -2281,9 +2281,6 @@
   .ac-cancel{background:#F2F2F5;color:var(--ink);}
   .ac-yes{background:var(--brand);color:#fff;}
   .ac-yes.danger{background:#E8607A;}
-  /* v3-α-8 家长模式状态小提示：开启时显示，再点 🔓 退出 */
-  .bk-tip{display:none;font-size:11.5px;color:#fff;background:rgba(40,180,120,.85);padding:3px 9px;border-radius:999px;line-height:1.2;font-weight:700;white-space:nowrap;}
-  body.edit .bk-tip{display:inline-flex;align-items:center;}
   /* 列表页工具行拆分 + 更多菜单 */
   .bk-tools-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
   .bk-spacer{flex:1 1 auto;}
@@ -3549,6 +3546,7 @@
             <button data-lang="en" onclick="switchBookLang('en',this)">英文绘本</button>
           </div>
           <span class="bk-search-btn" onclick="toggleBookSearch()">🔍</span>
+          <button class="pm-gear" id="bkGearBtn" onclick="toggleEditMode()" title="家长模式开关（点一下开启，再点关闭）">⚙️</button>
         </div>
 
         <div class="bk-main">
@@ -3574,8 +3572,6 @@
               <div class="bk-tools-row">
                 <div class="bk-count">共 <b id="bookCount">0</b> 本</div>
                 <span class="bk-spacer"></span>
-                <button class="pm-entry" id="bkEditBtn" onclick="toggleEditMode()" title="家长模式（需验证）">🔒</button>
-                <span class="bk-tip edit-only" id="bkEditTip">家长模式 · 点 🔓 退出</span>
               </div>
               <div class="bk-tools-row">
                 <div class="bk-levels lrn-pill" id="bkLevelPill">
@@ -3612,7 +3608,7 @@
             <button class="rtheme-dot" data-t="mint" style="background:#6FC9B4" onclick="setReaderTheme('mint',this)" title="薄荷青绿"></button>
             <button class="rtheme-dot" data-t="cream" style="background:#E9D9C2" onclick="setReaderTheme('cream',this)" title="奶油绘本"></button>
           </div>
-          <button class="pm-entry" id="rdEditBtn" onclick="toggleEditMode()" title="家长模式（需验证）">🔒</button>
+          <button class="pm-gear" id="rdEditBtn" onclick="toggleEditMode()" title="家长模式开关（点一下开启，再点关闭）">⚙️</button>
           <button class="rtool" id="rdShelfIco" onclick="toggleReaderShelf()" title="加入书架">☆</button>
           <button class="rtool" onclick="toggleReaderMore()" title="更多">⋯</button>
           <div class="rmore" id="readerMore" style="display:none">
@@ -7898,13 +7894,9 @@ let phonicsTopicIdx=-1;
   }
   function toggleEditMode(){
     if(editMode)exitEditMode();
-    else requestParentPin(enterEditMode);
+    else enterEditMode();
   }
-  function updateEditBtns(){
-    var b1=document.getElementById('bkEditBtn');
-    var b2=document.getElementById('rdEditBtn');
-    [b1,b2].forEach(function(b){ if(!b)return; b.textContent=editMode?'🔓':'🔒'; });
-  }
+  function updateEditBtns(){ /* v3-α-10 齿轮颜色由 body.edit 驱动，无需改文字；保留空函数兼容 */ }
   /* v3-α-8 ⋯按钮已删除：原 bkMenu 4 个功能（我的绘本/网盘导入/回收站/家长模式）均有独立入口，不再需要此菜单 */
   /* ===== 阅读器内正文页增删（编辑态，仅用户书） ===== */
   function isCurrentUserBook(){ if(!curBook)return false; return getUserBooks().some(function(b){return b.id===curBook.id;}); }
