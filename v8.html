@@ -7582,6 +7582,15 @@ let phonicsTopicIdx=-1;
       document.getElementById('bookCount').textContent=books.length;
       if(!books.length){
         const _pg0=document.getElementById('bookPager');if(_pg0)_pg0.innerHTML='';
+        if(editMode){
+          /* v4-7：家长模式下面分类为空也展示新增卡，方便直接添加绘本 */
+          list.innerHTML=mcEmpty('✍️','这个分类还没有故事','家长模式下可直接新增绘本');
+          const c=document.createElement('div');c.className='book-card bc-add-card bc-add-card-first';
+          c.innerHTML='<div class="bc-add-inner"><div class="bc-plus">＋</div><div class="bc-add-tip">新增故事<br><span>点此添加绘本</span></div></div>';
+          c.onclick=function(){addUserBook();openMyBooks();};
+          list.appendChild(c);
+          return;
+        }
         if(bookNav==='shelf') list.innerHTML=mcEmpty('📚','书架还是空的','把喜欢的故事加入书架，随时翻开陪读吧～','<button class="btn" onclick="openBooks()">去逛绘本</button>');
         else if(bookNav==='mine') list.innerHTML=mcEmpty('✍️','还没有自己上传的故事','在「全部」里挑喜欢的，点 + 加入书架，或在家长模式新增', '<button class="btn" onclick="openBooks()">去逛绘本</button>');
         else list.innerHTML=mcEmpty('🔍','这个分类还没有故事哦','换个分类看看吧～','<button class="btn" onclick="openBooks()">看全部</button>');
@@ -7600,10 +7609,10 @@ let phonicsTopicIdx=-1;
       const totalPages=Math.max(1,Math.ceil(books.length/pageSize));
       if(bookPage>totalPages-1)bookPage=totalPages-1;
       const pageBooks=books.slice(bookPage*pageSize,(bookPage+1)*pageSize);
-      /* v3-α-4：新增故事卡仅在家长模式 + mine 视图显示；首位 + 末位一致 */
-      const _pmMine=editMode && bookNav==='mine';
-      const showAddFirst=_pmMine && bookPage===0;
-      const showAdd=_pmMine && (bookPage>=totalPages-1);
+      /* v4-7：新增故事卡在所有视图显示（仅家长模式，儿童模式彻底不可见）；首位 + 末位一致。单页视图时首位已出卡则末位不再重复 */
+      const _pmEdit=editMode;
+      const showAddFirst=_pmEdit && bookPage===0;
+      const showAdd=_pmEdit && (bookPage>=totalPages-1) && (totalPages>1 || !showAddFirst);
       const displayBooks=pageBooks.slice();
       if(showAddFirst)displayBooks.unshift({__addcard:true});
       displayBooks.forEach(function(b){
