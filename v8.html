@@ -1301,10 +1301,12 @@
   .btn-pill.warn{background:#FFE9C7;color:#9A6A00}
   .btn-pill.on{box-shadow:0 0 0 3px var(--brand) inset}
   .btn-pill:active{transform:scale(.96)}
-  .text-block .sent{cursor:pointer;transition:background .12s,border-radius .12s;padding:2px 0;border-radius:8px;display:inline}
-  .text-block.tapread .sent:hover{background:var(--brand-s)}
-  .text-block.tapread .sent:active{background:var(--brand);color:#fff}
-  .text-block.tapread .sent:active .cz{color:#fff}
+.text-block .sent{cursor:pointer;transition:background .12s,border-radius .12s;padding:2px 2px;border-radius:8px;display:inline}
+.text-block .sent:hover{background:var(--brand-s)}
+.text-block .sent.hl{background:var(--brand);color:#fff}
+.text-block .sent.hl .cz{color:#fff}
+.text-block .sent:active{background:var(--brand);color:#fff}
+.text-block .sent:active .cz{color:#fff}
   .media-cover{position:relative;width:100%;height:100%;border-radius:24px;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--ill-a),var(--ill-b));transition:transform .15s}
   .media-cover:active{transform:scale(.985)}
   .media-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -2201,16 +2203,16 @@
   .reader[data-rtheme="cream"] .btn-pill.primary{background:#fff;border:2px solid var(--primary);color:var(--primary-dark);}
   .reader[data-rtheme="cream"] .btn-pill.secondary{background:#fff;border:2px solid var(--secondary);color:var(--secondary-dark);}
   .reader[data-rtheme] .btn-pill:hover{transform:translateY(-2px);}
-  .reader[data-rtheme] .text-block{background:#FFFFFF;border-radius:18px;padding:24px 28px;border:2.5px dashed #F2C6CE;flex:1;min-height:300px;max-height:60vh;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;scrollbar-width:thin;}
+  .reader[data-rtheme] .text-block{background:#FFFFFF;border-radius:18px;padding:22px 26px;border:2.5px dashed #F2C6CE;flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:center;scrollbar-width:thin;}
   .reader[data-rtheme] .text-block::before,.reader[data-rtheme] .text-block::after{content:"";flex:1 1 0;min-height:12px;}
   .reader[data-rtheme] .text-block::-webkit-scrollbar{width:8px;}
   .reader[data-rtheme] .text-block::-webkit-scrollbar-thumb{background:var(--line);border-radius:30px;}
   .reader[data-rtheme] .text-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;justify-content:center;line-height:1.9;margin-bottom:8px;}
   .reader[data-rtheme] .text-row:last-child{margin-bottom:0;}
   .reader[data-rtheme] .cz{display:inline-flex;flex-direction:column;align-items:center;line-height:1.05;vertical-align:top;}
-  .reader[data-rtheme] .cz .py{font-size:clamp(9px,1.5vh,11px);color:#3E6FB0;font-weight:700;line-height:1;margin-bottom:3px;letter-spacing:1px;transition:color .3s;display:none;}
-  .reader[data-rtheme] .cz .ch{font-size:clamp(20px,3.4vh,30px);font-weight:700;}
-  .reader[data-rtheme] .cz .punct{font-size:clamp(20px,3.4vh,30px);font-weight:700;}
+  .reader[data-rtheme] .cz .py{font-size:clamp(8px,1.2vh,10px);color:#3E6FB0;font-weight:700;line-height:1;margin-bottom:2px;letter-spacing:1px;transition:color .3s;display:none;}
+  .reader[data-rtheme] .cz .ch{font-size:clamp(17px,2.7vh,25px);font-weight:700;}
+  .reader[data-rtheme] .cz .punct{font-size:clamp(17px,2.7vh,25px);font-weight:700;}
   .reader[data-rtheme] .text-block.py-on .cz .py{display:block;}
   .reader[data-rtheme] .text-block.py-on .cz{margin:0 1px;}
   .reader[data-rtheme] .page-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:4px;width:100%;}
@@ -2303,8 +2305,8 @@
     .reader[data-rtheme] .cover-right{flex:1;min-height:520px}
     .reader[data-rtheme] .page-ill .bear{font-size:240px}
     .reader[data-rtheme] .cover-ill .bear{font-size:220px}
-    .reader[data-rtheme] .text-block{min-height:440px;max-height:76vh;padding:28px 34px}
-    .reader[data-rtheme] .cz .ch,.reader[data-rtheme] .cz .punct{font-size:clamp(22px,3.2vh,34px)}
+    .reader[data-rtheme] .text-block{flex:1;min-height:0;max-height:none;overflow:hidden;padding:24px 30px}
+    .reader[data-rtheme] .cz .ch,.reader[data-rtheme] .cz .punct{font-size:clamp(18px,2.6vh,28px)}
     .reader[data-rtheme] .cover-title .ch{font-size:54px}
     .reader[data-rtheme] .cover-title .py{font-size:22px}
     .reader[data-rtheme] .start{font-size:19px;padding:15px 42px}
@@ -3496,7 +3498,7 @@
                 <div class="page-actions page-actions-top">
                   <button class="btn-pill primary" onclick="speakBookPage()">🔊 听这一页</button>
                   <button class="btn-pill" id="rPagePyToggle" onclick="togglePagePy(this)">🔤 拼音</button>
-                  <button class="btn-pill" id="rdTapReadBtn" onclick="toggleTapRead(this)">👆 逐句点读：关</button>
+                  <button class="btn-pill" id="rdTapReadBtn" onclick="toggleTapRead(this)">👆 逐句点读：开</button>
                   <button class="btn-pill warn" onclick="startFollowRead()">🎤 跟读</button>
                 </div>
                 <div class="text-block" id="rdPage"></div>
@@ -6841,7 +6843,7 @@ let phonicsTopicIdx=-1;
   let bookNav='all', bookLevel='all', bookLang='cn', bookSearch='', bookPage=0;
   let curBook=null, curPage=0, pinyinOn=false;
   let bookVoices=[], bookMediaRec=null, bookRecChunks=[], bookClipURL=null, bookRecStream=null, bookRecording=false;
-  let tapReadOn=false, bookRecStopCb=null, bookRecStartT=0;
+  let tapReadOn=true, bookRecStopCb=null, bookRecStartT=0;
   let quizState={list:[], i:0};
   const BOOK_MEDIA_KEY='mp_book_media_v1';
   function attrEsc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -7417,12 +7419,12 @@ let phonicsTopicIdx=-1;
     stopBookSpeech();resetBookRec();
     curPage=0;pinyinOn=true;setPinyin(true);
     quizState={list:[],i:0};
-    tapReadOn=false;
+    tapReadOn=true;
     document.getElementById('readerMask').style.display='flex';
     initReaderTheme();initReaderMascot();
     var rdPageEl=document.getElementById('rdPage');
-    if(rdPageEl){ rdPageEl.classList.remove('tapread'); rdPageEl.onclick=onTapReadSent; }
-    var trb=document.getElementById('rdTapReadBtn'); if(trb){trb.classList.remove('on');trb.textContent='👆 逐句点读：关';}
+    if(rdPageEl){ rdPageEl.classList.add('tapread'); rdPageEl.onclick=onTapReadSent; }
+    var trb=document.getElementById('rdTapReadBtn'); if(trb){trb.classList.add('on');trb.textContent='👆 逐句点读：开';}
     var fbEl=document.getElementById('rdFollow'); if(fbEl)fbEl.innerHTML='';
     updateReaderShelfBtn();updateReaderNoteBtn();
     const icon=(curBook.icon)||'📖';
@@ -7951,13 +7953,17 @@ let phonicsTopicIdx=-1;
   function toggleTapRead(btn){
     tapReadOn=!tapReadOn;
     var box=document.getElementById('rdPage');
-    if(box)box.classList.toggle('tapread',tapReadOn);
+    if(box){box.classList.toggle('tapread',tapReadOn); if(!tapReadOn)box.querySelectorAll('.sent.hl').forEach(function(s){s.classList.remove('hl');});}
     if(btn){btn.classList.toggle('on',tapReadOn);btn.textContent=tapReadOn?'👆 逐句点读：开':'👆 逐句点读：关';}
   }
   function onTapReadSent(e){
     if(!tapReadOn)return;
     var sent=e.target.closest&&e.target.closest('.sent'); if(!sent)return;
     var text=sent.getAttribute('data-text'); if(!text)return;
+    /* 点哪句哪句高亮：移除其它句的高亮，给当前句加 .hl */
+    var box=document.getElementById('rdPage');
+    if(box)box.querySelectorAll('.sent.hl').forEach(function(s){if(s!==sent)s.classList.remove('hl');});
+    sent.classList.add('hl');
     speak(text,'zh');
   }
   function startFollowRead(){
