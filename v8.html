@@ -5306,6 +5306,10 @@
   function speak(text, lang, onDone){
     try{
       if(!('speechSynthesis' in window) || !text){ if(onDone)onDone(); return; }
+      /* v5-6：去除 emoji 等特殊符号（iPad webkit 遇这些字符会静默失败） */
+      var clean=String(text).replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F1FF}]/gu,'').replace(/\s+/g,' ').trim();
+      if(!clean){ if(onDone)onDone(); return; }
+      text=clean;
       var ss=window.speechSynthesis;
       _ttsWarmup();
       // 关键：仅当上一条不是"热身哑音"时才取消，避免把刚触发的解锁哑音掐掉导致 iOS 首次无声
@@ -8665,14 +8669,23 @@ let phonicsTopicIdx=-1;
     if(e&&e.stopPropagation)e.stopPropagation();
     var sent=e.target.closest&&e.target.closest('.sent'); if(!sent)return;
     var text=sent.getAttribute('data-text'); if(!text)return;
+    /* v5-6：去除 emoji/特殊符号（iPad webkit TTS 遇 emoji 会静默失败） */
+    text=text.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}\u{1F100}-\u{1F1FF}\u{1F200}-\u{1F2FF}]/gu,'').replace(/\s+/g,'');
+    if(!text){toast('这一句没有可朗读的文字');return;}
     /* 点哪句哪句高亮：移除其它句的高亮，给当前句加 .hl */
     var box=document.getElementById('rdPage');
     if(box)box.querySelectorAll('.sent.hl').forEach(function(s){if(s!==sent)s.classList.remove('hl');});
     sent.classList.add('hl');
-    /* v4-6：iPad 受限 webview TTS 可能静默失败 — 包裹 mute，失败时弹 toast，不弹家长模式提示 */
+    /* v5-6：iPad 受限 webview TTS 多重兜底；要求用户手势内连点 2 次"逐句朗读"开（首次只解锁引擎） */
     try{
+      _ttsWarmup();           /* 确保 iOS 音频引擎已解锁 */
       speak(text,'zh');
-      setTimeout(function(){if(window.speechSynthesis&&!window.speechSynthesis.speaking)toast('本设备未启用朗读，点 🔊 听这一页整页朗读');},260);
+      /* 失败检测延长到 600ms（首次 speak 的解锁哑音完成后才能判断） */
+      setTimeout(function(){
+        if(window.speechSynthesis&&!window.speechSynthesis.speaking){
+          toast('本设备未启用朗读或静音模式已开，点 🔊 听这一页整页朗读');
+        }
+      },600);
     }catch(err){toast('本设备未启用朗读');}
   }
   function startFollowRead(){
