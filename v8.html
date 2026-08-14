@@ -2250,6 +2250,14 @@
   .reader[data-rtheme] .page-edit-tools{margin-top:8px;gap:10px;justify-content:center;flex:none;}
   .reader[data-rtheme] .page-edit-tools .btn{border:1.5px solid #FFB3C1;background:#fff;color:#E8607A;}
   .reader[data-rtheme] .page-edit-tools .btn.warn{border-color:#ffb4b4;color:#e0506a;}
+  /* 编辑本页故事浮层 */
+  .pt-editor{width:min(560px,92vw);background:#fff;border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 12px 40px rgba(0,0,0,.25);}
+  .pt-head{display:flex;align-items:center;justify-content:space-between;font-weight:800;color:#E8607A;font-size:15px;}
+  .pt-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink-soft);line-height:1;}
+  .pt-editor textarea{width:100%;min-height:200px;resize:vertical;border:2px solid #FFB3C1;border-radius:12px;padding:12px;font-size:15px;line-height:1.7;font-family:inherit;outline:none;}
+  .pt-foot{display:flex;gap:10px;justify-content:flex-end;}
+  .pt-foot button{padding:9px 18px;border-radius:12px;border:none;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;background:#F2F2F2;color:var(--ink);}
+  .pt-foot .pt-save{background:#E8607A;color:#fff;}
   .reader[data-rtheme] .page-right{flex:1;display:flex;flex-direction:column;gap:12px;padding:18px 22px;justify-content:flex-start;min-height:0;overflow:hidden;}
   .reader[data-rtheme] .page-actions-top{margin-bottom:2px;display:flex;gap:10px;justify-content:center;flex-wrap:nowrap;flex:none;}
   .reader[data-rtheme] .btn-pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;padding:9px 16px;border-radius:30px;border:none;cursor:pointer;box-shadow:0 5px 14px rgba(0,0,0,.08);transition:.2s,background .3s,color .3s;white-space:nowrap;}
@@ -3707,6 +3715,18 @@
           <div class="ep-btns">
             <button class="ep-cancel" onclick="closeEditPin()">取消</button>
             <button class="ep-ok" onclick="confirmEditPin()">确认</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 编辑本页故事文字浮层 -->
+      <div class="reader-mask" id="pageTextEditor" style="display:none" onclick="if(event.target===this)closePageTextEditor()">
+        <div class="pt-editor" onclick="event.stopPropagation()">
+          <div class="pt-head"><span>✏️ 编辑本页故事</span><button class="pt-close" onclick="closePageTextEditor()">✕</button></div>
+          <textarea id="ptInput" placeholder="输入这一页的故事文字，保存后自动重新分页注音…"></textarea>
+          <div class="pt-foot">
+            <button onclick="closePageTextEditor()">取消</button>
+            <button class="pt-save" onclick="savePageText()">💾 保存本页</button>
           </div>
         </div>
       </div>
@@ -7667,6 +7687,7 @@ let phonicsTopicIdx=-1;
     }
     var pn=document.getElementById('rdPageNo');if(pn)pn.textContent=(curPage+1)+' / '+curBook.pages.length;
     box.scrollTop=0;
+    if(editMode){box.style.cursor='pointer';box.onclick=editPageText;}else{box.style.cursor='';box.onclick=null;}
     updateReaderProgress();
   }
   function renderPageMediaIll(pg){
@@ -7786,6 +7807,34 @@ let phonicsTopicIdx=-1;
     curBook.pages.splice(curPage,1);
     curPage=Math.max(0,Math.min(curPage,curBook.pages.length-1));
     renderBookPage(); persistCurBookPages(); updateReaderProgress(); toast('已删除本页 ✔');
+  }
+  /* ===== 编辑本页故事文字（编辑态，仅用户书） ===== */
+  function textToCharsKeepPy(text,oldChars){
+    text=String(text||'').replace(/\s+/g,'');
+    var out=[];
+    for(var i=0;i<text.length;i++){
+      var ch=text.charAt(i);
+      var p=(oldChars&&oldChars[i]&&oldChars[i].t===ch)?(oldChars[i].p||''):'';
+      out.push({t:ch,p:p});
+    }
+    return out;
+  }
+  function editPageText(){
+    if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
+    if(!isCurrentUserBook()){toast('内置绘本不能改文字，可在「✏️ 编辑 → ＋ 新增故事」新建一本');return;}
+    var pg=curBook.pages[curPage]; if(!pg)return;
+    var t=(pg.chars||[]).map(function(c){return c.t;}).join('');
+    var inp=document.getElementById('ptInput'); if(inp)inp.value=t;
+    var m=document.getElementById('pageTextEditor'); if(m)m.style.display='flex';
+  }
+  function closePageTextEditor(){var m=document.getElementById('pageTextEditor');if(m)m.style.display='none';}
+  function savePageText(){
+    if(!curBook||!curBook.ready)return;
+    var pg=curBook.pages[curPage]; if(!pg)return;
+    var txt=document.getElementById('ptInput').value;
+    var old=pg.chars||[];
+    pg.chars=normBookChars(textToCharsKeepPy(txt,old));
+    persistCurBookPages(); closePageTextEditor(); renderBookPage(); toast('已保存本页 ✔');
   }
   function playPageMedia(){
     var pg=curBook&&curBook.pages[curPage]; if(!pg||!pg.media)return;
