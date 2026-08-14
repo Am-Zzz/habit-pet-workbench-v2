@@ -1353,6 +1353,14 @@
   .btn-pill.warn{background:#FFE9C7;color:#9A6A00}
   .btn-pill.on{box-shadow:0 0 0 3px var(--brand) inset}
   .btn-pill:active{transform:scale(.96)}
+  /* v6-5：家长模式编辑"暂存条"（仅 edit-only 且脏数据时可见） */
+  .pm-save-bar{display:none;align-items:center;justify-content:center;gap:10px;background:linear-gradient(180deg,#FFF6E8,#FFE9C7);border-radius:12px;padding:8px 14px;margin:8px 0 6px;border:1.5px dashed #E8607A;box-shadow:0 2px 6px rgba(232,96,122,.12);}
+  body.edit .pm-save-bar.has-dirty{display:flex;}
+  .pm-save-bar button{border:none;border-radius:10px;padding:7px 14px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;}
+  .pm-save-bar .ghost{background:#fff;color:#5c3d00;border:1px solid #E0BC8A;}
+  .pm-save-bar .primary{background:#E8607A;color:#fff;}
+  .pm-save-bar .primary:hover{background:#D14C66;}
+  .pm-save-bar .ghost:hover{background:#FFF3E6;}
 .text-block .sent{cursor:pointer;transition:background .12s,border-radius .12s;padding:2px 2px;border-radius:8px;display:inline}
 .text-block .sent:hover{background:var(--brand-s)}
 .text-block .sent.hl{background:var(--brand);color:#fff}
@@ -3658,6 +3666,11 @@
           <button class="rtheme-btn" onclick="toggleReaderThemePop()" aria-label="切换主题">🎨</button>
         </div>
         <div class="reader-progress"><div class="bar"><i id="rProgressBar"></i></div></div>
+        <!-- v6-5：家长模式编辑"暂存条"（仅 edit-only 且脏数据时显示） -->
+        <div id="pmSaveBar" class="pm-save-bar edit-only" style="display:none">
+          <button type="button" class="ghost" onclick="discardReaderEdits()" title="不保存，回到原本板块">↩ 放弃修改</button>
+          <button type="button" class="primary" onclick="saveReaderEdits()" title="保存板块修改（持久化）">💾 保存修改</button>
+        </div>
         <div class="r-tabs" id="rTabs"></div>
 
           <div class="r-stage">
@@ -7747,6 +7760,10 @@ let phonicsTopicIdx=-1;
     curPage=0;pinyinOn=true;setPinyin(true);
     quizState={list:[],i:0};
     tapReadOn=true;
+    /* v6-5：切换绘本时清掉旧暂存（每本书独立暂存） */
+    var prevStaging={};Object.keys(pmStagingTabs).forEach(function(k){if(k!==id)delete pmStagingTabs[k];else prevStaging.tabs=pmStagingTabs[k];});
+    Object.keys(pmStagingCustom).forEach(function(k){if(k!==id)delete pmStagingCustom[k];});
+    Object.keys(pmDirty).forEach(function(k){if(k!==id)delete pmDirty[k];});
     document.getElementById('readerMask').style.display='flex';
     initReaderTheme();initReaderMascot();
     var rdPageEl=document.getElementById('rdPage');
@@ -7755,6 +7772,7 @@ let phonicsTopicIdx=-1;
     var fbEl=document.getElementById('rdFollow'); if(fbEl)fbEl.innerHTML='';
     updateReaderShelfBtn();updateReaderNoteBtn();
     renderReaderTabs(curBook);ensureCustomScreens(curBook);
+    updatePmSaveBar();
     const icon=(curBook.icon)||'📖';
     const ce=document.getElementById('rCoverEmoji');if(ce)ce.textContent=icon;
     const pe=document.getElementById('rPageEmoji');if(pe)pe.textContent=icon;
@@ -7804,14 +7822,71 @@ let phonicsTopicIdx=-1;
   var BOOK_CUSTOM_KEY='mp_book_custom_v1';
   var READER_DEFAULT_TABS=[{type:'cover',name:'封面'},{type:'page',name:'正文'},{type:'poem',name:'诗歌'},{type:'quiz',name:'互动'},{type:'notes',name:'笔记'}];
   var readerTabList=[];
+  /* v6-5：家长模式编辑"暂存态"——任何 tab ± / 自定义页内容编辑，先入内存 staging，不写盘；
+         在暂存条点 💾 保存才持久化；点 ↩ 放弃则重渲染读真实持久层 */
+  var pmStagingTabs={};    /* { bookId: tabsArr } */
+  var pmStagingCustom={};  /* { bookId: { cid: {content:'...'} 或 __pending_delete:true } } */
+  var pmDirty={};          /* { bookId: true } */
+  function isBookDirty(id){ return !!(id&&pmDirty[id]); }
+  function clearPmStaging(id){
+    delete pmStagingTabs[id];
+    delete pmStagingCustom[id];
+    delete pmDirty[id];
+  }
+  function getEffectiveTabs(id){
+    if(pmStagingTabs[id])return pmStagingTabs[id];
+    const m=getBookTabsMap();return m[id]?m[id].slice():READER_DEFAULT_TABS.slice();
+  }
+  function getEffectiveCustom(id,cid){
+    const stg=(pmStagingCustom[id]||{})[cid];
+    if(stg)return stg;
+    return ((getBookCustomMap()[id]||{})[cid])||{content:''};
+  }
+  function updatePmSaveBar(){
+    const bar=document.getElementById('pmSaveBar');
+    if(!bar){return;}
+    const id=curBook&&curBook.id;
+    if(editMode&&isBookDirty(id)){bar.classList.add('has-dirty');bar.style.display='flex';}
+    else{bar.classList.remove('has-dirty');bar.style.display='none';}
+  }
+  function saveReaderEdits(){
+    if(!curBook)return;
+    const id=curBook.id;
+    if(pmStagingTabs[id])setBookTabs(id,pmStagingTabs[id]);
+    if(pmStagingCustom[id]){
+      const cm=getBookCustomMap();if(!cm[id])cm[id]={};
+      Object.keys(pmStagingCustom[id]).forEach(function(cid){
+        const v=pmStagingCustom[id][cid];
+        if(v&&v.__pending_delete){delete cm[id][cid];}
+        else if(v){cm[id][cid]={content:v.content||''};}
+      });
+      setBookCustomMap(cm);
+    }
+    clearPmStaging(id);
+    updatePmSaveBar();
+    if(document.querySelector('.r-tabs')){renderReaderTabs(curBook);ensureCustomScreens(curBook);}
+    toast('已保存修改 ✔');
+  }
+  function discardReaderEdits(){
+    if(!curBook)return;
+    const id=curBook.id;
+    clearPmStaging(id);
+    updatePmSaveBar();
+    if(document.querySelector('.r-tabs')){
+      /* 重渲染读真持久层 */
+      if(typeof renderReaderPoem==='function')renderReaderPoem();
+      renderReaderTabs(curBook);ensureCustomScreens(curBook);
+    }
+    toast('已放弃修改，回到原状');
+  }
   function getBookTabsMap(){try{return JSON.parse(localStorage.getItem(BOOK_TABS_KEY)||'{}');}catch(e){return {};}}
-  function getBookTabs(id){const m=getBookTabsMap();return m[id]||READER_DEFAULT_TABS.slice();}
+  function getBookTabs(id){return getEffectiveTabs(id);}
   function setBookTabs(id,arr){const m=getBookTabsMap();m[id]=arr;localStorage.setItem(BOOK_TABS_KEY,JSON.stringify(m));}
   function getBookCustomMap(){try{return JSON.parse(localStorage.getItem(BOOK_CUSTOM_KEY)||'{}');}catch(e){return {};}}
   function setBookCustomMap(m){localStorage.setItem(BOOK_CUSTOM_KEY,JSON.stringify(m));}
   function renderReaderTabs(book){
     const tabsEl=document.querySelector('.r-tabs');if(!tabsEl||!book)return;
-    const tabs=getBookTabs(book.id);
+    const tabs=getEffectiveTabs(book.id);
     readerTabList=tabs.map(function(t){return {type:t.type,name:t.name,cid:t.cid};});
     let html='';
     tabs.forEach(function(t,idx){
@@ -7828,48 +7903,60 @@ let phonicsTopicIdx=-1;
   function ensureCustomScreens(book){
     const stage=document.querySelector('.r-stage');if(!stage||!book)return;
     stage.querySelectorAll('.r-screen[data-stype="custom"]').forEach(function(s){s.remove();});
-    const tabs=getBookTabs(book.id);const cm=getBookCustomMap();
+    const tabs=getEffectiveTabs(book.id);
     tabs.forEach(function(t){
       if(t.type!=='custom')return;
-      const data=(cm[book.id]&&cm[book.id][t.cid])||{content:''};
+      /* v6-5：被标记 __pending_delete 的自定义页不渲染 */
+      const stgEntry=(pmStagingCustom[book.id]||{})[t.cid];
+      if(stgEntry&&stgEntry.__pending_delete)return;
+      const data=getEffectiveCustom(book.id,t.cid);
       const sc=document.createElement('div');sc.className='r-screen custom-screen';sc.setAttribute('data-stype','custom');sc.setAttribute('data-cid',t.cid);
-      sc.innerHTML='<div class="card custom-card"><h3 class="custom-h">'+esc(t.name)+'</h3><div class="custom-body text-block" contenteditable="'+(editMode?'true':'false')+'" data-ph="点此输入这一页的内容…" onblur="saveCustomPage(\''+book.id+'\',\''+t.cid+'\',this)">'+data.content+'</div></div>';
+      sc.innerHTML='<div class="card custom-card"><h3 class="custom-h">'+esc(t.name)+'</h3><div class="custom-body text-block" contenteditable="'+(editMode?'true':'false')+'" data-ph="点此输入这一页的内容…" onblur="saveCustomPage(\''+book.id+'\',\''+t.cid+'\',this)">'+(data.content||'')+'</div></div>';
       stage.appendChild(sc);
     });
   }
   function addReaderTab(bookId){
-    const tabs=getBookTabs(bookId);
+    const tabs=JSON.parse(JSON.stringify(getEffectiveTabs(bookId)));
     const cid='cust_'+Date.now();
     const n='新页面'+(tabs.filter(function(t){return t.type==='custom';}).length+1);
     tabs.push({type:'custom',name:n,cid:cid});
-    setBookTabs(bookId,tabs);
+    /* v6-5：只入 staging，不写 setBookTabs */
+    pmStagingTabs[bookId]=tabs;pmDirty[bookId]=true;updatePmSaveBar();
     ensureCustomScreens(curBook||{id:bookId});
     renderReaderTabs(curBook);
     showReaderTab(tabs.length-1);
   }
   function removeReaderTab(idx,bookId){
     idx=parseInt(idx,10);
-    const tabs=getBookTabs(bookId);
+    const tabs=JSON.parse(JSON.stringify(getEffectiveTabs(bookId)));
     if(idx<0||idx>=tabs.length)return;
     const t=tabs[idx];
     if(t.type==='cover'||t.type==='page'){toast('封面和正文不可移除');return;}
     if(t.type==='custom'){
-      const cm=getBookCustomMap();if(cm[bookId]){delete cm[bookId][t.cid];setBookCustomMap(cm);}
+      if(!pmStagingCustom[bookId])pmStagingCustom[bookId]={};
+      pmStagingCustom[bookId][t.cid]={__pending_delete:true};
       const sc=document.querySelector('.r-screen[data-stype="custom"][data-cid="'+t.cid+'"]');if(sc)sc.remove();
     }
-    tabs.splice(idx,1);setBookTabs(bookId,tabs);
+    tabs.splice(idx,1);
+    /* v6-5：只入 staging，不写 setBookTabs */
+    pmStagingTabs[bookId]=tabs;pmDirty[bookId]=true;updatePmSaveBar();
     renderReaderTabs(curBook);showReaderTab(0);
   }
   function renameReaderTab(idx,bookId,span){
     idx=parseInt(idx,10);
-    const tabs=getBookTabs(bookId);if(!tabs[idx])return;
+    const tabs=JSON.parse(JSON.stringify(getEffectiveTabs(bookId)));if(!tabs[idx])return;
     let nm=(span.textContent||'').trim();if(!nm)nm='板块'+(idx+1);
-    tabs[idx].name=nm;setBookTabs(bookId,tabs);span.textContent=nm;
+    tabs[idx].name=nm;
+    /* v6-5：只入 staging，不写 setBookTabs */
+    pmStagingTabs[bookId]=tabs;pmDirty[bookId]=true;updatePmSaveBar();
+    span.textContent=nm;
     const sc=document.querySelector('.r-screen[data-stype="custom"][data-cid="'+(tabs[idx].cid||'')+'"] .custom-h');if(sc)sc.textContent=nm;
   }
   function saveCustomPage(bookId,cid,el){
-    const cm=getBookCustomMap();if(!cm[bookId])cm[bookId]={};if(!cm[bookId][cid])cm[bookId][cid]={content:''};
-    cm[bookId][cid].content=el.innerHTML||'';setBookCustomMap(cm);
+    /* v6-5：只入 staging，不写 setBookCustomMap（点 💾 保存才持久化） */
+    if(!pmStagingCustom[bookId])pmStagingCustom[bookId]={};
+    pmStagingCustom[bookId][cid]={content:el.innerHTML||''};
+    pmDirty[bookId]=true;updatePmSaveBar();
   }
   function updateReaderShelfBtn(){
     if(!curBook)return;
@@ -8066,9 +8153,13 @@ let phonicsTopicIdx=-1;
   }
   function enterEditMode(){
     editMode=true; document.body.classList.add('edit'); updateEditBtns();
+    updatePmSaveBar();
   }
   function exitEditMode(){
+    /* v6-5：退出家长模式自动丢弃暂存修改（用户原话"没保存退出不该生效"） */
+    if(curBook&&isBookDirty(curBook.id)){ discardReaderEdits(); }
     editMode=false; document.body.classList.remove('edit'); updateEditBtns();
+    updatePmSaveBar();
   }
   function toggleEditMode(){
     if(editMode)exitEditMode();
