@@ -2494,6 +2494,14 @@
     .reader[data-rtheme] .reader-nav{margin-top:auto}
     .reader[data-rtheme] .chip.cont{background:var(--brand-s);color:var(--brand-d);opacity:.85}
   }
+  /* v4-10 排版收尾：缩小顶部按钮、放大正文、互动/笔记页可滚动完整显示 */
+  .reader[data-rtheme] .page-actions-top .btn-pill{padding:6px 13px;font-size:12px;border-radius:16px;gap:4px;}
+  .reader[data-rtheme] .reader-nav .btn{padding:6px 15px;font-size:13px;border-radius:16px;}
+  .reader[data-rtheme] .reader-nav .cp-now{font-size:13px;}
+  .reader[data-rtheme] .text-block{font-size:19px;line-height:2;overflow:auto;}
+  .reader[data-rtheme] .quiz-screen{overflow:auto;}
+  .reader[data-rtheme] .draw-area{min-height:200px;}
+  .reader[data-rtheme] .note-card{max-height:100%;overflow:auto;}
 
     /* 阅读进度条（对照 book-A-cloud-themes 补回） */
     .reader[data-rtheme] .reader-progress{position:relative;z-index:3;padding:0 18px 6px;}
@@ -3707,10 +3715,6 @@
               <button class="btn ghost" onclick="readerFlipPage(-1)">◀ 上一页</button>
               <span class="cp-now" id="rdPageNo">1 / 1</span>
               <button class="btn ghost" onclick="readerFlipPage(1)">下一页 ▶</button>
-            </div>
-            <div class="page-edit-tools edit-only" id="pageEditTools">
-              <button class="btn sm" onclick="addBookPage()">＋ 新增一页</button>
-              <button class="btn sm warn" onclick="delBookPage()">🗑 删本页</button>
             </div>
           </div>
             </div>
