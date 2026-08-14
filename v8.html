@@ -1117,6 +1117,16 @@
   .book-card .bc-del{right:8px;background:rgba(232,96,122,.95);color:#fff;}
   body.edit .book-card .bc-add{display:none !important;}
   .book-card .bc-add:hover{background:#ffb300;transform:scale(1.08)}
+  /* 新增故事 / 空白故事 占位卡（与书卡同尺寸，居中＋号） */
+  .book-card.bc-add-card,.book-card.bc-blank{border:2px dashed #FFC4D2;background:linear-gradient(135deg,#FFF7FA,#FFF0F4);cursor:pointer;align-items:center;justify-content:center;min-height:200px;box-shadow:none;transition:.18s;}
+  .book-card.bc-add-card:hover,.book-card.bc-blank:hover{border-color:#E8607A;background:#FFF0F4;transform:translateY(-2px);box-shadow:0 8px 20px rgba(244,130,155,.18);}
+  .book-card.bc-blank{border-style:dashed;border-color:#CFE0F2;background:linear-gradient(135deg,#F7FBFF,#EEF5FD);}
+  .book-card.bc-blank:hover{border-color:#5B8FD0;background:#EEF5FD;}
+  .bc-add-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#E8607A;text-align:center;padding:18px;}
+  .book-card.bc-blank .bc-add-inner{color:#5B8FD0;}
+  .bc-plus{width:46px;height:46px;border-radius:50%;background:#fff;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+  .bc-add-tip{font-size:14px;font-weight:800;}
+  .bc-add-tip span{font-size:11px;font-weight:600;opacity:.7;}
   .empty{text-align:center;color:var(--ink-faint);font-size:13px;padding:24px 10px}
   /* 读书笔记：手绘风、高互动、每本绘本通用 */
   .note-illu{display:flex;align-items:center;justify-content:center}
@@ -7499,7 +7509,17 @@ let phonicsTopicIdx=-1;
       const totalPages=Math.max(1,Math.ceil(books.length/pageSize));
       if(bookPage>totalPages-1)bookPage=totalPages-1;
       const pageBooks=books.slice(bookPage*pageSize,(bookPage+1)*pageSize);
-      pageBooks.forEach(function(b){
+      const showBlank=(bookNav==='mine'&&bookPage===0);
+      const showAdd=(bookPage>=totalPages-1);
+      const displayBooks=pageBooks.slice();
+      if(showBlank)displayBooks.unshift({__blank:true});
+      displayBooks.forEach(function(b){
+        if(b&&b.__blank){
+          const c=document.createElement('div');c.className='book-card bc-blank';
+          c.innerHTML='<div class="bc-add-inner"><div class="bc-plus">＋</div><div class="bc-add-tip">空白故事<br><span>点此新建一本</span></div></div>';
+          c.onclick=function(){if(typeof createBlankBook==='function')createBlankBook();};
+          list.appendChild(c);return;
+        }
         const card=document.createElement('div');card.className='book-card'+(b.ready?'':' notready');
         const isDone=done.indexOf(b.id)>=0;const isShelf=inBookShelf(b.id);
         const bcov=getBookCover(b.id);
@@ -7517,6 +7537,12 @@ let phonicsTopicIdx=-1;
         card.onclick=function(){openBookReader(b.id);};
         list.appendChild(card);
       });
+      if(showAdd){
+        const c=document.createElement('div');c.className='book-card bc-add-card';
+        c.innerHTML='<div class="bc-add-inner"><div class="bc-plus">＋</div><div class="bc-add-tip">新增故事<br><span>点此添加绘本</span></div></div>';
+        c.onclick=function(){addUserBook();openMyBooks();};
+        list.appendChild(c);
+      }
       const _pg=document.getElementById('bookPager');
       if(_pg){
         if(books.length>pageSize){
@@ -8872,6 +8898,15 @@ let phonicsTopicIdx=-1;
     });
   }
   function openBookFromMine(id){closeMyBooks();openBookReader(id);}
+  function createBlankBook(){
+    const id='u_blank_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);
+    const icons=['🐛','🐰','🦖','🌈','🚀','🌟','🍎','🐱'];
+    const icon=icons[Math.floor(Math.random()*icons.length)];
+    const book={id:id,cat:'classic',icon:icon,title:'未命名故事',tag:'',age:'幼升小',grade:'幼升小',ready:true,desc:'点击进入后即可在家长模式下添加内容',cover:'',pages:[{chars:[],media:{video:null,ppt:null}}],difficulty:'幼升小',tags:[],blank:true};
+    const books=getUserBooks();books.push(book);setUserBooks(books);
+    toast('已创建空白故事，进入后可添加内容 ✔');
+    closeMyBooks();openBookReader(id);
+  }
   function addUserBook(){editBookId=null;document.getElementById('mbEditor').style.display='block';document.getElementById('mbList').style.display='none';
     ['mbFTitle','mbFIcon','mbFDesc','mbFTags','mbFContent'].forEach(function(id2){document.getElementById(id2).value='';});
     document.getElementById('mbFCat').value='classic';document.getElementById('mbFAge').value='幼升小';document.getElementById('mbFIcon').value='📖';document.getElementById('mbFSaveBtn').textContent='💾 保存';
