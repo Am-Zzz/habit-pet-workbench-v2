@@ -2246,6 +2246,10 @@
   .edit-pin-mask .ep-btns button{flex:1;padding:10px;border-radius:12px;border:none;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;}
   .edit-pin-mask .ep-ok{background:#E8607A;color:#fff;}
   .edit-pin-mask .ep-cancel{background:#F2F2F2;color:var(--ink);}
+  /* 阅读器正文屏：编辑态增删页工具条 */
+  .reader[data-rtheme] .page-edit-tools{margin-top:8px;gap:10px;justify-content:center;flex:none;}
+  .reader[data-rtheme] .page-edit-tools .btn{border:1.5px solid #FFB3C1;background:#fff;color:#E8607A;}
+  .reader[data-rtheme] .page-edit-tools .btn.warn{border-color:#ffb4b4;color:#e0506a;}
   .reader[data-rtheme] .page-right{flex:1;display:flex;flex-direction:column;gap:12px;padding:18px 22px;justify-content:flex-start;min-height:0;overflow:hidden;}
   .reader[data-rtheme] .page-actions-top{margin-bottom:2px;display:flex;gap:10px;justify-content:center;flex-wrap:nowrap;flex:none;}
   .reader[data-rtheme] .btn-pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;padding:9px 16px;border-radius:30px;border:none;cursor:pointer;box-shadow:0 5px 14px rgba(0,0,0,.08);transition:.2s,background .3s,color .3s;white-space:nowrap;}
@@ -3572,12 +3576,16 @@
                   <div class="think-text" id="rdThink"></div>
                   <div id="rdFollow"></div>
                 </div>
-                <div class="reader-nav">
-                  <button class="btn ghost" onclick="readerFlipPage(-1)">◀ 上一页</button>
-                  <span class="cp-now" id="rdPageNo">1 / 1</span>
-                  <button class="btn ghost" onclick="readerFlipPage(1)">下一页 ▶</button>
-                </div>
-              </div>
+            <div class="reader-nav">
+              <button class="btn ghost" onclick="readerFlipPage(-1)">◀ 上一页</button>
+              <span class="cp-now" id="rdPageNo">1 / 1</span>
+              <button class="btn ghost" onclick="readerFlipPage(1)">下一页 ▶</button>
+            </div>
+            <div class="page-edit-tools edit-only" id="pageEditTools">
+              <button class="btn sm" onclick="addBookPage()">＋ 新增一页</button>
+              <button class="btn sm warn" onclick="delBookPage()">🗑 删本页</button>
+            </div>
+          </div>
             </div>
 
             <!-- 诗歌 -->
@@ -7754,6 +7762,30 @@ let phonicsTopicIdx=-1;
     var b1=document.getElementById('bkEditBtn');
     var b2=document.getElementById('rdEditBtn');
     [b1,b2].forEach(function(b){ if(!b)return; if(editMode){b.classList.add('on');b.textContent='✅ 完成编辑';} else {b.classList.remove('on');b.textContent='✏️ 编辑';} });
+  }
+  /* ===== 阅读器内正文页增删（编辑态，仅用户书） ===== */
+  function isCurrentUserBook(){ if(!curBook)return false; return getUserBooks().some(function(b){return b.id===curBook.id;}); }
+  function persistCurBookPages(){
+    if(!curBook||!isCurrentUserBook())return;
+    var books=getUserBooks(); var b=books.filter(function(x){return x.id===curBook.id;})[0];
+    if(b){ b.pages=curBook.pages; setUserBooks(books); }
+  }
+  function addBookPage(){
+    if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
+    if(!isCurrentUserBook()){toast('内置绘本不能增删页，可在「✏️ 编辑 → ＋ 新增故事」新建一本');return;}
+    if(!curBook.pages)curBook.pages=[];
+    curBook.pages.splice(curPage+1,0,{chars:[],media:{video:null,ppt:null}});
+    curPage=Math.min(curPage+1,curBook.pages.length-1);
+    renderBookPage(); persistCurBookPages(); updateReaderProgress(); toast('已新增一页 ✔');
+  }
+  function delBookPage(){
+    if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
+    if(!isCurrentUserBook()){toast('内置绘本不能删页，可在「✏️ 编辑 → ＋ 新增故事」新建一本');return;}
+    if(!curBook.pages||curBook.pages.length<=1){toast('至少保留一页');return;}
+    if(!confirm('确定删除当前这一页？'))return;
+    curBook.pages.splice(curPage,1);
+    curPage=Math.max(0,Math.min(curPage,curBook.pages.length-1));
+    renderBookPage(); persistCurBookPages(); updateReaderProgress(); toast('已删除本页 ✔');
   }
   function playPageMedia(){
     var pg=curBook&&curBook.pages[curPage]; if(!pg||!pg.media)return;
