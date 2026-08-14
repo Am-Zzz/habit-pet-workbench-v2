@@ -1300,6 +1300,7 @@
   .reader-controls .btn{flex:1;padding:13px 14px;font-size:15px;font-weight:900;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand-d));color:#fff;border:none;box-shadow:0 8px 22px rgba(255,143,168,.35);letter-spacing:1px;cursor:pointer}
   .reader-top .rtool{width:32px;height:32px;border-radius:50%;border:none;background:var(--surface-2);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);position:relative;flex:none}
   .reader-top .rtool.on{background:var(--primary-s);color:var(--brand-d)}
+  /* v6-4：阅读器 ⋰ 更多菜单移除，.rmore CSS 保留以兼容老引用 */
   .reader-top .rmore{position:absolute;top:42px;right:6px;background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);padding:6px;z-index:40;display:none;flex-direction:column;gap:2px;min-width:160px}
   .reader-top .rmore.show{display:flex}
   .reader-top .rmore button{display:flex;align-items:center;gap:8px;width:100%;padding:9px 12px;border:none;background:none;font-size:13px;font-weight:700;color:var(--ink);border-radius:9px;cursor:pointer;text-align:left}
@@ -3652,15 +3653,8 @@
             <button class="rtheme-dot" data-t="cream" style="background:#E9D9C2" onclick="setReaderTheme('cream',this)" title="奶油绘本"></button>
           </div>
           <button class="pm-gear" id="rdEditBtn" onclick="toggleEditMode()" title="家长模式开关（点一下开启，再点关闭）">⚙️</button>
-          <button class="rtool edit-only" onclick="editUserBook(curBook.id)" title="编辑这本绘本（内置书会自动克隆一份再改）">✏️</button>
+          <!-- v6-4：删 ✏️ 编辑绘本入口（用户多次说"笔没用"）和 ⋰ 更多菜单（用户说"依旧是无效"），保留 ⚙️ 家长模式 / ⭐ 书架 / 🎨 主题 -->
           <button class="rtool" id="rdShelfIco" onclick="toggleReaderShelf()" title="加入书架">☆</button>
-          <button class="rtool" onclick="toggleReaderMore()" title="更多">⋯</button>
-          <div class="rmore" id="readerMore" style="display:none">
-            <button onclick="openMyBooks()">✏️ 我的绘本</button>
-            <button class="edit-only" onclick="openInsertMedia()">📎 插入页</button>
-            <button class="edit-only" onclick="openRecycleBin()">♻️ 回收站</button>
-            <button class="edit-only" onclick="exitEditMode()">ⓧ 退出家长模式</button>
-          </div>
           <button class="rtheme-btn" onclick="toggleReaderThemePop()" aria-label="切换主题">🎨</button>
         </div>
         <div class="reader-progress"><div class="bar"><i id="rProgressBar"></i></div></div>
@@ -7883,7 +7877,7 @@ let phonicsTopicIdx=-1;
     const old=document.getElementById('rdShelfBtn'); if(old){old.textContent=(on?'★ 已在书架':'☆ 加入书架');old.classList.toggle('ghost',!on);}
     const ico=document.getElementById('rdShelfIco'); if(ico){ico.textContent=on?'★':'☆';ico.classList.toggle('on',on);}
   }
-  function toggleReaderMore(){var m=document.getElementById('readerMore');if(m)m.classList.toggle('show');}
+  /* v6-4：toggleReaderMore 函数移除（⋯ 菜单不再使用） */
   function toggleReaderShelf(){if(!curBook)return;const on=inBookShelf(curBook.id);toggleBookShelf(curBook.id,null);updateReaderShelfBtn();renderBookList();}
   function pageText(pg){return pg.chars.map(function(c){return c.t;}).join('');}
   function setPinyin(on){
