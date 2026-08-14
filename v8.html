@@ -7325,6 +7325,11 @@ let phonicsTopicIdx=-1;
     if(!curBook){toast('请先打开一本绘本');return;}
     var idx=-1; readerTabList.forEach(function(t,i){if(t.type==='notes')idx=i;});
     if(idx<0){toast('当前绘本未启用笔记页，请在家长模式「＋」添加');return;}
+    /* v8-1：showReaderTab 在 notes tab 会反向调 openNotePicker，加幂等保护避免循环 — 同书且选择器已可见就跳过 */
+    if(noteView==='picker' && curNoteBook && curNoteBook.id===curBook.id){
+      var pv=document.getElementById('notePickerView');
+      if(pv && pv.style.display==='block')return;
+    }
     curNoteBook=curBook;curNote=null;noteVoiceData={};noteDrawDirty={};noteView='picker';
     document.getElementById('noteStatus').textContent='读书笔记';
     document.getElementById('noteBookTitle').textContent=curBook.title;
@@ -7817,6 +7822,8 @@ let phonicsTopicIdx=-1;
     if(tab&&tab.type==='cover')updateIllEmoji('cover');
     if(tab&&tab.type==='page')updateIllEmoji('page');
     if(tab&&tab.type==='quiz')initReaderCanvas();
+    /* v8-1：notes tab 数据驱动后没人调 openNotePicker，导致模板与标题从未渲染 — 在这里钩一下 */
+    if(tab&&tab.type==='notes')openNotePicker();
   }
   function showReaderTabByType(type){let idx=-1;readerTabList.forEach(function(t,i){if(t.type===type)idx=i;});if(idx>=0)showReaderTab(idx);}
   /* ===== v4-8 阅读器 tab 数据驱动：板块可显隐/增删/改名（仅家长模式） ===== */
