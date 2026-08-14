@@ -2268,6 +2268,9 @@
   .pm-entry:hover{background:#FFF7FA;color:#E8607A;border-color:#FFC4D2;transform:scale(1.06);}
   body.edit .pm-entry{background:rgba(40,180,120,.92);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(40,180,120,.35);}
   body.edit .pm-entry:hover{background:rgba(40,180,120,1);}
+  /* v3-α-8 家长模式状态小提示：开启时显示，再点 🔓 退出 */
+  .bk-tip{display:none;font-size:11.5px;color:#fff;background:rgba(40,180,120,.85);padding:3px 9px;border-radius:999px;line-height:1.2;font-weight:700;white-space:nowrap;}
+  body.edit .bk-tip{display:inline-flex;align-items:center;}
   /* 列表页工具行拆分 + 更多菜单 */
   .bk-tools-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
   .bk-spacer{flex:1 1 auto;}
@@ -3556,15 +3559,7 @@
                 <div class="bk-count">共 <b id="bookCount">0</b> 本</div>
                 <span class="bk-spacer"></span>
                 <button class="pm-entry" id="bkEditBtn" onclick="toggleEditMode()" title="家长模式（需验证）">🔒</button>
-                <button class="rtool bk-more" onclick="toggleBookMenu()" title="更多">⋯</button>
-                <div class="bk-menu" id="bookMenu" style="display:none">
-                <button onclick="openMyBooks();toggleBookMenu()">✏️ 我的绘本</button>
-                <button onclick="openNetImport('book');toggleBookMenu()">🌐 网盘导入</button>
-                <button class="edit-only" onclick="openRecycleBin();toggleBookMenu()">♻️ 回收站</button>
-                <hr style="border:none;border-top:1px dashed var(--line);margin:4px 2px">
-                <button class="pm-menu-item" onclick="toggleEditMode();toggleBookMenu()">🔒 进入家长模式</button>
-                <button class="edit-only" onclick="exitEditMode();toggleBookMenu()">ⓧ 退出家长模式</button>
-                </div>
+                <span class="bk-tip edit-only" id="bkEditTip">家长模式 · 点 🔓 退出</span>
               </div>
               <div class="bk-tools-row">
                 <div class="bk-levels lrn-pill" id="bkLevelPill">
@@ -7894,14 +7889,7 @@ let phonicsTopicIdx=-1;
     var b2=document.getElementById('rdEditBtn');
     [b1,b2].forEach(function(b){ if(!b)return; b.textContent=editMode?'🔓':'🔒'; });
   }
-  function toggleBookMenu(){
-    var m=document.getElementById('bookMenu'); if(!m)return;
-    m.style.display = (m.style.display==='none'||!m.style.display)?'flex':'none';
-  }
-  document.addEventListener('click',function(e){
-    var m=document.getElementById('bookMenu');
-    if(m && m.style.display!=='none' && !m.contains(e.target) && !e.target.closest('.bk-more')) m.style.display='none';
-  },true);
+  /* v3-α-8 ⋯按钮已删除：原 bkMenu 4 个功能（我的绘本/网盘导入/回收站/家长模式）均有独立入口，不再需要此菜单 */
   /* ===== 阅读器内正文页增删（编辑态，仅用户书） ===== */
   function isCurrentUserBook(){ if(!curBook)return false; return getUserBooks().some(function(b){return b.id===curBook.id;}); }
   function persistCurBookPages(){
