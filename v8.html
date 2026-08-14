@@ -2258,6 +2258,10 @@
   .pt-foot{display:flex;gap:10px;justify-content:flex-end;}
   .pt-foot button{padding:9px 18px;border-radius:12px;border:none;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;background:#F2F2F2;color:var(--ink);}
   .pt-foot .pt-save{background:#E8607A;color:#fff;}
+  .pt-ins{display:flex;gap:8px;flex-wrap:wrap;}
+  .pt-ins button{flex:1;min-width:130px;padding:9px 10px;border:1.5px dashed #F2C6CE;background:#FFF6E7;border-radius:12px;color:#C25A72;font-weight:700;cursor:pointer;font-size:13px;transition:background .15s;}
+  .pt-ins button:hover{background:#FCE9EE;}
+  .pt-ins button:active{transform:scale(.98);}
   .reader[data-rtheme] .page-right{flex:1;display:flex;flex-direction:column;gap:12px;padding:18px 22px;justify-content:flex-start;min-height:0;overflow:hidden;}
   .reader[data-rtheme] .page-actions-top{margin-bottom:2px;display:flex;gap:10px;justify-content:center;flex-wrap:nowrap;flex:none;}
   .reader[data-rtheme] .btn-pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;padding:9px 16px;border-radius:30px;border:none;cursor:pointer;box-shadow:0 5px 14px rgba(0,0,0,.08);transition:.2s,background .3s,color .3s;white-space:nowrap;}
@@ -2275,6 +2279,10 @@
   .reader[data-rtheme] .cz{display:inline-flex;flex-direction:column;align-items:center;line-height:1.05;vertical-align:top;}
   .reader[data-rtheme] .cz .py{font-size:clamp(8px,1.1vh,9px);color:#3E6FB0;font-weight:700;line-height:1;margin-bottom:2px;letter-spacing:.5px;transition:color .3s;display:none;}
   .reader[data-rtheme] .cz .ch{font-size:clamp(15px,2.1vh,21px);font-weight:700;letter-spacing:.5px;}
+  /* 正文故事文字流内的行内插图 / 链接（家长模式插入，随 ruby 文字流式排列） */
+  .reader[data-rtheme] .text-block .inline-img{display:inline-block;max-width:118px;max-height:118px;width:auto;height:auto;vertical-align:middle;margin:0 5px;border-radius:10px;border:2px solid #F2C6CE;object-fit:cover;cursor:pointer;}
+  .reader[data-rtheme] .text-block .inline-link{color:#E8607A;text-decoration:underline;font-weight:700;cursor:pointer;padding:0 2px;white-space:nowrap;}
+  .reader[data-rtheme] .text-block .inline-link::before{content:"\1F517";font-size:.78em;margin-right:2px;}
   .reader[data-rtheme] .cz .punct{font-size:clamp(15px,2.1vh,21px);font-weight:700;}
   .reader[data-rtheme] .text-block.py-on .cz .py{display:block;}
   .reader[data-rtheme] .text-block.py-on .cz{margin:0 1px;}
@@ -3724,6 +3732,10 @@
         <div class="pt-editor" onclick="event.stopPropagation()">
           <div class="pt-head"><span id="ptTitle">✏️ 编辑本页故事</span><button class="pt-close" onclick="closePageTextEditor()">✕</button></div>
           <textarea id="ptInput" placeholder="输入这一页的故事文字，保存后自动重新分页注音…"></textarea>
+          <div class="pt-ins">
+            <button type="button" onclick="insertInlineMedia('img')">🖼 在光标处插图片</button>
+            <button type="button" onclick="insertInlineMedia('link')">🔗 在光标处插链接</button>
+          </div>
           <div class="pt-foot">
             <button onclick="closePageTextEditor()">取消</button>
             <button class="pt-save" onclick="savePageText()">💾 保存本页</button>
@@ -7657,13 +7669,26 @@ let phonicsTopicIdx=-1;
       /* 媒体已改为在左侧插图区以封面呈现，正文照常渲染，不再单独成页 */
     }
     var chars=normBookChars(pg.chars||[]);
-    var sents=[], cur=[];
-    chars.forEach(function(c){cur.push(c); if(/[。！？!?；;]/.test(c.t)){sents.push(cur);cur=[];}});
+    /* 行内插图/链接：按 at（字索引）插入到文字流对应位置；内置书无 inline 不受影响 */
+    var inlines=(Array.isArray(pg.inline)?pg.inline:[]).slice().sort(function(a,b){return (a.at||0)-(b.at||0);});
+    var gi=0, sents=[], cur=[];
+    chars.forEach(function(c){
+      while(inlines.length && (inlines[0].at||0)===gi){ cur.push({inline:inlines.shift()}); }
+      cur.push(c); gi++;
+      if(/[。！？!?；;]/.test(c.t)){sents.push(cur);cur=[];}
+    });
+    while(inlines.length){ cur.push({inline:inlines.shift()}); }
     if(cur.length)sents.push(cur);
     var html='';
-    sents.forEach(function(sentChars){
-      var sentText=sentChars.map(function(c){return c.t;}).join('');
-      var sentInner=sentChars.map(function(c){
+    sents.forEach(function(items){
+      var sentText=items.filter(function(it){return !it.inline;}).map(function(it){return it.t;}).join('');
+      var sentInner=items.map(function(it){
+        if(it.inline){
+          var x=it.inline;
+          if(x.kind==='img')return '<img class="inline-img" src="'+attrEsc(x.url||'')+'" alt="'+attrEsc(x.label||'插图')+'" title="'+attrEsc(x.label||'插图')+'" onclick="event.stopPropagation()">';
+          return '<a class="inline-link" href="'+attrEsc(x.url||'#')+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">'+esc(x.label||x.url||'链接')+'</a>';
+        }
+        var c=it;
         if(c.p)return '<span class="cz"><span class="py">'+esc(c.p)+'</span><span class="ch">'+esc(c.t)+'</span></span>';
         return '<span class="cz"><span class="ch">'+esc(c.t)+'</span></span>';
       }).join('');
@@ -7820,12 +7845,15 @@ let phonicsTopicIdx=-1;
     return out;
   }
   var _ptMode='page';
+  var _inlineBackup=null;   /* 打开编辑器时对 pg.inline 的备份，取消时回滚 */
+  var _ptSaved=false;       /* savePageText 成功置 true，closePageTextEditor 取消时据此回滚 */
   function editPageText(){
     if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
     if(!isCurrentUserBook()){toast('内置绘本不能改文字，可在「✏️ 编辑 → ＋ 新增故事」新建一本');return;}
-    _ptMode='page';
+    _ptMode='page'; _ptSaved=false;
     var tEl=document.getElementById('ptTitle'); if(tEl)tEl.textContent='✏️ 编辑本页故事';
     var pg=curBook.pages[curPage]; if(!pg)return;
+    _inlineBackup=pg.inline?JSON.parse(JSON.stringify(pg.inline)):null;
     var t=(pg.chars||[]).map(function(c){return c.t;}).join('');
     var inp=document.getElementById('ptInput'); if(inp)inp.value=t;
     var m=document.getElementById('pageTextEditor'); if(m)m.style.display='flex';
@@ -7833,13 +7861,35 @@ let phonicsTopicIdx=-1;
   function editPoem(){
     if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
     if(!isCurrentUserBook()){toast('内置绘本不能改文字，可在「✏️ 编辑 → ＋ 新增故事」新建一本');return;}
-    _ptMode='poem';
+    _ptMode='poem'; _ptSaved=false; _inlineBackup=null;
     var tEl=document.getElementById('ptTitle'); if(tEl)tEl.textContent='✏️ 编辑诗歌（每行一句）';
     var lines=Array.isArray(curBook.poem)?curBook.poem:((curBook.poem&&typeof curBook.poem==='string')?curBook.poem.split('\n'):[]);
     var inp=document.getElementById('ptInput'); if(inp)inp.value=lines.join('\n');
     var m=document.getElementById('pageTextEditor'); if(m)m.style.display='flex';
   }
-  function closePageTextEditor(){var m=document.getElementById('pageTextEditor');if(m)m.style.display='none';}
+  function insertInlineMedia(kind){
+    if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
+    var inp=document.getElementById('ptInput'); if(!inp)return;
+    var sel=(inp.selectionStart!=null)?inp.selectionStart:inp.value.length;
+    var url=prompt(kind==='img'?'输入图片链接（以 https:// 开头）：':'输入链接地址（以 https:// 开头）：');
+    if(url===null||!url.trim())return; url=url.trim();
+    var label='';
+    if(kind==='link'){ label=prompt('链接显示的文字（如：扩展阅读 / 听音频）：', url); if(label===null)return; label=label.trim(); }
+    else { label=prompt('图片说明文字（可留空，默认显示“插图”）：',''); if(label===null)return; label=label.trim(); }
+    var pg=curBook.pages[curPage]; if(!pg)return;
+    if(!Array.isArray(pg.inline))pg.inline=[];
+    pg.inline.push({at:sel, kind:kind, url:url, label:label});
+    pg.inline.sort(function(a,b){return a.at-b.at;});
+    renderBookPage();
+    toast((kind==='img'?'已插入图片':'已插入链接')+'，保存后生效');
+  }
+  function closePageTextEditor(){
+    if(!_ptSaved && _inlineBackup!==null){
+      var pg=curBook&&curBook.pages&&curBook.pages[curPage];
+      if(pg)pg.inline=_inlineBackup?JSON.parse(JSON.stringify(_inlineBackup)):null;
+    }
+    var m=document.getElementById('pageTextEditor');if(m)m.style.display='none';
+  }
   function persistCurBookMeta(){
     if(!curBook||!isCurrentUserBook())return;
     var books=getUserBooks(); var b=books.filter(function(x){return x.id===curBook.id;})[0];
@@ -7850,13 +7900,18 @@ let phonicsTopicIdx=-1;
     if(_ptMode==='poem'){
       if(!isCurrentUserBook()){toast('内置绘本不能改');return;}
       curBook.poem=document.getElementById('ptInput').value.split('\n').map(function(s){return s.trim();}).filter(Boolean);
-      persistCurBookMeta(); closePageTextEditor(); renderReaderPoem(); toast('已保存诗歌 ✔'); return;
+      persistCurBookMeta(); _ptSaved=true; closePageTextEditor(); renderReaderPoem(); toast('已保存诗歌 ✔'); return;
     }
     var pg=curBook.pages[curPage]; if(!pg)return;
     var txt=document.getElementById('ptInput').value;
     var old=pg.chars||[];
     pg.chars=normBookChars(textToCharsKeepPy(txt,old));
-    persistCurBookPages(); closePageTextEditor(); renderBookPage(); toast('已保存本页 ✔');
+    var len=(pg.chars||[]).reduce(function(n,c){return n+(c.t?String(c.t).length:0);},0);
+    if(Array.isArray(pg.inline)){
+      pg.inline.forEach(function(x){ if(typeof x.at!=='number'||x.at<0)x.at=0; if(x.at>len)x.at=len; });
+      pg.inline.sort(function(a,b){return a.at-b.at;});
+    } else { pg.inline=[]; }
+    persistCurBookPages(); _ptSaved=true; closePageTextEditor(); renderBookPage(); toast('已保存本页 ✔');
   }
   function playPageMedia(){
     var pg=curBook&&curBook.pages[curPage]; if(!pg||!pg.media)return;
