@@ -3530,7 +3530,7 @@
                 <div class="bk-menu" id="bookMenu" style="display:none">
                   <button onclick="openMyBooks();toggleBookMenu()">✏️ 我的绘本</button>
                   <button onclick="openNetImport('book');toggleBookMenu()">🌐 网盘导入</button>
-                  <button onclick="switchBookNav('shelf',document.querySelector('#bkSidebar .bk-nav-item[data-nav=shelf]'));toggleBookMenu()">+ 加入书架</button>
+                  <button class="edit-only" onclick="openRecycleBin();toggleBookMenu()">♻️ 回收站</button>
                   <button class="edit-only" onclick="exitEditMode();toggleBookMenu()">ⓧ 退出家长模式</button>
                 </div>
               </div>
@@ -3575,7 +3575,7 @@
           <div class="rmore" id="readerMore" style="display:none">
             <button onclick="openMyBooks()">✏️ 我的绘本</button>
             <button class="edit-only" onclick="openInsertMedia()">📎 插入页</button>
-            <button class="edit-only" onclick="openNotePicker()">📝 做笔记</button>
+            <button class="edit-only" onclick="openRecycleBin()">♻️ 回收站</button>
             <button class="edit-only" onclick="exitEditMode()">ⓧ 退出家长模式</button>
           </div>
           <button class="rtheme-btn" onclick="toggleReaderThemePop()" aria-label="切换主题">🎨</button>
