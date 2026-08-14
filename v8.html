@@ -2199,8 +2199,7 @@
   .reader[data-rtheme] .page-left{flex:1.1;padding:8px;background:#FFF6E7;border:2px solid #F2C6CE;border-radius:18px;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;position:relative;min-height:340px;overflow:hidden;box-shadow:none;backdrop-filter:none;}
   .reader[data-rtheme] .cover-left,.reader[data-rtheme] .page-left{position:relative;}
   .reader[data-rtheme] .page-ill-head{position:absolute;top:12px;right:12px;z-index:4;display:none;align-items:center;justify-content:flex-end;gap:6px;flex:none;pointer-events:none;}
-  .reader[data-rtheme] .ill-media-tag{background:rgba(20,20,30,.55);color:#fff;font-size:12.5px;font-weight:800;padding:7px 14px;border-radius:999px;border:none;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.28);font-family:inherit;line-height:1.2;display:inline-flex;align-items:center;gap:4px;pointer-events:auto;transition:.2s;user-select:none;-webkit-tap-highlight-color:transparent;}
-  .reader[data-rtheme] .ill-media-tag::after{content:"⇅";font-size:11px;margin-left:2px;color:rgba(255,255,255,.75);font-weight:700;}
+  .reader[data-rtheme] .ill-media-tag{background:rgba(20,20,30,.55);color:#fff;font-size:13px;font-weight:800;padding:7px 14px;border-radius:999px;border:none;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.28);font-family:inherit;line-height:1.2;display:inline-flex;align-items:center;gap:4px;pointer-events:auto;transition:.2s;user-select:none;-webkit-tap-highlight-color:transparent;}
   .reader[data-rtheme] .ill-media-tag:hover{filter:brightness(1.15);transform:scale(1.04);}
   .reader[data-rtheme] .ill-media-tag:active{transform:scale(.97);}
   .reader[data-rtheme] .page-ill{flex:1;width:100%;border-radius:12px;background:linear-gradient(160deg,#CFE3F2,#E7D7F0);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:0;box-shadow:none;transition:background .3s;}
@@ -7620,7 +7619,7 @@ let phonicsTopicIdx=-1;
     /* 双素材：右上角胶囊显示当前激活的类型，点击后切到另一种（中央 ▶ 跟着一起切） */
     if(mv && mp){
       if(_pageMediaCur!=='ppt')_pageMediaCur='video';
-      var curLabel=_pageMediaCur==='video'?'🎬 视频':'📄 PPT';
+      var curLabel=_pageMediaCur==='video'?'视频':'PPT';
       if(head){head.style.display='flex';head.innerHTML='<button class="ill-media-tag" onclick="togglePageMediaTag()" title="点击切换">'+curLabel+'</button>';}
       ill.innerHTML=bg()
         +'<span class="bear" style="display:none">'+icon+'</span>'
@@ -7628,15 +7627,15 @@ let phonicsTopicIdx=-1;
         +addPill;
       return;
     }
-    /* 单视频：右上角胶囊"🎬 视频"点击直接全屏 */
+    /* 单视频：右上角胶囊"视频"点击直接全屏 */
     if(mv){
-      if(head){head.style.display='flex';head.innerHTML='<button class="ill-media-tag" onclick="playPageMediaByType(\'video\')" title="点击全屏播放">🎬 视频</button>';}
+      if(head){head.style.display='flex';head.innerHTML='<button class="ill-media-tag" onclick="playPageMediaByType(\'video\')" title="点击全屏播放">视频</button>';}
       ill.innerHTML=bg()+'<span class="bear" style="display:none">'+icon+'</span><span class="play" onclick="playPageMediaByType(\'video\')" title="点击看视频">▶</span>'+addPill;
       return;
     }
-    /* 单 PPT：右上角胶囊"📄 PPT"点击直接全屏 */
+    /* 单 PPT：右上角胶囊"PPT"点击直接全屏 */
     if(mp){
-      if(head){head.style.display='flex';head.innerHTML='<button class="ill-media-tag" onclick="playPageMediaByType(\'ppt\')" title="点击全屏播放">📄 PPT</button>';}
+      if(head){head.style.display='flex';head.innerHTML='<button class="ill-media-tag" onclick="playPageMediaByType(\'ppt\')" title="点击全屏播放">PPT</button>';}
       ill.innerHTML=bg()+'<span class="bear" style="display:none">'+icon+'</span><span class="play" onclick="playPageMediaByType(\'ppt\')" title="点击看 PPT">▶</span>'+addPill;
       return;
     }
