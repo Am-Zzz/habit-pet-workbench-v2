@@ -1118,7 +1118,11 @@
   .bc-soon{font-size:10px;color:#b08968;background:#fff3e6;padding:2px 8px;border-radius:999px;font-weight:700}
   .book-card.notready{opacity:.92}
   /* v3-α-3：移除 .bc-add hover 浮出规则；bc-add 整块已删 */
-  /* v6-3：书卡 ✏️ 按钮已删，.bc-edit 整段移除（.bc-del 见上） */
+  /* v6-3：书卡 ✏️ 按钮已删，.bc-edit 整段移除 */
+  /* v7-2：书卡右上角删除按钮 = 红色圆圈"−"（所有书卡统一位置；家长模式下显示） */
+  .bc-del{position:absolute;top:8px;right:8px;z-index:5;width:30px;height:30px;border:1.5px solid #E8607A;background:rgba(255,255,255,.96);border-radius:50%;color:#E8607A;font-size:22px;font-weight:900;cursor:pointer;display:none;align-items:center;justify-content:center;padding:0;font-family:inherit;line-height:1;box-shadow:0 2px 6px rgba(232,96,122,.25);-webkit-tap-highlight-color:transparent}
+  body.edit .bc-del{display:flex;}
+  body.edit .bc-del:hover{background:#E8607A;color:#fff;}
   /* 新增故事 / 空白故事 占位卡（与书卡同尺寸，居中＋号） */
   /* v3-α-4：移除 .bc-blank（空白故事卡，v2 设计未保留到 v3）；bc-add-card 兼任首位/末尾"新增故事"卡 */
   /* === v3-α-5 回收站 === */
@@ -1354,13 +1358,12 @@
   .btn-pill.on{box-shadow:0 0 0 3px var(--brand) inset}
   .btn-pill:active{transform:scale(.96)}
   /* v6-5：家长模式编辑"暂存条"（仅 edit-only 且脏数据时可见） */
-  .pm-save-bar{display:none;align-items:center;justify-content:center;gap:10px;background:linear-gradient(180deg,#FFF6E8,#FFE9C7);border-radius:12px;padding:8px 14px;margin:8px 0 6px;border:1.5px dashed #E8607A;box-shadow:0 2px 6px rgba(232,96,122,.12);}
-  body.edit .pm-save-bar.has-dirty{display:flex;}
-  .pm-save-bar button{border:none;border-radius:10px;padding:7px 14px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;}
-  .pm-save-bar .ghost{background:#fff;color:#5c3d00;border:1px solid #E0BC8A;}
-  .pm-save-bar .primary{background:#E8607A;color:#fff;}
-  .pm-save-bar .primary:hover{background:#D14C66;}
-  .pm-save-bar .ghost:hover{background:#FFF3E6;}
+  /* v7-2：暂存条 = 单个"💾 保存修改"按钮，与 .r-tabs 同一行；有脏数据时跳动提示 */
+  .r-tabs-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:2px 0 8px;position:relative;z-index:3;}
+  .pm-save-bar{display:none;border:1.5px solid #E8607A;background:linear-gradient(180deg,#FFF6E8,#FFE9C7);color:#E8607A;border-radius:20px;padding:7px 14px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(232,96,122,.22);animation:pm-pulse 1.6s ease-in-out infinite;margin:0;-webkit-tap-highlight-color:transparent}
+  body.edit .pm-save-bar.has-dirty{display:inline-flex;}
+  .pm-save-bar:hover{background:#E8607A;color:#fff;}
+  @keyframes pm-pulse{0%,100%{transform:scale(1);box-shadow:0 2px 6px rgba(232,96,122,.25);}50%{transform:scale(1.06);box-shadow:0 4px 14px rgba(232,96,122,.45);}}
 .text-block .sent{cursor:pointer;transition:background .12s,border-radius .12s;padding:2px 2px;border-radius:8px;display:inline}
 .text-block .sent:hover{background:var(--brand-s)}
 .text-block .sent.hl{background:var(--brand);color:#fff}
@@ -3666,12 +3669,11 @@
           <button class="rtheme-btn" onclick="toggleReaderThemePop()" aria-label="切换主题">🎨</button>
         </div>
         <div class="reader-progress"><div class="bar"><i id="rProgressBar"></i></div></div>
-        <!-- v6-5：家长模式编辑"暂存条"（仅 edit-only 且脏数据时显示） -->
-        <div id="pmSaveBar" class="pm-save-bar edit-only" style="display:none">
-          <button type="button" class="ghost" onclick="discardReaderEdits()" title="不保存，回到原本板块">↩ 放弃修改</button>
-          <button type="button" class="primary" onclick="saveReaderEdits()" title="保存板块修改（持久化）">💾 保存修改</button>
+        <!-- v7-2：暂存条 = 单个"💾 保存修改"，与 .r-tabs 同一行（脏数据时显示 + 跳动提示）；无 ↩ 按钮 = 没点保存 = 自动放弃（退出家长模式触发） -->
+        <div class="r-tabs-row">
+          <div class="r-tabs" id="rTabs"></div>
+          <button type="button" id="pmSaveBar" class="pm-save-bar edit-only" onclick="saveReaderEdits()" title="保存板块修改（持久化）" style="display:none">💾 保存修改</button>
         </div>
-        <div class="r-tabs" id="rTabs"></div>
 
           <div class="r-stage">
             <!-- 封面 -->
@@ -7698,8 +7700,8 @@ let phonicsTopicIdx=-1;
         const ph=bcov?'':'<div class="rd-cover-ph" style="background:'+bookCoverBg(b.id)+'">'+b.icon+'</div>';
         /* v4-4 ★ 书架徽章变按钮：家长模式 + 未在书架时显示 "+ 书架" 按钮（绿色）；已在书架显示 "★ 书架" 按钮（黄色）。点击 toggleBookShelfByBadge */
         const isUser=userIds.indexOf(b.id)>=0;
-        /* v6-3：书卡右上 ✏️ 笔按钮删除（用户多次说"笔没用"）；只保留 🗑 移到回收站 */
-        const delBtn='<button class="bc-del edit-only" onclick="event.stopPropagation();askMoveBookToTrash(\''+b.id+'\',\''+esc(b.title).replace(/'/g,"\\'")+'\')" title="移到回收站">🗑</button>';
+        /* v7-2：书卡右上角删除按钮 = 红色圆圈"−"（统一位置 + 醒目减号，所有书卡一致） */
+        const delBtn='<button class="bc-del edit-only" onclick="event.stopPropagation();askMoveBookToTrash(\''+b.id+'\',\''+esc(b.title).replace(/'/g,"\\'")+'\')" title="移到回收站">−</button>';
         const isDoneShelf=isDone;
         const shelfLabel=isShelf?'★ 书架':'+ 书架';
         const shelfClass='bc-shelf'+(isShelf?'':' shelf-add');
