@@ -3489,7 +3489,7 @@
                 <div class="page-ill" id="rPageIll">
                   <span class="bear" id="rPageEmoji">📖</span>
                   <span class="play" id="rPagePlay" onclick="openMediaFullscreen()" title="点击看视频/PPT">▶</span>
-                  <button class="ill-add-pill" onclick="openReaderImgPicker('page')" title="加媒体页">＋ 加媒体页</button>
+                  <button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>
                 </div>
               </div>
               <div class="card page-right">
@@ -7484,12 +7484,27 @@ let phonicsTopicIdx=-1;
     raw.forEach(function(c){
       var t=String(c.t||''), p=String(c.p||'');
       if(t.length<=1){out.push({t:t,p:p});return;}
+      /* 拆分一串拼音为数组（按空白分割） */
       var pys=p.split(/\s+/).filter(Boolean);
-      var pi=0;
-      for(var i=0;i<t.length;i++){
-        var ch=t.charAt(i);
-        if(/[，。！？!?；;、\s]/.test(ch)){out.push({t:ch,p:''});continue;}
-        out.push({t:ch,p:pys[pi++]||''});
+      /* 把 t 切成单字，标点占位 */
+      var chs=[];
+      for(var j=0;j<t.length;j++){
+        var ch=t.charAt(j);
+        if(/[，。！？!?；;、\s　]/.test(ch))chs.push({t:ch,isPunct:true});
+        else chs.push({t:ch,isPunct:false});
+      }
+      var charCount=chs.filter(function(x){return !x.isPunct;}).length;
+      /* 关键修复：只有「拼音数 == 字数（不含标点）」才按位匹配；
+         否则整段不加拼音（避免错位）,并 console.warn 提示数据异常。 */
+      if(pys.length===charCount){
+        var pi=0;
+        chs.forEach(function(it){
+          if(it.isPunct){out.push({t:it.t,p:''});}
+          else{out.push({t:it.t,p:pys[pi++]||''});}
+        });
+      }else{
+        console.warn('[normBookChars] 拼音数('+pys.length+')与字数('+charCount+')不匹配，整段留空:',t,'|',p);
+        chs.forEach(function(it){out.push({t:it.t,p:''});});
       }
     });
     /* 去重保护：合并连续重复的字（防止书数据重复导致“双字”显示） */
@@ -7556,11 +7571,11 @@ let phonicsTopicIdx=-1;
       var coverHtml = m.cover
         ? '<img class="ill-cover-img" src="'+attrEsc(m.cover)+'" alt="封面" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;z-index:1;" onerror="this.style.display=\'none\'">'
         : '';
-      ill.innerHTML=coverHtml+'<span class="bear" id="rPageEmoji">'+icon+'</span><span class="play" onclick="openMediaFullscreen()" title="点击看视频/PPT">▶</span><button class="ill-add-pill" onclick="openReaderImgPicker(\'page\')" title="加媒体页">＋ 加媒体页</button>';
+      ill.innerHTML=coverHtml+'<span class="bear" id="rPageEmoji">'+icon+'</span><span class="play" onclick="openMediaFullscreen()" title="点击看视频/PPT">▶</span><button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>';
       return;
     }
     if(head)head.innerHTML='<span class="ill-head-label">这一页是插图 · 没有视频素材</span><span class="ill-tag" style="background:var(--muted);opacity:.7">插图</span>';
-    ill.innerHTML='<span class="bear" id="rPageEmoji">'+icon+'</span><span class="play" onclick="openMediaFullscreen()" title="点击看视频/PPT" style="opacity:.45">▶</span><button class="ill-add-pill" onclick="openReaderImgPicker(\'page\')" title="加媒体页">＋ 加媒体页</button>';
+    ill.innerHTML='<span class="bear" id="rPageEmoji">'+icon+'</span><span class="play" onclick="openMediaFullscreen()" title="点击看视频/PPT" style="opacity:.45">▶</span><button class="ill-add-pill" onclick="openInsertMedia()" title="加媒体页">＋ 加媒体页</button>';
     var saved=_ripType; _ripType='page';
     var url=getReaderCustomImg();
     if(url)applyReaderImgToDom(url);
