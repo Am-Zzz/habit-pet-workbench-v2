@@ -2026,6 +2026,11 @@
   .mb-item .mi-act{display:flex;gap:4px}
   .mb-item .mini-btn{border:none;background:#fff;border-radius:8px;padding:5px 8px;font-size:12px;cursor:pointer;color:var(--brand-d);box-shadow:0 1px 3px rgba(0,0,0,.06)}
   .mb-item .mini-btn.del{color:var(--color-error,#ef4444)}
+  /* 新增书：封面图标选择网格 + 封面链接输入 */
+  .mb-icons{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:4px;}
+  .mb-ic{width:34px;height:34px;border-radius:10px;border:1.5px solid var(--line,#eee);background:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:.15s;}
+  .mb-ic:hover{border-color:#FFB3C1;transform:translateY(-1px);}
+  .mb-ic.on{border-color:#E8607A;background:#FFF0F4;box-shadow:0 2px 6px rgba(244,130,155,.25);}
   .mb-form label{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);margin:8px 0 3px}
   .mb-form input,.mb-form textarea,.mb-form select{width:100%;padding:9px;border:1px solid var(--line);border-radius:9px;font-size:13px;font-family:var(--font-family-primary)}
   .mb-form textarea{min-height:96px;resize:vertical}
@@ -7525,7 +7530,7 @@ let phonicsTopicIdx=-1;
         const bcov=getBookCover(b.id);
         const cover=bcov?('<img src="'+bcov+'" alt="'+esc(b.title)+'">'
           +'<div class="rd-cover-ph" style="display:none">'+b.icon+'</div>'):'';
-        const ph=bcov?'':'<div class="rd-cover-ph">'+b.icon+'</div>';
+        const ph=bcov?'':'<div class="rd-cover-ph" style="background:'+bookCoverBg(b.id)+'">'+b.icon+'</div>';
         const addBtn='<button class="bc-add" title="'+(isShelf?'移除书架':'加入书架')+'" onclick="toggleBookShelf(\''+b.id+'\',event)">'+(isShelf?'−':'+')+'</button>';
         const isUser=userIds.indexOf(b.id)>=0;
         const editBtn=isUser?'<button class="bc-edit edit-only" onclick="event.stopPropagation();editUserBook(\''+b.id+'\')" title="编辑这本绘本">✏️</button>':'';
@@ -8484,6 +8489,11 @@ let phonicsTopicIdx=-1;
   function mergeBooks(){return (window.BOOK_CONTENT||[]).concat(getUserBooks());}
   function findBook(id){return mergeBooks().filter(function(b){return b.id===id;})[0];}
   function getBookCover(id){const m=getBookCoverMap();if(m[id])return m[id];const b=findBook(id);return b?b.cover:'';}
+  function bookCoverBg(id){
+    var palette=['linear-gradient(135deg,#FFE0EC,#FFC4D6)','linear-gradient(135deg,#DCEBFF,#BFD4FF)','linear-gradient(135deg,#FFF3D6,#FFE0A8)','linear-gradient(135deg,#E3F9E5,#C2EBC8)','linear-gradient(135deg,#F3E1FF,#DCC4FF)','linear-gradient(135deg,#FFE6D6,#FFCBB0)','linear-gradient(135deg,#D6F7F6,#B0ECEA)','linear-gradient(135deg,#F0E4D6,#E0C9A8)'];
+    var h=String(id).split('').reduce(function(a,c){return a+c.charCodeAt(0);},0);
+    return palette[h%palette.length];
+  }
   function setBookCover(id,val){
     const m=getBookCoverMap();if(val)m[id]=val;else delete m[id];
     try{LS.setItem(BOOK_COVER_KEY,JSON.stringify(m));}catch(e){}
@@ -8908,30 +8918,50 @@ let phonicsTopicIdx=-1;
     closeMyBooks();openBookReader(id);
   }
   function addUserBook(){editBookId=null;document.getElementById('mbEditor').style.display='block';document.getElementById('mbList').style.display='none';
-    ['mbFTitle','mbFIcon','mbFDesc','mbFTags','mbFContent'].forEach(function(id2){document.getElementById(id2).value='';});
-    document.getElementById('mbFCat').value='classic';document.getElementById('mbFAge').value='幼升小';document.getElementById('mbFIcon').value='📖';document.getElementById('mbFSaveBtn').textContent='💾 保存';
+    ['mbFTitle','mbFIcon','mbFCover','mbFDesc','mbFTags','mbFContent'].forEach(function(id2){document.getElementById(id2).value='';});
+    document.getElementById('mbFCat').value='classic';document.getElementById('mbFAge').value='幼升小';document.getElementById('mbFSaveBtn').textContent='💾 保存';
+    initMbIcons();
   }
   function editUserBook(id){
     const b=getUserBooks().filter(function(x){return x.id===id;})[0];if(!b)return;editBookId=id;
     document.getElementById('mbFTitle').value=b.title||'';document.getElementById('mbFIcon').value=b.icon||'📖';
     document.getElementById('mbFAge').value=b.age||'幼升小';document.getElementById('mbFCat').value=b.cat||'classic';
+    document.getElementById('mbFCover').value=b.cover||'';
     document.getElementById('mbFDesc').value=b.desc||'';document.getElementById('mbFTags').value=(b.tags||[]).join('，');
     document.getElementById('mbFContent').value=b.pages?b.pages.map(function(p){return p.chars.map(function(c){return c.t;}).join('');}).join(''):'';
     document.getElementById('mbEditor').style.display='block';document.getElementById('mbList').style.display='none';
     document.getElementById('mbFSaveBtn').textContent='💾 保存修改';
+    initMbIcons();
+  }
+  const MB_ICONS=['📖','🐛','🐰','🦖','🌈','🚀','🌟','🍎','🌼','🐱','🧸','🌙'];
+  function initMbIcons(){
+    const box=document.getElementById('mbIcons'); if(!box)return; box.innerHTML='';
+    MB_ICONS.forEach(function(em){
+      const b=document.createElement('button');b.type='button';b.className='mb-ic';b.textContent=em;
+      b.onclick=function(){document.getElementById('mbFIcon').value=em;Array.prototype.forEach.call(box.children,function(c){c.classList.remove('on');});b.classList.add('on');};
+      box.appendChild(b);
+    });
+    var cur=document.getElementById('mbFIcon').value;
+    var sel=cur?Array.prototype.slice.call(box.children).filter(function(c){return c.textContent===cur;})[0]:box.children[0];
+    if(sel)sel.classList.add('on');
   }
   function cancelEditBook(){document.getElementById('mbEditor').style.display='none';document.getElementById('mbList').style.display='block';renderMyBooks();}
   function saveUserBook(){
     const title=document.getElementById('mbFTitle').value.trim();if(!title){toast('请填写书名');return;}
     const age=document.getElementById('mbFAge').value;const cat=document.getElementById('mbFCat').value;
-    const icon=document.getElementById('mbFIcon').value.trim()||'📖';const desc=document.getElementById('mbFDesc').value.trim();
+    let icon=document.getElementById('mbFIcon').value.trim();const cover=document.getElementById('mbFCover').value.trim();
+    const desc=document.getElementById('mbFDesc').value.trim();
     const tags=document.getElementById('mbFTags').value.split(/[,，]/).map(function(s){return s.trim();}).filter(Boolean);
     const content=document.getElementById('mbFContent').value;const pages=splitStory(content);
-    const books=getUserBooks();
-    if(editBookId){const b=books.filter(function(x){return x.id===editBookId;})[0];if(b){b.title=title;b.age=age;b.grade=age;b.cat=cat;b.icon=icon;b.desc=desc;b.tags=tags;b.pages=pages;b.ready=true;b.difficulty=age;}}
-    else{books.push({id:'u_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),cat:cat,icon:icon,title:title,tag:tags[0]||'',age:age,grade:age,ready:true,desc:desc,cover:'',pages:pages,difficulty:age,tags:tags});}
+    const books=getUserBooks();let newId=null;
+    if(editBookId){const b=books.filter(function(x){return x.id===editBookId;})[0];if(b){b.title=title;b.age=age;b.grade=age;b.cat=cat;b.icon=icon;b.desc=desc;b.tags=tags;b.pages=pages;b.ready=true;b.difficulty=age;if(cover)b.cover=cover;}}
+    else{newId='u_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);
+      if(!icon){const h=newId.split('').reduce(function(a,c){return a+c.charCodeAt(0);},0);icon=MB_ICONS[h%MB_ICONS.length];}
+      books.push({id:newId,cat:cat,icon:icon,title:title,tag:tags[0]||'',age:age,grade:age,ready:true,desc:desc,cover:cover,pages:pages,difficulty:age,tags:tags});}
     setUserBooks(books);document.getElementById('mbEditor').style.display='none';document.getElementById('mbList').style.display='block';
-    renderMyBooks();renderBookList();toast('已保存 ✔');
+    renderMyBooks();renderBookList();
+    if(newId){toast('已保存，进入阅读 📖');closeMyBooks();openBookReader(newId);}
+    else toast('已保存修改 ✔');
   }
   function deleteUserBook(id){
     if(!confirm('确定删除这本绘本？'))return;
@@ -12200,11 +12230,15 @@ let phonicsTopicIdx=-1;
           <div id="mbEditor" style="display:none" class="mb-form">
             <label>书名 *</label><input id="mbFTitle" placeholder="绘本名称">
             <div class="mb-two">
-              <div><label>图标</label><input id="mbFIcon" placeholder="📖" maxlength="4"></div>
+              <div><label>封面图标</label>
+                <div class="mb-icons" id="mbIcons"></div>
+                <input id="mbFIcon" style="display:none">
+              </div>
               <div><label>年龄/年级</label>
                 <select id="mbFAge"><option>幼升小</option><option>小学1-3</option><option>小学3-6</option></select>
-              </div>
+                </div>
             </div>
+            <label>封面图链接（可选，留空用默认图标）</label><input id="mbFCover" placeholder="https://...">
             <label>分类</label>
             <select id="mbFCat"><option value="classic">经典故事</option><option value="fable">寓言故事</option><option value="fairy">童话故事</option></select>
             <label>简介</label><input id="mbFDesc" placeholder="一句话简介">
