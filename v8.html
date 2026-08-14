@@ -7165,6 +7165,24 @@ let phonicsTopicIdx=-1;
     toggleBookShelf(id,null);
   }
   function toggleBookShelf(id,evt){if(evt)evt.stopPropagation();const shelf=getBookShelf();const i=shelf.indexOf(id);if(i>=0){shelf.splice(i,1);toast('已从书架移除');}else{shelf.push(id);toast('已加入书架');}setBookShelf(shelf);renderBookList();}
+  /* ===== v5-1：内置书懒克隆（编辑/增删页前自动克隆到 user books，原地改写 curBook） ===== */
+  function cloneBuiltinIfNeeded(book){
+    if(!book)return false;
+    const users=getUserBooks();
+    if(users.some(function(b){return b.id===book.id;}))return false;        /* 已经是 user 书 */
+    const src=(window.BOOK_CONTENT||[]).find(function(b){return b.id===book.id;});
+    if(!src){toast('找不到原始绘本');return false;}
+    const cloned=JSON.parse(JSON.stringify(src));
+    cloned.user=true;
+    cloned.id='u_clone_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
+    users.push(cloned);
+    setUserBooks(users);
+    /* 原地改写 curBook 属性（保持引用不变，下游 curPage/curBook.pages 仍指向同一对象） */
+    const k=Object.keys(cloned);
+    for(var i=0;i<k.length;i++) book[k[i]]=cloned[k[i]];
+    toast('已克隆到「我的绘本」，现在可以自由修改 ✔');
+    return true;
+  }
   /* ========== 读书笔记板块（设计稿：低饱和裸粉卡片 + 浅紫选中 + 扁平卡通插画） ========== */
   const NOTE_SVGS={
     n_cover:'<svg viewBox="0 0 120 120"><g fill="none" stroke="#2E2926" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="40" cy="44" r="13" fill="#FFE6EF"/><circle cx="80" cy="44" r="13" fill="#EAF2FB"/><path d="M27 98c0-16 13-26 26-26" fill="#F26D92"/><path d="M67 98c0-16 13-26 26-26" fill="#8CB4DC"/><rect x="48" y="58" width="24" height="20" rx="4" fill="#E7B255"/><line x1="60" y1="58" x2="60" y2="78"/></g></svg>',
@@ -8075,7 +8093,7 @@ let phonicsTopicIdx=-1;
   }
   function addBookPage(){
     if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
-    if(!isCurrentUserBook()){toast('内置绘本不能增删页，可在「✏️ 编辑 → ＋ 新增故事」新建一本');return;}
+    cloneBuiltinIfNeeded(curBook);if(!curBook)return;
     if(!curBook.pages)curBook.pages=[];
     curBook.pages.splice(curPage+1,0,{chars:[],media:{video:null,ppt:null}});
     curPage=Math.min(curPage+1,curBook.pages.length-1);
@@ -8083,7 +8101,7 @@ let phonicsTopicIdx=-1;
   }
   function delBookPage(){
     if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
-    if(!isCurrentUserBook()){toast('内置绘本不能删页，可在「✏️ 编辑 → ＋ 新增故事」新建一本');return;}
+    cloneBuiltinIfNeeded(curBook);if(!curBook)return;
     if(!curBook.pages||curBook.pages.length<=1){toast('至少保留一页');return;}
     if(!confirm('确定删除当前这一页？'))return;
     curBook.pages.splice(curPage,1);
@@ -8106,7 +8124,7 @@ let phonicsTopicIdx=-1;
   var _ptSaved=false;       /* savePageText 成功置 true，closePageTextEditor 取消时据此回滚 */
   function editPageText(){
     if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
-    if(!isCurrentUserBook()){toast('内置绘本不能改文字，可在「✏️ 编辑 → ＋ 新增故事」新建一本');return;}
+    cloneBuiltinIfNeeded(curBook);if(!curBook)return;
     _ptMode='page'; _ptSaved=false;
     var tEl=document.getElementById('ptTitle'); if(tEl)tEl.textContent='✏️ 编辑本页故事';
     var pg=curBook.pages[curPage]; if(!pg)return;
@@ -8117,7 +8135,7 @@ let phonicsTopicIdx=-1;
   }
   function editPoem(){
     if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
-    if(!isCurrentUserBook()){toast('内置绘本不能改文字，可在「✏️ 编辑 → ＋ 新增故事」新建一本');return;}
+    cloneBuiltinIfNeeded(curBook);if(!curBook)return;
     _ptMode='poem'; _ptSaved=false; _inlineBackup=null;
     var tEl=document.getElementById('ptTitle'); if(tEl)tEl.textContent='✏️ 编辑诗歌（每行一句）';
     var lines=Array.isArray(curBook.poem)?curBook.poem:((curBook.poem&&typeof curBook.poem==='string')?curBook.poem.split('\n'):[]);
