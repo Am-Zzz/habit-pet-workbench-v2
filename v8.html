@@ -2502,6 +2502,11 @@
   .reader[data-rtheme] .quiz-screen{overflow:auto;}
   .reader[data-rtheme] .draw-area{min-height:200px;}
   .reader[data-rtheme] .note-card{max-height:100%;overflow:auto;}
+  /* v5-3：让内容超过 stage 高度时 stage 自身可滚动（之前是 overflow:hidden 会把互动屏颜色尺/画板截掉） */
+  .reader[data-rtheme] .r-stage{overflow:visible;}
+  .reader[data-rtheme] .r-screen.active{overflow-y:auto;overflow-x:hidden;}
+  .reader[data-rtheme] .quiz-screen{padding:6px 14px;}
+  .reader[data-rtheme] .draw-area{position:sticky;bottom:0;padding:8px 0 0;background:linear-gradient(0deg,var(--bg,#fff) 70%,transparent);}
 
     /* 阅读进度条（对照 book-A-cloud-themes 补回） */
     .reader[data-rtheme] .reader-progress{position:relative;z-index:3;padding:0 18px 6px;}
