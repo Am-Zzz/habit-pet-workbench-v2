@@ -3616,7 +3616,6 @@
                 <div class="bk-more">
                   <button class="rtool" onclick="toggleBookMenu()" title="更多">⋯</button>
                   <div class="bk-menu" id="bookMenu" style="display:none">
-                    <button onclick="toggleEditMode();toggleBookMenu()">🔒 家长模式</button>
                     <button class="edit-only" onclick="addUserBook();openMyBooks();toggleBookMenu()">＋ 新增故事</button>
                     <button class="edit-only" onclick="openRecycleBin();toggleBookMenu()">♻️ 回收站</button>
                     <button onclick="openNetImport('book');toggleBookMenu()">🌐 网盘导入</button>
@@ -7658,10 +7657,9 @@ let phonicsTopicIdx=-1;
       const totalPages=Math.max(1,Math.ceil(books.length/pageSize));
       if(bookPage>totalPages-1)bookPage=totalPages-1;
       const pageBooks=books.slice(bookPage*pageSize,(bookPage+1)*pageSize);
-      /* v4-7：新增故事卡在所有视图显示（仅家长模式，儿童模式彻底不可见）；首位 + 末位一致。单页视图时首位已出卡则末位不再重复 */
+      /* v5-5：新增卡永远只在「第一页第一位」，其它页 0 张卡；不要末位 push（用户原话：固定的，只要开启家长模式就有它） */
       const _pmEdit=editMode;
       const showAddFirst=_pmEdit && bookPage===0;
-      const showAdd=_pmEdit && (bookPage>=totalPages-1) && (totalPages>1 || !showAddFirst);
       const displayBooks=pageBooks.slice();
       if(showAddFirst)displayBooks.unshift({__addcard:true});
       displayBooks.forEach(function(b){
@@ -7694,12 +7692,6 @@ let phonicsTopicIdx=-1;
         card.onclick=function(){openBookReader(b.id);};
         list.appendChild(card);
       });
-      if(showAdd){
-        const c=document.createElement('div');c.className='book-card bc-add-card';
-        c.innerHTML='<div class="bc-add-inner"><div class="bc-plus">＋</div><div class="bc-add-tip">新增故事<br><span>点此添加绘本</span></div></div>';
-        c.onclick=function(){addUserBook();openMyBooks();};
-        list.appendChild(c);
-      }
       const _pg=document.getElementById('bookPager');
       if(_pg){
         if(books.length>pageSize){
