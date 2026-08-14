@@ -3722,7 +3722,7 @@
       <!-- 编辑本页故事文字浮层 -->
       <div class="reader-mask" id="pageTextEditor" style="display:none" onclick="if(event.target===this)closePageTextEditor()">
         <div class="pt-editor" onclick="event.stopPropagation()">
-          <div class="pt-head"><span>✏️ 编辑本页故事</span><button class="pt-close" onclick="closePageTextEditor()">✕</button></div>
+          <div class="pt-head"><span id="ptTitle">✏️ 编辑本页故事</span><button class="pt-close" onclick="closePageTextEditor()">✕</button></div>
           <textarea id="ptInput" placeholder="输入这一页的故事文字，保存后自动重新分页注音…"></textarea>
           <div class="pt-foot">
             <button onclick="closePageTextEditor()">取消</button>
@@ -7819,17 +7819,39 @@ let phonicsTopicIdx=-1;
     }
     return out;
   }
+  var _ptMode='page';
   function editPageText(){
     if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
     if(!isCurrentUserBook()){toast('内置绘本不能改文字，可在「✏️ 编辑 → ＋ 新增故事」新建一本');return;}
+    _ptMode='page';
+    var tEl=document.getElementById('ptTitle'); if(tEl)tEl.textContent='✏️ 编辑本页故事';
     var pg=curBook.pages[curPage]; if(!pg)return;
     var t=(pg.chars||[]).map(function(c){return c.t;}).join('');
     var inp=document.getElementById('ptInput'); if(inp)inp.value=t;
     var m=document.getElementById('pageTextEditor'); if(m)m.style.display='flex';
   }
+  function editPoem(){
+    if(!editMode){toast('请先点「✏️ 编辑」进入家长模式');return;}
+    if(!isCurrentUserBook()){toast('内置绘本不能改文字，可在「✏️ 编辑 → ＋ 新增故事」新建一本');return;}
+    _ptMode='poem';
+    var tEl=document.getElementById('ptTitle'); if(tEl)tEl.textContent='✏️ 编辑诗歌（每行一句）';
+    var lines=Array.isArray(curBook.poem)?curBook.poem:((curBook.poem&&typeof curBook.poem==='string')?curBook.poem.split('\n'):[]);
+    var inp=document.getElementById('ptInput'); if(inp)inp.value=lines.join('\n');
+    var m=document.getElementById('pageTextEditor'); if(m)m.style.display='flex';
+  }
   function closePageTextEditor(){var m=document.getElementById('pageTextEditor');if(m)m.style.display='none';}
+  function persistCurBookMeta(){
+    if(!curBook||!isCurrentUserBook())return;
+    var books=getUserBooks(); var b=books.filter(function(x){return x.id===curBook.id;})[0];
+    if(b){ if(_ptMode==='poem')b.poem=document.getElementById('ptInput').value.split('\n').map(function(s){return s.trim();}).filter(Boolean); setUserBooks(books); }
+  }
   function savePageText(){
     if(!curBook||!curBook.ready)return;
+    if(_ptMode==='poem'){
+      if(!isCurrentUserBook()){toast('内置绘本不能改');return;}
+      curBook.poem=document.getElementById('ptInput').value.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+      persistCurBookMeta(); closePageTextEditor(); renderReaderPoem(); toast('已保存诗歌 ✔'); return;
+    }
     var pg=curBook.pages[curPage]; if(!pg)return;
     var txt=document.getElementById('ptInput').value;
     var old=pg.chars||[];
@@ -7923,6 +7945,7 @@ let phonicsTopicIdx=-1;
     el.innerHTML=html;
     const wordsEl=document.getElementById('rPoemWords');
     if(wordsEl){const words=buildBookVocab(curBook);wordsEl.innerHTML=words.map(function(w){return '<div class="word-card"><span class="we">'+w.e+'</span><span>'+esc(w.t)+'</span></div>';}).join('');}
+    if(editMode){el.style.cursor='pointer';el.onclick=editPoem;}else{el.style.cursor='';el.onclick=null;}
   }
   function togglePoemPy(el){
     if(!el)return;
