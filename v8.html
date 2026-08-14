@@ -1107,7 +1107,11 @@
   .bc-done{position:absolute;top:8px;left:8px;background:rgba(232,96,122,.95);color:#fff;font-size:11px;padding:3px 8px;border-radius:999px;font-weight:800;display:flex;align-items:center;gap:4px;cursor:default;}
   .bc-done-x{display:none;border:none;background:rgba(255,255,255,.3);color:#fff;width:16px;height:16px;border-radius:50%;font-size:11px;line-height:1;cursor:pointer;align-items:center;justify-content:center;padding:0;}
   body.edit .bc-done-x{display:flex;}
-  .bc-shelf{position:absolute;top:8px;left:8px;background:rgba(255,193,7,.95);color:#5c3d00;font-size:10px;font-weight:800;padding:3px 8px;border-radius:999px}
+  /* v4-4 ★ 书架按钮化：家长模式显示按钮，可点击 toggle 加入/移除书架；非家长模式保留徽章视觉 */
+  .bc-shelf{position:absolute;top:8px;left:8px;background:rgba(255,193,7,.95);color:#5c3d00;font-size:10px;font-weight:800;padding:3px 8px;border-radius:999px;border:none;font-family:inherit;line-height:1.2;cursor:default;-webkit-tap-highlight-color:transparent}
+  body.edit .bc-shelf{cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.18);transition:.15s}
+  body.edit .bc-shelf:hover{transform:scale(1.08);background:#FFB300}
+  body.edit .bc-shelf.shelf-add{background:rgba(40,180,120,.92);color:#fff}
   .bc-body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1;text-align:center}
   .bc-title{font-size:14px;font-weight:800;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .bc-desc{font-size:11px;color:var(--ink-faint);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -7109,6 +7113,32 @@ let phonicsTopicIdx=-1;
   function getBookShelf(){try{return JSON.parse(LS.getItem(BOOK_SHELF_KEY))||[];}catch(e){return [];}}
   function setBookShelf(ids){try{LS.setItem(BOOK_SHELF_KEY,JSON.stringify(ids));}catch(e){}}
   function inBookShelf(id){return getBookShelf().indexOf(id)>=0;}
+  /* v4-4：徽章点击 toggle；未在书架时自动调用 joinBookShelfAndMaybeClone */
+  function toggleBookShelfByBadge(id){
+    const on=inBookShelf(id);
+    if(on){toggleBookShelf(id,null);}else{joinBookShelfAndMaybeClone(id);}
+  }
+  function joinBookShelfAndMaybeClone(id){
+    const userIds=(getUserBooks()||[]).map(function(b){return b.id;});
+    const isUser=userIds.indexOf(id)>=0;
+    if(!isUser){
+      const src=(window.BOOK_CONTENT||[]).find(function(b){return b.id===id;});
+      if(!src){toast('找不到原始绘本');return;}
+      const cloned=JSON.parse(JSON.stringify(src));
+      cloned.user=true;
+      cloned.id='u_clone_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
+      const books=getUserBooks();
+      books.push(cloned);
+      setUserBooks(books);
+      const shelf=getBookShelf();
+      shelf.push(cloned.id);
+      setBookShelf(shelf);
+      toast('已克隆到「我的绘本」并加入书架 ✔');
+      renderBookList();
+      return;
+    }
+    toggleBookShelf(id,null);
+  }
   function toggleBookShelf(id,evt){if(evt)evt.stopPropagation();const shelf=getBookShelf();const i=shelf.indexOf(id);if(i>=0){shelf.splice(i,1);toast('已从书架移除');}else{shelf.push(id);toast('已加入书架');}setBookShelf(shelf);renderBookList();}
   /* ========== 读书笔记板块（设计稿：低饱和裸粉卡片 + 浅紫选中 + 扁平卡通插画） ========== */
   const NOTE_SVGS={
@@ -7590,12 +7620,16 @@ let phonicsTopicIdx=-1;
         const cover=bcov?('<img src="'+bcov+'" alt="'+esc(b.title)+'">'
           +'<div class="rd-cover-ph" style="display:none">'+b.icon+'</div>'):'';
         const ph=bcov?'':'<div class="rd-cover-ph" style="background:'+bookCoverBg(b.id)+'">'+b.icon+'</div>';
-        /* v3-α-3：移除 bc-add（单书右上 +/− 按钮） */
+        /* v4-4 ★ 书架徽章变按钮：家长模式 + 未在书架时显示 "+ 书架" 按钮（绿色）；已在书架显示 "★ 书架" 按钮（黄色）。点击 toggleBookShelfByBadge */
         const isUser=userIds.indexOf(b.id)>=0;
         const editBtn=isUser?'<button class="bc-edit edit-only" onclick="event.stopPropagation();editUserBook(\''+b.id+'\')" title="编辑这本绘本">✏️</button>':'';
         /* v3-α-5：bc-del 改为所有书都可删除（移动到回收站） */
         const delBtn='<button class="bc-del edit-only" onclick="event.stopPropagation();askMoveBookToTrash(\''+b.id+'\',\''+esc(b.title).replace(/'/g,"\\'")+'\')" title="移到回收站">🗑</button>';
-        card.innerHTML='<div class="bc-cover">'+cover+ph+doneBadge+(isShelf&&!isDone?'<span class="bc-shelf">★ 书架</span>':'')+editBtn+delBtn+'</div>'+
+        const isDoneShelf=isDone;
+        const shelfLabel=isShelf?'★ 书架':'+ 书架';
+        const shelfClass='bc-shelf'+(isShelf?'':' shelf-add');
+        const shelfBadge=(isShelf||editMode)?'<button type="button" class="'+shelfClass+'" onclick="event.stopPropagation();toggleBookShelfByBadge(\''+b.id+'\')" title="'+(isShelf?'移除书架':'加入书架')+'">'+shelfLabel+'</button>':'';
+        card.innerHTML='<div class="bc-cover">'+cover+ph+doneBadge+shelfBadge+editBtn+delBtn+'</div>'+
           '<div class="bc-body"><div class="bc-title">'+esc(b.title)+'</div>'+
           '<div class="bc-desc">'+esc(b.desc)+'</div>'+
           '<div class="bc-foot"><span class="bi-tag">'+esc(b.age)+'</span>'+(b.ready?'':'<span class="bc-soon">内容整理中</span>')+'</div></div>';
