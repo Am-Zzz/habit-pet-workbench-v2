@@ -7701,9 +7701,10 @@ let phonicsTopicIdx=-1;
       const totalPages=Math.max(1,Math.ceil(books.length/pageSize));
       if(bookPage>totalPages-1)bookPage=totalPages-1;
       const pageBooks=books.slice(bookPage*pageSize,(bookPage+1)*pageSize);
-      /* v5-5：新增卡永远只在「第一页第一位」，其它页 0 张卡；不要末位 push（用户原话：固定的，只要开启家长模式就有它） */
+      /* v5-5：新增卡不要末位 push；用户原话「固定的，只要开启家长模式就有它」。
+         v10-6：去掉 bookPage===0 限制 → 家长模式下任何页首位都显示新增卡（避免翻页/返回书架后卡片消失）；开启家长模式时由 enterEditMode 重置 bookPage=0 回到第一页 */
       const _pmEdit=editMode;
-      const showAddFirst=_pmEdit && bookPage===0;
+      const showAddFirst=_pmEdit;
       const displayBooks=pageBooks.slice();
       if(showAddFirst)displayBooks.unshift({__addcard:true});
       displayBooks.forEach(function(b){
@@ -8209,6 +8210,8 @@ let phonicsTopicIdx=-1;
   function enterEditMode(){
     editMode=true; document.body.classList.add('edit'); updateEditBtns();
     updatePmSaveBar();
+    /* v10-6：开家长模式自动回书架第一页，确保首位「新增故事」卡可见 */
+    if(!document.querySelector('.reader-screen.active')){ bookPage=0; }
   }
   function exitEditMode(){
     /* v6-5：退出家长模式自动丢弃暂存修改（用户原话"没保存退出不该生效"） */
