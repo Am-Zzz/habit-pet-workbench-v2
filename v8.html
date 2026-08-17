@@ -917,6 +917,49 @@
   .py-card .py-em{font-size:36px;margin-bottom:6px}
   .py-card .py-letter{font-size:42px;font-weight:900;color:var(--butter);line-height:1}
   .py-card .py-word{font-size:11px;color:var(--ink-soft);margin-top:6px}
+  /* ====== 拼音 v11 新模块：总览/书写/默写/音序表 ====== */
+  .py-entry-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 16px}
+  .py-entry{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:11px 6px;text-align:center;cursor:pointer;transition:.15s;user-select:none}
+  .py-entry:hover{background:var(--butter-s)}
+  .py-entry:active{transform:translateY(2px)}
+  .py-entry .pe-em{font-size:22px;line-height:1.1;margin-bottom:3px}
+  .py-entry .pe-t{font-size:12px;font-weight:800;color:var(--ink)}
+  .py-sub-h{display:flex;align-items:center;justify-content:space-between;background:var(--butter-s);border:2px solid var(--butter);border-radius:14px;padding:9px 14px;margin-bottom:14px}
+  .py-sub-h .t{font-size:15px;font-weight:900;color:var(--ink)}
+  .py-sub-h .b{font-size:12px;color:var(--ink-soft);font-weight:700}
+  .py-overview-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .py-overview-card{border:2px solid var(--line);border-radius:16px;padding:12px;background:var(--surface);cursor:pointer;transition:.15s}
+  .py-overview-card:hover{transform:translateY(-2px);box-shadow:0 4px 0 var(--line)}
+  .py-overview-card .po-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .py-overview-card .po-t{font-size:13px;font-weight:900;color:var(--ink)}
+  .py-overview-card .po-n{font-size:11px;font-weight:800;color:var(--ink-soft);background:var(--butter-s);padding:2px 8px;border-radius:999px}
+  .py-overview-card .po-letters{font-size:13px;line-height:1.55;font-weight:700;letter-spacing:1px;color:var(--ink-soft)}
+  .py-write-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media (min-width:560px){.py-write-grid{grid-template-columns:repeat(3,1fr)}}
+  .py-write-card{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:14px 8px 10px;text-align:center}
+  .py-write-card .py-tian{position:relative;width:88px;height:88px;margin:0 auto 6px;border:2px solid var(--ink);border-radius:4px;background:#fff;overflow:hidden}
+  .py-write-card .py-tian::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--ink);opacity:.3;transform:translateX(-.5px)}
+  .py-write-card .py-tian::after{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--ink);opacity:.3;transform:translateY(-.5px)}
+  .py-write-card .py-tian .py-letter-big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:900;color:#444;font-family:serif;line-height:1}
+  .py-write-card .py-tian .py-strokes{position:absolute;inset:0;pointer-events:none}
+  .py-write-card .py-spk{display:inline-block;font-size:11px;color:var(--ink-soft);margin-top:4px;padding:3px 10px;background:var(--butter-s);border-radius:999px;cursor:pointer}
+  .py-dictate-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+  @media (min-width:560px){.py-dictate-grid{grid-template-columns:repeat(8,1fr)}}
+  .py-dictate-cell{position:relative;aspect-ratio:1/1;border:2px solid var(--ink);border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:900;color:#444;font-family:serif}
+  .py-dictate-cell::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--ink);opacity:.3;transform:translateX(-.5px)}
+  .py-dictate-cell::after{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--ink);opacity:.3;transform:translateY(-.5px)}
+  .py-dictate-cell .py-cell-txt{opacity:.28}
+  .py-dictate-cell .py-cell-hint{position:absolute;right:-22px;top:-8px;font-size:10px;color:var(--ink-soft);font-weight:700;background:#fff;padding:1px 4px;border-radius:6px;border:1px solid var(--line);opacity:0;transition:.2s}
+  .py-dictate-cell.show-hint .py-cell-hint{opacity:1}
+  .py-alphabet-section{margin-bottom:14px}
+  .py-alphabet-section .py-alpha-h{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px;font-weight:900;color:var(--ink)}
+  .py-alphabet-section .py-alpha-h .tag{font-size:11px;background:var(--butter-s);padding:2px 8px;border-radius:999px;color:var(--ink-soft);font-weight:700}
+  .py-alpha-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .py-alpha-letter{aspect-ratio:1.4/1;border:1.5px solid var(--ink);border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'Times New Roman',serif;transition:.15s}
+  .py-alpha-letter:hover{background:var(--butter-s)}
+  .py-alpha-letter:active{transform:scale(.95)}
+  .py-alpha-letter .py-up{color:#d33;font-size:18px;font-weight:900;line-height:1;margin-right:1px}
+  .py-alpha-letter .py-lo{color:#36c;font-size:14px;font-weight:700;line-height:1}
   /* ====== 英语单词屏 ====== */
   .word-goal{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
   .word-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -2732,6 +2775,10 @@
   #sc-rich.on .mono-wrap{margin:0;width:100%;max-width:none;height:100%;position:relative;flex:1;min-height:0}
   #sc-rich.on .mono-stage{width:100%;height:100%;border-radius:18px;overflow:hidden;background:#FBF3D5;box-shadow:0 8px 0 rgba(58,42,26,.10),0 14px 30px rgba(58,42,26,.16)}
   #sc-rich.on svg#monoboard{display:block;width:100%;height:100%;touch-action:none}
+  #sc-rich.on .mono-stage{position:relative}
+  #sc-rich.on .mono-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+  #sc-rich.on svg#monoboard{position:relative;z-index:1}
+  #sc-rich.on .clickable{cursor:pointer;border-bottom:1px dashed currentColor;padding:0 3px}
 
   /* ===== 学科题库：家长编辑 + 孩子闯关 ===== */
   .bn-flag{margin-right:4px}
@@ -3209,40 +3256,102 @@
     <div class="screen" id="sc-pinyin">
       <div class="card" style="max-width:600px;margin:0 auto">
         <div class="card-h"><span class="t">🔡 拼音学习</span><span class="s" onclick="go('home')" style="cursor:pointer">← 返回</span></div>
-        <div style="text-align:center;margin-bottom:14px">
-          <div class="lrn-pill" id="pyPill">
-            <button class="sel" data-t="single" onclick="switchPyTab('single',this)">❤️ 单韵母</button>
-            <button data-t="initial" onclick="switchPyTab('initial',this)">🌤 声母</button>
-            <button data-t="compound" onclick="switchPyTab('compound',this)">🌈 复韵母</button>
-            <button data-t="nasalFront" onclick="switchPyTab('nasalFront',this)">🌊 前鼻韵母</button>
-            <button data-t="nasalBack" onclick="switchPyTab('nasalBack',this)">🌟 后鼻韵母</button>
-            <button data-t="whole" onclick="switchPyTab('whole',this)">🔵 整体认读</button>
-            <button data-t="read" onclick="switchPyTab('read',this)">🔡 拼音跟读</button>
+
+        <!-- v11：顶部 4 个新模块快速入口（总览/书写/默写/音序表） -->
+        <div class="py-entry-row" id="pyEntryRow">
+          <div class="py-entry" onclick="openPyMode('overview')"><div class="pe-em">📋</div><div class="pe-t">总览</div></div>
+          <div class="py-entry" onclick="openPyMode('write')"><div class="pe-em">✏️</div><div class="pe-t">书写</div></div>
+          <div class="py-entry" onclick="openPyMode('dictate')"><div class="pe-em">📝</div><div class="pe-t">默写</div></div>
+          <div class="py-entry" onclick="openPyMode('alphabet')"><div class="pe-em">🔠</div><div class="pe-t">音序表</div></div>
+        </div>
+
+        <!-- 视图1：原 7 tab + 字母卡（默认 tabs 模式） -->
+        <div id="pyViewTabs">
+          <div style="text-align:center;margin-bottom:14px">
+            <div class="lrn-pill" id="pyPill">
+              <button class="sel" data-t="single" onclick="switchPyTab('single',this)">❤️ 单韵母</button>
+              <button data-t="initial" onclick="switchPyTab('initial',this)">🌤 声母</button>
+              <button data-t="compound" onclick="switchPyTab('compound',this)">🌈 复韵母</button>
+              <button data-t="nasalFront" onclick="switchPyTab('nasalFront',this)">🌊 前鼻韵母</button>
+              <button data-t="nasalBack" onclick="switchPyTab('nasalBack',this)">🌟 后鼻韵母</button>
+              <button data-t="whole" onclick="switchPyTab('whole',this)">🔵 整体认读</button>
+              <button data-t="read" onclick="switchPyTab('read',this)">🔡 拼音跟读</button>
+            </div>
+          </div>
+          <div class="py-grid" id="pyGrid"></div>
+          <div class="lrn-card read-card" id="pyReadCard" style="display:none">
+            <div class="lrn-prog">第 <span id="pyReadIdx">1</span> / <span id="pyReadTot">5</span> 句 · <span id="pyReadCat">拼音跟读</span></div>
+            <div class="read-phrase" id="pyReadPhrase">b—à—bà</div>
+            <div class="read-ph" id="pyReadPh">声母 b ＋ 韵母 à</div>
+            <div class="read-zh" id="pyReadZh">爸 爸（bà ba）</div>
+            <div class="read-spk" id="pyReadSpk" onclick="playPyModel()">🔊 听示范</div>
+            <div class="mic-wrap">
+              <button class="mic-btn" id="pyMicBtn" onclick="startPyRead()">🎙️</button>
+              <div class="wave" id="pyWave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="mic-tip" id="pyMicTip">点麦克风，跟着读一遍吧！</div>
+            </div>
+            <div class="score-box" id="pyReadScore">
+              <div class="score-num"><span id="pyScoreNum">92</span><small> 分</small></div>
+              <div class="stars" id="pyScoreStars">⭐⭐⭐⭐⭐</div>
+              <div class="score-tip" id="pyScoreTip">发音很标准！再来一句巩固一下～</div>
+              <div class="read-pet"><span class="pe">❤️</span><span class="pt" id="pyReadPet">小萌：你读得真棒，奖励一颗小星星！🌟</span></div>
+            </div>
+          </div>
+          <div class="lrn-foot" id="pyReadFoot" style="display:none">
+            <button class="btn ghost" onclick="playPyModel()">🔁 再听一次</button>
+            <button class="btn" id="pyNextBtn" onclick="nextPyRead()">下一句 →</button>
           </div>
         </div>
-        <div class="py-grid" id="pyGrid"></div>
-        <div class="lrn-card read-card" id="pyReadCard" style="display:none">
-          <div class="lrn-prog">第 <span id="pyReadIdx">1</span> / <span id="pyReadTot">5</span> 句 · <span id="pyReadCat">拼音跟读</span></div>
-          <div class="read-phrase" id="pyReadPhrase">b—à—bà</div>
-          <div class="read-ph" id="pyReadPh">声母 b ＋ 韵母 à</div>
-          <div class="read-zh" id="pyReadZh">爸 爸（bà ba）</div>
-          <div class="read-spk" id="pyReadSpk" onclick="playPyModel()">🔊 听示范</div>
-          <div class="mic-wrap">
-            <button class="mic-btn" id="pyMicBtn" onclick="startPyRead()">🎙️</button>
-            <div class="wave" id="pyWave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            <div class="mic-tip" id="pyMicTip">点麦克风，跟着读一遍吧！</div>
+
+        <!-- 视图2：六类总览 -->
+        <div id="pyViewOverview" style="display:none">
+          <div class="py-sub-h">
+            <span class="t">📋 六类拼音总览</span>
+            <span class="b" onclick="backPyTabs()" style="cursor:pointer">← 返回拼音</span>
           </div>
-          <div class="score-box" id="pyReadScore">
-            <div class="score-num"><span id="pyScoreNum">92</span><small> 分</small></div>
-            <div class="stars" id="pyScoreStars">⭐⭐⭐⭐⭐</div>
-            <div class="score-tip" id="pyScoreTip">发音很标准！再来一句巩固一下～</div>
-            <div class="read-pet"><span class="pe">❤️</span><span class="pt" id="pyReadPet">小萌：你读得真棒，奖励一颗小星星！🌟</span></div>
+          <div id="pyOverviewGrid" class="py-overview-grid"></div>
+        </div>
+
+        <!-- 视图3：书写练习 -->
+        <div id="pyViewWrite" style="display:none">
+          <div class="py-sub-h">
+            <span class="t">✏️ 书写练习</span>
+            <span class="b" onclick="backPyTabs()" style="cursor:pointer">← 返回拼音</span>
           </div>
+          <div style="text-align:center;margin-bottom:14px">
+            <div class="lrn-pill" id="pyWritePill">
+              <button class="sel" data-wt="initial" onclick="switchPyWrite('initial',this)">声母 23</button>
+              <button data-wt="final" onclick="switchPyWrite('final',this)">韵母 24</button>
+              <button data-wt="whole" onclick="switchPyWrite('whole',this)">整体认读 16</button>
+            </div>
+          </div>
+          <div id="pyWriteGrid" class="py-write-grid"></div>
         </div>
-        <div class="lrn-foot" id="pyReadFoot" style="display:none">
-          <button class="btn ghost" onclick="playPyModel()">🔁 再听一次</button>
-          <button class="btn" id="pyNextBtn" onclick="nextPyRead()">下一句 →</button>
+
+        <!-- 视图4：默写练习 -->
+        <div id="pyViewDictate" style="display:none">
+          <div class="py-sub-h">
+            <span class="t">📝 默写练习</span>
+            <span class="b" onclick="backPyTabs()" style="cursor:pointer">← 返回拼音</span>
+          </div>
+          <div style="text-align:center;margin-bottom:14px">
+            <div class="lrn-pill" id="pyDictatePill">
+              <button class="sel" data-dm="trace" onclick="switchPyDictate('trace',this)">描红</button>
+              <button data-dm="dict" onclick="switchPyDictate('dict',this)">听写</button>
+            </div>
+          </div>
+          <div id="pyDictateGrid" class="py-dictate-grid"></div>
         </div>
+
+        <!-- 视图5：音序表 -->
+        <div id="pyViewAlphabet" style="display:none">
+          <div class="py-sub-h">
+            <span class="t">🔠 汉语音序表</span>
+            <span class="b" onclick="backPyTabs()" style="cursor:pointer">← 返回拼音</span>
+          </div>
+          <div id="pyAlphabetBody" class="py-alphabet-body"></div>
+        </div>
+
       </div>
     </div>
 
@@ -4266,12 +4375,13 @@
       <div class="mono-chip"><span class="dot"></span><span id="monopetName">小萌</span></div>
       <div class="mono-chip">⭐ <span id="monostarCount">0</span></div>
       <div class="mono-chip">🎲 <span id="monoturnCount">0</span></div>
-      <div class="mono-chip">🎚️ <span id="diffChip">幼儿园</span></div>
+      <div class="mono-chip">🎚️ <span id="diffChip" class="clickable" onclick="cycleMonoDiff()" title="点我切换难度">幼儿园</span></div>
     </div>
     <button class="mono-quit" id="monoquitBtn">结束</button>
   </div>
 
   <div class="mono-stage">
+    <img class="mono-bg" id="monobg" src="assets/monopoly-board-zootopia-v2.jpg" alt="动物城棋盘">
     <svg id="monoboard" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-label="动物城大富翁棋盘"></svg>
 
     <button class="mono-dice-btn" id="monodiceBtn">
@@ -4762,6 +4872,15 @@
     </svg>`;
   }
   let currentPartner='dog', currentFace='growth', snakeLv=3, dogLv=1, catLv=1;
+  /* ===== 宠物按伙伴独立命名（互不覆盖） ===== */
+  let PET_NAMES={};
+  try{ PET_NAMES=JSON.parse(localStorage.getItem('mc_petnames')||'{}')||{}; }catch(e){ PET_NAMES={}; }
+  try{ var _oldName=localStorage.getItem('mc_petname'); if(_oldName&&!PET_NAMES.dog){ PET_NAMES.dog=_oldName; localStorage.setItem('mc_petnames',JSON.stringify(PET_NAMES)); } }catch(e){}
+  function defaultPetName(p){ return p==='snake'?'小蛇蛇':(p==='cat'?'咪咪':'小萌'); }
+  function getPetName(p){ if(!p)p=currentPartner||'dog'; var c=PET_NAMES[p]; return (c&&c.trim())?c:defaultPetName(p); }
+  function setPetName(p,n){ PET_NAMES[p]=n; try{ localStorage.setItem('mc_petnames',JSON.stringify(PET_NAMES)); }catch(e){} }
+  function applyCurrentPetName(){ var n=getPetName(currentPartner); ['petName','monopetName','meName'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=n;}); }
+  window.getPetName=getPetName; window.setPetName=setPetName; window.applyCurrentPetName=applyCurrentPetName;
   const DOG_MOODS={
     happy:{img:'pets/dog-mood-cry.png',label:'😊 开心'},
     meh:{img:'pets/dog-mood-happy.png',label:'😐 平静'},
@@ -4796,7 +4915,7 @@
     const ha=document.getElementById('homePartnerAvatar');
     const hn=document.getElementById('homePartnerName');
     const p=currentPartner==='snake'?'🐍':(currentPartner==='cat'?'🐱':'🐶');
-    const n=currentPartner==='snake'?'小蛇蛇':(currentPartner==='cat'?'咪咪':'小萌');
+    const n=getPetName(currentPartner);
     if(ha)ha.textContent=p;
     if(hn)hn.textContent=n;
   }
@@ -4841,7 +4960,7 @@
       const imgAlt = showMood ? m.label : d.name;
       face.innerHTML=`<img src="${imgSrc}" alt="${imgAlt}" style="width:100%;height:100%;object-fit:contain;position:relative;z-index:1" onerror="this.style.display='none'">`;
       if(growthBox)growthBox.style.display='block';
-      if(petNameEl){petNameEl.textContent='小萌'; if(window.PET_NAME)petNameEl.textContent=window.PET_NAME;}
+      if(petNameEl){petNameEl.textContent=getPetName(currentPartner);}
       if(snakeLvEl)snakeLvEl.textContent=d.lv;
       if(snakeStageEl)snakeStageEl.textContent=d.name;
       if(bubbleEl)bubbleEl.textContent= showMood ? d.say : d.say;
@@ -4984,7 +5103,7 @@
     else if(target==='sc-game-diff'){ initDiff(); }
     else if(target==='sc-hanzi'){ initHanzi(); }
     else if(target==='sc-qbank'){ renderQBank(); }
-    else if(target==='sc-home'){renderGrowthTrack();updateHomePartnerIcon();renderHomeTasks();}
+    else if(target==='sc-home'){renderGrowthTrack();updateHomePartnerIcon();renderHomeTasks();renderLearnGrid();renderMiniClass();}
     else if(target==='sc-pset'){renderCheckins();renderStudies();renderPerm();renderBankTabs();renderBankList();}
     else if(target==='sc-recycle'){renderRecycle();}
     navSync(screen);
@@ -5175,7 +5294,7 @@
     currentFace='growth';renderPet();
     document.getElementById('bubble').textContent=DOG_GROWTH[dogLv-1].say;
   }
-  function rename(){const n=prompt('给宠物起个名字：',(window.PET_NAME||'小萌'));if(n){window.PET_NAME=n;if(window.applyPetName)window.applyPetName(n);try{localStorage.setItem('mc_petname',n);}catch(e){}}}
+  function rename(){ const p=currentPartner||'dog'; const cur=getPetName(p); const n=prompt('给'+(defaultPetName(p))+'起个名字：',cur); if(n&&n.trim()){ setPetName(p,n.trim()); applyCurrentPetName(); } }
 
 /* ================================================================
    识字学习数据与交互（CHARS_DATA 由 chars_data.js 注入）
@@ -5721,6 +5840,146 @@
         <div class="py-word">${p.word}</div>
       </div>`;
     });
+  }
+
+/* ================================================================
+   v11：拼音板块 4 个新模块（总览 / 书写 / 默写 / 音序表）
+   ================================================================ */
+  /* 六类总览分类定义（颜色呼应各模块） */
+  const PY_OVERVIEW=[
+    {key:'initial',    name:'声母',     color:'#4a90d9', letters:PINYIN_DATA.initial.map(p=>p.letter)},
+    {key:'single',     name:'单韵母',   color:'#e8609a', letters:PINYIN_DATA.single.map(p=>p.letter)},
+    {key:'compound',   name:'复韵母',   color:'#f0922e', letters:PINYIN_DATA.compound.map(p=>p.letter)},
+    {key:'nasalFront', name:'前鼻韵母', color:'#3fb87a', letters:PINYIN_DATA.nasalFront.map(p=>p.letter)},
+    {key:'nasalBack',  name:'后鼻韵母', color:'#9b6bd9', letters:PINYIN_DATA.nasalBack.map(p=>p.letter)},
+    {key:'whole',      name:'整体认读', color:'#e0b020', letters:PINYIN_DATA.whole.map(p=>p.letter)}
+  ];
+  /* 书写笔顺数据：单字母用真实笔顺路径；多字母（zh/ai/ang 等）用通用左→右箭头 */
+  const PY_STROKE_DB={
+    a:[{d:'M52,42 C52,32 34,32 34,47 C34,60 53,60 53,49',n:1},{d:'M53,42 L53,62',n:2}],
+    b:[{d:'M34,22 L34,62',n:1},{d:'M34,47 C34,35 54,35 54,49 C54,60 34,60 34,52',n:2}],
+    c:[{d:'M56,40 C56,30 32,30 32,47 C32,61 56,61 56,52',n:1}],
+    d:[{d:'M54,22 L54,62',n:1},{d:'M54,47 C54,35 34,35 34,49 C34,60 54,60 54,52',n:2}],
+    e:[{d:'M56,42 C56,32 32,32 32,47 C32,61 56,61 56,49',n:1},{d:'M32,47 L56,47',n:2}],
+    f:[{d:'M44,22 L44,62',n:1},{d:'M44,34 C44,29 31,29 31,34',n:2},{d:'M34,52 C34,57 51,57 51,52',n:3}],
+    g:[{d:'M34,22 L34,49 C34,63 56,63 56,50 C56,39 39,39 39,50',n:1}],
+    h:[{d:'M34,22 L34,62',n:1},{d:'M34,47 C34,47 40,47 44,47 L56,62',n:2}],
+    i:[{d:'M44,25 L44,27',n:0},{d:'M44,34 L44,62',n:1}],
+    j:[{d:'M52,25 L52,27',n:0},{d:'M52,34 L52,60 C52,70 39,70 39,63',n:1}],
+    k:[{d:'M34,22 L34,62',n:1},{d:'M53,37 L34,51 L55,62',n:2}],
+    l:[{d:'M44,22 L44,62',n:1}],
+    m:[{d:'M30,62 L30,40 C30,32 41,32 41,40 L41,62 M41,46 C41,32 53,32 53,40 L53,62',n:1}],
+    n:[{d:'M32,62 L32,44 C32,34 47,34 47,44 L47,62',n:1}],
+    o:[{d:'M44,34 C27,34 27,60 44,60 C61,60 61,34 44,34',n:1}],
+    p:[{d:'M34,22 L34,62',n:1},{d:'M34,52 C34,40 54,40 54,52 C54,62 34,62 34,56',n:2}],
+    q:[{d:'M54,22 L54,62',n:1},{d:'M54,52 C54,40 34,40 34,52 C34,62 54,62 54,56',n:2}],
+    r:[{d:'M32,62 L32,40 C32,32 47,32 47,43',n:1},{d:'M41,46 L47,56',n:2}],
+    s:[{d:'M56,40 C56,31 32,31 32,47 C32,62 56,62 56,52',n:1}],
+    t:[{d:'M44,22 L44,62',n:1},{d:'M33,50 C33,55 55,55 55,50',n:2}],
+    u:[{d:'M34,36 L34,53 C34,64 55,64 55,53 L55,36',n:1}],
+    v:[{d:'M32,34 L44,60 L56,34',n:1}],
+    w:[{d:'M28,34 L36,59 L44,40 L52,59 L60,34',n:1}],
+    x:[{d:'M32,34 L56,60',n:1},{d:'M56,34 L32,60',n:2}],
+    y:[{d:'M32,34 L44,49 L56,34 M44,49 L44,63 C44,70 34,70 34,63',n:1}],
+    z:[{d:'M34,36 L56,36 L34,60 L56,60',n:1}],
+    'ü':[{d:'M34,37 L34,53 C34,64 55,64 55,53 L55,37',n:1},{d:'M34,24 L34,28',n:2},{d:'M55,24 L55,28',n:3}]
+  };
+  function pyStrokeSVG(L){
+    const strokes = PY_STROKE_DB[L] ? PY_STROKE_DB[L] : [{d:'M28,46 L60,46',n:1}];
+    let s='<defs><marker id="pyAh" markerWidth="7" markerHeight="7" refX="4.5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e23"/></marker></defs>';
+    strokes.forEach(st=>{
+      const mm=st.d.match(/M([\d.]+),([\d.]+)/);
+      if(st.n>0 && mm) s+='<text x="'+(+mm[1]-4)+'" y="'+(+mm[2]-4)+'" font-size="11" font-weight="900" fill="#e23">'+st.n+'</text>';
+      s+='<path d="'+st.d+'" stroke="#e23" stroke-width="3.4" fill="none" stroke-linecap="round" marker-end="url(#pyAh)"/>';
+      if(mm) s+='<circle cx="'+mm[1]+'" cy="'+mm[2]+'" r="2.6" fill="#e23"/>';
+    });
+    return s;
+  }
+  function openPyMode(mode){
+    ['pyViewTabs','pyViewOverview','pyViewWrite','pyViewDictate','pyViewAlphabet'].forEach(id=>{
+      document.getElementById(id).style.display='none';
+    });
+    if(mode==='overview'){renderPyOverview();document.getElementById('pyViewOverview').style.display='block';}
+    else if(mode==='write'){document.getElementById('pyViewWrite').style.display='block';switchPyWrite('initial',document.querySelector('#pyWritePill button'));}
+    else if(mode==='dictate'){document.getElementById('pyViewDictate').style.display='block';switchPyDictate('trace',document.querySelector('#pyDictatePill button'));}
+    else if(mode==='alphabet'){renderPyAlphabet();document.getElementById('pyViewAlphabet').style.display='block';}
+  }
+  function backPyTabs(){
+    ['pyViewOverview','pyViewWrite','pyViewDictate','pyViewAlphabet'].forEach(id=>{
+      document.getElementById(id).style.display='none';
+    });
+    document.getElementById('pyViewTabs').style.display='block';
+  }
+  function renderPyOverview(){
+    const g=document.getElementById('pyOverviewGrid');let h='';
+    PY_OVERVIEW.forEach(c=>{
+      h+='<div class="py-overview-card" style="border-color:'+c.color+'" onclick="pyOverviewGo(\''+c.key+'\')">'
+        +'<div class="po-h"><span class="po-t" style="color:'+c.color+'">'+c.name+'</span><span class="po-n">'+c.letters.length+' 个</span></div>'
+        +'<div class="po-letters">'+c.letters.join('  ')+'</div></div>';
+    });
+    g.innerHTML=h;
+  }
+  function pyOverviewGo(key){
+    backPyTabs();
+    const btn=document.querySelector('#pyPill button[data-t="'+key+'"]');
+    if(btn) switchPyTab(key,btn); else switchPyTab(key,null);
+  }
+  function switchPyWrite(type,btn){
+    document.querySelectorAll('#pyWritePill button').forEach(b=>b.classList.remove('sel'));
+    if(btn) btn.classList.add('sel');
+    let letters;
+    if(type==='initial') letters=PINYIN_DATA.initial.map(p=>p.letter);
+    else if(type==='whole') letters=PINYIN_DATA.whole.map(p=>p.letter);
+    else letters=[].concat(PINYIN_DATA.single,PINYIN_DATA.compound,PINYIN_DATA.nasalFront,PINYIN_DATA.nasalBack).map(p=>p.letter);
+    const g=document.getElementById('pyWriteGrid');g.innerHTML='';
+    letters.forEach(L=>{
+      g.innerHTML+='<div class="py-write-card"><div class="py-tian">'
+        +'<div class="py-letter-big">'+L+'</div>'
+        +'<svg class="py-strokes" viewBox="0 0 88 88">'+pyStrokeSVG(L)+'</svg>'
+        +'</div><div class="py-spk" onclick="speakPinyin(\''+esc(L)+'\')">🔊 '+L+'</div></div>';
+    });
+  }
+  let pyDictateList=[];
+  function switchPyDictate(mode,btn){
+    document.querySelectorAll('#pyDictatePill button').forEach(b=>b.classList.remove('sel'));
+    if(btn) btn.classList.add('sel');
+    const all=[].concat(PINYIN_DATA.initial,PINYIN_DATA.single,PINYIN_DATA.compound,PINYIN_DATA.nasalFront,PINYIN_DATA.nasalBack,PINYIN_DATA.whole).map(p=>p.letter);
+    pyDictateList=shuffle(all.slice()).slice(0,8);
+    renderPyDictate(mode);
+  }
+  function renderPyDictate(mode){
+    const g=document.getElementById('pyDictateGrid');
+    let h='<div style="grid-column:1/-1;display:flex;gap:8px;justify-content:center;margin-bottom:6px">'
+      +'<button class="btn ghost" onclick="pyDictateReshuffle()">🔁 换一组</button>';
+    if(mode==='dict') h+='<button class="btn" onclick="pyDictateShowAll()">👀 显示答案</button>';
+    h+='</div>';
+    pyDictateList.forEach((L,i)=>{
+      if(mode==='trace'){
+        h+='<div class="py-dictate-cell"><span class="py-cell-txt">'+L+'</span></div>';
+      }else{
+        h+='<div class="py-dictate-cell" id="pyDictateCell'+i+'" onclick="speakPinyin(\''+esc(L)+'\')"><span class="py-cell-hint">'+L+'</span></div>';
+      }
+    });
+    g.innerHTML=h;
+    if(mode==='dict') speakPinyin(pyDictateList[0]);
+  }
+  function pyDictateReshuffle(){const cur=document.querySelector('#pyDictatePill button.sel');const m=cur?cur.dataset.dm:'trace';switchPyDictate(m,cur);}
+  function pyDictateShowAll(){document.querySelectorAll('.py-dictate-cell').forEach(c=>c.classList.add('show-hint'));}
+  const PY_ALPHA_GROUPS=[
+    {name:'大小写一样',tag:'9 个',letters:[['C','c'],['K','k'],['O','o'],['P','p'],['S','s'],['V','v'],['W','w'],['X','x'],['Z','z']]},
+    {name:'大小写不同',tag:'8 个',letters:[['A','a'],['B','b'],['D','d'],['E','e'],['G','g'],['H','h'],['Q','q'],['R','r']]},
+    {name:'大小写相近',tag:'9 个',letters:[['F','f'],['I','i'],['J','j'],['L','l'],['M','m'],['N','n'],['T','t'],['U','u'],['Y','y']]}
+  ];
+  function renderPyAlphabet(){
+    const body=document.getElementById('pyAlphabetBody');let h='';
+    PY_ALPHA_GROUPS.forEach(grp=>{
+      h+='<div class="py-alphabet-section"><div class="py-alpha-h">'+grp.name+'<span class="tag">'+grp.tag+'</span></div><div class="py-alpha-grid">';
+      grp.letters.forEach(pair=>{
+        h+='<div class="py-alpha-letter" onclick="speak(\''+pair[0]+'\',\'en\')"><span class="py-up">'+pair[0]+'</span><span class="py-lo">'+pair[1]+'</span></div>';
+      });
+      h+='</div></div>';
+    });
+    body.innerHTML=h;
   }
 
 /* ================================================================
@@ -9090,6 +9349,7 @@ let phonicsTopicIdx=-1;
     if(!sents.length)sents.push(text.trim());
     /* 自然分页：每页约 180 字（绘本阅读区一满页密度），一段故事一页；剩余不足一页的并入上一页 */
     const PER_PAGE=180;
+    const pages=[];
     let bufArr=[];let buf='';let bufChars=0;
     sents.forEach(function(s,idx){
       const sl=s.length;
@@ -10860,12 +11120,16 @@ let phonicsTopicIdx=-1;
     // B 升级：开蛋旋转 -> 揭晓（稀有金光）
     openEggReveal(function(){
       pop.classList.add('on');
+      var _cta=pop.querySelector('.gp-cta'); if(_cta)_cta.onclick=function(){ closeGachaPrize(); };
+      clearTimeout(window.__gachaAutoClose);
+      window.__gachaAutoClose=setTimeout(function(){ if(typeof closeGachaPrize==='function')closeGachaPrize(true); },2500);
       if(window.celebrate){ var big=(rw.type==='points'||rare); window.celebrate({type: big?'big':'medium', emoji: rw.icon||'🎁', text: rw.name||'恭喜中奖'}); }
       gameReward('gacha',1);
     });
   }
   function closeGachaPrize(silent){
     var p=document.getElementById('gachaPrizePop'); if(!p)return;
+    clearTimeout(window.__gachaAutoClose);
     if(window.beep)window.beep(680,100);
     p.classList.add('closing');
     setTimeout(function(){ if(p)p.classList.remove('on','closing'); },160);
@@ -13362,7 +13626,7 @@ function roundedTop(x,y,w,h,r){
   return `M${x},${y+h} L${x},${y+r} Q${x},${y} ${x+r},${y} L${x+w-r},${y} Q${x+w},${y} ${x+w},${y+r} L${x+w},${y+h} Z`;
 }
 function buildScene(){
-  board.appendChild(el('image',{href:'assets/monopoly-board-zootopia-v2.jpg',x:0,y:0,width:1000,height:700,preserveAspectRatio:'xMidYMid slice'}));
+  /* 背景图改为 .mono-bg 层（CSS 背景，棋子动画不再反复重绘大图，解决卡顿） */
   /* 中心装饰：动物城中心徽章（盘心露出背景，不再画路径框） */
   board.appendChild(el('circle',{cx:500,cy:350,r:118,fill:'rgba(255,252,235,.80)',stroke:INK,'stroke-width':3}));
   board.appendChild(el('circle',{cx:500,cy:350,r:118,fill:'none',stroke:'#F4C943','stroke-width':5,'stroke-dasharray':'2 12'}));
@@ -13677,6 +13941,13 @@ function initMonopoly(){
 window.__monoGame={ TYPES, DECKS, VENUE_LORE, VENUES, CELLS_PTS, getPoint, state, rollDice, resolveCell, movePawn,
   setForceDice:(n)=>{forceDice=n;}, settle, nextLuck, pickTale, gainStars, getPet, diffTxt, MAX_TURNS, initMonopoly, _doc:document };
 
+  function cycleMonoDiff(){
+    var cur=getDiff(); var order=['pre','g13','g36']; var nx=order[(order.indexOf(cur)+1)%order.length];
+    if(typeof setGameDiff==='function') setGameDiff(nx);
+    var dc=document.getElementById('diffChip'); if(dc) dc.textContent=diffTxt();
+    showToast('难度已切换：'+diffTxt());
+  }
+  window.cycleMonoDiff=cycleMonoDiff;
 window.__monoInit=initMonopoly;
 
 })();
@@ -13848,7 +14119,7 @@ window.__monoBack = function () {
   }
   window.lyObNext=function(){
     var s=OB[obIdx];
-    if(s.name){var v=document.getElementById('lyObInput').value.trim();v=v||'小萌';window.PET_NAME=v;if(window.applyPetName)window.applyPetName(v);lsSet('mc_petname',v);}
+    if(s.name){var v=document.getElementById('lyObInput').value.trim();v=v||defaultPetName('dog');if(typeof setPetName==='function')setPetName('dog',v);if(typeof applyCurrentPetName==='function')applyCurrentPetName();}
     if(obIdx>=OB.length-1){lyObFinish();return;}
     obIdx++;lyObRender();
   };
@@ -13864,13 +14135,11 @@ window.__monoBack = function () {
     obIdx=0;ov.classList.add('on');lyObRender();
   };
 
-  /* ---------- 全局宠物名应用（让改名/引导持久化） ---------- */
-  window.applyPetName=function(n){
-    ['petName','monopetName','meName'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=n;});
-  };
+  /* ---------- 当前伙伴名应用（按伙伴独立命名，互不覆盖） ---------- */
+  window.applyPetName=applyCurrentPetName;
 
   /* ---------- 启动 ---------- */
-  if(window.PET_NAME)window.applyPetName(window.PET_NAME);
+  if(typeof applyCurrentPetName==='function')applyCurrentPetName();
   startOnboard();
 })();
 </script>
@@ -14069,6 +14338,7 @@ window.__monoBack = function () {
   }
   function closePetGacha(silent){
     var p=document.getElementById('petGachaPop'); if(!p)return;
+    clearTimeout(window.__petGachaAutoClose);
     if(window.beep)window.beep(680,100);
     p.classList.add('closing');
     setTimeout(function(){ if(p)p.classList.remove('on','closing'); },160);
@@ -14084,6 +14354,9 @@ window.__monoBack = function () {
       var pop=document.getElementById('petGachaPop');
       pop.querySelector('.pg-card').classList.toggle('gold',rare);
       pop.classList.add('on');
+      var _pcta=pop.querySelector('.gp-cta'); if(_pcta)_pcta.onclick=function(){ closePetGacha(); };
+      clearTimeout(window.__petGachaAutoClose);
+      window.__petGachaAutoClose=setTimeout(function(){ if(typeof closePetGacha==='function')closePetGacha(true); },2800);
       if(window.celebrate)window.celebrate({type:rare?'big':'medium',emoji:pet.emoji,text:isNew?('新伙伴 '+pet.name):'谢谢陪伴'});
       if(window.beep)window.beep(rare?990:700,180);
     });
