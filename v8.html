@@ -936,13 +936,16 @@
   .py-overview-card .po-letters{font-size:13px;line-height:1.55;font-weight:700;letter-spacing:1px;color:var(--ink-soft)}
   .py-write-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
   @media (min-width:560px){.py-write-grid{grid-template-columns:repeat(3,1fr)}}
-  .py-write-card{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:14px 8px 10px;text-align:center}
+  .py-write-card{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:14px 8px 10px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s}
+  .py-write-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(76,53,117,.18)}
+  .py-write-card:active{transform:translateY(0)}
   .py-write-card .py-tian{position:relative;width:88px;height:88px;margin:0 auto 6px;border:2px solid var(--ink);border-radius:4px;background:#fff;overflow:hidden}
   .py-write-card .py-tian::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--ink);opacity:.3;transform:translateX(-.5px)}
   .py-write-card .py-tian::after{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--ink);opacity:.3;transform:translateY(-.5px)}
-  .py-write-card .py-tian .py-letter-big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:900;color:#444;font-family:serif;line-height:1}
-  .py-write-card .py-tian .py-strokes{position:absolute;inset:0;pointer-events:none}
-  .py-write-card .py-spk{display:inline-block;font-size:11px;color:var(--ink-soft);margin-top:4px;padding:3px 10px;background:var(--butter-s);border-radius:999px;cursor:pointer}
+  /* v12：网格里只画半透明字母（描红态），SVG 笔顺移到弹窗独立区域 */
+  .py-write-card .py-tian .py-letter-big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:700;color:var(--ink-soft);font-family:serif;line-height:1;opacity:.42;pointer-events:none;letter-spacing:-1px}
+  .py-write-card .py-tian .py-strokes{display:none}
+  .py-write-card .py-spk{display:inline-block;font-size:11px;color:var(--ink-soft);margin-top:4px;padding:3px 10px;background:var(--butter-s);border-radius:999px;cursor:pointer;font-weight:700}
   .py-dictate-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
   @media (min-width:560px){.py-dictate-grid{grid-template-columns:repeat(8,1fr)}}
   .py-dictate-cell{position:relative;aspect-ratio:1/1;border:2px solid var(--ink);border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:900;color:#444;font-family:serif}
@@ -960,6 +963,43 @@
   .py-alpha-letter:active{transform:scale(.95)}
   .py-alpha-letter .py-up{color:#d33;font-size:18px;font-weight:900;line-height:1;margin-right:1px}
   .py-alpha-letter .py-lo{color:#36c;font-size:14px;font-weight:700;line-height:1}
+
+  /* ====== v12：拼音字母详情弹窗（点击声/韵/整体单字打开） ====== */
+  .py-detail-back{position:fixed;inset:0;background:rgba(38,33,92,.45);display:flex;align-items:center;justify-content:center;z-index:80;padding:18px;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);animation:pyFadeIn .18s ease-out}
+  .py-detail-back[hidden]{display:none!important}
+  @keyframes pyFadeIn{from{opacity:0}to{opacity:1}}
+  .py-detail-modal{background:#fff;border:2.5px solid var(--ink);border-radius:20px;width:100%;max-width:480px;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 18px 48px rgba(38,33,92,.30);overflow:hidden;animation:pyPopIn .22s cubic-bezier(.4,1.4,.6,1)}
+  @keyframes pyPopIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+  .py-detail-head{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:var(--butter-s);border-bottom:1.5px solid var(--line)}
+  .py-detail-head .py-detail-nav{background:transparent;border:1.5px solid var(--ink);border-radius:10px;padding:4px 11px;color:var(--ink);font-size:13px;font-weight:800;cursor:pointer;line-height:1}
+  .py-detail-head .py-detail-nav:hover{background:var(--butter-s);color:var(--ink)}
+  .py-detail-head .py-detail-title{font-size:18px;font-weight:900;color:var(--ink);letter-spacing:1px;flex:1;text-align:center;padding:0 8px}
+  .py-detail-head .py-detail-close{background:transparent;border:none;font-size:24px;color:var(--ink-soft);cursor:pointer;padding:0 6px;line-height:1;font-weight:900}
+  .py-detail-head .py-detail-close:hover{color:#e23}
+  .py-detail-body{display:flex;gap:12px;padding:14px 16px;flex:1;min-height:0}
+  .py-detail-left{flex:1.05;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;border-right:1.5px dashed var(--line);padding-right:12px}
+  .py-detail-letter{font-size:60px;font-weight:900;color:var(--ink);font-family:serif;line-height:1;letter-spacing:-2px}
+  .py-detail-meta{font-size:11px;color:var(--ink-soft);font-weight:700;text-align:center;line-height:1.4}
+  .py-detail-tian{position:relative;width:100%;aspect-ratio:1.4/1;max-width:200px;margin-top:6px;border:2px solid var(--ink);border-radius:6px;background:#fff;overflow:hidden}
+  .py-detail-tian::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--ink);opacity:.3;transform:translateX(-.5px)}
+  .py-detail-tian::after{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--ink);opacity:.3;transform:translateY(-.5px)}
+  .py-detail-tian-ghost{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:96px;font-weight:700;color:var(--ink-soft);opacity:.32;font-family:serif;line-height:1;letter-spacing:-2px}
+  .py-detail-tian-cap{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-size:11px;color:var(--ink-soft);font-weight:800}
+  .py-detail-tian-cap b{background:#fff;padding:2px 8px;border-radius:999px;border:1px solid var(--line)}
+  .py-detail-right{flex:.95;min-width:0;display:flex;flex-direction:column;gap:6px;overflow-y:auto}
+  .py-detail-rh{font-size:12px;font-weight:900;color:var(--ink);letter-spacing:.5px}
+  .py-detail-strokes{position:relative;width:100%;aspect-ratio:1/1;border:2px solid var(--ink);border-radius:6px;background:#fff;overflow:hidden}
+  .py-detail-strokes::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--ink);opacity:.3;transform:translateX(-.5px)}
+  .py-detail-strokes::after{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--ink);opacity:.3;transform:translateY(-.5px)}
+  .py-detail-strokes-svg{position:absolute;inset:0;width:100%;height:100%}
+  .py-detail-stroke-list{margin:0;padding-left:18px;font-size:11px;color:var(--ink-soft);font-weight:700;line-height:1.5}
+  .py-detail-stroke-list li{margin-bottom:2px}
+  .py-detail-stroke-list li b{color:var(--ink);margin-right:3px;font-weight:900}
+  .py-detail-foot{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-top:1.5px solid var(--line);background:var(--butter-s);gap:10px}
+  .py-detail-foot .py-detail-foot-mid{flex:1;text-align:center;font-size:11px;color:var(--ink-soft);font-weight:700}
+  .py-detail-foot .py-detail-nav{background:var(--surface);border:1.5px solid var(--ink);border-radius:10px;padding:5px 14px;color:var(--ink);font-size:12px;font-weight:800;cursor:pointer;line-height:1}
+  .py-detail-foot .py-detail-nav:hover{background:var(--butter-s)}
+
   /* ====== 英语单词屏 ====== */
   .word-goal{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
   .word-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -3254,7 +3294,7 @@
     </div>
 
     <div class="screen" id="sc-pinyin">
-      <div class="card" style="max-width:600px;margin:0 auto">
+      <div class="card" style="max-width:920px;margin:0 auto">
         <div class="card-h"><span class="t">🔡 拼音学习</span><span class="s" onclick="go('home')" style="cursor:pointer">← 返回</span></div>
 
         <!-- v11：顶部 4 个新模块快速入口（总览/书写/默写/音序表） -->
@@ -3350,6 +3390,43 @@
             <span class="b" onclick="backPyTabs()" style="cursor:pointer">← 返回拼音</span>
           </div>
           <div id="pyAlphabetBody" class="py-alphabet-body"></div>
+        </div>
+
+        <!-- 视图6：单字详情弹窗（v12：点击声/韵/整体卡时打开） -->
+        <div id="pyDetailBack" class="py-detail-back" hidden onclick="if(event.target===this)closePyDetail()">
+          <div class="py-detail-modal" role="dialog" aria-label="拼音字母详情">
+            <div class="py-detail-head">
+              <button class="py-detail-nav" onclick="pyDetailNav(-1)" aria-label="上一字">«</button>
+              <div class="py-detail-title" id="pyDetailTitle">— —</div>
+              <button class="py-detail-close" onclick="closePyDetail()" aria-label="关闭">×</button>
+            </div>
+            <div class="py-detail-body">
+              <!-- 左：字母 + 田字格描红 -->
+              <div class="py-detail-left">
+                <div class="py-detail-letter" id="pyDetailLetter">—</div>
+                <div class="py-detail-meta" id="pyDetailMeta">—</div>
+                <div class="py-detail-tian">
+                  <span class="py-detail-tian-ghost" id="pyDetailTianGhost">—</span>
+                  <span class="py-detail-tian-cap"><b>🔊 跟着念 <span id="pyDetailCnName">—</span></b></span>
+                </div>
+              </div>
+              <!-- 右：笔顺独立区 -->
+              <div class="py-detail-right">
+                <div class="py-detail-rh">笔顺说明（人教版）</div>
+                <div class="py-detail-strokes">
+                  <svg class="py-detail-strokes-svg" viewBox="0 0 120 120" id="pyDetailStrokesSVG"></svg>
+                </div>
+                <ol class="py-detail-stroke-list" id="pyDetailStrokeList"></ol>
+              </div>
+            </div>
+            <div class="py-detail-foot">
+              <button class="btn ghost" onclick="pyDetailSpeakCurrent()">🔊 听发音</button>
+              <div class="py-detail-foot-mid">
+                <span id="pyDetailCounter">— / —</span>
+              </div>
+              <button class="py-detail-nav" onclick="pyDetailNav(1)" aria-label="下一字">下一字 »</button>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -5519,17 +5596,6 @@
     if(whole && typeof SYLLABLE_LIB!=='undefined' && SYLLABLE_LIB[whole]) return SYLLABLE_LIB[whole];
     return '';
   }
-  // 拼音朗读：只把【代表汉字】交给中文语音慢速朗读 —— 永远不直接喂拉丁字母，
-  // 因此绝不会被识别成英文单词 / 自然拼读 / 音标。
-  function speakPinyin(syllable, onDone){
-    try{
-      if(!('speechSynthesis' in window) || !syllable){ if(onDone)onDone(); return; }
-      var ch=pinyinToChar(syllable);
-      if(!ch) ch=stripTone(syllable);          // 资料库查不到的极少见情况，退化为原拼音串
-      speak(ch,'zh');                          // 强制中文语音慢速朗读
-      if(onDone)onDone();
-    }catch(e){ if(onDone)onDone(); }
-  }
   // 拼音跟读示范：把「b—à—bà」这类分解串，按「声母 / 韵母带调 / 音节」逐段朗读，
   // 每段之间留间隔；全程只把【代表汉字】交给中文语音 → 绝不会读成英文。
   function speakPinyinSeq(pStr, onDone){
@@ -5931,13 +5997,76 @@
     if(type==='initial') letters=PINYIN_DATA.initial.map(p=>p.letter);
     else if(type==='whole') letters=PINYIN_DATA.whole.map(p=>p.letter);
     else letters=[].concat(PINYIN_DATA.single,PINYIN_DATA.compound,PINYIN_DATA.nasalFront,PINYIN_DATA.nasalBack).map(p=>p.letter);
+    /* v12：保存当前 cat 与字母表，让详情弹窗的「上/下一字」按当前分类内翻页 */
+    pyWriteCat=type; pyWriteLetters=letters.slice();
     const g=document.getElementById('pyWriteGrid');g.innerHTML='';
-    letters.forEach(L=>{
-      g.innerHTML+='<div class="py-write-card"><div class="py-tian">'
+    letters.forEach((L,i)=>{
+      g.innerHTML+='<div class="py-write-card" onclick="openPyDetail('+i+')" title="点我打开笔顺详情（念「'
+        +esc(PINYIN_CN_NAME[L]||'')+'」）">'
+        +'<div class="py-tian">'
         +'<div class="py-letter-big">'+L+'</div>'
-        +'<svg class="py-strokes" viewBox="0 0 88 88">'+pyStrokeSVG(L)+'</svg>'
-        +'</div><div class="py-spk" onclick="speakPinyin(\''+esc(L)+'\')">🔊 '+L+'</div></div>';
+        /* v12：网格只画半透明灰字母，笔顺挪进弹窗独立区 */
+        +'</div><div class="py-spk">🔊 '+esc(PINYIN_CN_NAME[L]||L)+'</div></div>';
     });
+  }
+
+  /* === v12：单字详情弹窗（点击声/韵/整体任意一格打开） === */
+  let pyWriteCat=null;            /* 'initial' | 'final' | 'whole' —— 当前书写屏子分类 */
+  let pyWriteLetters=[];          /* 当前分类所有字母（与网格一一对应） */
+  let pyDetailIdx=-1;             /* 当前打开的字母下标 */
+
+  function openPyDetail(idx){
+    if(!pyWriteLetters.length || idx<0 || idx>=pyWriteLetters.length) return;
+    pyDetailIdx=idx;
+    const L=pyWriteLetters[idx];
+    const cn=PINYIN_CN_NAME[L] || L;
+    /* 字母性质简单映射（常见声韵母） */
+    const META={
+      'b':'双唇 · 不送气 · 清塞音','p':'双唇 · 送气 · 清塞音','m':'双唇 · 浊鼻音','f':'唇齿 · 清擦音',
+      'd':'舌尖中 · 不送气 · 清塞音','t':'舌尖中 · 送气 · 清塞音','n':'舌尖中 · 浊鼻音','l':'舌尖中 · 浊边音',
+      'g':'舌根 · 不送气 · 清塞音','k':'舌根 · 送气 · 清塞音','h':'舌根 · 清擦音',
+      'j':'舌面前 · 不送气 · 清塞擦音','q':'舌面前 · 送气 · 清塞擦音','x':'舌面前 · 清擦音',
+      'zh':'舌尖后 · 不送气 · 清塞擦音','ch':'舌尖后 · 送气 · 清塞擦音','sh':'舌尖后 · 清擦音','r':'舌尖后 · 浊擦音',
+      'z':'舌尖前 · 不送气 · 清塞擦音','c':'舌尖前 · 送气 · 清塞擦音','s':'舌尖前 · 清擦音',
+      'y':'舌面前 · 半元音','w':'舌面后 · 半元音',
+      'a':'单元音 · 开口','o':'单元音 · 开口','e':'单元音 · 开口','i':'单元音 · 齐齿','u':'单元音 · 合口','ü':'单元音 · 撮口'
+    };
+    document.getElementById('pyDetailTitle').innerHTML = '🔊 '+esc(L)+' — '+esc(cn);
+    document.getElementById('pyDetailLetter').textContent = L;
+    document.getElementById('pyDetailMeta').textContent = META[L] || '发音字母';
+    document.getElementById('pyDetailTianGhost').textContent = L;
+    document.getElementById('pyDetailCnName').textContent = cn;
+    document.getElementById('pyDetailCounter').textContent = (idx+1)+' / '+pyWriteLetters.length;
+    /* 笔顺 SVG —— 多字母（zh/ch/sh/ang...）单字母用已有 path，复合串视为整体 */
+    document.getElementById('pyDetailStrokesSVG').innerHTML = pyStrokeSVG(L);
+    /* 笔顺步骤文字描述（取自已有 PY_STROKE_DB） */
+    const strokes=(PY_STROKE_DB[L]||[]).filter(s=>s.n>0);
+    let listH='';
+    if(strokes.length){
+      const NAMES=['起笔','横','竖','撇','捺','点','提','折','钩','挑','弯','半圆','弧','其它'];
+      strokes.forEach((s,i)=> listH+='<li><b>第'+(i+1)+'笔</b>'+NAMES[Math.min(s.n, NAMES.length-1)]+'</li>');
+    }else{
+      listH='<li style="list-style:none;margin-left:-18px;color:var(--ink-soft)">整体记忆字母即可（按构成字母）</li>';
+    }
+    document.getElementById('pyDetailStrokeList').innerHTML = listH;
+    /* 显示弹窗，自动念一声 */
+    document.getElementById('pyDetailBack').hidden=false;
+    speakPinyin(L);
+  }
+  function closePyDetail(){
+    const el=document.getElementById('pyDetailBack');
+    if(el) el.hidden=true;
+    pyDetailIdx=-1;
+  }
+  function pyDetailNav(delta){
+    if(!pyWriteLetters.length) return;
+    const n=pyWriteLetters.length;
+    const next=(pyDetailIdx + delta + n) % n;
+    openPyDetail(next);
+  }
+  function pyDetailSpeakCurrent(){
+    if(pyDetailIdx<0) return;
+    speakPinyin(pyWriteLetters[pyDetailIdx]);
   }
   let pyDictateList=[];
   function switchPyDictate(mode,btn){
