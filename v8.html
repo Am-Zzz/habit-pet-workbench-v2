@@ -9284,11 +9284,19 @@ let phonicsTopicIdx=-1;
     applyReaderImgToDom(url);
     _readerImgCache[_ripKey()]=url;
     try{LS.setItem(_ripKey(),JSON.stringify(url));}catch(e){}
+    /* 方案A：封面自定义图同步到书架卡片（BOOK_COVER_KEY），保证书架与封面 tab 一致 */
+    if(_ripType==='cover' && curBook && curBook.id && typeof setBookCover==='function'){
+      try{ setBookCover(curBook.id, url); }catch(e){}
+    }
     updateIllEmoji(_ripType);
   }
   function removeReaderCustomImg(){
     try{LS.removeItem(_ripKey());}catch(e){}
     delete _readerImgCache[_ripKey()];
+    /* 方案A：移除封面自定义图时同步清除书架卡片自定义封面，回退书自带封面 */
+    if(_ripType==='cover' && curBook && curBook.id && typeof setBookCover==='function'){
+      try{ setBookCover(curBook.id, ''); }catch(e){}
+    }
     applyReaderImgToDom(null);renderRipPreview();toast('已还原默认插图 ✔');
     updateIllEmoji(_ripType);
   }
