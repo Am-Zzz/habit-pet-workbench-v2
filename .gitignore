@@ -46,3 +46,54 @@ ai_config.json
 # 网盘登录态 cookie（不入库，仅存本机）
 netdisk_config.json
 
+# ============================================================
+# cloudstudio 部署源 / 草稿目录（不入库）
+# deploy_v8 = 公网 3587173a 沙箱源（26MB，含大图），deploy_cs = 另一沙箱源
+# ============================================================
+deploy_v8/
+deploy_cs/
+_deploy/
+_phonics_preview/
+_phonics_preview_v4/
+_phonics_preview_v5/
+_phonics_preview_v6/
+_phonics_preview_v7/
+
+# 备份压缩包 / 一次性清单 / 临时脚本（不入库）
+*_BACKUP_*.tar.gz
+_del_list.txt
+_han_chars.txt
+_other8.txt
+_path.txt
+cover_test.png
+add_mindmap_book.js
+admin_check.py
+check_aliyun.py
+fix2.py
+
+# 未引用的大富翁背景草稿（v8 实际只用 zootopia-v2）
+assets/monopoly-board-bg-v2.jpg
+assets/monopoly-board-bg.jpg
+assets/monopoly-board-handdrawn.jpg
+assets/monopoly-board-voxel.jpg
+assets/monopoly-board-zootopia-wide.jpg
+assets/monopoly-board-zootopia.jpg
+
+# 一次性修补/生成脚本（规则：临时脚本不入库）
+gen_words2.py
+patch_dlg_cats.py
+patch_grade_cn.py
+patch_words.py
+patch_words_clean.py
+patch_words_clean2.py
+patch_words_grade.py
+patch_words_school.py
+probe_aliyun.py
+
+# 旧备份残留 / 未引用素材
+*.bak2
+*.bak3
+phonics_assets/
+
+
+

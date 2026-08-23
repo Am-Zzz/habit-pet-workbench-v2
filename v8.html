@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>萌宠小屋</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -254,6 +254,44 @@
     .mini-grid{grid-template-columns:repeat(2,1fr)}
   }
   .learn .sub{display:block;font-size:9.5px;font-weight:700;color:var(--ink-faint);margin-top:4px;line-height:1.3}
+
+  /* ====== iPad 横屏适配（≥960px）：主页三栏展开、块对齐、消除大小不一 ====== */
+  @media (min-width:960px){
+    .wrap{max-width:1280px}
+    .screen#sc-home .home-wrap{align-items:stretch}
+    .screen#sc-home .home-main{min-width:0}
+    .screen#sc-home .grid3{
+      grid-template-columns:1.1fr 1.2fr 1.1fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .screen#sc-home .grid3 > .card{
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+    }
+    .screen#sc-home .grid3 > .card:last-child{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      padding:14px;
+    }
+    .screen#sc-home .grid3 > .card:last-child .milestone-card{flex:0 0 auto}
+    .screen#sc-home .grid3 > .card:last-child .coll-card{
+      flex:1 1 0;
+      min-height:62px;
+      margin-bottom:0;
+      padding:12px 14px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .screen#sc-home .grid3 > .card:last-child .home-link-list{display:none}
+    .screen#sc-home .learn-grid{grid-template-columns:repeat(3,1fr);gap:11px}
+    .screen#sc-home .pet-stage{width:150px;height:150px}
+  }
+  .version-badge{font-size:9px;font-weight:700;color:var(--ink-faint);background:var(--surface-2);padding:2px 6px;border-radius:8px;margin-left:8px;letter-spacing:.3px}
 
   /* 各模块标识角标 */
   .badge{position:absolute;top:5px;right:5px;font-size:8.5px;font-weight:800;color:#fff;padding:1.5px 5.5px;border-radius:999px;box-shadow:0 2px 5px rgba(0,0,0,.15)}
@@ -917,89 +955,6 @@
   .py-card .py-em{font-size:36px;margin-bottom:6px}
   .py-card .py-letter{font-size:42px;font-weight:900;color:var(--butter);line-height:1}
   .py-card .py-word{font-size:11px;color:var(--ink-soft);margin-top:6px}
-  /* ====== 拼音 v11 新模块：总览/书写/默写/音序表 ====== */
-  .py-entry-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 16px}
-  .py-entry{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:11px 6px;text-align:center;cursor:pointer;transition:.15s;user-select:none}
-  .py-entry:hover{background:var(--butter-s)}
-  .py-entry:active{transform:translateY(2px)}
-  .py-entry .pe-em{font-size:22px;line-height:1.1;margin-bottom:3px}
-  .py-entry .pe-t{font-size:12px;font-weight:800;color:var(--ink)}
-  .py-sub-h{display:flex;align-items:center;justify-content:space-between;background:var(--butter-s);border:2px solid var(--butter);border-radius:14px;padding:9px 14px;margin-bottom:14px}
-  .py-sub-h .t{font-size:15px;font-weight:900;color:var(--ink)}
-  .py-sub-h .b{font-size:12px;color:var(--ink-soft);font-weight:700}
-  .py-overview-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-  .py-overview-card{border:2px solid var(--line);border-radius:16px;padding:12px;background:var(--surface);cursor:pointer;transition:.15s}
-  .py-overview-card:hover{transform:translateY(-2px);box-shadow:0 4px 0 var(--line)}
-  .py-overview-card .po-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-  .py-overview-card .po-t{font-size:13px;font-weight:900;color:var(--ink)}
-  .py-overview-card .po-n{font-size:11px;font-weight:800;color:var(--ink-soft);background:var(--butter-s);padding:2px 8px;border-radius:999px}
-  .py-overview-card .po-letters{font-size:13px;line-height:1.55;font-weight:700;letter-spacing:1px;color:var(--ink-soft)}
-  .py-write-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-  @media (min-width:560px){.py-write-grid{grid-template-columns:repeat(3,1fr)}}
-  .py-write-card{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:14px 8px 10px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s}
-  .py-write-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(76,53,117,.18)}
-  .py-write-card:active{transform:translateY(0)}
-  .py-write-card .py-tian{position:relative;width:88px;height:88px;margin:0 auto 6px;border:2px solid var(--ink);border-radius:4px;background:#fff;overflow:hidden}
-  .py-write-card .py-tian::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--ink);opacity:.3;transform:translateX(-.5px)}
-  .py-write-card .py-tian::after{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--ink);opacity:.3;transform:translateY(-.5px)}
-  /* v12：网格里只画半透明字母（描红态），SVG 笔顺移到弹窗独立区域 */
-  .py-write-card .py-tian .py-letter-big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:700;color:var(--ink-soft);font-family:serif;line-height:1;opacity:.42;pointer-events:none;letter-spacing:-1px}
-  .py-write-card .py-tian .py-strokes{display:none}
-  .py-write-card .py-spk{display:inline-block;font-size:11px;color:var(--ink-soft);margin-top:4px;padding:3px 10px;background:var(--butter-s);border-radius:999px;cursor:pointer;font-weight:700}
-  .py-dictate-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
-  @media (min-width:560px){.py-dictate-grid{grid-template-columns:repeat(8,1fr)}}
-  .py-dictate-cell{position:relative;aspect-ratio:1/1;border:2px solid var(--ink);border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:900;color:#444;font-family:serif}
-  .py-dictate-cell::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--ink);opacity:.3;transform:translateX(-.5px)}
-  .py-dictate-cell::after{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--ink);opacity:.3;transform:translateY(-.5px)}
-  .py-dictate-cell .py-cell-txt{opacity:.28}
-  .py-dictate-cell .py-cell-hint{position:absolute;right:-22px;top:-8px;font-size:10px;color:var(--ink-soft);font-weight:700;background:#fff;padding:1px 4px;border-radius:6px;border:1px solid var(--line);opacity:0;transition:.2s}
-  .py-dictate-cell.show-hint .py-cell-hint{opacity:1}
-  .py-alphabet-section{margin-bottom:14px}
-  .py-alphabet-section .py-alpha-h{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px;font-weight:900;color:var(--ink)}
-  .py-alphabet-section .py-alpha-h .tag{font-size:11px;background:var(--butter-s);padding:2px 8px;border-radius:999px;color:var(--ink-soft);font-weight:700}
-  .py-alpha-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-  .py-alpha-letter{aspect-ratio:1.4/1;border:1.5px solid var(--ink);border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'Times New Roman',serif;transition:.15s}
-  .py-alpha-letter:hover{background:var(--butter-s)}
-  .py-alpha-letter:active{transform:scale(.95)}
-  .py-alpha-letter .py-up{color:#d33;font-size:18px;font-weight:900;line-height:1;margin-right:1px}
-  .py-alpha-letter .py-lo{color:#36c;font-size:14px;font-weight:700;line-height:1}
-
-  /* ====== v12：拼音字母详情弹窗（点击声/韵/整体单字打开） ====== */
-  .py-detail-back{position:fixed;inset:0;background:rgba(38,33,92,.45);display:flex;align-items:center;justify-content:center;z-index:80;padding:18px;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);animation:pyFadeIn .18s ease-out}
-  .py-detail-back[hidden]{display:none!important}
-  @keyframes pyFadeIn{from{opacity:0}to{opacity:1}}
-  .py-detail-modal{background:#fff;border:2.5px solid var(--ink);border-radius:20px;width:100%;max-width:480px;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 18px 48px rgba(38,33,92,.30);overflow:hidden;animation:pyPopIn .22s cubic-bezier(.4,1.4,.6,1)}
-  @keyframes pyPopIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
-  .py-detail-head{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:var(--butter-s);border-bottom:1.5px solid var(--line)}
-  .py-detail-head .py-detail-nav{background:transparent;border:1.5px solid var(--ink);border-radius:10px;padding:4px 11px;color:var(--ink);font-size:13px;font-weight:800;cursor:pointer;line-height:1}
-  .py-detail-head .py-detail-nav:hover{background:var(--butter-s);color:var(--ink)}
-  .py-detail-head .py-detail-title{font-size:18px;font-weight:900;color:var(--ink);letter-spacing:1px;flex:1;text-align:center;padding:0 8px}
-  .py-detail-head .py-detail-close{background:transparent;border:none;font-size:24px;color:var(--ink-soft);cursor:pointer;padding:0 6px;line-height:1;font-weight:900}
-  .py-detail-head .py-detail-close:hover{color:#e23}
-  .py-detail-body{display:flex;gap:12px;padding:14px 16px;flex:1;min-height:0}
-  .py-detail-left{flex:1.05;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;border-right:1.5px dashed var(--line);padding-right:12px}
-  .py-detail-letter{font-size:60px;font-weight:900;color:var(--ink);font-family:serif;line-height:1;letter-spacing:-2px}
-  .py-detail-meta{font-size:11px;color:var(--ink-soft);font-weight:700;text-align:center;line-height:1.4}
-  .py-detail-tian{position:relative;width:100%;aspect-ratio:1.4/1;max-width:200px;margin-top:6px;border:2px solid var(--ink);border-radius:6px;background:#fff;overflow:hidden}
-  .py-detail-tian::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--ink);opacity:.3;transform:translateX(-.5px)}
-  .py-detail-tian::after{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--ink);opacity:.3;transform:translateY(-.5px)}
-  .py-detail-tian-ghost{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:96px;font-weight:700;color:var(--ink-soft);opacity:.32;font-family:serif;line-height:1;letter-spacing:-2px}
-  .py-detail-tian-cap{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-size:11px;color:var(--ink-soft);font-weight:800}
-  .py-detail-tian-cap b{background:#fff;padding:2px 8px;border-radius:999px;border:1px solid var(--line)}
-  .py-detail-right{flex:.95;min-width:0;display:flex;flex-direction:column;gap:6px;overflow-y:auto}
-  .py-detail-rh{font-size:12px;font-weight:900;color:var(--ink);letter-spacing:.5px}
-  .py-detail-strokes{position:relative;width:100%;aspect-ratio:1/1;border:2px solid var(--ink);border-radius:6px;background:#fff;overflow:hidden}
-  .py-detail-strokes::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--ink);opacity:.3;transform:translateX(-.5px)}
-  .py-detail-strokes::after{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:var(--ink);opacity:.3;transform:translateY(-.5px)}
-  .py-detail-strokes-svg{position:absolute;inset:0;width:100%;height:100%}
-  .py-detail-stroke-list{margin:0;padding-left:18px;font-size:11px;color:var(--ink-soft);font-weight:700;line-height:1.5}
-  .py-detail-stroke-list li{margin-bottom:2px}
-  .py-detail-stroke-list li b{color:var(--ink);margin-right:3px;font-weight:900}
-  .py-detail-foot{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-top:1.5px solid var(--line);background:var(--butter-s);gap:10px}
-  .py-detail-foot .py-detail-foot-mid{flex:1;text-align:center;font-size:11px;color:var(--ink-soft);font-weight:700}
-  .py-detail-foot .py-detail-nav{background:var(--surface);border:1.5px solid var(--ink);border-radius:10px;padding:5px 14px;color:var(--ink);font-size:12px;font-weight:800;cursor:pointer;line-height:1}
-  .py-detail-foot .py-detail-nav:hover{background:var(--butter-s)}
-
   /* ====== 英语单词屏 ====== */
   .word-goal{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
   .word-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -2890,6 +2845,7 @@
         <div class="ts-pill star" onclick="go('bank')" title="星星积分"><span class="ic">⭐</span><span id="topStar">0</span></div>
       </div>
       <div class="gear" onclick="go('parent')" title="家长模式">⚙️</div>
+      <span class="version-badge" id="verBadge">v0819</span>
     </div>
 
     <!-- 屏幕：主页 -->
@@ -3083,6 +3039,12 @@
           <div class="mgmt" id="bankList"></div>
           <div class="add-row" onclick="addBankItem()">＋ 添加题目</div>
           <div class="add-row ghost" onclick="resetBank()">↺ 恢复占位题库（清空后重装示例）</div>
+        </div>
+        <div class="sec">
+          <div class="sec-h">🎲 大富翁大题库（自定义 · 家长添加）</div>
+          <p style="font-size:11px;color:var(--ink-soft);margin:0 0 8px">这里添加的题目会和大富翁内置 132 题<b>混在一起随机抽取</b>，孩子玩大富翁就能抽到你加的卡。已添加 <b id="monoBankCount">0</b> 题。</p>
+          <div class="mgmt" id="monoBankList"></div>
+          <div class="add-row" onclick="addMonoBankItem()">＋ 添加大富翁题</div>
         </div>
         <div class="sec">
           <div class="sec-h">🔐 权限管理（游戏开放）</div>
@@ -3294,141 +3256,42 @@
     </div>
 
     <div class="screen" id="sc-pinyin">
-      <div class="card" style="max-width:920px;margin:0 auto">
+      <div class="card" style="max-width:600px;margin:0 auto">
         <div class="card-h"><span class="t">🔡 拼音学习</span><span class="s" onclick="go('home')" style="cursor:pointer">← 返回</span></div>
-
-        <!-- v11：顶部 4 个新模块快速入口（总览/书写/默写/音序表） -->
-        <div class="py-entry-row" id="pyEntryRow">
-          <div class="py-entry" onclick="openPyMode('overview')"><div class="pe-em">📋</div><div class="pe-t">总览</div></div>
-          <div class="py-entry" onclick="openPyMode('write')"><div class="pe-em">✏️</div><div class="pe-t">书写</div></div>
-          <div class="py-entry" onclick="openPyMode('dictate')"><div class="pe-em">📝</div><div class="pe-t">默写</div></div>
-          <div class="py-entry" onclick="openPyMode('alphabet')"><div class="pe-em">🔠</div><div class="pe-t">音序表</div></div>
-        </div>
-
-        <!-- 视图1：原 7 tab + 字母卡（默认 tabs 模式） -->
-        <div id="pyViewTabs">
-          <div style="text-align:center;margin-bottom:14px">
-            <div class="lrn-pill" id="pyPill">
-              <button class="sel" data-t="single" onclick="switchPyTab('single',this)">❤️ 单韵母</button>
-              <button data-t="initial" onclick="switchPyTab('initial',this)">🌤 声母</button>
-              <button data-t="compound" onclick="switchPyTab('compound',this)">🌈 复韵母</button>
-              <button data-t="nasalFront" onclick="switchPyTab('nasalFront',this)">🌊 前鼻韵母</button>
-              <button data-t="nasalBack" onclick="switchPyTab('nasalBack',this)">🌟 后鼻韵母</button>
-              <button data-t="whole" onclick="switchPyTab('whole',this)">🔵 整体认读</button>
-              <button data-t="read" onclick="switchPyTab('read',this)">🔡 拼音跟读</button>
-            </div>
-          </div>
-          <div class="py-grid" id="pyGrid"></div>
-          <div class="lrn-card read-card" id="pyReadCard" style="display:none">
-            <div class="lrn-prog">第 <span id="pyReadIdx">1</span> / <span id="pyReadTot">5</span> 句 · <span id="pyReadCat">拼音跟读</span></div>
-            <div class="read-phrase" id="pyReadPhrase">b—à—bà</div>
-            <div class="read-ph" id="pyReadPh">声母 b ＋ 韵母 à</div>
-            <div class="read-zh" id="pyReadZh">爸 爸（bà ba）</div>
-            <div class="read-spk" id="pyReadSpk" onclick="playPyModel()">🔊 听示范</div>
-            <div class="mic-wrap">
-              <button class="mic-btn" id="pyMicBtn" onclick="startPyRead()">🎙️</button>
-              <div class="wave" id="pyWave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-              <div class="mic-tip" id="pyMicTip">点麦克风，跟着读一遍吧！</div>
-            </div>
-            <div class="score-box" id="pyReadScore">
-              <div class="score-num"><span id="pyScoreNum">92</span><small> 分</small></div>
-              <div class="stars" id="pyScoreStars">⭐⭐⭐⭐⭐</div>
-              <div class="score-tip" id="pyScoreTip">发音很标准！再来一句巩固一下～</div>
-              <div class="read-pet"><span class="pe">❤️</span><span class="pt" id="pyReadPet">小萌：你读得真棒，奖励一颗小星星！🌟</span></div>
-            </div>
-          </div>
-          <div class="lrn-foot" id="pyReadFoot" style="display:none">
-            <button class="btn ghost" onclick="playPyModel()">🔁 再听一次</button>
-            <button class="btn" id="pyNextBtn" onclick="nextPyRead()">下一句 →</button>
+        <div style="text-align:center;margin-bottom:14px">
+          <div class="lrn-pill" id="pyPill">
+            <button class="sel" data-t="single" onclick="switchPyTab('single',this)">❤️ 单韵母</button>
+            <button data-t="initial" onclick="switchPyTab('initial',this)">🌤 声母</button>
+            <button data-t="compound" onclick="switchPyTab('compound',this)">🌈 复韵母</button>
+            <button data-t="nasalFront" onclick="switchPyTab('nasalFront',this)">🌊 前鼻韵母</button>
+            <button data-t="nasalBack" onclick="switchPyTab('nasalBack',this)">🌟 后鼻韵母</button>
+            <button data-t="whole" onclick="switchPyTab('whole',this)">🔵 整体认读</button>
+            <button data-t="read" onclick="switchPyTab('read',this)">🔡 拼音跟读</button>
           </div>
         </div>
-
-        <!-- 视图2：六类总览 -->
-        <div id="pyViewOverview" style="display:none">
-          <div class="py-sub-h">
-            <span class="t">📋 六类拼音总览</span>
-            <span class="b" onclick="backPyTabs()" style="cursor:pointer">← 返回拼音</span>
+        <div class="py-grid" id="pyGrid"></div>
+        <div class="lrn-card read-card" id="pyReadCard" style="display:none">
+          <div class="lrn-prog">第 <span id="pyReadIdx">1</span> / <span id="pyReadTot">5</span> 句 · <span id="pyReadCat">拼音跟读</span></div>
+          <div class="read-phrase" id="pyReadPhrase">b—à—bà</div>
+          <div class="read-ph" id="pyReadPh">声母 b ＋ 韵母 à</div>
+          <div class="read-zh" id="pyReadZh">爸 爸（bà ba）</div>
+          <div class="read-spk" id="pyReadSpk" onclick="playPyModel()">🔊 听示范</div>
+          <div class="mic-wrap">
+            <button class="mic-btn" id="pyMicBtn" onclick="startPyRead()">🎙️</button>
+            <div class="wave" id="pyWave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="mic-tip" id="pyMicTip">点麦克风，跟着读一遍吧！</div>
           </div>
-          <div id="pyOverviewGrid" class="py-overview-grid"></div>
-        </div>
-
-        <!-- 视图3：书写练习 -->
-        <div id="pyViewWrite" style="display:none">
-          <div class="py-sub-h">
-            <span class="t">✏️ 书写练习</span>
-            <span class="b" onclick="backPyTabs()" style="cursor:pointer">← 返回拼音</span>
-          </div>
-          <div style="text-align:center;margin-bottom:14px">
-            <div class="lrn-pill" id="pyWritePill">
-              <button class="sel" data-wt="initial" onclick="switchPyWrite('initial',this)">声母 23</button>
-              <button data-wt="final" onclick="switchPyWrite('final',this)">韵母 24</button>
-              <button data-wt="whole" onclick="switchPyWrite('whole',this)">整体认读 16</button>
-            </div>
-          </div>
-          <div id="pyWriteGrid" class="py-write-grid"></div>
-        </div>
-
-        <!-- 视图4：默写练习 -->
-        <div id="pyViewDictate" style="display:none">
-          <div class="py-sub-h">
-            <span class="t">📝 默写练习</span>
-            <span class="b" onclick="backPyTabs()" style="cursor:pointer">← 返回拼音</span>
-          </div>
-          <div style="text-align:center;margin-bottom:14px">
-            <div class="lrn-pill" id="pyDictatePill">
-              <button class="sel" data-dm="trace" onclick="switchPyDictate('trace',this)">描红</button>
-              <button data-dm="dict" onclick="switchPyDictate('dict',this)">听写</button>
-            </div>
-          </div>
-          <div id="pyDictateGrid" class="py-dictate-grid"></div>
-        </div>
-
-        <!-- 视图5：音序表 -->
-        <div id="pyViewAlphabet" style="display:none">
-          <div class="py-sub-h">
-            <span class="t">🔠 汉语音序表</span>
-            <span class="b" onclick="backPyTabs()" style="cursor:pointer">← 返回拼音</span>
-          </div>
-          <div id="pyAlphabetBody" class="py-alphabet-body"></div>
-        </div>
-
-        <!-- 视图6：单字详情弹窗（v12：点击声/韵/整体卡时打开） -->
-        <div id="pyDetailBack" class="py-detail-back" hidden onclick="if(event.target===this)closePyDetail()">
-          <div class="py-detail-modal" role="dialog" aria-label="拼音字母详情">
-            <div class="py-detail-head">
-              <button class="py-detail-nav" onclick="pyDetailNav(-1)" aria-label="上一字">«</button>
-              <div class="py-detail-title" id="pyDetailTitle">— —</div>
-              <button class="py-detail-close" onclick="closePyDetail()" aria-label="关闭">×</button>
-            </div>
-            <div class="py-detail-body">
-              <!-- 左：字母 + 田字格描红 -->
-              <div class="py-detail-left">
-                <div class="py-detail-letter" id="pyDetailLetter">—</div>
-                <div class="py-detail-meta" id="pyDetailMeta">—</div>
-                <div class="py-detail-tian">
-                  <span class="py-detail-tian-ghost" id="pyDetailTianGhost">—</span>
-                  <span class="py-detail-tian-cap"><b>🔊 跟着念 <span id="pyDetailCnName">—</span></b></span>
-                </div>
-              </div>
-              <!-- 右：笔顺独立区 -->
-              <div class="py-detail-right">
-                <div class="py-detail-rh">笔顺说明（人教版）</div>
-                <div class="py-detail-strokes">
-                  <svg class="py-detail-strokes-svg" viewBox="0 0 120 120" id="pyDetailStrokesSVG"></svg>
-                </div>
-                <ol class="py-detail-stroke-list" id="pyDetailStrokeList"></ol>
-              </div>
-            </div>
-            <div class="py-detail-foot">
-              <button class="btn ghost" onclick="pyDetailSpeakCurrent()">🔊 听发音</button>
-              <div class="py-detail-foot-mid">
-                <span id="pyDetailCounter">— / —</span>
-              </div>
-              <button class="py-detail-nav" onclick="pyDetailNav(1)" aria-label="下一字">下一字 »</button>
-            </div>
+          <div class="score-box" id="pyReadScore">
+            <div class="score-num"><span id="pyScoreNum">92</span><small> 分</small></div>
+            <div class="stars" id="pyScoreStars">⭐⭐⭐⭐⭐</div>
+            <div class="score-tip" id="pyScoreTip">发音很标准！再来一句巩固一下～</div>
+            <div class="read-pet"><span class="pe">❤️</span><span class="pt" id="pyReadPet">小萌：你读得真棒，奖励一颗小星星！🌟</span></div>
           </div>
         </div>
-
+        <div class="lrn-foot" id="pyReadFoot" style="display:none">
+          <button class="btn ghost" onclick="playPyModel()">🔁 再听一次</button>
+          <button class="btn" id="pyNextBtn" onclick="nextPyRead()">下一句 →</button>
+        </div>
       </div>
     </div>
 
@@ -5181,7 +5044,7 @@
     else if(target==='sc-hanzi'){ initHanzi(); }
     else if(target==='sc-qbank'){ renderQBank(); }
     else if(target==='sc-home'){renderGrowthTrack();updateHomePartnerIcon();renderHomeTasks();renderLearnGrid();renderMiniClass();}
-    else if(target==='sc-pset'){renderCheckins();renderStudies();renderPerm();renderBankTabs();renderBankList();}
+    else if(target==='sc-pset'){renderCheckins();renderStudies();renderPerm();renderBankTabs();renderBankList();renderMonoBank();}
     else if(target==='sc-recycle'){renderRecycle();}
     navSync(screen);
     window.scrollTo({top:0,behavior:'smooth'});
@@ -5596,6 +5459,17 @@
     if(whole && typeof SYLLABLE_LIB!=='undefined' && SYLLABLE_LIB[whole]) return SYLLABLE_LIB[whole];
     return '';
   }
+  // 拼音朗读：只把【代表汉字】交给中文语音慢速朗读 —— 永远不直接喂拉丁字母，
+  // 因此绝不会被识别成英文单词 / 自然拼读 / 音标。
+  function speakPinyin(syllable, onDone){
+    try{
+      if(!('speechSynthesis' in window) || !syllable){ if(onDone)onDone(); return; }
+      var ch=pinyinToChar(syllable);
+      if(!ch) ch=stripTone(syllable);          // 资料库查不到的极少见情况，退化为原拼音串
+      speak(ch,'zh');                          // 强制中文语音慢速朗读
+      if(onDone)onDone();
+    }catch(e){ if(onDone)onDone(); }
+  }
   // 拼音跟读示范：把「b—à—bà」这类分解串，按「声母 / 韵母带调 / 音节」逐段朗读，
   // 每段之间留间隔；全程只把【代表汉字】交给中文语音 → 绝不会读成英文。
   function speakPinyinSeq(pStr, onDone){
@@ -5906,209 +5780,6 @@
         <div class="py-word">${p.word}</div>
       </div>`;
     });
-  }
-
-/* ================================================================
-   v11：拼音板块 4 个新模块（总览 / 书写 / 默写 / 音序表）
-   ================================================================ */
-  /* 六类总览分类定义（颜色呼应各模块） */
-  const PY_OVERVIEW=[
-    {key:'initial',    name:'声母',     color:'#4a90d9', letters:PINYIN_DATA.initial.map(p=>p.letter)},
-    {key:'single',     name:'单韵母',   color:'#e8609a', letters:PINYIN_DATA.single.map(p=>p.letter)},
-    {key:'compound',   name:'复韵母',   color:'#f0922e', letters:PINYIN_DATA.compound.map(p=>p.letter)},
-    {key:'nasalFront', name:'前鼻韵母', color:'#3fb87a', letters:PINYIN_DATA.nasalFront.map(p=>p.letter)},
-    {key:'nasalBack',  name:'后鼻韵母', color:'#9b6bd9', letters:PINYIN_DATA.nasalBack.map(p=>p.letter)},
-    {key:'whole',      name:'整体认读', color:'#e0b020', letters:PINYIN_DATA.whole.map(p=>p.letter)}
-  ];
-  /* 书写笔顺数据：单字母用真实笔顺路径；多字母（zh/ai/ang 等）用通用左→右箭头 */
-  const PY_STROKE_DB={
-    a:[{d:'M52,42 C52,32 34,32 34,47 C34,60 53,60 53,49',n:1},{d:'M53,42 L53,62',n:2}],
-    b:[{d:'M34,22 L34,62',n:1},{d:'M34,47 C34,35 54,35 54,49 C54,60 34,60 34,52',n:2}],
-    c:[{d:'M56,40 C56,30 32,30 32,47 C32,61 56,61 56,52',n:1}],
-    d:[{d:'M54,22 L54,62',n:1},{d:'M54,47 C54,35 34,35 34,49 C34,60 54,60 54,52',n:2}],
-    e:[{d:'M56,42 C56,32 32,32 32,47 C32,61 56,61 56,49',n:1},{d:'M32,47 L56,47',n:2}],
-    f:[{d:'M44,22 L44,62',n:1},{d:'M44,34 C44,29 31,29 31,34',n:2},{d:'M34,52 C34,57 51,57 51,52',n:3}],
-    g:[{d:'M34,22 L34,49 C34,63 56,63 56,50 C56,39 39,39 39,50',n:1}],
-    h:[{d:'M34,22 L34,62',n:1},{d:'M34,47 C34,47 40,47 44,47 L56,62',n:2}],
-    i:[{d:'M44,25 L44,27',n:0},{d:'M44,34 L44,62',n:1}],
-    j:[{d:'M52,25 L52,27',n:0},{d:'M52,34 L52,60 C52,70 39,70 39,63',n:1}],
-    k:[{d:'M34,22 L34,62',n:1},{d:'M53,37 L34,51 L55,62',n:2}],
-    l:[{d:'M44,22 L44,62',n:1}],
-    m:[{d:'M30,62 L30,40 C30,32 41,32 41,40 L41,62 M41,46 C41,32 53,32 53,40 L53,62',n:1}],
-    n:[{d:'M32,62 L32,44 C32,34 47,34 47,44 L47,62',n:1}],
-    o:[{d:'M44,34 C27,34 27,60 44,60 C61,60 61,34 44,34',n:1}],
-    p:[{d:'M34,22 L34,62',n:1},{d:'M34,52 C34,40 54,40 54,52 C54,62 34,62 34,56',n:2}],
-    q:[{d:'M54,22 L54,62',n:1},{d:'M54,52 C54,40 34,40 34,52 C34,62 54,62 54,56',n:2}],
-    r:[{d:'M32,62 L32,40 C32,32 47,32 47,43',n:1},{d:'M41,46 L47,56',n:2}],
-    s:[{d:'M56,40 C56,31 32,31 32,47 C32,62 56,62 56,52',n:1}],
-    t:[{d:'M44,22 L44,62',n:1},{d:'M33,50 C33,55 55,55 55,50',n:2}],
-    u:[{d:'M34,36 L34,53 C34,64 55,64 55,53 L55,36',n:1}],
-    v:[{d:'M32,34 L44,60 L56,34',n:1}],
-    w:[{d:'M28,34 L36,59 L44,40 L52,59 L60,34',n:1}],
-    x:[{d:'M32,34 L56,60',n:1},{d:'M56,34 L32,60',n:2}],
-    y:[{d:'M32,34 L44,49 L56,34 M44,49 L44,63 C44,70 34,70 34,63',n:1}],
-    z:[{d:'M34,36 L56,36 L34,60 L56,60',n:1}],
-    'ü':[{d:'M34,37 L34,53 C34,64 55,64 55,53 L55,37',n:1},{d:'M34,24 L34,28',n:2},{d:'M55,24 L55,28',n:3}]
-  };
-  function pyStrokeSVG(L){
-    const strokes = PY_STROKE_DB[L] ? PY_STROKE_DB[L] : [{d:'M28,46 L60,46',n:1}];
-    let s='<defs><marker id="pyAh" markerWidth="7" markerHeight="7" refX="4.5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e23"/></marker></defs>';
-    strokes.forEach(st=>{
-      const mm=st.d.match(/M([\d.]+),([\d.]+)/);
-      if(st.n>0 && mm) s+='<text x="'+(+mm[1]-4)+'" y="'+(+mm[2]-4)+'" font-size="11" font-weight="900" fill="#e23">'+st.n+'</text>';
-      s+='<path d="'+st.d+'" stroke="#e23" stroke-width="3.4" fill="none" stroke-linecap="round" marker-end="url(#pyAh)"/>';
-      if(mm) s+='<circle cx="'+mm[1]+'" cy="'+mm[2]+'" r="2.6" fill="#e23"/>';
-    });
-    return s;
-  }
-  function openPyMode(mode){
-    ['pyViewTabs','pyViewOverview','pyViewWrite','pyViewDictate','pyViewAlphabet'].forEach(id=>{
-      document.getElementById(id).style.display='none';
-    });
-    if(mode==='overview'){renderPyOverview();document.getElementById('pyViewOverview').style.display='block';}
-    else if(mode==='write'){document.getElementById('pyViewWrite').style.display='block';switchPyWrite('initial',document.querySelector('#pyWritePill button'));}
-    else if(mode==='dictate'){document.getElementById('pyViewDictate').style.display='block';switchPyDictate('trace',document.querySelector('#pyDictatePill button'));}
-    else if(mode==='alphabet'){renderPyAlphabet();document.getElementById('pyViewAlphabet').style.display='block';}
-  }
-  function backPyTabs(){
-    ['pyViewOverview','pyViewWrite','pyViewDictate','pyViewAlphabet'].forEach(id=>{
-      document.getElementById(id).style.display='none';
-    });
-    document.getElementById('pyViewTabs').style.display='block';
-  }
-  function renderPyOverview(){
-    const g=document.getElementById('pyOverviewGrid');let h='';
-    PY_OVERVIEW.forEach(c=>{
-      h+='<div class="py-overview-card" style="border-color:'+c.color+'" onclick="pyOverviewGo(\''+c.key+'\')">'
-        +'<div class="po-h"><span class="po-t" style="color:'+c.color+'">'+c.name+'</span><span class="po-n">'+c.letters.length+' 个</span></div>'
-        +'<div class="po-letters">'+c.letters.join('  ')+'</div></div>';
-    });
-    g.innerHTML=h;
-  }
-  function pyOverviewGo(key){
-    backPyTabs();
-    const btn=document.querySelector('#pyPill button[data-t="'+key+'"]');
-    if(btn) switchPyTab(key,btn); else switchPyTab(key,null);
-  }
-  function switchPyWrite(type,btn){
-    document.querySelectorAll('#pyWritePill button').forEach(b=>b.classList.remove('sel'));
-    if(btn) btn.classList.add('sel');
-    let letters;
-    if(type==='initial') letters=PINYIN_DATA.initial.map(p=>p.letter);
-    else if(type==='whole') letters=PINYIN_DATA.whole.map(p=>p.letter);
-    else letters=[].concat(PINYIN_DATA.single,PINYIN_DATA.compound,PINYIN_DATA.nasalFront,PINYIN_DATA.nasalBack).map(p=>p.letter);
-    /* v12：保存当前 cat 与字母表，让详情弹窗的「上/下一字」按当前分类内翻页 */
-    pyWriteCat=type; pyWriteLetters=letters.slice();
-    const g=document.getElementById('pyWriteGrid');g.innerHTML='';
-    letters.forEach((L,i)=>{
-      g.innerHTML+='<div class="py-write-card" onclick="openPyDetail('+i+')" title="点我打开笔顺详情（念「'
-        +esc(PINYIN_CN_NAME[L]||'')+'」）">'
-        +'<div class="py-tian">'
-        +'<div class="py-letter-big">'+L+'</div>'
-        /* v12：网格只画半透明灰字母，笔顺挪进弹窗独立区 */
-        +'</div><div class="py-spk">🔊 '+esc(PINYIN_CN_NAME[L]||L)+'</div></div>';
-    });
-  }
-
-  /* === v12：单字详情弹窗（点击声/韵/整体任意一格打开） === */
-  let pyWriteCat=null;            /* 'initial' | 'final' | 'whole' —— 当前书写屏子分类 */
-  let pyWriteLetters=[];          /* 当前分类所有字母（与网格一一对应） */
-  let pyDetailIdx=-1;             /* 当前打开的字母下标 */
-
-  function openPyDetail(idx){
-    if(!pyWriteLetters.length || idx<0 || idx>=pyWriteLetters.length) return;
-    pyDetailIdx=idx;
-    const L=pyWriteLetters[idx];
-    const cn=PINYIN_CN_NAME[L] || L;
-    /* 字母性质简单映射（常见声韵母） */
-    const META={
-      'b':'双唇 · 不送气 · 清塞音','p':'双唇 · 送气 · 清塞音','m':'双唇 · 浊鼻音','f':'唇齿 · 清擦音',
-      'd':'舌尖中 · 不送气 · 清塞音','t':'舌尖中 · 送气 · 清塞音','n':'舌尖中 · 浊鼻音','l':'舌尖中 · 浊边音',
-      'g':'舌根 · 不送气 · 清塞音','k':'舌根 · 送气 · 清塞音','h':'舌根 · 清擦音',
-      'j':'舌面前 · 不送气 · 清塞擦音','q':'舌面前 · 送气 · 清塞擦音','x':'舌面前 · 清擦音',
-      'zh':'舌尖后 · 不送气 · 清塞擦音','ch':'舌尖后 · 送气 · 清塞擦音','sh':'舌尖后 · 清擦音','r':'舌尖后 · 浊擦音',
-      'z':'舌尖前 · 不送气 · 清塞擦音','c':'舌尖前 · 送气 · 清塞擦音','s':'舌尖前 · 清擦音',
-      'y':'舌面前 · 半元音','w':'舌面后 · 半元音',
-      'a':'单元音 · 开口','o':'单元音 · 开口','e':'单元音 · 开口','i':'单元音 · 齐齿','u':'单元音 · 合口','ü':'单元音 · 撮口'
-    };
-    document.getElementById('pyDetailTitle').innerHTML = '🔊 '+esc(L)+' — '+esc(cn);
-    document.getElementById('pyDetailLetter').textContent = L;
-    document.getElementById('pyDetailMeta').textContent = META[L] || '发音字母';
-    document.getElementById('pyDetailTianGhost').textContent = L;
-    document.getElementById('pyDetailCnName').textContent = cn;
-    document.getElementById('pyDetailCounter').textContent = (idx+1)+' / '+pyWriteLetters.length;
-    /* 笔顺 SVG —— 多字母（zh/ch/sh/ang...）单字母用已有 path，复合串视为整体 */
-    document.getElementById('pyDetailStrokesSVG').innerHTML = pyStrokeSVG(L);
-    /* 笔顺步骤文字描述（取自已有 PY_STROKE_DB） */
-    const strokes=(PY_STROKE_DB[L]||[]).filter(s=>s.n>0);
-    let listH='';
-    if(strokes.length){
-      const NAMES=['起笔','横','竖','撇','捺','点','提','折','钩','挑','弯','半圆','弧','其它'];
-      strokes.forEach((s,i)=> listH+='<li><b>第'+(i+1)+'笔</b>'+NAMES[Math.min(s.n, NAMES.length-1)]+'</li>');
-    }else{
-      listH='<li style="list-style:none;margin-left:-18px;color:var(--ink-soft)">整体记忆字母即可（按构成字母）</li>';
-    }
-    document.getElementById('pyDetailStrokeList').innerHTML = listH;
-    /* 显示弹窗，自动念一声 */
-    document.getElementById('pyDetailBack').hidden=false;
-    speakPinyin(L);
-  }
-  function closePyDetail(){
-    const el=document.getElementById('pyDetailBack');
-    if(el) el.hidden=true;
-    pyDetailIdx=-1;
-  }
-  function pyDetailNav(delta){
-    if(!pyWriteLetters.length) return;
-    const n=pyWriteLetters.length;
-    const next=(pyDetailIdx + delta + n) % n;
-    openPyDetail(next);
-  }
-  function pyDetailSpeakCurrent(){
-    if(pyDetailIdx<0) return;
-    speakPinyin(pyWriteLetters[pyDetailIdx]);
-  }
-  let pyDictateList=[];
-  function switchPyDictate(mode,btn){
-    document.querySelectorAll('#pyDictatePill button').forEach(b=>b.classList.remove('sel'));
-    if(btn) btn.classList.add('sel');
-    const all=[].concat(PINYIN_DATA.initial,PINYIN_DATA.single,PINYIN_DATA.compound,PINYIN_DATA.nasalFront,PINYIN_DATA.nasalBack,PINYIN_DATA.whole).map(p=>p.letter);
-    pyDictateList=shuffle(all.slice()).slice(0,8);
-    renderPyDictate(mode);
-  }
-  function renderPyDictate(mode){
-    const g=document.getElementById('pyDictateGrid');
-    let h='<div style="grid-column:1/-1;display:flex;gap:8px;justify-content:center;margin-bottom:6px">'
-      +'<button class="btn ghost" onclick="pyDictateReshuffle()">🔁 换一组</button>';
-    if(mode==='dict') h+='<button class="btn" onclick="pyDictateShowAll()">👀 显示答案</button>';
-    h+='</div>';
-    pyDictateList.forEach((L,i)=>{
-      if(mode==='trace'){
-        h+='<div class="py-dictate-cell"><span class="py-cell-txt">'+L+'</span></div>';
-      }else{
-        h+='<div class="py-dictate-cell" id="pyDictateCell'+i+'" onclick="speakPinyin(\''+esc(L)+'\')"><span class="py-cell-hint">'+L+'</span></div>';
-      }
-    });
-    g.innerHTML=h;
-    if(mode==='dict') speakPinyin(pyDictateList[0]);
-  }
-  function pyDictateReshuffle(){const cur=document.querySelector('#pyDictatePill button.sel');const m=cur?cur.dataset.dm:'trace';switchPyDictate(m,cur);}
-  function pyDictateShowAll(){document.querySelectorAll('.py-dictate-cell').forEach(c=>c.classList.add('show-hint'));}
-  const PY_ALPHA_GROUPS=[
-    {name:'大小写一样',tag:'9 个',letters:[['C','c'],['K','k'],['O','o'],['P','p'],['S','s'],['V','v'],['W','w'],['X','x'],['Z','z']]},
-    {name:'大小写不同',tag:'8 个',letters:[['A','a'],['B','b'],['D','d'],['E','e'],['G','g'],['H','h'],['Q','q'],['R','r']]},
-    {name:'大小写相近',tag:'9 个',letters:[['F','f'],['I','i'],['J','j'],['L','l'],['M','m'],['N','n'],['T','t'],['U','u'],['Y','y']]}
-  ];
-  function renderPyAlphabet(){
-    const body=document.getElementById('pyAlphabetBody');let h='';
-    PY_ALPHA_GROUPS.forEach(grp=>{
-      h+='<div class="py-alphabet-section"><div class="py-alpha-h">'+grp.name+'<span class="tag">'+grp.tag+'</span></div><div class="py-alpha-grid">';
-      grp.letters.forEach(pair=>{
-        h+='<div class="py-alpha-letter" onclick="speak(\''+pair[0]+'\',\'en\')"><span class="py-up">'+pair[0]+'</span><span class="py-lo">'+pair[1]+'</span></div>';
-      });
-      h+='</div></div>';
-    });
-    body.innerHTML=h;
   }
 
 /* ================================================================
@@ -11750,6 +11421,81 @@ let phonicsTopicIdx=-1;
       if(yes){ CONTENT_BANK=defaultBank(); bankEnsureSubjects(); saveBank(); BANK_ACTIVE='识字'; renderBankTabs(); renderBankList(); }
     }});
   }
+  /* ===== 大富翁大题库（家长自定义，与内置 Q_BANK 混合随机抽取） ===== */
+  var MONO_CUSTOM_KEY='mc_mono_custom';
+  /* 惰性初始化：运行时构建分类表并共享到 window（避免超长 script 分段作用域问题） */
+  function getMonoCats(){
+    if(window.__MONO_CATS) return window.__MONO_CATS;
+    var arr=[
+      {k:'math',n:'数学'},{k:'chinese',n:'语文'},{k:'english',n:'英语'},
+      {k:'habit',n:'习惯小题'},{k:'general',n:'通识大自然'},{k:'bt',n:'脑筋急转弯'},
+      {k:'eq',n:'情商'},{k:'fq',n:'财商'},{k:'aq',n:'逆商'},{k:'hq',n:'健商'},
+      {k:'mq',n:'德商'},{k:'wq',n:'志商'},{k:'sq',n:'灵商'},{k:'aeq',n:'美商'}
+    ];
+    window.__MONO_CATS=arr; return arr;
+  }
+  function getMonoCatName(cat){ var arr=getMonoCats(); for(var i=0;i<arr.length;i++){ if(arr[i].k===cat) return arr[i].n; } return cat; }
+  function getMonoCustom(){ try{ var raw=LS.getItem('mc_mono_custom'); var d=raw?JSON.parse(raw):{}; return (d&&typeof d==='object')?d:{}; }catch(e){ return {}; } }
+  function saveMonoCustom(d){ try{ LS.setItem('mc_mono_custom',JSON.stringify(d)); }catch(e){} }
+  function monoTotal(){ var d=getMonoCustom(),n=0; for(var k in d){ n+=(d[k]||[]).length; } return n; }
+  function renderMonoBank(){
+    var box=document.getElementById('monoBankList'); if(!box)return;
+    var d=getMonoCustom(), count=document.getElementById('monoBankCount');
+    if(count)count.textContent=monoTotal();
+    var lines=[];
+    getMonoCats().forEach(function(c){
+      var arr=d[c.k]||[]; if(!arr.length)return;
+      arr.forEach(function(it,i){
+        lines.push('<div class="mrow"><span class="nm">🎲 '+esc(c.n)+' · '+esc(it.story)+'<span class="tg">答：'+esc(it.opts[it.ans]||'')+'</span></span>'+
+          '<button class="mini-btn" onclick="editMonoBankItem(\''+c.k+'\','+i+')">改</button>'+
+          '<button class="mini-btn del" onclick="delMonoBankItem(\''+c.k+'\','+i+')">删</button></div>');
+      });
+    });
+    if(!lines.length) box.innerHTML=mcEmpty('🎲','还没有自定义大富翁题','点下面「＋ 添加大富翁题」，添加后会和内置题一起被随机抽到。');
+    else box.innerHTML=lines.join('');
+  }
+  function addMonoBankItem(){
+    showInputDlg({title:'添加大富翁题',msg:'选择分类（卡片会显示对应分类的颜色和图标）',options:getMonoCats().map(function(c){return {value:c.k,label:c.n};}),onOk:function(cat){
+      if(cat===null)return;
+      showInputDlg({title:'添加大富翁题 · '+getMonoCatName(cat),msg:'小镇居民（可选，如：🐰 兔小姐（花店老板娘）；留空默认小萌）',required:false,onOk:function(who){
+        if(who===null)return;
+        showInputDlg({title:'添加大富翁题 · '+getMonoCatName(cat),msg:'故事（一小段情境）',placeholder:'如：兔小姐在花店数花，有 5 朵红的、3 朵黄的。',required:true,onOk:function(story){
+          if(story===null)return;
+          showInputDlg({title:'添加大富翁题 · '+getMonoCatName(cat),msg:'问题',placeholder:'如：花店里一共有几朵花？',required:true,onOk:function(q){
+            if(q===null)return;
+            showInputDlg({title:'添加大富翁题 · '+getMonoCatName(cat),msg:'4 个选项（用 | 分隔，如：8|7|9|6）',placeholder:'8|7|9|6',required:true,onOk:function(optStr){
+              if(optStr===null)return;
+              var opts=String(optStr).split('|').map(function(x){return x.trim();}).filter(Boolean);
+              if(opts.length!==4){ toast('选项需要正好 4 个（用 | 分隔）'); return; }
+              showInputDlg({title:'添加大富翁题 · '+getMonoCatName(cat),msg:'正确答案',options:opts.map(function(o,j){return {value:String(j),label:('ABCD'[j]+') '+o)};}),onOk:function(ansIdx){
+                if(ansIdx===null)return;
+                var d=getMonoCustom(); if(!d[cat])d[cat]=[];
+                if(monoTotal()>=200){ toast('最多添加 200 题'); return; }
+                d[cat].push({who:(String(who).trim()||'🐶 小萌'),story:String(story).trim(),q:String(q).trim(),opts:opts,ans:parseInt(ansIdx,10)});
+                saveMonoCustom(d); renderMonoBank();
+              }});
+            }});
+          }});
+        }});
+      }});
+    }});
+  }
+  function editMonoBankItem(cat,i){
+    var d=getMonoCustom(), arr=d[cat]||[], it=arr[i]; if(!it)return;
+    showInputDlg({title:'修改故事',msg:'故事',value:it.story,required:true,onOk:function(story){
+      if(story===null)return;
+      showInputDlg({title:'修改问题',msg:'问题',value:it.q,required:true,onOk:function(q){
+        if(q===null)return;
+        var cp=JSON.parse(JSON.stringify(it)); cp.story=String(story).trim(); cp.q=String(q).trim(); arr[i]=cp; saveMonoCustom(d); renderMonoBank();
+      }});
+    }});
+  }
+  function delMonoBankItem(cat,i){
+    showConfirmDlg({title:'删除题目',msg:'确定删除该题？',onOk:function(yes){ if(yes){ var d=getMonoCustom(); (d[cat]||[]).splice(i,1); saveMonoCustom(d); renderMonoBank(); } }});
+  }
+  window.getMonoCustom=getMonoCustom; window.getMonoCats=getMonoCats; window.getMonoCatName=getMonoCatName;
+  window.renderMonoBank=renderMonoBank; window.addMonoBankItem=addMonoBankItem;
+  window.editMonoBankItem=editMonoBankItem; window.delMonoBankItem=delMonoBankItem;
   // 孩子端：题库闯关
   var QB={subj:null,items:[],idx:0,cur:null,answered:false};
   function renderQBank(){
@@ -13510,7 +13256,18 @@ const META = {
   luck:     {label:'幸运', color:'#F4C943', icon:'🎁'},
   rest:     {label:'休息', color:'#CFE3D6', icon:'☕'},
   challenge:{label:'挑战', color:'#F2994A', icon:'🛡️'},
-  story:    {label:'剧情', color:'#9B7FD6', icon:'💬'}
+  story:    {label:'剧情', color:'#9B7FD6', icon:'💬'},
+  habit:    {label:'习惯小题', color:'#2DD4BF', icon:'🌱'},
+  general:  {label:'通识百科', color:'#8E6FBF', icon:'🔭'},
+  eq:       {label:'情商', color:'#F472B6', icon:'💗'},
+  fq:       {label:'财商', color:'#F59E0B', icon:'💰'},
+  bt:       {label:'脑筋急转弯', color:'#0891B2', icon:'🤔'},
+  aq:       {label:'逆商', color:'#FB923C', icon:'💪'},
+  hq:       {label:'健商', color:'#16A34A', icon:'🍎'},
+  mq:       {label:'德商', color:'#F87171', icon:'🌟'},
+  wq:       {label:'志商', color:'#9333EA', icon:'🏔️'},
+  sq:       {label:'灵商', color:'#22D3EE', icon:'🧘'},
+  aeq:      {label:'美商', color:'#FB7185', icon:'🎨'}
 };
 /* 每格上方小字：动物城生活场景（与 TYPES 顺序一一对应，共 36） */
 const VENUES = [
@@ -13528,7 +13285,7 @@ const VENUE_LORE = {
   /* ===== 数学场馆（7 个，各 3 条情景题） ===== */
   '面包店':   {who:'🐰 兔小姐', tales:[
     {story:'兔小姐刚烤好 3 盘草莓面包，每盘 4 个，想知道一共几个。', q:'3 盘、每盘 4 个，一共烤了几个面包？', opts:['7','12','9','10'], ans:1},
-    {story:'面包店排起长队，兔小姐先收了 5 个铜板，又收了 3 个。', q:'先收 5 个、又收 3 个铜板，她一共收了几个？', opts:['7','8','6','9'], ans:0},
+    {story:'面包店排起长队，兔小姐先收了 5 个铜板，又收了 3 个。', q:'先收 5 个、又收 3 个铜板，她一共收了几个？', opts:['7','8','6','9'], ans:1},
     {story:'兔小姐要把 8 个面包装袋，每袋装 2 个。', q:'8 个面包、每袋 2 个，能装几袋？', opts:['3','4','5','6'], ans:1}
   ]},
   '银行':     {who:'🐮 牛小姐', tales:[
@@ -13698,7 +13455,185 @@ const DECKS = {
     {ava:'🐶',name:'小萌',text:'搭档，我们一起解了谜！今天表现非常棒！'}
   ]
 };
+/* 习惯养成 + 通识百科：与学科题共用同一张答题卡（故事+题+4选项+判题），随机混入所有答题卡 */
+const HABIT_BANK=[
+  {who:'🐰 兔小姐',story:'兔小姐每天玩完都把玩具收进箱子，房间亮堂堂。',q:'下面哪个做法更好？',opts:['玩完自己收拾玩具','扔地上不管','让妈妈全收','都不用做'],ans:0},
+  {who:'🐻 熊爸爸',story:'熊爸爸常说：自己的事情自己做。',q:'哪件事是“自己的事”？',opts:['自己整理书包','让妈妈喂饭','乱扔衣服','都不用做'],ans:0},
+  {who:'🐱 猫医生',story:'猫医生提醒：每天要喝够水，早晚都要刷牙。',q:'保护牙齿应该怎么做？',opts:['早晚都刷牙','只早上刷一次','吃完糖不刷','都不用'],ans:0},
+  {who:'🐼 熊猫老师',story:'熊猫老师带大家做眼保健操，保护小眼睛。',q:'看书很久后应该？',opts:['远眺休息眼睛','继续盯屏幕','关灯看手机','都不用'],ans:0},
+  {who:'🐧 企鹅妈妈',story:'企鹅妈妈煮饭前先把手洗干净。',q:'吃饭前应该先？',opts:['洗手','直接吃','玩完不洗','都不用'],ans:0},
+  {who:'🐶 小狗',story:'小狗每天早起，自己把被子叠得整整齐齐。',q:'起床后更棒的做法是？',opts:['自己叠被子','躺一整天','等妈妈叠','都不用'],ans:0},
+  {who:'🦁 狮哥哥',story:'狮哥哥运动完会喝水、慢慢走一走再休息。',q:'运动后应该？',opts:['喝水休息一会儿','立刻猛喝冰水狂跑','不喝水','都不用'],ans:0},
+  {who:'🐹 仓鼠妹妹',story:'仓鼠妹妹把零食收好，一点都不浪费。',q:'吃不完的零食应该？',opts:['收好下次再吃','随便乱扔','藏床底下','都不用'],ans:0},
+  {who:'🐔 鸡妈妈',story:'鸡妈妈家的闹钟响了，小鸡还赖在被窝里。',q:'早上听到闹钟应该？',opts:['按时起床','继续赖床','再睡一小时','装没听见'],ans:0},
+  {who:'🦆 鸭哥哥',story:'鸭哥哥把玩具借给朋友玩，朋友用完还给他。',q:'玩完借来的玩具应该？',opts:['收好还回去','随手乱放','不还了','弄坏不说'],ans:0},
+  {who:'🦉 猫头鹰爷爷',story:'猫头鹰爷爷睡前把明天要穿的衣服准备好。',q:'睡前可以做什么准备？',opts:['把明天衣服放好','玩到很晚','不刷牙就睡','熬夜'],ans:0},
+  {who:'🐿️ 松鼠小弟',story:'松鼠小弟看动画片，看一会儿就让眼睛休息一下。',q:'看动画片要注意？',opts:['定时休息保护眼睛','一直看不停','越看越近','关灯看'],ans:0}
+];
+const GENERAL_BANK=[
+  {who:'🐝 小蜜蜂',story:'小蜜蜂在花丛里飞来飞去，忙个不停。',q:'蜜蜂采集什么来酿蜜？',opts:['花蜜','沙子','雨水','石头'],ans:0},
+  {who:'🌳 大树公公',story:'大树公公站在阳光下，绿油油的。',q:'植物主要靠什么制造养分？',opts:['阳光','月亮','短信','风声'],ans:0},
+  {who:'🌟 小星星',story:'夜晚的天上亮晶晶，全是小星星。',q:'为什么白天看不见星星？',opts:['太阳光太亮盖住了','星星去睡觉','星星都掉光','根本没有'],ans:0},
+  {who:'🐟 小鱼儿',story:'小鱼儿在水里快活地游来游去。',q:'鱼是用什么呼吸的？',opts:['鳃','鼻子','耳朵','尾巴'],ans:0},
+  {who:'🌈 彩虹姐姐',story:'一场小雨过后，天空挂起彩虹。',q:'彩虹通常是由几种颜色组成的？',opts:['七种','两种','一种','十种'],ans:0},
+  {who:'🌍 地球妈妈',story:'我们大家都住在地球妈妈身上。',q:'地球大概是什么形状？',opts:['近似球形','方形','三角形','一条线'],ans:0},
+  {who:'☀️ 太阳公公',story:'太阳公公每天从东边升起。',q:'一天里什么时候最亮？',opts:['中午','半夜','凌晨','都不亮'],ans:0},
+  {who:'🐘 大象伯伯',story:'大象伯伯用长鼻子卷东西、喝水。',q:'大象的长鼻子主要用来？',opts:['吸水卷物','听声音','走路','飞翔'],ans:0},
+  {who:'❄️ 小雪花',story:'冬天冷的时候，水会结成冰。',q:'水在多少度以下常常会结冰？',opts:['0℃','100℃','50℃','20℃'],ans:0},
+  {who:'🌙 月亮婆婆',story:'月亮有时圆圆的，有时弯弯的。',q:'月亮本身会发光吗？',opts:['不会，是反射太阳光','会自己发光','是个大灯泡','都不会'],ans:0},
+  {who:'🐧 企鹅宝宝',story:'企鹅宝宝在冰上摇摇摆摆地走，一点都不怕冷。',q:'企鹅主要生活在哪里？',opts:['寒冷的南极','沙漠','热带雨林','火山口'],ans:0},
+  {who:'🐜 小蚂蚁',story:'小蚂蚁排着长队，把食物一点点搬回洞里。',q:'蚂蚁的家一般建在哪里？',opts:['地下洞穴','天上','水里','冰箱里'],ans:0}
+];
+/* ============ 统一大题库 Q_BANK：习惯/通识/脑筋急转弯/8大「商」全汇于此 ============
+   结构统一 {who, story, q, opts[4], ans}，与学科题共用同一张答题卡。
+   who 带小镇居民身份（如 🐰 兔小姐（花店老板娘）），卡头/卡身自动展示。
+   每类 ≥10 题、双重去重无重复；大富翁落答题格时约 40% 概率从本库随机抽卡。 */
+const Q_BANK={
+  habit:HABIT_BANK,
+  general:GENERAL_BANK,
+  eq:[
+    {who:'🐰 兔小姐（花店老板娘）',story:'兔小姐想和小羊一起玩积木，可小羊正和别人玩，兔小姐有点失落。',q:'兔小姐怎么做最舒服？',opts:['冲过去抢积木','生闷气不理大家','先去画画，等会儿再邀请小羊','哭着找妈妈'],ans:2},
+    {who:'🐰 兔小姐（花店老板娘）',story:'小伙伴不小心把你的画弄湿了，他很难过地说「对不起」。',q:'你该怎么回应？',opts:['骂他一顿','说「没关系，我们一起补画」','再也不理他','也弄湿他的画'],ans:1},
+    {who:'🐰 兔小姐（花店老板娘）',story:'你很想和新朋友一起玩，手里正拿着最爱的玩具。',q:'哪种做法最亲切？',opts:['把玩具藏起来','说「我们一起玩吧」','自己躲一边','抢对方的'],ans:1},
+    {who:'🐰 兔小姐（花店老板娘）',story:'小伙伴哭着跑过来，看起来很难过。',q:'共情的做法是？',opts:['笑话他','问「你怎么了，我陪你」','假装没看见','走开'],ans:1},
+    {who:'🐰 兔小姐（花店老板娘）',story:'你拼图拼错了很着急，脸都红了。',q:'怎么让自己平静下来？',opts:['大喊大叫','深呼吸数到3再继续','把拼图摔了','躲起来'],ans:1},
+    {who:'🐰 兔小姐（花店老板娘）',story:'小刺猬搬家，一个人搬不动大箱子。',q:'你可以怎么帮它？',opts:['主动帮忙搬小箱子','假装没看见','笑话它慢','只让大人帮忙'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'今天你被老师表扬了，心里美滋滋的。',q:'开心的心情可以怎么表达？',opts:['跳起来和大家分享','一个人躲起来','乱扔东西','一直憋着不说'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'好朋友不小心把你的水杯碰倒了，他很不好意思。',q:'你会怎么做？',opts:['微笑着说没关系','生气大喊','也碰倒他的杯子','再也不理他'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'操场上大家都在玩，只有你一个人没有伙伴。',q:'更好的做法是？',opts:['鼓起勇气去加入','哭个不停','乱发脾气','躲角落里'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'妹妹搭的积木倒了，急得快哭出来。',q:'你可以怎么安慰她？',opts:['帮她一起重新搭','笑话她','自己玩自己的','怪她笨'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'有人夸你画画好看，还问你跟谁学的。',q:'有礼貌的回应是？',opts:['说「谢谢，我很喜欢画画」','不理人家','说「那当然」','把画抢过来藏起'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'你和朋友都想玩同一个玩具。',q:'好的解决方法是？',opts:['轮流玩，一人一次','抢过来自己玩','都不玩','让妈妈再买一个'],ans:0},
+    /* 家长 md 同步新增（12 题，2026-08-23） */
+    {who:'🐰 兔小姐（花店老板娘）',story:'兔小姐在自己的花店里打理鲜花，兔朱迪路过帮忙时，不小心碰掉了货架上的小花，瞬间慌张不已。',q:'兔小姐最暖心的做法是？',opts:['大声责怪朱迪','温柔安慰、一起收拾','假装没看见','生气不理人'],ans:1},
+    {who:'🐰 兔小姐（花店老板娘）',story:'狐尼克和耳廓狐吵架闹别扭，两人互不搭理、心情低落，热心的兔小姐想帮忙化解矛盾。',q:'兔小姐怎么做最会调解？',opts:['偏袒其中一方','耐心倾听、劝大家互相体谅','看热闹不说话','跟着一起生气'],ans:1},
+    {who:'🐰 兔小姐（花店老板娘）',story:'节日将至，兔小姐打算张罗一场邻里小聚会，邀请街区的小伙伴们，增进大家的感情。',q:'举办邻里聚会最贴心的做法是？',opts:['只邀请好朋友','热情邀请每一位邻居','举办后不告诉大家','嫌弃邻居麻烦'],ans:1},
+    {who:'🐰 兔小姐（花店老板娘）',story:'小松鼠最近遇到了烦心事，整日闷闷不乐，路过兔小姐的花店门口。',q:'兔小姐怎样做最暖心？',opts:['主动关心、温柔陪伴','视而不见','嘲笑对方不开心','到处乱说对方的事'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'街区组织打扫公共卫生，豹警官偷懒躲在一旁，不愿意参与劳动。',q:'兔小姐最得体的做法是？',opts:['当众指责对方','耐心劝说、带头帮忙','跟着一起偷懒','生气甩手不干'],ans:1},
+    {who:'🐰 兔小姐（花店老板娘）',story:'兔朱迪特意准备了小伴手礼，送给热心助人的兔小姐，礼物虽然简单但心意满满。',q:'兔小姐应该怎么回应？',opts:['真诚道谢、心怀感恩','嫌弃礼物不好','直接拒收','收下毫无反应'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'狐尼克和小猎豹在花店门口争抢趣味玩具，互不相让，场面十分尴尬。',q:'兔小姐最好的处理方式是？',opts:['让大家轮流分享、友好谦让','帮一方抢玩具','不管不问','批评两只小动物'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'兔小姐发现，牛局长误会了狐尼克，还在背后悄悄议论尼克的为人。',q:'兔小姐高情商的做法是？',opts:['跟着一起议论','帮忙解释、化解误会','假装不知道','散播更多闲话'],ans:1},
+    {who:'🐰 兔小姐（花店老板娘）',story:'突如其来的大雨，让出门办事的兔朱迪忘记带伞，被困在兔小姐的花店门口。',q:'兔小姐看到朱迪被困在门口，最暖心的做法是？',opts:['主动借伞、邀请躲雨','视而不见','笑话对方粗心','关门不理'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'邻里分享会上，耳廓狐只顾自己挑选爱吃的零食，完全不顾身边的小伙伴。',q:'兔小姐怎么引导最贴心？',opts:['告诉大家要互相分享、顾及他人','纵容自私行为','抢光所有零食','直接发脾气'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'刚搬到街区的小绵羊，刚来这里没有朋友，独自站在路边显得格外孤单。',q:'兔小姐怎么对待新邻居最温暖？',opts:['主动打招呼、热情接纳','故意疏远不理','排挤新邻居','嘲笑对方陌生'],ans:0},
+    {who:'🐰 兔小姐（花店老板娘）',story:'兔小姐张罗街区联谊活动时，狐尼克提出了和她不一样的活动方案。',q:'兔小姐面对不同的活动方案，高情商的做法是？',opts:['直接否定他的想法','认真倾听，尊重不同意见','赌气不办活动了','当众反驳让他难堪'],ans:1}
+  ],
+  fq:[
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'熊大叔给你3枚金币，可以买一样小东西。糖果3金、绘本5金、气球1金。',q:'想买绘本但金币不够，最聪明的做法？',opts:['偷偷拿一本','先买气球，剩下的攒起来','抢别人的金币','把3金全买糖果'],ans:1},
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'你存钱罐里有10枚金币，妈妈说明天有更想要的拼图卖15金。',q:'今天你会怎么做？',opts:['今天全花光','今天先不花，明天买拼图','找人借钱乱花','把金币扔掉'],ans:1},
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'妈妈给了你一点零花钱，你既想买糖又想存钱。',q:'聪明的做法是？',opts:['全花光','分一点买小糖，剩下的存起来','都借给别人','弄丢钱包'],ans:1},
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'你看到很喜欢的玩具，可是它很贵。',q:'怎么做更合适？',opts:['哭闹非要买','记在「愿望单」里慢慢攒','偷偷拿走','干脆不理'],ans:1},
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'妈妈让你保管红包，说「这是你的小金库」。',q:'最稳妥的做法是？',opts:['马上花掉','交给信任的大人帮忙保管','随便塞在床上','借给不熟的人'],ans:1},
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'你想吃的冰淇淋要3元，可你只有2元。',q:'怎么做最合适？',opts:['攒够再来买','直接拿走','找别人要钱','原地哭闹'],ans:0},
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'路边有人说「免费送玩具，只要先付5元」。',q:'最该怎么做？',opts:['天上不会掉馅饼，告诉大人当心','赶紧付钱','多买几个','自己偷偷决定'],ans:0},
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'妈妈给你10元去买菜，找回5元零钱。',q:'找回的钱应该怎么办？',opts:['交给妈妈并说清楚','自己藏起来','扔掉','随手乱放'],ans:0},
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'你看到同学买了一大堆玩具。',q:'正确的想法是？',opts:['不攀比，自己的够用就好','马上也要买','觉得他厉害就学他乱花','生气不理人'],ans:0},
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'过年收到的压岁钱，怎么放最安全？',opts:['放进存钱罐或储蓄账户','塞在枕头底下','拿去随便花','放在门口'],ans:0},
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'你想买10元的玩具，每天存1元。',q:'多少天能存够？',opts:['10天','3天','1天','永远不够'],ans:0},
+    {who:'🐻 熊大叔（镇上银行柜员）',story:'商店搞活动「买一个送两个」。',q:'买1个、送2个，一共得到几个？',opts:['3个','2个','1个','4个'],ans:0}
+  ],
+  bt:[
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'猴小灵最爱出怪题考大家，它眨眨眼说：「听好咯——」',q:'什么东西越洗越脏？',opts:['衣服','水','手','碗'],ans:1},
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'猴小灵歪着头：「妈妈生了三个孩子，老大叫大毛，老二叫二毛——」',q:'老三叫什么？',opts:['三毛','小明','小毛','大毛'],ans:1},
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'猴小灵举着一张图：「这艘船能在天上飞，从不下水。」',q:'它是什么船？',opts:['木船','宇宙飞船','渔船','帆船'],ans:1},
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'猴小灵爬上梯子又跳下：「我从十米高的梯子掉下来，居然没受伤！」',q:'为什么？',opts:['他会飞','从最低一级掉下来','梯子是软的','有人接住'],ans:1},
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'猴小灵指着火辣辣的太阳：「天越热，它爬得越高。」',q:'「它」是什么？',opts:['蜗牛','温度计','小猫','太阳'],ans:1},
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'猴小灵拍拍手臂：「你打死了它，流的却是你自己的血。」',q:'它是什么？',opts:['老虎','蚊子','苍蝇','蚂蚁'],ans:1},
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'猴小灵问：「火车从北京开到上海要8小时，开了4小时后，它在哪？」',q:'4小时后火车在哪？',opts:['轨道上','北京','上海','天上'],ans:0},
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'猴小灵说：「有个人走进来，却没有把门带进来。」',q:'他是怎么进的门？',opts:['门本来就开着','他是超人','把门拆了','从窗户爬'],ans:0},
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'猴小灵问：「上课时大家都坐着，只有一个人站着。」',q:'站着的人是谁？',opts:['老师','同学','校长','值日生'],ans:0},
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'猴小灵指指树：「树上有两只鸟，猎人打中一只。」',q:'树上还剩几只鸟？',opts:['0只，都飞走了','1只','2只','3只'],ans:0},
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'猴小灵问：「什么门永远关不上？」',q:'猜猜看是？',opts:['球门','木门','铁门','家门'],ans:0},
+    {who:'🐵 猴小灵（集市谜题摊主）',story:'火车呜呜地响，猴小灵问它为什么总爱叫。',q:'火车为什么鸣笛？',opts:['提醒大家它来了','它害怕','它饿了','它在唱歌'],ans:0}
+  ],
+  aq:[
+    {who:'🦊 小狐狸（运动场教练）',story:'小狐狸搭的高塔总倒，试了三次都失败，它有点想放弃。',q:'怎么才能变厉害？',opts:['直接不玩了','看看别人怎么搭，再试一次','怪塔不好使','把积木踢飞'],ans:1},
+    {who:'🦊 小狐狸（运动场教练）',story:'跑步比赛你跑了最后一名，有点难过。',q:'下次更好的办法是？',opts:['再也不跑步','每天练一点点','怪跑道不平','哭一场就算了'],ans:1},
+    {who:'🦊 小狐狸（运动场教练）',story:'拼图卡住了一块，怎么也放不进去。',q:'你会怎么做？',opts:['把拼图撕了','换个方向试试','怪拼图质量差','不拼了'],ans:1},
+    {who:'🦊 小狐狸（运动场教练）',story:'被老师批评了，你有点委屈。',q:'更好的做法是？',opts:['当场哭闹','听听哪里错了，下次改','恨老师','逃课'],ans:1},
+    {who:'🦊 小狐狸（运动场教练）',story:'你举手回答错了，同学笑了笑。',q:'你会怎么做？',opts:['再也不举手','笑一下，下次更努力','记恨同学','趴桌哭'],ans:1},
+    {who:'🦊 小狐狸（运动场教练）',story:'画画画坏了，纸也皱了。',q:'你会怎么做？',opts:['换个新纸再画一张','把笔扔了','再也不画画','怪桌子不好'],ans:0},
+    {who:'🦊 小狐狸（运动场教练）',story:'跳绳总被绳子绊倒。',q:'正确做法是？',opts:['调整节奏多练习','不跳了','怪绳子','把绳子扔了'],ans:0},
+    {who:'🦊 小狐狸（运动场教练）',story:'比赛输了，好朋友却赢了。',q:'你会怎么做？',opts:['恭喜好朋友，下次再比','生好朋友的气','再也不比赛','哭闹不停'],ans:0},
+    {who:'🦊 小狐狸（运动场教练）',story:'作业有点难，想了好久没做出来。',q:'更好的做法是？',opts:['先自己想想，再请教别人','直接抄别人的','空着不写','发脾气'],ans:0},
+    {who:'🦊 小狐狸（运动场教练）',story:'练字练得手酸，字还是不好看。',q:'你会怎么做？',opts:['歇一会儿再慢慢练','撕掉本子','怪笔不好','放弃写字'],ans:0},
+    {who:'🦊 小狐狸（运动场教练）',story:'上台讲故事，讲着讲着忘词了。',q:'最好怎么办？',opts:['深呼吸想想，接着讲','大哭','跑下台','怪话筒'],ans:0},
+    {who:'🦊 小狐狸（运动场教练）',story:'和朋友下棋输了。',q:'你可以怎么做？',opts:['说「再来一局」，继续学','摔棋子','再也不下棋','生气不理人'],ans:0}
+  ],
+  hq:[
+    {who:'🐯 小老虎（早餐铺老板）',story:'小老虎每天晚上9点睡觉，早上7点起床，白天还去操场跑一跑。',q:'这样对身体有什么好处？',opts:['总是没精神','长得壮、精神好','越来越矮','经常生病'],ans:1},
+    {who:'🐯 小老虎（早餐铺老板）',story:'玩耍出汗后，小老虎想喝水。',q:'怎么做更健康？',opts:['一次性猛灌冰水','少量多次、温水慢慢喝','渴了也不喝','只喝甜饮料'],ans:1},
+    {who:'🐯 小老虎（早餐铺老板）',story:'吃饭前和上厕所后，小老虎应该——',q:'正确做法是？',opts:['不用管','认真洗手','只擦擦嘴','玩完泥巴直接吃'],ans:1},
+    {who:'🐯 小老虎（早餐铺老板）',story:'看平板很久，小老虎眼睛有点酸。',q:'该怎么做？',opts:['继续盯着看','抬头远眺休息一下','用力揉眼睛','关灯继续看'],ans:1},
+    {who:'🐯 小老虎（早餐铺老板）',story:'放学后你又累又饿。',q:'更好的吃法是？',opts:['只吃零食不吃正餐','先喝温水、吃点水果再吃饭','喝冰可乐代替饭','不吃饭只吃糖'],ans:1},
+    {who:'🐯 小老虎（早餐铺老板）',story:'太阳火辣辣，要出门去玩。',q:'正确做法是？',opts:['戴帽子、涂防晒','晒着没关系','中午不喝水','穿很厚'],ans:0},
+    {who:'🐯 小老虎（早餐铺老板）',story:'晚上到了睡觉时间，动画片还没看完。',q:'你会怎么做？',opts:['按时上床睡觉','继续看动画','玩到很晚','偷偷玩平板'],ans:0},
+    {who:'🐯 小老虎（早餐铺老板）',story:'上完体育课，满头大汗。',q:'正确做法是？',opts:['先擦汗，休息一会儿再喝水','马上冲冷水','脱光衣服吹风','直接吃冰'],ans:0},
+    {who:'🐯 小老虎（早餐铺老板）',story:'看到一大包零食，特别想吃。',q:'更健康的做法是？',opts:['适量吃一点，正餐照常','零食当饭吃','一次全吃光','睡前狂吃'],ans:0},
+    {who:'🐯 小老虎（早餐铺老板）',story:'小朋友每天要运动多少才合适？',q:'更好的习惯是？',opts:['每天动一动，至少1小时','一动不动','一直躺着','只看电视'],ans:0},
+    {who:'🐯 小老虎（早餐铺老板）',story:'新买的鞋子有点紧，走起来不舒服。',q:'正确做法是？',opts:['告诉大人换合适的鞋','硬穿','把鞋剪个洞','不穿鞋'],ans:0},
+    {who:'🐯 小老虎（早餐铺老板）',story:'眼睛有点痒痒的。',q:'你应该怎么做？',opts:['告诉大人，不乱揉','用力揉','拿东西戳','不管它'],ans:0}
+  ],
+  mq:[
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'小镇广场你看到一朵漂亮小花，旁边没有人。',q:'最懂事的做法是？',opts:['摘走带回家','它长在这儿更美，看看就好','踩坏它','和小伙伴争抢'],ans:1},
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'小伙伴忘了带橡皮，正在发愁。',q:'你会怎么做？',opts:['假装没看见','借他一块橡皮','笑话他','把橡皮藏起来'],ans:1},
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'图书馆里有人大声说话，影响了大家。',q:'合适的做法是？',opts:['也大声喊','轻声提醒「这里是图书馆哦」','和他吵架','装没听见'],ans:1},
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'你答应妈妈「回家先写完作业再玩」。',q:'到家后你会怎么做？',opts:['先看动画片','先写完作业再玩','把答应忘了','让妈妈替你写'],ans:1},
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'排队玩滑梯，前面小朋友有点慢。',q:'正确做法是？',opts:['推他一把','耐心等、不打扰','插到最前面','抱怨大喊'],ans:1},
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'地上有一张垃圾，不是你的。',q:'你会怎么做？',opts:['捡起来扔进垃圾桶','踢到一边','假装没看见','踩过去'],ans:0},
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'公交车来了，很多人一起上车。',q:'正确做法是？',opts:['排队上车','往前挤','插队','从别人前面钻'],ans:0},
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'你借了同桌的绘本回家看。',q:'看完应该怎么做？',opts:['按时归还并道谢','一直不还','弄丢了不说','折角涂画'],ans:0},
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'弟弟不小心摔倒了，坐在地上哭。',q:'你会怎么做？',opts:['扶起来安慰他','笑话他','假装没看见','在旁边跳'],ans:0},
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'你玩的时候不小心打碎了杯子。',q:'诚实做法是？',opts:['主动告诉大人并说对不起','藏起来','推到别人身上','装不知道'],ans:0},
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'在公共场合，小朋友应该——',q:'以下哪个更合适？',opts:['小声说话','大喊大叫','跑来跑去','乱扔东西'],ans:0},
+    {who:'🐘 大象伯伯（图书馆管理员）',story:'你答应同学周末一起玩。',q:'到了那天你会怎么做？',opts:['准时赴约','忘得一干二净','临时放鸽子','不想去就不去'],ans:0}
+  ],
+  wq:[
+    {who:'🦁 小狮子（登山社社长）',story:'小狮子想学跳绳，第一天只会跳1个，有点灰心。',q:'怎么才能学会？',opts:['算了不学了','每天练一点点，坚持下来','等别人替它跳','假装自己会了'],ans:1},
+    {who:'🦁 小狮子（登山社社长）',story:'你想种一盆小花，可它三天都没发芽。',q:'正确做法是？',opts:['拔了丢掉','继续浇水耐心等','怪种子不好','干脆不理它'],ans:1},
+    {who:'🦁 小狮子（登山社社长）',story:'学骑自行车摔了一跤，膝盖有点疼。',q:'你会怎么做？',opts:['不学了','爬起来再试一次','哭很久不起来','怪自行车'],ans:1},
+    {who:'🦁 小狮子（登山社社长）',story:'练琴手有点酸，想停下来。',q:'更对的做法是？',opts:['直接放弃','休息一下，再练一小段','把琴砸了','让别人替你练'],ans:1},
+    {who:'🦁 小狮子（登山社社长）',story:'你想学会系鞋带，试了几次还没会。',q:'怎么做？',opts:['让妈妈一直代劳','每天练一次，慢慢就会了','永远不学','怪鞋子难系'],ans:1},
+    {who:'🦁 小狮子（登山社社长）',story:'背古诗，今天怎么也背不会。',q:'你会怎么做？',opts:['分几句，每天背一点','不背了','怪诗太长','让别人背'],ans:0},
+    {who:'🦁 小狮子（登山社社长）',story:'你坚持跑步已经10天了。',q:'这说明什么？',opts:['坚持就会进步','没用','该停了','太累别跑了'],ans:0},
+    {who:'🦁 小狮子（登山社社长）',story:'做手工，第一步就剪歪了。',q:'正确做法是？',opts:['重新剪一次','不做了','怪剪刀','扔一边'],ans:0},
+    {who:'🦁 小狮子（登山社社长）',story:'暑假里，你想学会游泳。',q:'怎么实现这个目标？',opts:['每周去练一次','想一下就够','等明年再说','叫别人替你游'],ans:0},
+    {who:'🦁 小狮子（登山社社长）',story:'今天不想写作业。',q:'更好的选择是？',opts:['定个小目标，先写一点','一直拖','假装写了','等妈妈催'],ans:0},
+    {who:'🦁 小狮子（登山社社长）',story:'练字很枯燥，不想练。',q:'你会怎么做？',opts:['每天写3行，坚持下去','写一天就停','怪老师','不写了'],ans:0},
+    {who:'🦁 小狮子（登山社社长）',story:'你想存钱买一盒大拼图。',q:'好办法是？',opts:['每天存一点点','马上花光','等别人送','忘掉这个想法'],ans:0}
+  ],
+  sq:[
+    {who:'🐼 熊猫先生（茶馆老板）',story:'夜晚小镇很安静，星星出来了，小熊猫看着天空想了想。',q:'哪件事让心里更平静？',opts:['深呼吸，看看星星','大吵大闹','一直刷手机','乱发脾气'],ans:0},
+    {who:'🐼 熊猫先生（茶馆老板）',story:'你心里有点乱，想让自己安静下来。',q:'可以试试？',opts:['深呼吸数到10','乱摔东西','大喊大叫','躲起来生闷气'],ans:0},
+    {who:'🐼 熊猫先生（茶馆老板）',story:'你看着云朵，觉得它像一只小兔子，于是编了个故事。',q:'这其实是？',opts:['瞎想','想象力','做错事','该去睡觉'],ans:1},
+    {who:'🐼 熊猫先生（茶馆老板）',story:'你用积木搭出了一座从没见过的城堡。',q:'这体现了什么？',opts:['乱搭','创造力','犯错了','抄袭别人'],ans:1},
+    {who:'🐼 熊猫先生（茶馆老板）',story:'你听雨声，觉得像一首轻轻的歌，心里很安静。',q:'这感受来自哪里？',opts:['讨厌下雨','观察与感悟力','该写作业了','烦人的噪音'],ans:1},
+    {who:'🐼 熊猫先生（茶馆老板）',story:'今天有点难过，心里闷闷的。',q:'可以试试？',opts:['深呼吸，听一首喜欢的歌','乱发脾气','砸东西','一直憋着'],ans:0},
+    {who:'🐼 熊猫先生（茶馆老板）',story:'你看到一片落叶从树上飘下来。',q:'你能想到什么？',opts:['它像一只小船，飘呀飘','马上踩烂','没意思','扔掉'],ans:0},
+    {who:'🐼 熊猫先生（茶馆老板）',story:'你用橡皮泥捏东西玩。',q:'捏什么最能发挥想象？',opts:['自己发明的小怪兽','只捏一个圆球','什么都不捏','别人捏什么就捏什么'],ans:0},
+    {who:'🐼 熊猫先生（茶馆老板）',story:'画画时，你想到一个从没听过的新故事。',q:'这说明什么？',opts:['你很有想象力','你在乱想','浪费时间','该停笔了'],ans:0},
+    {who:'🐼 熊猫先生（茶馆老板）',story:'睡前有点兴奋，翻来覆去睡不着。',q:'可以怎么做？',opts:['闭上眼睛，慢慢深呼吸','起来蹦跳','看很久动画','喝很多水'],ans:0},
+    {who:'🐼 熊猫先生（茶馆老板）',story:'窗外小鸟在唱歌，叽叽喳喳的。',q:'静静听一听，你会？',opts:['发现声音好听，心情也变好','觉得吵','把它赶走','捂耳朵'],ans:0},
+    {who:'🐼 熊猫先生（茶馆老板）',story:'你帮了别人一个小忙，心里暖暖的。',q:'这种感受是？',opts:['内心的喜悦和满足','没感觉','难受','害怕'],ans:0}
+  ],
+  aeq:[
+    {who:'🐱 猫小姐（服装店老板娘）',story:'猫小姐想让桌子变好看一点。',q:'怎样摆最美观？',opts:['东西乱堆一通','放一束花+整齐的书','全部涂成黑色','不管它'],ans:1},
+    {who:'🐱 猫小姐（服装店老板娘）',story:'你用彩色笔画画，想让画面更美。',q:'更好的做法是？',opts:['一种颜色乱涂','搭配几种颜色并留白','整张涂黑','随便乱画线条'],ans:1},
+    {who:'🐱 猫小姐（服装店老板娘）',story:'小镇要办画展，猫小姐在挂画。',q:'怎么挂更美？',opts:['随便钉满墙','选几幅、对齐高度、留出空白','全贴在地上','叠在一起'],ans:1},
+    {who:'🐱 猫小姐（服装店老板娘）',story:'猫小姐挑了两件衣服，一件花花绿绿，一件简简单单。',q:'怎么搭更好看？',opts:['两件都穿满花纹','选一件主色，另一件做点缀','全穿最亮的','随便套上'],ans:1},
+    {who:'🐱 猫小姐（服装店老板娘）',story:'你想把房间布置得温馨一点。',q:'好办法是？',opts:['东西扔满地','加一盏暖光小灯+整齐的收纳','全部涂红','不管多乱'],ans:1},
+    {who:'🐱 猫小姐（服装店老板娘）',story:'你给布娃娃穿衣服。',q:'怎么搭更美？',opts:['颜色搭配和谐','全穿最花','乱穿','只穿一件'],ans:0},
+    {who:'🐱 猫小姐（服装店老板娘）',story:'整理书架上的书。',q:'整齐美观的做法是？',opts:['按高矮排列整齐','随手一扔','堆在地上','都塞进抽屉'],ans:0},
+    {who:'🐱 猫小姐（服装店老板娘）',story:'过生日要装饰房间。',q:'好看的选择是？',opts:['挂彩旗和气球','什么都不放','全涂黑','乱贴纸'],ans:0},
+    {who:'🐱 猫小姐（服装店老板娘）',story:'你画一个大大的太阳。',q:'哪个配色更好看？',opts:['金色加一圈浅橙','全涂黑','乱涂','只画一点点'],ans:0},
+    {who:'🐱 猫小姐（服装店老板娘）',story:'要给照片配一个相框。',q:'更美观的做法是？',opts:['选颜色相配的相框','随便找个脏框','不配框','反着放'],ans:0},
+    {who:'🐱 猫小姐（服装店老板娘）',story:'整理玩具箱。',q:'美观又方便的做法是？',opts:['分类摆好','全倒出来','塞不下就堆','不管'],ans:0},
+    {who:'🐱 猫小姐（服装店老板娘）',story:'冬天选围巾。',q:'更美的搭配是？',opts:['和外套颜色呼应','乱选一条','越花越好','随便拿'],ans:0}
+  ]
+};
 function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+/* 家长自定义大富翁题库（localStorage，由家长模式「大富翁大题库」写入） */
+function readMonoCustom(){ try{ var _ls=window.localStorage; if(!_ls)return {}; var r=_ls.getItem('mc_mono_custom'); if(!r)return {}; var d=JSON.parse(r); return (d&&typeof d==='object')?d:{}; }catch(e){ return {}; } }
 /* P2-9 本局已抽去重：同一场馆故事池抽完一轮再重置，减少重复感 */
 function pickUnique(arr, seen){
   if(!arr||!arr.length) return null;
@@ -13908,10 +13843,17 @@ async function resolveCell(idx, depth=0){
   const t=TYPES[idx];
   if(t==='start'){ showToast('🏁 回到起点，继续冒险～'); return; }
   const venue=VENUES[idx];
-  let card;
-  if(t==='story') card=pickUnique(DECKS.story, state.shownStory) || pick(DECKS.story);
+  let card, useT=t;
+  const isQ = (t==='math'||t==='chinese'||t==='english'||t==='challenge'||t==='story');
+  if(isQ && Math.random()<0.4){
+    const MONO_ALL=['math','chinese','english','habit','general','eq','fq','bt','aq','hq','mq','wq','sq','aeq'];
+    let k=MONO_ALL[Math.floor(Math.random()*MONO_ALL.length)];
+    let pool=(Q_BANK[k]||[]).concat(readMonoCustom()[k]||[]);
+    if(!pool.length){ const ks=Object.keys(Q_BANK); k=ks[Math.floor(Math.random()*ks.length)]; pool=Q_BANK[k]; }
+    card=pick(pool); useT=k;
+  } else if(t==='story'){ card=pickUnique(DECKS.story, state.shownStory) || pick(DECKS.story); }
   else { card=pickTale(venue); if(!card) card=pick(VENUE_LORE[venue].tales); }
-  await showCard(t, card, venue);
+  await showCard(useT, card, venue);
   if(t==='luck'){ await applyLuck(card.effect, depth); }
 }
 async function applyLuck(effect, depth){
@@ -13993,7 +13935,7 @@ function renderFace(t, card, resolve, venue){
     return;
   }
   const isChal=(t==='challenge');
-  const persona=isChal?getPet():lore.who;
+  const persona=isChal?getPet():(card.who||lore.who);
   face.innerHTML=`<div class="mono-c-head" style="background:${m.color}"><span class="mono-c-emoji">${m.icon}</span> ${m.label} · ${persona.split(' ')[0]}</div><div class="mono-c-badge" id="monocBadge"></div><div class="mono-c-scroll"><div class="mono-c-who">${persona} · ${venue||''}</div><div class="mono-c-tale">${tale}</div><div class="mono-c-q">${card.q}</div><div class="mono-c-opts" id="monooptBox"></div></div><div class="mono-c-floatbar"><button class="mono-c-float" id="monocardPrimary">继续冒险 ➜</button></div>`;
   const box=document.getElementById('monooptBox');
   const labels=['A','B','C','D'];

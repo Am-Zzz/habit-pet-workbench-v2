@@ -1485,9 +1485,17 @@ function closeLevel(){
   document.getElementById('viewList').classList.remove('active');
 }
 function backToV8(){
-  // phonics 是 V8 的子页面，统一返回 V8 游戏中心（兼容：游戏中心进入 / 全屏打开 / 直接预览）
+  // 嵌入 v8 iframe 时：在关卡内 → 返回地图；在地图根 → 请求父页面(v8)返回，不跳走整页
+  if(window.self !== window.top){
+    if(levelLayer && levelLayer.classList.contains('on')){ closeLevel(); return; }
+    try{ window.parent.postMessage({type:'phx-exit'}, '*'); }catch(e){}
+    return;
+  }
+  // 独立整页打开时：按 back 参数返回 V8 的对应屏（默认游戏中心），避免返回错页
   if(/phonics/i.test(location.pathname) || new URLSearchParams(location.search).get('from')==='v8'){
-    window.location.href = '../v8.html#games';
+    var back = new URLSearchParams(location.search).get('back') || 'games';
+    if(!/^[a-z-]+$/.test(back)) back='games'; // 白名单兜底，防注入
+    window.location.href = '../v8.html#' + back;
   } else {
     history.back();
   }

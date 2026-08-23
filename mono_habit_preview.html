@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>学习大富翁 · 习惯小题（效果预览·答题卡内嵌）</title>
+<style>
+  :root{
+    --cream:#FBF6F1; --ink:#3A2A1A; --pink:#F4829B; --shadow:4px 4px 0 rgba(58,42,26,.18);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  body{margin:0; background:var(--cream); color:var(--ink);
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; padding:18px}
+  .top{margin-bottom:14px}
+  .title{font-size:20px; font-weight:800}
+  .title small{font-size:12px; font-weight:600; color:#9a8a78; display:block; margin-top:2px}
+  .wrap{display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap}
+  .board-wrap{background:#fff; border:3px solid var(--ink); border-radius:20px; padding:14px; box-shadow:var(--shadow)}
+  .board{position:relative; width:360px; height:360px}
+  .cell{position:absolute; border:2.5px solid var(--ink); border-radius:8px; background:#fff; overflow:hidden; font-size:9px; font-weight:800}
+  .cell .bar{height:32%; width:100%}
+  .cell .ic{position:absolute; top:28%; left:0; right:0; text-align:center; font-size:16px}
+  .cell .nm{position:absolute; bottom:3px; left:0; right:0; text-align:center; line-height:1}
+  .pawn{position:absolute; width:26px; height:26px; border-radius:50%; background:var(--pink);
+    border:3px solid #fff; outline:2.5px solid var(--ink); display:flex; align-items:center;
+    justify-content:center; font-size:13px; z-index:5}
+
+  .side{flex:1; min-width:320px; display:flex; flex-direction:column; gap:14px}
+  .card{background:#fff; border:3px solid var(--ink); border-radius:18px; padding:18px; box-shadow:var(--shadow); max-width:480px}
+  .tag{display:inline-block; padding:4px 12px; border-radius:999px; font-weight:800; font-size:13px;
+    border:2.5px solid var(--ink); margin-bottom:12px}
+  .tag.subj{background:#E7F0FB} .tag.habit{background:#D7F7F1}
+  .scene{font-size:14px; line-height:1.55; background:var(--cream); border-radius:12px; padding:12px; margin-bottom:12px}
+  .q{font-weight:800; font-size:16px; margin-bottom:12px}
+  .opt{display:block; width:100%; text-align:left; border:2.5px solid var(--ink); border-radius:12px;
+    background:#fff; padding:11px 14px; margin-bottom:9px; font-size:15px; font-weight:700; cursor:pointer}
+  .opt.correct{background:#C8EFC9; border-color:#3DA33D}
+  .opt.wrong{background:#FBD0D0; border-color:#D9534F}
+  .opt:disabled{cursor:default}
+  .row{display:flex; gap:10px; margin-top:6px}
+  .btn{flex:1; border:2.5px solid var(--ink); border-radius:12px; background:var(--pink); color:#fff;
+    font-weight:800; font-size:14px; padding:11px; cursor:pointer}
+  .btn.ghost{background:#fff; color:var(--ink)}
+  .btn:active{transform:scale(.97)}
+  .hud{display:flex; gap:10px; margin-top:12px}
+  .pill{background:#fff; border:2.5px solid var(--ink); border-radius:999px; padding:7px 14px; font-weight:800; font-size:14px; box-shadow:var(--shadow)}
+  .tip{font-size:11.5px; color:#9a8a78; margin-top:10px; line-height:1.5}
+  .toast{position:fixed; left:50%; bottom:30px; transform:translateX(-50%); background:var(--ink); color:#fff;
+    padding:10px 18px; border-radius:999px; font-weight:800; font-size:14px; opacity:0; transition:opacity .2s; pointer-events:none}
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="title">🎲 学习大富翁 · 习惯养成（效果预览）
+      <small>修正版：习惯内容 = 答题卡里的问题（和数学/语文题同一张卡），不是单独格子</small>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- 棋盘（保持真实 36 格不变，仅作位置示意） -->
+    <div class="board-wrap">
+      <div class="board" id="board"></div>
+      <div class="tip">棋盘本身不变（仍是数学/语文/英语/幸运/休息/挑战/剧情）。习惯内容只在「答题卡」里出现。</div>
+    </div>
+
+    <!-- 答题卡 -->
+    <div class="side">
+      <div class="card" id="card">
+        <span class="tag" id="tag">🌱 习惯小题</span>
+        <div class="scene" id="scene"></div>
+        <div class="q" id="q"></div>
+        <div id="opts"></div>
+        <div class="row">
+          <button class="btn ghost" id="switch">🔄 随机抽另一张卡</button>
+        </div>
+        <div class="hud">
+          <div class="pill">⭐ <span id="starN">0</span></div>
+        </div>
+        <div class="tip" id="tip">提示：习惯小题和学科题是「同一张答题卡」的形式，答对 +⭐。下方可随机切换看学科题 vs 习惯题的共存效果。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+// ===== 真实 META（与 v8 一致，棋盘不变）=====
+const META = {
+  start:{label:'起点',color:'#F4B942',icon:'🚓'}, math:{label:'数学',color:'#74B7E8',icon:'🔢'},
+  chinese:{label:'语文',color:'#F2A1C0',icon:'📖'}, english:{label:'英语',color:'#6FBF3F',icon:'🔤'},
+  luck:{label:'幸运',color:'#F4C943',icon:'🎁'}, rest:{label:'休息',color:'#CFE3D6',icon:'☕'},
+  challenge:{label:'挑战',color:'#F2994A',icon:'🛡️'}, story:{label:'剧情',color:'#9B7FD6',icon:'💬'}
+};
+const TYPES = ['start','luck','rest','english','luck','math','chinese','english','rest','math',
+  'chinese','english','luck','math','chinese','challenge','english','story','math','chinese',
+  'english','luck','math','chinese','english','rest','math','chinese','story','english',
+  'luck','math','chinese','challenge','story','rest'];
+
+// ===== 小棋盘渲染（示意）=====
+const G=10,S=32,GAP=3,OX=4,OY=4;
+const order=[]; for(let r=0;r<G;r++)for(let c=0;c<G;c++) if(r===0||r===G-1||c===0||c===G-1) order.push({r,c});
+const board=document.getElementById('board');
+order.forEach((p,i)=>{
+  const m=META[TYPES[i]];
+  const d=document.createElement('div'); d.className='cell';
+  d.style.left=(OX+p.c*(S+GAP))+'px'; d.style.top=(OY+p.r*(S+GAP))+'px';
+  d.style.width=S+'px'; d.style.height=S+'px';
+  d.innerHTML=`<div class="bar" style="background:${m.color}"></div><div class="ic">${m.icon}</div>`;
+  board.appendChild(d);
+});
+const pi=TYPES.indexOf('story'); const pp=order[pi];
+const pawn=document.createElement('div'); pawn.className='pawn'; pawn.textContent='🐾';
+pawn.style.left=(OX+pp.c*(S+GAP)+S/2-13)+'px'; pawn.style.top=(OY+pp.r*(S+GAP)+S/2-13)+'px';
+board.appendChild(pawn);
+
+// ===== 答题卡题库：学科题 + 习惯题（同一张卡片形式）=====
+const SUBJ=[
+  {tag:'🔢 数学', scene:'🐰 兔小姐烤了 3 盘草莓面包，每盘 4 个。', q:'一共烤了几个面包？', opts:['7','12','9','10'], ans:1},
+  {tag:'📖 语文', scene:'🦊 小狐狸在图书馆发现一个字。', q:'“木”加一笔可以变成哪个字？', opts:['禾','本','田','目'], ans:1},
+  {tag:'🔤 英语', scene:'🐱 猫医生指着苹果问你。', q:'“苹果”的英文是？', opts:['apple','banana','orange','pear'], ans:0}
+];
+const HABIT=[
+  {tag:'🌱 习惯小题', scene:'🐰 兔小姐每天自己把玩具收进箱子，房间亮堂堂。', q:'下面哪个做法更好？', opts:['玩完自己收拾玩具','扔地上不管','让妈妈全收','都不用做'], ans:0},
+  {tag:'🌱 习惯小题', scene:'🐻 熊爸爸说：自己的事情自己做。', q:'哪件事是“自己的事”？', opts:['自己整理书包','让妈妈喂饭','乱扔衣服','都不用'], ans:0},
+  {tag:'🌱 习惯小题', scene:'🐱 猫医生提醒：每天要喝够水、早晚刷牙。', q:'保护牙齿该怎么做？', opts:['早晚都刷牙','只早上刷一次','吃糖不刷','都不用'], ans:0},
+  {tag:'🌱 习惯小题', scene:'🐼 熊猫老师带大家做眼保健操。', q:'看书很久后应该？', opts:['远眺休息眼睛','继续盯屏幕','关灯看手机','都不用'], ans:0},
+  {tag:'🌱 习惯小题', scene:'🐧 企鹅妈妈煮饭前先洗手。', q:'吃饭前应该先？', opts:['洗手','直接吃','玩完不洗','都不用'], ans:0}
+];
+
+let cur=null, stars=0, locked=false;
+function render(card){
+  cur=card; locked=false;
+  const tag=document.getElementById('tag'); tag.className='tag '+(card.tag.indexOf('习惯')>=0?'habit':'subj');
+  tag.textContent=card.tag;
+  document.getElementById('scene').innerHTML=card.scene;
+  document.getElementById('q').textContent=card.q;
+  const box=document.getElementById('opts'); box.innerHTML='';
+  card.opts.forEach((o,oi)=>{
+    const b=document.createElement('button'); b.className='opt'; b.textContent=o;
+    b.onclick=()=>{
+      if(locked) return; locked=true;
+      [...box.children].forEach(c=>c.disabled=true);
+      if(oi===card.ans){ b.classList.add('correct'); stars++; document.getElementById('starN').textContent=stars; toast('🎉 答对啦，+1 ⭐'); }
+      else { b.classList.add('wrong'); box.children[card.ans].classList.add('correct'); toast('再想想～正确答案已标绿'); }
+    };
+    box.appendChild(b);
+  });
+}
+function rand(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+document.getElementById('switch').onclick=()=>{
+  // 随机抽一张：学科或习惯，演示两类题共存于同一张卡
+  const pool = Math.random()<0.5 ? SUBJ : HABIT;
+  render(rand(pool));
+};
+render(rand(HABIT));
+
+function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('show');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),1600); }
+</script>
+</body>
+</html>

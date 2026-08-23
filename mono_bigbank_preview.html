@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>学习大富翁 · 大题库设计方案预览 v4</title>
+<style>
+  :root{
+    --cream:#FBF6F1; --pink:#F4829B; --pink-d:#e0637d; --ink:#4b3a36; --ink-faint:#9a8a84;
+    --line:#ecd9cf; --card:#fffdfb; --shadow:0 6px 0 rgba(180,140,120,.18);
+    --c-math:#A78BFA; --c-chinese:#34D399; --c-english:#60A5FA; --c-habit:#2DD4BF;
+    --c-general:#8E6FBF; --c-eq:#F472B6; --c-fq:#F59E0B; --c-bt:#0891B2; --c-aq:#FB923C;
+    --c-hq:#16A34A; --c-mq:#F87171; --c-wq:#9333EA; --c-sq:#22D3EE; --c-aeq:#FB7185;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--cream);color:var(--ink);
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.5}
+  .top{background:linear-gradient(180deg,#fff 0%,var(--cream) 100%);
+    padding:18px 16px 10px;border-bottom:2px dashed var(--line);text-align:center}
+  .top h1{margin:0;font-size:20px;color:var(--pink-d)}
+  .top p{margin:6px 0 0;font-size:12.5px;color:var(--ink-faint)}
+  .wrap{max-width:980px;margin:0 auto;padding:14px}
+  .concept{background:var(--card);border:2px solid var(--line);border-radius:18px;
+    padding:14px 16px;box-shadow:var(--shadow);margin-bottom:16px}
+  .concept h2{margin:0 0 6px;font-size:15px;color:var(--pink-d)}
+  .flow{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:12px;margin-top:8px}
+  .chip{background:#fdf0f3;color:var(--pink-d);border:1.5px solid #f6c9d6;
+    border-radius:999px;padding:4px 10px;font-weight:700;white-space:nowrap}
+  .arrow{color:var(--ink-faint);font-weight:700}
+  .bank-chip{background:#fff7e6;border:1.5px solid #f3d9a0;color:#b8860b;font-weight:800}
+  .qchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .qchip{font-size:11px;font-weight:800;color:#fff;border-radius:999px;padding:3px 9px}
+  .scale{background:#fef3c7;border:1.5px solid #fcd34d;color:#92400e;border-radius:12px;
+    padding:9px 12px;font-size:12.5px;font-weight:700;margin-bottom:14px;text-align:center}
+  .cats{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+  .cat-btn{border:2px solid var(--line);background:var(--card);border-radius:12px;
+    padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer;color:var(--ink);
+    display:flex;align-items:center;gap:5px;transition:.15s}
+  .cat-btn .dot{width:11px;height:11px;border-radius:50%}
+  .cat-btn.on{transform:translateY(-2px);box-shadow:var(--shadow)}
+  .card{background:var(--card);border:2.5px solid var(--accent,var(--pink));border-radius:22px;
+    padding:16px 16px 14px;box-shadow:var(--shadow);max-width:560px;margin:0 auto}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;
+    color:#fff;background:var(--accent,var(--pink));padding:4px 11px;border-radius:999px}
+  .sub{font-size:11px;color:var(--ink-faint);margin:6px 0 0}
+  .who{display:flex;align-items:center;gap:10px;margin:10px 0 8px}
+  .who .ava{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:26px;
+    background:#fdf0f3;border:2px solid var(--line)}
+  .who .nm{font-weight:800;font-size:14px}
+  .who .rl{font-size:11px;color:var(--ink-faint)}
+  .story{font-size:13px;color:#6b5852;background:#fbf2f4;border-radius:12px;padding:9px 11px;margin-bottom:10px}
+  .q{font-size:14.5px;font-weight:800;margin:4px 0 10px}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .opt{border:2px solid var(--line);border-radius:12px;padding:9px 11px;font-size:13px;
+    background:#fff;display:flex;align-items:center;gap:8px}
+  .opt .k{width:20px;height:20px;border-radius:7px;background:#f3e7e1;display:grid;place-items:center;
+    font-weight:800;font-size:12px;color:var(--pink-d);flex:0 0 auto}
+  .opt.right{border-color:var(--accent,var(--pink));background:#f3fbf6}
+  .opt.right .k{background:var(--accent,var(--pink));color:#fff}
+  .star{text-align:center;margin-top:12px;font-size:13px;font-weight:800;color:var(--pink-d)}
+  .residents{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px;margin-top:6px}
+  .res{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+  .res .a{font-size:26px}
+  .res .n{font-weight:800;font-size:12.5px;margin-top:2px}
+  .res .t{font-size:10px;color:var(--ink-faint);margin-top:2px;line-height:1.35}
+  .logic{background:#f7fbff;border:2px solid #d6e6fb;border-radius:16px;padding:13px 15px;margin-top:14px;font-size:12.5px}
+  .logic h3{margin:0 0 6px;font-size:13.5px;color:#3b6fb0}
+  .logic code{background:#eef4fc;padding:1px 6px;border-radius:6px;color:#2b5a93;font-size:12px}
+  .note{text-align:center;font-size:11px;color:var(--ink-faint);margin:16px 0 8px}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>🎲 学习大富翁 · 大题库设计方案预览 v4</h1>
+  <p>统一题库 · 学科 + 习惯 + 通识大自然 + 脑筋急转弯 + 8 大「商」 · 小镇居民对话答题卡</p>
+</div>
+
+<div class="wrap">
+  <div class="concept">
+    <h2>① 一个统一「大题库」，所有答题都从它抽</h2>
+    <div class="flow">
+      <span class="chip">数学</span><span class="chip">语文</span><span class="chip">英语</span>
+      <span class="chip">习惯</span><span class="chip">通识大自然</span>
+      <span class="arrow">→</span>
+      <span class="bank-chip">📚 大题库 Q_BANK</span>
+      <span class="arrow">→</span>
+      <span class="chip">大富翁 / 其它玩法随机抽卡</span>
+    </div>
+    <div class="qchips">
+      <span class="qchip" style="background:var(--c-eq)">情商EQ</span>
+      <span class="qchip" style="background:var(--c-fq)">财商FQ</span>
+      <span class="qchip" style="background:var(--c-bt)">脑筋急转弯</span>
+      <span class="qchip" style="background:var(--c-aq)">逆商AQ</span>
+      <span class="qchip" style="background:var(--c-hq)">健商HQ</span>
+      <span class="qchip" style="background:var(--c-mq)">德商MQ</span>
+      <span class="qchip" style="background:var(--c-wq)">志商WQ</span>
+      <span class="qchip" style="background:var(--c-sq)">灵商SQ</span>
+      <span class="qchip" style="background:var(--c-aeq)">美商AEQ</span>
+    </div>
+  </div>
+
+  <div class="scale">📌 题库规模：每个分类 <b>落地版 ≥10 题</b>，全库 <b>140+ 题</b>；人工筛选 + 脚本查重<b>双重去重</b>，保证题干不重复。预览每类展示 5 张示意。</div>
+
+  <div class="cats" id="cats"></div>
+  <div class="card" id="card"></div>
+
+  <div class="concept" style="margin-top:16px">
+    <h2>② 小镇居民（每个分类有专属 NPC 身份，不是"老师"）</h2>
+    <div class="residents" id="residents"></div>
+  </div>
+
+  <div class="logic">
+    <h3>③ 抽取逻辑（做进 v8.html 后的真实行为）</h3>
+    <p style="margin:4px 0">
+      • 大富翁落格 → 按当前难度（幼儿园 pre / 1-3年级 g13 / 3-6年级 g36）从 <code>Q_BANK</code> 抽一张卡；<br>
+      • 学科题仍按「落格类型」优先，习惯 / 通识 / 脑筋急转弯 / 8 大「商」题随机穿插，孩子全程自然遇到；<br>
+      • 每张卡结构统一：<code>{cat, who, story, q, opts[4], ans, diff}</code>，渲染层完全复用，零改答题 UI；<br>
+      • 答对 +⭐，答错标绿不加分（防漏洞），与现有积分回写一致。<b>落地后每类 ≥10 题、全库 140+、双重去重无重复。</b>
+    </p>
+  </div>
+  <div class="note">※ 这是设计预览 v4（IQ 改为脑筋急转弯、每类 ≥10 题、全库去重），确认后写进 v8.html 并部署 iPad 横屏实测。</div>
+</div>
+
+<script>
+const CATS = {
+  math:    {name:'数学',   color:'var(--c-math)',    sub:'计算·逻辑·图形'},
+  chinese: {name:'语文',   color:'var(--c-chinese)', sub:'识字·阅读·表达'},
+  english: {name:'英语',   color:'var(--c-english)', sub:'单词·对话·拼读'},
+  habit:   {name:'习惯小题',color:'var(--c-habit)',   sub:'自理·作息·整理'},
+  general: {name:'通识大自然',color:'var(--c-general)',sub:'百科·动植物·自然'},
+  eq:      {name:'情商 EQ', color:'var(--c-eq)', sub:'情绪感知·待人相处·共情沟通'},
+  fq:      {name:'财商 FQ', color:'var(--c-fq)', sub:'金钱认知·花钱存钱·理财观念'},
+  bt:      {name:'脑筋急转弯',color:'var(--c-bt)', sub:'趣味巧思·反转思维'},
+  aq:      {name:'逆商 AQ', color:'var(--c-aq)', sub:'抗挫折·面对失败·抗压能力'},
+  hq:      {name:'健商 HQ', color:'var(--c-hq)', sub:'健康意识·作息·运动·爱护身体'},
+  mq:      {name:'德商 MQ', color:'var(--c-mq)', sub:'品德修养·礼貌·责任心·同理心'},
+  wq:      {name:'志商 WQ', color:'var(--c-wq)', sub:'意志力·坚持·目标感'},
+  sq:      {name:'灵商 SQ', color:'var(--c-sq)', sub:'感悟力·想象力·创造力'},
+  aeq:     {name:'美商 AEQ',color:'var(--c-aeq)', sub:'审美力·色彩搭配·环境布置'}
+};
+const RES = [
+  {a:'🐰',n:'兔小姐',t:'花店老板娘 · 爱张罗邻里事'},
+  {a:'🐻',n:'熊大叔',t:'镇上银行柜员 · 管钱有一套'},
+  {a:'🐵',n:'猴小灵',t:'集市谜题摊主 · 最爱出怪题'},
+  {a:'🦊',n:'小狐狸',t:'运动场教练 · 专教不服输'},
+  {a:'🐯',n:'小老虎',t:'早餐铺老板 · 讲究吃得健康'},
+  {a:'🐘',n:'大象伯伯',t:'图书馆管理员 · 最讲规矩礼貌'},
+  {a:'🦁',n:'小狮子',t:'登山社社长 · 认准目标不放弃'},
+  {a:'🐼',n:'熊猫先生',t:'茶馆老板 · 慢悠悠爱琢磨'},
+  {a:'🐱',n:'猫小姐',t:'服装店老板娘 · 懂搭配审美'},
+  {a:'🐶',n:'小萌',t:'你的小伙伴 · 全程陪你闯关'}
+];
+const BANK = {
+  eq:[
+    {who:{a:'🐰',n:'兔小姐',rl:'花店老板娘'},story:'兔小姐想和小羊一起玩积木，可小羊正和别人玩，兔小姐有点失落。',q:'兔小姐怎么做最舒服？',opts:['冲过去抢积木','生闷气不理大家','先去画画，等会儿再邀请小羊','哭着找妈妈'],ans:2},
+    {who:{a:'🐰',n:'兔小姐',rl:'花店老板娘'},story:'小伙伴不小心把你的画弄湿了，他很难过地说"对不起"。',q:'你该怎么回应？',opts:['骂他一顿','说"没关系，我们一起补画"','再也不理他','也弄湿他的画'],ans:1},
+    {who:{a:'🐰',n:'兔小姐',rl:'花店老板娘'},story:'你很想和新朋友一起玩，手里正拿着最爱的玩具。',q:'哪种做法最亲切？',opts:['把玩具藏起来','说"我们一起玩吧"','自己躲一边','抢对方的'],ans:1},
+    {who:{a:'🐰',n:'兔小姐',rl:'花店老板娘'},story:'小伙伴哭着跑过来，看起来很难过。',q:'共情的做法是？',opts:['笑话他','问"你怎么了，我陪你"','假装没看见','走开'],ans:1},
+    {who:{a:'🐰',n:'兔小姐',rl:'花店老板娘'},story:'你拼图拼错了很着急，脸都红了。',q:'怎么让自己平静下来？',opts:['大喊大叫','深呼吸数到3再继续','把拼图摔了','躲起来'],ans:1}
+  ],
+  fq:[
+    {who:{a:'🐻',n:'熊大叔',rl:'镇上银行柜员'},story:'熊大叔给你3枚金币，可以买一样小东西。糖果3金、绘本5金、气球1金。',q:'想买绘本但金币不够，最聪明的做法？',opts:['偷偷拿一本','先买气球，剩下的攒起来','抢别人的金币','把3金全买糖果'],ans:1},
+    {who:{a:'🐻',n:'熊大叔',rl:'镇上银行柜员'},story:'你存钱罐有10枚金币，妈妈说明天有更想要的拼图卖15金。',q:'今天你会？',opts:['今天全花光','今天先不花，明天买拼图','找人借钱乱花','把金币扔掉'],ans:1},
+    {who:{a:'🐻',n:'熊大叔',rl:'镇上银行柜员'},story:'妈妈给了你一点零花钱，你既想买糖又想存钱。',q:'聪明的做法？',opts:['全花光','分一点买小糖，剩下的存起来','都借给别人','弄丢钱包'],ans:1},
+    {who:{a:'🐻',n:'熊大叔',rl:'镇上银行柜员'},story:'你看到很喜欢的玩具，可是它很贵。',q:'怎么做更合适？',opts:['哭闹非要买','记在"愿望单"里慢慢攒','偷偷拿走','干脆不理'],ans:1},
+    {who:{a:'🐻',n:'熊大叔',rl:'镇上银行柜员'},story:'妈妈让你保管红包，说"这是你的小金库"。',q:'最稳妥的做法？',opts:['马上花掉','交给信任的大人帮忙保管','随便塞在床上','借给不熟的人'],ans:1}
+  ],
+  bt:[
+    {who:{a:'🐵',n:'猴小灵',rl:'集市谜题摊主'},story:'猴小灵最爱出怪题考大家，它眨眨眼说："听好咯——"',q:'什么东西越洗越脏？',opts:['衣服','水','手','碗'],ans:1},
+    {who:{a:'🐵',n:'猴小灵',rl:'集市谜题摊主'},story:'猴小灵歪着头："妈妈生了三个孩子，老大叫大毛，老二叫二毛——"',q:'老三叫什么？',opts:['三毛','小明','小毛','大毛'],ans:1},
+    {who:{a:'🐵',n:'猴小灵',rl:'集市谜题摊主'},story:'猴小灵举着一张图："这艘船能在天上飞，从不下水。"',q:'它是什么船？',opts:['木船','宇宙飞船','渔船','帆船'],ans:1},
+    {who:{a:'🐵',n:'猴小灵',rl:'集市谜题摊主'},story:'猴小灵爬上梯子又跳下："我从十米高的梯子掉下来，居然没受伤！"',q:'为什么？',opts:['他会飞','从最低一级掉下来','梯子是软的','有人接住'],ans:1},
+    {who:{a:'🐵',n:'猴小灵',rl:'集市谜题摊主'},story:'猴小灵指着火辣辣的太阳："天越热，它爬得越高。"',q:'"它"是什么？',opts:['蜗牛','温度计','小猫','太阳'],ans:1},
+    {who:{a:'🐵',n:'猴小灵',rl:'集市谜题摊主'},story:'猴小灵拍拍手臂："你打死了它，流的却是你自己的血。"',q:'它是什么？',opts:['老虎','蚊子','苍蝇','蚂蚁'],ans:1}
+  ],
+  aq:[
+    {who:{a:'🦊',n:'小狐狸',rl:'运动场教练'},story:'小狐狸搭的高塔总倒，试了三次都失败，它有点想放弃。',q:'怎么才能变厉害？',opts:['直接不玩了','看看别人怎么搭，再试一次','怪塔不好使','把积木踢飞'],ans:1},
+    {who:{a:'🦊',n:'小狐狸',rl:'运动场教练'},story:'跑步比赛你跑了最后一名，有点难过。',q:'下次更好的办法？',opts:['再也不跑步','每天练一点点','怪跑道不平','哭一场就算了'],ans:1},
+    {who:{a:'🦊',n:'小狐狸',rl:'运动场教练'},story:'拼图卡住了一块，怎么也放不进去。',q:'你会？',opts:['把拼图撕了','换个方向试试','怪拼图质量差','不拼了'],ans:1},
+    {who:{a:'🦊',n:'小狐狸',rl:'运动场教练'},story:'被老师批评了，你有点委屈。',q:'更好的做法？',opts:['当场哭闹','听听哪里错了，下次改','恨老师','逃课'],ans:1},
+    {who:{a:'🦊',n:'小狐狸',rl:'运动场教练'},story:'你举手回答错了，同学笑了笑。',q:'你会？',opts:['再也不举手','笑一下，下次更努力','记恨同学','趴桌哭'],ans:1}
+  ],
+  hq:[
+    {who:{a:'🐯',n:'小老虎',rl:'早餐铺老板'},story:'小老虎每天晚上9点睡觉，早上7点起床，白天还去操场跑一跑。',q:'这样对身体有什么好处？',opts:['总是没精神','长得壮、精神好','越来越矮','经常生病'],ans:1},
+    {who:{a:'🐯',n:'小老虎',rl:'早餐铺老板'},story:'玩耍出汗后，小老虎想喝水。',q:'怎么做更健康？',opts:['一次性猛灌冰水','少量多次、温水慢慢喝','渴了也不喝','只喝甜饮料'],ans:1},
+    {who:{a:'🐯',n:'小老虎',rl:'早餐铺老板'},story:'吃饭前和上厕所后，小老虎应该——',q:'正确做法是？',opts:['不用管','认真洗手','只擦擦嘴','玩完泥巴直接吃'],ans:1},
+    {who:{a:'🐯',n:'小老虎',rl:'早餐铺老板'},story:'看平板很久，小老虎眼睛有点酸。',q:'该怎么做？',opts:['继续盯着看','抬头远眺休息一下','用力揉眼睛','关灯继续看'],ans:1},
+    {who:{a:'🐯',n:'小老虎',rl:'早餐铺老板'},story:'放学后你又累又饿。',q:'更好的吃法？',opts:['只吃零食不吃正餐','先喝温水、吃点水果再吃饭','喝冰可乐代替饭','不吃饭只吃糖'],ans:1}
+  ],
+  mq:[
+    {who:{a:'🐘',n:'大象伯伯',rl:'图书馆管理员'},story:'小镇广场你看到一朵漂亮小花，旁边没有人。',q:'最懂事的做法？',opts:['摘走带回家','它长在这儿更美，看看就好','踩坏它','和小伙伴争抢'],ans:1},
+    {who:{a:'🐘',n:'大象伯伯',rl:'图书馆管理员'},story:'小伙伴忘了带橡皮，正在发愁。',q:'你会？',opts:['假装没看见','借他一块橡皮','笑话他','把橡皮藏起来'],ans:1},
+    {who:{a:'🐘',n:'大象伯伯',rl:'图书馆管理员'},story:'图书馆里有人大声说话，影响了大家。',q:'合适的做法？',opts:['也大声喊','轻声提醒"这里是图书馆哦"','和他吵架','装没听见'],ans:1},
+    {who:{a:'🐘',n:'大象伯伯',rl:'图书馆管理员'},story:'你答应妈妈"回家先写完作业再玩"。',q:'到家后你会？',opts:['先看动画片','先写完作业再玩','把答应忘了','让妈妈替你写'],ans:1},
+    {who:{a:'🐘',n:'大象伯伯',rl:'图书馆管理员'},story:'排队玩滑梯，前面小朋友有点慢。',q:'正确做法？',opts:['推他一把','耐心等、不打扰','插到最前面','抱怨大喊'],ans:1}
+  ],
+  wq:[
+    {who:{a:'🦁',n:'小狮子',rl:'登山社社长'},story:'小狮子想学跳绳，第一天只会跳1个，有点灰心。',q:'怎么才能学会？',opts:['算了不学了','每天练一点点，坚持下来','等别人替它跳','假装自己会了'],ans:1},
+    {who:{a:'🦁',n:'小狮子',rl:'登山社社长'},story:'你想种一盆小花，可它三天都没发芽。',q:'正确做法？',opts:['拔了丢掉','继续浇水耐心等','怪种子不好','干脆不理它'],ans:1},
+    {who:{a:'🦁',n:'小狮子',rl:'登山社社长'},story:'学骑自行车摔了一跤，膝盖有点疼。',q:'你会？',opts:['不学了','爬起来再试一次','哭很久不起来','怪自行车'],ans:1},
+    {who:{a:'🦁',n:'小狮子',rl:'登山社社长'},story:'练琴手有点酸，想停下来。',q:'更对的做法？',opts:['直接放弃','休息一下，再练一小段','把琴砸了','让别人替你练'],ans:1},
+    {who:{a:'🦁',n:'小狮子',rl:'登山社社长'},story:'你想学会系鞋带，试了几次还没会。',q:'怎么做？',opts:['让妈妈一直代劳','每天练一次，慢慢就会了','永远不学','怪鞋子难系'],ans:1}
+  ],
+  sq:[
+    {who:{a:'🐼',n:'熊猫先生',rl:'茶馆老板'},story:'夜晚小镇很安静，星星出来了，小熊猫看着天空想了想。',q:'哪件事让心里更平静？',opts:['深呼吸，看看星星','大吵大闹','一直刷手机','乱发脾气'],ans:0},
+    {who:{a:'🐼',n:'熊猫先生',rl:'茶馆老板'},story:'你心里有点乱，想让自己安静下来。',q:'可以试试？',opts:['深呼吸数到10','乱摔东西','大喊大叫','躲起来生闷气'],ans:0},
+    {who:{a:'🐼',n:'熊猫先生',rl:'茶馆老板'},story:'你看着云朵，觉得它像一只小兔子，于是编了个故事。',q:'这其实是？',opts:['瞎想','想象力','做错事','该去睡觉'],ans:1},
+    {who:{a:'🐼',n:'熊猫先生',rl:'茶馆老板'},story:'你用积木搭出了一座从没见过的城堡。',q:'这体现了？',opts:['乱搭','创造力','犯错了','抄袭别人'],ans:1},
+    {who:{a:'🐼',n:'熊猫先生',rl:'茶馆老板'},story:'你听雨声，觉得像一首轻轻的歌，心里很安静。',q:'这感受来自？',opts:['讨厌下雨','观察与感悟力','该写作业了','烦人的噪音'],ans:1}
+  ],
+  aeq:[
+    {who:{a:'🐱',n:'猫小姐',rl:'服装店老板娘'},story:'猫小姐想让桌子变好看一点。',q:'怎样摆最美观？',opts:['东西乱堆一通','放一束花+整齐的书','全部涂成黑色','不管它'],ans:1},
+    {who:{a:'🐱',n:'猫小姐',rl:'服装店老板娘'},story:'你用彩色笔画画，想让画面更美。',q:'更好的做法？',opts:['一种颜色乱涂','搭配几种颜色并留白','整张涂黑','随便乱画线条'],ans:1},
+    {who:{a:'🐱',n:'猫小姐',rl:'服装店老板娘'},story:'小镇要办画展，猫小姐在挂画。',q:'怎么挂更美？',opts:['随便钉满墙','选几幅、对齐高度、留出空白','全贴在地上','叠在一起'],ans:1},
+    {who:{a:'🐱',n:'猫小姐',rl:'服装店老板娘'},story:'猫小姐挑了两件衣服，一件花花绿绿，一件简简单单。',q:'怎么搭更好看？',opts:['两件都穿满花纹','选一件主色，另一件做点缀','全穿最亮的','随便套上'],ans:1},
+    {who:{a:'🐱',n:'猫小姐',rl:'服装店老板娘'},story:'你想把房间布置得温馨一点。',q:'好办法是？',opts:['东西扔满地','加一盏暖光小灯+整齐的收纳','全部涂红','不管多乱'],ans:1}
+  ]
+};
+const catsEl=document.getElementById('cats');
+const cardEl=document.getElementById('card');
+const resEl=document.getElementById('residents');
+const order=['eq','fq','bt','aq','hq','mq','wq','sq','aeq','habit','general','math','chinese','english'];
+let cur='eq';
+order.forEach(k=>{
+  const c=CATS[k];
+  const b=document.createElement('div');
+  b.className='cat-btn'+(k===cur?' on':'');
+  b.style.borderColor=k===cur?c.color:'var(--line)';
+  b.innerHTML=`<span class="dot" style="background:${c.color}"></span>${c.name}`;
+  b.onclick=()=>{cur=k;render();};
+  catsEl.appendChild(b);
+});
+RES.forEach(r=>{
+  const d=document.createElement('div');
+  d.className='res';
+  d.innerHTML=`<div class="a">${r.a}</div><div class="n">${r.n}</div><div class="t">${r.t}</div>`;
+  resEl.appendChild(d);
+});
+function render(){
+  document.querySelectorAll('.cat-btn').forEach((b,i)=>{
+    const k=order[i];const on=k===cur;
+    b.classList.toggle('on',on);
+    b.style.borderColor=on?CATS[k].color:'var(--line)';
+  });
+  const c=CATS[cur];
+  const list=BANK[cur]||[];
+  cardEl.style.setProperty('--accent',c.color);
+  if(list.length){
+    let idx=0;
+    const draw=i=>{
+      const cc=list[i];
+      cardEl.innerHTML=`
+        <span class="badge">${c.name} · 小题 ${list.length>1?((i+1)+'/'+list.length):''}</span>
+        <div class="sub">${c.sub}</div>
+        <div class="who"><div class="ava">${cc.who.a}</div>
+          <div><div class="nm">${cc.who.n}</div><div class="rl">${cc.who.rl}</div></div></div>
+        <div class="story">${cc.story}</div>
+        <div class="q">${cc.q}</div>
+        <div class="opts">
+          ${cc.opts.map((o,j)=>`<div class="opt ${j===cc.ans?'right':''}"><span class="k">${'ABCD'[j]}</span>${o}${j===cc.ans?' ✅':''}</div>`).join('')}
+        </div>
+        <div class="star">⭐ 答对 +1 星　|　点卡片看下一张（共 ${list.length} 张）</div>`;
+    };
+    draw(0);
+    cardEl.onclick=()=>{ if(list.length>1){idx=(idx+1)%list.length;draw(idx);} };
+  }else{
+    cardEl.innerHTML=`<span class="badge">${c.name}</span><div class="sub">${c.sub}</div>
+      <div class="q" style="color:var(--ink-faint)">（学科/习惯/通识题沿用现有题库，结构同「商」卡：居民讲故事 + 一个问题 + 4 选项 + 判题 + ⭐；落地版每类 ≥10 题）</div>`;
+    cardEl.onclick=null;
+  }
+}
+render();
+</script>
+</body>
+</html>
