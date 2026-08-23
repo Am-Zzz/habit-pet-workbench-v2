@@ -9138,6 +9138,43 @@ let phonicsTopicIdx=-1;
     if(d==='小学3-6')return '小学3-6';
     return d||'幼升小';
   }
+  /* ===== 自动补拼音：用内置字库 CHARS_DATA 给文本逐字标注（多音字用字库首个读音） ===== */
+  let _pyMapCache=null;
+  function buildPyMap(){
+    if(_pyMapCache)return _pyMapCache;
+    const m={};
+    try{
+      for(const tab in CHARS_DATA){
+        (CHARS_DATA[tab]||[]).forEach(function(page){
+          (page||[]).forEach(function(it){
+            if(it&&it.ch&&it.py&&!m[it.ch])m[it.ch]=it.py;
+          });
+        });
+      }
+    }catch(e){}
+    _pyMapCache=m;return m;
+  }
+  function autoFillPy(text){
+    const m=buildPyMap();const out=[];
+    Array.from(String(text||'')).forEach(function(ch){
+      if(/[\u4e00-\u9fa5]/.test(ch)){ out.push({t:ch,p:m[ch]||null}); }
+      else out.push({t:ch,p:null});
+    });
+    return out;
+  }
+  /* 已有 pages 补拼音：p 为空的汉字用字库自动标注（用于 JSON 导入的旧数据） */
+  function fillPagesPy(pages){
+    if(!Array.isArray(pages))return pages;
+    const m=buildPyMap();
+    pages.forEach(function(pg){
+      if(pg&&Array.isArray(pg.chars)){
+        pg.chars.forEach(function(ch){
+          if(ch&&ch.t&&!ch.p&&/[\u4e00-\u9fa5]/.test(ch.t)){ ch.p=m[ch.t]||null; }
+        });
+      }
+    });
+    return pages;
+  }
   function splitStory(text){
     if(!text||!text.trim())return [{role:'旁白',chars:[{t:'（暂无内容）',p:null}]}];
     const parts=text.split(/([。！？!?；;]+)/);
@@ -9154,13 +9191,13 @@ let phonicsTopicIdx=-1;
     sents.forEach(function(s,idx){
       const sl=s.length;
       if(bufChars>0 && bufChars+sl>PER_PAGE && idx<sents.length-1){
-        pages.push({role:'旁白',chars:Array.from(buf).map(function(ch){return {t:ch,p:null};})});
+        pages.push({role:'旁白',chars:autoFillPy(buf)});
         buf='';bufChars=0;
       }
       buf+=s;bufChars+=sl;
       if(idx===sents.length-1 && bufChars>0){
-        if(bufArr.length && pages.length===0){pages.push({role:'旁白',chars:Array.from(bufArr.join('')).map(function(ch){return {t:ch,p:null};})});}
-        if(buf)pages.push({role:'旁白',chars:Array.from(buf).map(function(ch){return {t:ch,p:null};})});
+        if(bufArr.length && pages.length===0){pages.push({role:'旁白',chars:autoFillPy(bufArr.join(''))});}
+        if(buf)pages.push({role:'旁白',chars:autoFillPy(buf)});
       }
     });
     if(!pages.length)pages.push({role:'旁白',chars:[{t:'（暂无内容）',p:null}]});
@@ -9169,7 +9206,7 @@ let phonicsTopicIdx=-1;
   function transformRawBook(raw,forcedId){
     const id=forcedId||raw.id||('u_'+Date.now()+'_'+Math.random().toString(36).slice(2,7));
     const age=diffToAge(raw.difficulty||raw.age||raw.grade);
-    const pages=raw.pages?raw.pages:splitStory(raw.storyContent||raw.content||raw.desc||'');
+    const pages=fillPagesPy(raw.pages?raw.pages:splitStory(raw.storyContent||raw.content||raw.desc||''));
     return {id:id,cat:raw.cat||'classic',icon:raw.icon||'📖',title:raw.title||'未命名绘本',
       tag:raw.tag||(raw.tags&&raw.tags[0])||raw.difficulty||'',age:age,grade:age,ready:raw.ready!==false,
       desc:raw.intro||raw.desc||'',cover:raw.cover||'',pages:pages,difficulty:raw.difficulty||age,
@@ -9638,6 +9675,26 @@ let phonicsTopicIdx=-1;
     if(sel)sel.classList.add('on');
   }
   function cancelEditBook(){if(bookInfoEditorReturnReader){bookInfoEditorReturnReader=false;closeMyBooks();if(editBookId)openBookReader(editBookId);return;}document.getElementById('mbEditor').style.display='none';document.getElementById('mbList').style.display='block';renderMyBooks();}
+  /* ===== AI 一键写正文：在线生成，失败用离线示例兜底 ===== */
+  function aiWriteStoryOffline(title){
+    const t=title||'小故事';
+    return '森林里住着一只快乐的小'+t+'。\n它每天和朋友一起玩耍。\n有一天，它遇到了一件新鲜事。\n它想了想，决定勇敢试一试。\n最后，它成功了，大家都为它高兴。\n勇敢尝试，就会有新的收获。';
+  }
+  function aiWriteStory(){
+    const title=document.getElementById('mbFTitle').value.trim();
+    if(!title){toast('请先填写书名');return;}
+    toast('✨ AI 正在写故事…');
+    const prompt='请写一篇给5-7岁孩子的绘本小故事，题目《'+title+'》，8个短句以内，每句不超过15个字，只输出故事正文，不要标题、不要编号、不要解释。';
+    aiChat([{role:'user',content:prompt}]).then(function(txt){
+      if(!txt||!txt.trim())throw new Error('空回复');
+      document.getElementById('mbFContent').value=txt.trim();
+      toast('AI 正文已生成，可编辑后保存 ✔');
+    }).catch(function(){
+      document.getElementById('mbFContent').value=aiWriteStoryOffline(title);
+      toast('AI 未配置联网，已用示例故事，可自行修改');
+    });
+  }
+  window.aiWriteStory=aiWriteStory;
   function saveUserBook(){
     const title=document.getElementById('mbFTitle').value.trim();if(!title){toast('请填写书名');return;}
     const age=document.getElementById('mbFAge').value;const cat=document.getElementById('mbFCat').value;
@@ -13023,7 +13080,12 @@ let phonicsTopicIdx=-1;
             <select id="mbFCat"><option value="classic">经典故事</option><option value="fable">寓言故事</option><option value="fairy">童话故事</option></select>
             <label>简介</label><input id="mbFDesc" placeholder="一句话简介">
             <label>标签(逗号分隔)</label><input id="mbFTags" placeholder="亲情, 习惯养成">
-            <label>正文(按句自动分页)</label><textarea id="mbFContent" placeholder="把故事正文粘贴到这里，系统会按句号自动分页"></textarea>
+            <label>正文(按句自动分页，保存时自动补拼音)</label>
+            <div class="mb-row" style="margin:4px 0 8px">
+              <button class="btn ghost" onclick="aiWriteStory()">✨ AI 帮我写正文</button>
+              <span style="font-size:11px;color:var(--ink-soft)">粘贴或 AI 生成后保存，自动分页 + 自动补拼音</span>
+            </div>
+            <textarea id="mbFContent" placeholder="把故事正文粘贴到这里，系统会按句号自动分页（每页一句话），保存时自动标注拼音"></textarea>
             <div class="mb-sec-box">
               <label>板块设置（勾选要包含的板块，可排序；封面/正文固定不可关）</label>
               <div id="mbSections" class="mb-sections"></div>
