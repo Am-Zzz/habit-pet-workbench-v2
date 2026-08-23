@@ -128,7 +128,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "快",
-            "p": null
+            "p": "kuài"
           },
           {
             "t": "，",
@@ -160,7 +160,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           }
         ]
       },
@@ -237,7 +237,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "慢",
-            "p": null
+            "p": "màn"
           },
           {
             "t": "，",
@@ -273,7 +273,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "下",
-            "p": null
+            "p": "xià"
           }
         ]
       },
@@ -459,7 +459,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "慢",
-            "p": null
+            "p": "màn"
           },
           {
             "t": "，",
@@ -495,7 +495,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "迟",
-            "p": null
+            "p": "chí"
           },
           {
             "t": "。",
@@ -543,7 +543,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "大",
-            "p": null
+            "p": "dà"
           }
         ]
       },
@@ -892,7 +892,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": null
+            "p": "le"
           },
           {
             "t": "，",
@@ -924,7 +924,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "吧",
-            "p": null
+            "p": "ba"
           }
         ]
       },
@@ -1815,7 +1815,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "娘",
-            "p": null
+            "p": "niánɡ"
           },
           {
             "t": "，",
@@ -1835,7 +1835,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "呀",
-            "p": null
+            "p": "ya"
           },
           {
             "t": "？",
@@ -1855,7 +1855,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "帽",
-            "p": null
+            "p": "mào"
           },
           {
             "t": "说",
@@ -1875,7 +1875,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "看",
-            "p": null
+            "p": "kàn"
           },
           {
             "t": "外",
@@ -1915,7 +1915,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "到",
-            "p": null
+            "p": "dào"
           }
         ]
       },
@@ -2954,7 +2954,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "鹅",
-            "p": null
+            "p": "é"
           }
         ]
       },
@@ -3248,7 +3248,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": null
+            "p": "le"
           },
           {
             "t": "！",
@@ -3264,7 +3264,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": null
+            "p": "le"
           },
           {
             "t": "！",
@@ -3312,7 +3312,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "帮",
-            "p": null
+            "p": "bāng"
           }
         ]
       },
@@ -3441,7 +3441,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "哈",
-            "p": null
+            "p": "hā"
           },
           {
             "t": "，",
@@ -3457,7 +3457,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "啦",
-            "p": null
+            "p": "lā"
           }
         ]
       },
@@ -3550,7 +3550,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": null
+            "p": "le"
           },
           {
             "t": "，",
@@ -3594,7 +3594,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": null
+            "p": "le"
           }
         ]
       },
@@ -3711,7 +3711,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "他",
-            "p": null
+            "p": "tā"
           }
         ]
       },
@@ -3985,7 +3985,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "！",
@@ -4013,7 +4013,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "掉",
-            "p": null
+            "p": "diào"
           },
           {
             "t": "，",
@@ -4033,7 +4033,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "赢",
-            "p": null
+            "p": "yínɡ"
           },
           {
             "t": "。",
@@ -4057,7 +4057,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "吹",
@@ -4105,7 +4105,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "更",
-            "p": null
+            "p": "ɡènɡ"
           }
         ]
       },
@@ -4271,7 +4271,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "了",
-            "p": null
+            "p": "le"
           },
           {
             "t": "。",
@@ -4299,7 +4299,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "照",
-            "p": null
+            "p": "zhào"
           },
           {
             "t": "着",
@@ -4323,7 +4323,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "得",
-            "p": null
+            "p": "de"
           },
           {
             "t": "热",
@@ -4355,7 +4355,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "外",
-            "p": null
+            "p": "wài"
           }
         ]
       },
@@ -4802,7 +4802,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "伤",
-            "p": null
+            "p": "shāng"
           },
           {
             "t": "，",
@@ -4822,7 +4822,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "着",
-            "p": null
+            "p": "zhe"
           }
         ]
       },
@@ -4879,7 +4879,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "去",
-            "p": null
+            "p": "qù"
           },
           {
             "t": "，",
@@ -4895,7 +4895,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "睡",
-            "p": null
+            "p": "shuì"
           },
           {
             "t": "，",
@@ -4931,7 +4931,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "醒",
-            "p": null
+            "p": "xǐng"
           }
         ]
       },
@@ -5499,7 +5499,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "会",
-            "p": null
+            "p": "huì"
           },
           {
             "t": "！",
@@ -5535,7 +5535,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "哭",
-            "p": null
+            "p": "kū"
           }
         ]
       },
@@ -5737,7 +5737,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "效",
-            "p": null
+            "p": "xiào"
           },
           {
             "t": "，",
@@ -5761,7 +5761,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "家",
-            "p": null
+            "p": "jiā"
           },
           {
             "t": "。",
@@ -5777,7 +5777,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "会",
-            "p": null
+            "p": "huì"
           },
           {
             "t": "上",
@@ -5821,7 +5821,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "跳",
-            "p": null
+            "p": "tiào"
           }
         ]
       },
@@ -6554,7 +6554,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "吧",
-            "p": null
+            "p": "ba"
           },
           {
             "t": "！",
@@ -6570,7 +6570,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "婆",
-            "p": null
+            "p": "pó"
           },
           {
             "t": "说",
@@ -6598,7 +6598,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "声",
-            "p": null
+            "p": "shēnɡ"
           },
           {
             "t": "音",
@@ -6654,7 +6654,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "刀",
-            "p": null
+            "p": "dāo"
           }
         ]
       },
@@ -64766,51 +64766,51 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "欢",
-            "p": null
+            "p": "huān"
           },
           {
             "t": "迎",
-            "p": null
+            "p": "yíng"
           },
           {
             "t": "来",
-            "p": null
+            "p": "lái"
           },
           {
             "t": "到",
-            "p": null
+            "p": "dào"
           },
           {
             "t": "儿",
-            "p": null
+            "p": "ér"
           },
           {
             "t": "童",
-            "p": null
+            "p": "tóng"
           },
           {
             "t": "思",
-            "p": null
+            "p": "sī"
           },
           {
             "t": "维",
-            "p": null
+            "p": "wéi"
           },
           {
             "t": "导",
-            "p": null
+            "p": "dǎo"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "启",
-            "p": null
+            "p": "qǐ"
           },
           {
             "t": "蒙",
-            "p": null
+            "p": "ménɡ"
           },
           {
             "t": "。",
@@ -64818,43 +64818,43 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "这",
-            "p": null
+            "p": "zhè"
           },
           {
             "t": "里",
-            "p": null
+            "p": "lǐ"
           },
           {
             "t": "有",
-            "p": null
+            "p": "yǒu"
           },
           {
             "t": "很",
-            "p": null
+            "p": "hěn"
           },
           {
             "t": "多",
-            "p": null
+            "p": "duō"
           },
           {
             "t": "好",
-            "p": null
+            "p": "hǎo"
           },
           {
             "t": "玩",
-            "p": null
+            "p": "wán"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "形",
-            "p": null
+            "p": "xíng"
           },
           {
             "t": "，",
@@ -64862,35 +64862,35 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "帮",
-            "p": null
+            "p": "bāng"
           },
           {
             "t": "助",
-            "p": null
+            "p": "zhù"
           },
           {
             "t": "我",
-            "p": null
+            "p": "wǒ"
           },
           {
             "t": "们",
-            "p": null
+            "p": "men"
           },
           {
             "t": "整",
-            "p": null
+            "p": "zhěng"
           },
           {
             "t": "理",
-            "p": null
+            "p": "lǐ"
           },
           {
             "t": "想",
-            "p": null
+            "p": "xiǎng"
           },
           {
             "t": "法",
-            "p": null
+            "p": "fǎ"
           },
           {
             "t": "。",
@@ -64903,39 +64903,39 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "共",
-            "p": null
+            "p": "gòng"
           },
           {
             "t": "有",
-            "p": null
+            "p": "yǒu"
           },
           {
             "t": "九",
-            "p": null
+            "p": "jiǔ"
           },
           {
             "t": "种",
-            "p": null
+            "p": "zhòng"
           },
           {
             "t": "思",
-            "p": null
+            "p": "sī"
           },
           {
             "t": "维",
-            "p": null
+            "p": "wéi"
           },
           {
             "t": "导",
-            "p": null
+            "p": "dǎo"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "。",
@@ -64943,51 +64943,51 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "每",
-            "p": null
+            "p": "měi"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "种",
-            "p": null
+            "p": "zhòng"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "形",
-            "p": null
+            "p": "xíng"
           },
           {
             "t": "都",
-            "p": null
+            "p": "dōu"
           },
           {
             "t": "有",
-            "p": null
+            "p": "yǒu"
           },
           {
             "t": "不",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "同",
-            "p": null
+            "p": "tóng"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "本",
-            "p": null
+            "p": "běn"
           },
           {
             "t": "领",
-            "p": null
+            "p": "lǐnɡ"
           },
           {
             "t": "，",
@@ -64995,59 +64995,59 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "就",
-            "p": null
+            "p": "jiù"
           },
           {
             "t": "像",
-            "p": null
+            "p": "xiànɡ"
           },
           {
             "t": "我",
-            "p": null
+            "p": "wǒ"
           },
           {
             "t": "们",
-            "p": null
+            "p": "men"
           },
           {
             "t": "每",
-            "p": null
+            "p": "měi"
           },
           {
             "t": "个",
-            "p": null
+            "p": "gè"
           },
           {
             "t": "人",
-            "p": null
+            "p": "rén"
           },
           {
             "t": "都",
-            "p": null
+            "p": "dōu"
           },
           {
             "t": "有",
-            "p": null
+            "p": "yǒu"
           },
           {
             "t": "不",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "同",
-            "p": null
+            "p": "tóng"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "特",
-            "p": null
+            "p": "tè"
           },
           {
             "t": "长",
-            "p": null
+            "p": "cháng"
           },
           {
             "t": "。",
@@ -65060,23 +65060,23 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "这",
-            "p": null
+            "p": "zhè"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "圆",
-            "p": null
+            "p": "yuán"
           },
           {
             "t": "圈",
-            "p": null
+            "p": "quān"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "。",
@@ -65084,31 +65084,31 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "它",
-            "p": null
+            "p": "tā"
           },
           {
             "t": "像",
-            "p": null
+            "p": "xiànɡ"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "个",
-            "p": null
+            "p": "gè"
           },
           {
             "t": "甜",
-            "p": null
+            "p": "tián"
           },
           {
             "t": "甜",
-            "p": null
+            "p": "tián"
           },
           {
             "t": "圈",
-            "p": null
+            "p": "quān"
           },
           {
             "t": "，",
@@ -65116,23 +65116,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "中",
-            "p": null
+            "p": "zhōng"
           },
           {
             "t": "间",
-            "p": null
+            "p": "jiān"
           },
           {
             "t": "写",
-            "p": null
+            "p": "xiě"
           },
           {
             "t": "主",
-            "p": null
+            "p": "zhǔ"
           },
           {
             "t": "题",
-            "p": null
+            "p": "tí"
           },
           {
             "t": "，",
@@ -65140,55 +65140,55 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "外",
-            "p": null
+            "p": "wài"
           },
           {
             "t": "面",
-            "p": null
+            "p": "miàn"
           },
           {
             "t": "写",
-            "p": null
+            "p": "xiě"
           },
           {
             "t": "和",
-            "p": null
+            "p": "hé"
           },
           {
             "t": "这",
-            "p": null
+            "p": "zhè"
           },
           {
             "t": "个",
-            "p": null
+            "p": "gè"
           },
           {
             "t": "主",
-            "p": null
+            "p": "zhǔ"
           },
           {
             "t": "题",
-            "p": null
+            "p": "tí"
           },
           {
             "t": "有",
-            "p": null
+            "p": "yǒu"
           },
           {
             "t": "关",
-            "p": null
+            "p": "guān"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "想",
-            "p": null
+            "p": "xiǎng"
           },
           {
             "t": "法",
-            "p": null
+            "p": "fǎ"
           },
           {
             "t": "。",
@@ -65201,31 +65201,31 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "比",
-            "p": null
+            "p": "bǐ"
           },
           {
             "t": "如",
-            "p": null
+            "p": "rú"
           },
           {
             "t": "主",
-            "p": null
+            "p": "zhǔ"
           },
           {
             "t": "题",
-            "p": null
+            "p": "tí"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "星",
-            "p": null
+            "p": "xīng"
           },
           {
             "t": "星",
-            "p": null
+            "p": "xīng"
           },
           {
             "t": "。",
@@ -65233,39 +65233,39 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "我",
-            "p": null
+            "p": "wǒ"
           },
           {
             "t": "们",
-            "p": null
+            "p": "men"
           },
           {
             "t": "可",
-            "p": null
+            "p": "kě"
           },
           {
             "t": "以",
-            "p": null
+            "p": "yǐ"
           },
           {
             "t": "想",
-            "p": null
+            "p": "xiǎng"
           },
           {
             "t": "到",
-            "p": null
+            "p": "dào"
           },
           {
             "t": "亮",
-            "p": null
+            "p": "liàng"
           },
           {
             "t": "亮",
-            "p": null
+            "p": "liàng"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "、",
@@ -65273,15 +65273,15 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "黄",
-            "p": null
+            "p": "huáng"
           },
           {
             "t": "色",
-            "p": null
+            "p": "sè"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "、",
@@ -65289,19 +65289,19 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "晚",
-            "p": null
+            "p": "wǎn"
           },
           {
             "t": "上",
-            "p": null
+            "p": "shàng"
           },
           {
             "t": "出",
-            "p": null
+            "p": "chū"
           },
           {
             "t": "现",
-            "p": null
+            "p": "xiàn"
           },
           {
             "t": "、",
@@ -65309,19 +65309,19 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "会",
-            "p": null
+            "p": "huì"
           },
           {
             "t": "眨",
-            "p": null
+            "p": "zhǎ"
           },
           {
             "t": "眼",
-            "p": null
+            "p": "yǎn"
           },
           {
             "t": "睛",
-            "p": null
+            "p": "jīng"
           },
           {
             "t": "。",
@@ -65334,23 +65334,23 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "这",
-            "p": null
+            "p": "zhè"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "气",
-            "p": null
+            "p": "qì"
           },
           {
             "t": "泡",
-            "p": null
+            "p": "pào"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "。",
@@ -65358,31 +65358,31 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "中",
-            "p": null
+            "p": "zhōng"
           },
           {
             "t": "间",
-            "p": null
+            "p": "jiān"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "个",
-            "p": null
+            "p": "gè"
           },
           {
             "t": "小",
-            "p": null
+            "p": "xiǎo"
           },
           {
             "t": "朋",
-            "p": null
+            "p": "péng"
           },
           {
             "t": "友",
-            "p": null
+            "p": "yǒu"
           },
           {
             "t": "，",
@@ -65390,51 +65390,51 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "周",
-            "p": null
+            "p": "zhōu"
           },
           {
             "t": "围",
-            "p": null
+            "p": "wéi"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "气",
-            "p": null
+            "p": "qì"
           },
           {
             "t": "泡",
-            "p": null
+            "p": "pào"
           },
           {
             "t": "里",
-            "p": null
+            "p": "lǐ"
           },
           {
             "t": "写",
-            "p": null
+            "p": "xiě"
           },
           {
             "t": "上",
-            "p": null
+            "p": "shàng"
           },
           {
             "t": "她",
-            "p": null
+            "p": "tā"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "样",
-            "p": null
+            "p": "yàng"
           },
           {
             "t": "子",
-            "p": null
+            "p": "zǐ"
           },
           {
             "t": "，",
@@ -65442,35 +65442,35 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "帮",
-            "p": null
+            "p": "bāng"
           },
           {
             "t": "助",
-            "p": null
+            "p": "zhù"
           },
           {
             "t": "我",
-            "p": null
+            "p": "wǒ"
           },
           {
             "t": "们",
-            "p": null
+            "p": "men"
           },
           {
             "t": "描",
-            "p": null
+            "p": "miáo"
           },
           {
             "t": "述",
-            "p": null
+            "p": "shù"
           },
           {
             "t": "事",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "物",
-            "p": null
+            "p": "wù"
           },
           {
             "t": "。",
@@ -65483,35 +65483,35 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "中",
-            "p": null
+            "p": "zhōng"
           },
           {
             "t": "间",
-            "p": null
+            "p": "jiān"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "只",
-            "p": null
+            "p": "zhī"
           },
           {
             "t": "大",
-            "p": null
+            "p": "dà"
           },
           {
             "t": "熊",
-            "p": null
+            "p": "xióng"
           },
           {
             "t": "猫",
-            "p": null
+            "p": "māo"
           },
           {
             "t": "。",
@@ -65519,35 +65519,35 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "旁",
-            "p": null
+            "p": "páng"
           },
           {
             "t": "边",
-            "p": null
+            "p": "biān"
           },
           {
             "t": "可",
-            "p": null
+            "p": "kě"
           },
           {
             "t": "以",
-            "p": null
+            "p": "yǐ"
           },
           {
             "t": "写",
-            "p": null
+            "p": "xiě"
           },
           {
             "t": "圆",
-            "p": null
+            "p": "yuán"
           },
           {
             "t": "圆",
-            "p": null
+            "p": "yuán"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "、",
@@ -65555,19 +65555,19 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "黑",
-            "p": null
+            "p": "hēi"
           },
           {
             "t": "白",
-            "p": null
+            "p": "bái"
           },
           {
             "t": "相",
-            "p": null
+            "p": "xiānɡ"
           },
           {
             "t": "间",
-            "p": null
+            "p": "jiān"
           },
           {
             "t": "、",
@@ -65575,19 +65575,19 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "爱",
-            "p": null
+            "p": "ài"
           },
           {
             "t": "吃",
-            "p": null
+            "p": "chī"
           },
           {
             "t": "竹",
-            "p": null
+            "p": "zhú"
           },
           {
             "t": "子",
-            "p": null
+            "p": "zǐ"
           },
           {
             "t": "、",
@@ -65595,15 +65595,15 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "很",
-            "p": null
+            "p": "hěn"
           },
           {
             "t": "可",
-            "p": null
+            "p": "kě"
           },
           {
             "t": "爱",
-            "p": null
+            "p": "ài"
           },
           {
             "t": "。",
@@ -65616,27 +65616,27 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "这",
-            "p": null
+            "p": "zhè"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "双",
-            "p": null
+            "p": "shuāng"
           },
           {
             "t": "气",
-            "p": null
+            "p": "qì"
           },
           {
             "t": "泡",
-            "p": null
+            "p": "pào"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "。",
@@ -65644,27 +65644,27 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "它",
-            "p": null
+            "p": "tā"
           },
           {
             "t": "有",
-            "p": null
+            "p": "yǒu"
           },
           {
             "t": "两",
-            "p": null
+            "p": "liǎng"
           },
           {
             "t": "个",
-            "p": null
+            "p": "gè"
           },
           {
             "t": "圆",
-            "p": null
+            "p": "yuán"
           },
           {
             "t": "圈",
-            "p": null
+            "p": "quān"
           },
           {
             "t": "，",
@@ -65672,47 +65672,47 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "中",
-            "p": null
+            "p": "zhōng"
           },
           {
             "t": "间",
-            "p": null
+            "p": "jiān"
           },
           {
             "t": "重",
-            "p": null
+            "p": "zhòng"
           },
           {
             "t": "叠",
-            "p": null
+            "p": "dié"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "部",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "分",
-            "p": null
+            "p": "fēn"
           },
           {
             "t": "写",
-            "p": null
+            "p": "xiě"
           },
           {
             "t": "相",
-            "p": null
+            "p": "xiānɡ"
           },
           {
             "t": "同",
-            "p": null
+            "p": "tóng"
           },
           {
             "t": "点",
-            "p": null
+            "p": "diǎn"
           },
           {
             "t": "，",
@@ -65720,27 +65720,27 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "两",
-            "p": null
+            "p": "liǎng"
           },
           {
             "t": "边",
-            "p": null
+            "p": "biān"
           },
           {
             "t": "写",
-            "p": null
+            "p": "xiě"
           },
           {
             "t": "不",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "同",
-            "p": null
+            "p": "tóng"
           },
           {
             "t": "点",
-            "p": null
+            "p": "diǎn"
           },
           {
             "t": "。",
@@ -65753,43 +65753,43 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "比",
-            "p": null
+            "p": "bǐ"
           },
           {
             "t": "如",
-            "p": null
+            "p": "rú"
           },
           {
             "t": "比",
-            "p": null
+            "p": "bǐ"
           },
           {
             "t": "较",
-            "p": null
+            "p": "jiào"
           },
           {
             "t": "两",
-            "p": null
+            "p": "liǎng"
           },
           {
             "t": "个",
-            "p": null
+            "p": "gè"
           },
           {
             "t": "熊",
-            "p": null
+            "p": "xióng"
           },
           {
             "t": "猫",
-            "p": null
+            "p": "māo"
           },
           {
             "t": "蛋",
-            "p": null
+            "p": "dàn"
           },
           {
             "t": "糕",
-            "p": null
+            "p": "gāo"
           },
           {
             "t": "。",
@@ -65797,31 +65797,31 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "相",
-            "p": null
+            "p": "xiānɡ"
           },
           {
             "t": "同",
-            "p": null
+            "p": "tóng"
           },
           {
             "t": "点",
-            "p": null
+            "p": "diǎn"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "都",
-            "p": null
+            "p": "dōu"
           },
           {
             "t": "很",
-            "p": null
+            "p": "hěn"
           },
           {
             "t": "甜",
-            "p": null
+            "p": "tián"
           },
           {
             "t": "，",
@@ -65829,47 +65829,47 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "不",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "同",
-            "p": null
+            "p": "tóng"
           },
           {
             "t": "点",
-            "p": null
+            "p": "diǎn"
           },
           {
             "t": "可",
-            "p": null
+            "p": "kě"
           },
           {
             "t": "能",
-            "p": null
+            "p": "nénɡ"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "大",
-            "p": null
+            "p": "dà"
           },
           {
             "t": "小",
-            "p": null
+            "p": "xiǎo"
           },
           {
             "t": "和",
-            "p": null
+            "p": "hé"
           },
           {
             "t": "颜",
-            "p": null
+            "p": "yán"
           },
           {
             "t": "色",
-            "p": null
+            "p": "sè"
           },
           {
             "t": "。",
@@ -65882,23 +65882,23 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "这",
-            "p": null
+            "p": "zhè"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "树",
-            "p": null
+            "p": "shù"
           },
           {
             "t": "形",
-            "p": null
+            "p": "xíng"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "。",
@@ -65906,27 +65906,27 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "它",
-            "p": null
+            "p": "tā"
           },
           {
             "t": "像",
-            "p": null
+            "p": "xiànɡ"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "棵",
-            "p": null
+            "p": "kē"
           },
           {
             "t": "大",
-            "p": null
+            "p": "dà"
           },
           {
             "t": "树",
-            "p": null
+            "p": "shù"
           },
           {
             "t": "，",
@@ -65934,31 +65934,31 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "把",
-            "p": null
+            "p": "bǎ"
           },
           {
             "t": "东",
-            "p": null
+            "p": "dōng"
           },
           {
             "t": "西",
-            "p": null
+            "p": "xī"
           },
           {
             "t": "分",
-            "p": null
+            "p": "fēn"
           },
           {
             "t": "成",
-            "p": null
+            "p": "chéng"
           },
           {
             "t": "几",
-            "p": null
+            "p": "jǐ"
           },
           {
             "t": "类",
-            "p": null
+            "p": "lèi"
           },
           {
             "t": "，",
@@ -65966,39 +65966,39 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "帮",
-            "p": null
+            "p": "bāng"
           },
           {
             "t": "助",
-            "p": null
+            "p": "zhù"
           },
           {
             "t": "我",
-            "p": null
+            "p": "wǒ"
           },
           {
             "t": "们",
-            "p": null
+            "p": "men"
           },
           {
             "t": "整",
-            "p": null
+            "p": "zhěng"
           },
           {
             "t": "理",
-            "p": null
+            "p": "lǐ"
           },
           {
             "t": "和",
-            "p": null
+            "p": "hé"
           },
           {
             "t": "归",
-            "p": null
+            "p": "ɡuī"
           },
           {
             "t": "纳",
-            "p": null
+            "p": "nà"
           },
           {
             "t": "。",
@@ -66011,31 +66011,31 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "比",
-            "p": null
+            "p": "bǐ"
           },
           {
             "t": "如",
-            "p": null
+            "p": "rú"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "个",
-            "p": null
+            "p": "gè"
           },
           {
             "t": "礼",
-            "p": null
+            "p": "lǐ"
           },
           {
             "t": "物",
-            "p": null
+            "p": "wù"
           },
           {
             "t": "盒",
-            "p": null
+            "p": "hé"
           },
           {
             "t": "，",
@@ -66043,27 +66043,27 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "可",
-            "p": null
+            "p": "kě"
           },
           {
             "t": "以",
-            "p": null
+            "p": "yǐ"
           },
           {
             "t": "分",
-            "p": null
+            "p": "fēn"
           },
           {
             "t": "成",
-            "p": null
+            "p": "chéng"
           },
           {
             "t": "气",
-            "p": null
+            "p": "qì"
           },
           {
             "t": "球",
-            "p": null
+            "p": "qiú"
           },
           {
             "t": "、",
@@ -66071,11 +66071,11 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "星",
-            "p": null
+            "p": "xīng"
           },
           {
             "t": "星",
-            "p": null
+            "p": "xīng"
           },
           {
             "t": "、",
@@ -66083,23 +66083,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "爱",
-            "p": null
+            "p": "ài"
           },
           {
             "t": "心",
-            "p": null
+            "p": "xīn"
           },
           {
             "t": "和",
-            "p": null
+            "p": "hé"
           },
           {
             "t": "圆",
-            "p": null
+            "p": "yuán"
           },
           {
             "t": "形",
-            "p": null
+            "p": "xíng"
           },
           {
             "t": "，",
@@ -66107,23 +66107,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "按",
-            "p": null
+            "p": "àn"
           },
           {
             "t": "形",
-            "p": null
+            "p": "xíng"
           },
           {
             "t": "状",
-            "p": null
+            "p": "zhuàng"
           },
           {
             "t": "分",
-            "p": null
+            "p": "fēn"
           },
           {
             "t": "类",
-            "p": null
+            "p": "lèi"
           },
           {
             "t": "。",
@@ -66136,23 +66136,23 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "这",
-            "p": null
+            "p": "zhè"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "括",
-            "p": null
+            "p": "kuò"
           },
           {
             "t": "号",
-            "p": null
+            "p": "hào"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "。",
@@ -66160,27 +66160,27 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "它",
-            "p": null
+            "p": "tā"
           },
           {
             "t": "像",
-            "p": null
+            "p": "xiànɡ"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "把",
-            "p": null
+            "p": "bǎ"
           },
           {
             "t": "大",
-            "p": null
+            "p": "dà"
           },
           {
             "t": "伞",
-            "p": null
+            "p": "sǎn"
           },
           {
             "t": "，",
@@ -66188,23 +66188,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "左",
-            "p": null
+            "p": "zuǒ"
           },
           {
             "t": "边",
-            "p": null
+            "p": "biān"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "整",
-            "p": null
+            "p": "zhěng"
           },
           {
             "t": "体",
-            "p": null
+            "p": "tǐ"
           },
           {
             "t": "，",
@@ -66212,27 +66212,27 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "右",
-            "p": null
+            "p": "yòu"
           },
           {
             "t": "边",
-            "p": null
+            "p": "biān"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "大",
-            "p": null
+            "p": "dà"
           },
           {
             "t": "括",
-            "p": null
+            "p": "kuò"
           },
           {
             "t": "号",
-            "p": null
+            "p": "hào"
           },
           {
             "t": "，",
@@ -66240,31 +66240,31 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "里",
-            "p": null
+            "p": "lǐ"
           },
           {
             "t": "面",
-            "p": null
+            "p": "miàn"
           },
           {
             "t": "写",
-            "p": null
+            "p": "xiě"
           },
           {
             "t": "部",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "分",
-            "p": null
+            "p": "fēn"
           },
           {
             "t": "组",
-            "p": null
+            "p": "zǔ"
           },
           {
             "t": "成",
-            "p": null
+            "p": "chéng"
           },
           {
             "t": "。",
@@ -66277,27 +66277,27 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "比",
-            "p": null
+            "p": "bǐ"
           },
           {
             "t": "如",
-            "p": null
+            "p": "rú"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "盆",
-            "p": null
+            "p": "pén"
           },
           {
             "t": "植",
-            "p": null
+            "p": "zhí"
           },
           {
             "t": "物",
-            "p": null
+            "p": "wù"
           },
           {
             "t": "，",
@@ -66305,23 +66305,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "可",
-            "p": null
+            "p": "kě"
           },
           {
             "t": "以",
-            "p": null
+            "p": "yǐ"
           },
           {
             "t": "分",
-            "p": null
+            "p": "fēn"
           },
           {
             "t": "为",
-            "p": null
+            "p": "wèi"
           },
           {
             "t": "根",
-            "p": null
+            "p": "gēn"
           },
           {
             "t": "、",
@@ -66329,7 +66329,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "茎",
-            "p": null
+            "p": "jīng"
           },
           {
             "t": "、",
@@ -66337,7 +66337,7 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "叶",
-            "p": null
+            "p": "yè"
           },
           {
             "t": "、",
@@ -66345,19 +66345,19 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "花",
-            "p": null
+            "p": "huā"
           },
           {
             "t": "和",
-            "p": null
+            "p": "hé"
           },
           {
             "t": "果",
-            "p": null
+            "p": "guǒ"
           },
           {
             "t": "实",
-            "p": null
+            "p": "shí"
           },
           {
             "t": "，",
@@ -66365,35 +66365,35 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "每",
-            "p": null
+            "p": "měi"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "部",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "分",
-            "p": null
+            "p": "fēn"
           },
           {
             "t": "都",
-            "p": null
+            "p": "dōu"
           },
           {
             "t": "很",
-            "p": null
+            "p": "hěn"
           },
           {
             "t": "重",
-            "p": null
+            "p": "zhòng"
           },
           {
             "t": "要",
-            "p": null
+            "p": "yào"
           },
           {
             "t": "。",
@@ -66406,23 +66406,23 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "这",
-            "p": null
+            "p": "zhè"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "流",
-            "p": null
+            "p": "liú"
           },
           {
             "t": "程",
-            "p": null
+            "p": "chénɡ"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "。",
@@ -66430,43 +66430,43 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "它",
-            "p": null
+            "p": "tā"
           },
           {
             "t": "用",
-            "p": null
+            "p": "yònɡ"
           },
           {
             "t": "箭",
-            "p": null
+            "p": "jiàn"
           },
           {
             "t": "头",
-            "p": null
+            "p": "tóu"
           },
           {
             "t": "把",
-            "p": null
+            "p": "bǎ"
           },
           {
             "t": "步",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "骤",
-            "p": null
+            "p": "zhòu"
           },
           {
             "t": "连",
-            "p": null
+            "p": "lián"
           },
           {
             "t": "起",
-            "p": null
+            "p": "qǐ"
           },
           {
             "t": "来",
-            "p": null
+            "p": "lái"
           },
           {
             "t": "，",
@@ -66474,39 +66474,39 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "告",
-            "p": null
+            "p": "gào"
           },
           {
             "t": "诉",
-            "p": null
+            "p": "sù"
           },
           {
             "t": "我",
-            "p": null
+            "p": "wǒ"
           },
           {
             "t": "们",
-            "p": null
+            "p": "men"
           },
           {
             "t": "先",
-            "p": null
+            "p": "xiān"
           },
           {
             "t": "做",
-            "p": null
+            "p": "zuò"
           },
           {
             "t": "哪",
-            "p": null
+            "p": "nǎ"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "步",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "，",
@@ -66514,23 +66514,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "后",
-            "p": null
+            "p": "hòu"
           },
           {
             "t": "做",
-            "p": null
+            "p": "zuò"
           },
           {
             "t": "哪",
-            "p": null
+            "p": "nǎ"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "步",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "。",
@@ -66543,31 +66543,31 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "比",
-            "p": null
+            "p": "bǐ"
           },
           {
             "t": "如",
-            "p": null
+            "p": "rú"
           },
           {
             "t": "小",
-            "p": null
+            "p": "xiǎo"
           },
           {
             "t": "飞",
-            "p": null
+            "p": "fēi"
           },
           {
             "t": "机",
-            "p": null
+            "p": "jī"
           },
           {
             "t": "旅",
-            "p": null
+            "p": "lǚ"
           },
           {
             "t": "行",
-            "p": null
+            "p": "xíng"
           },
           {
             "t": "。",
@@ -66575,23 +66575,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "第",
-            "p": null
+            "p": "dì"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "步",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "起",
-            "p": null
+            "p": "qǐ"
           },
           {
             "t": "飞",
-            "p": null
+            "p": "fēi"
           },
           {
             "t": "，",
@@ -66599,31 +66599,31 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "第",
-            "p": null
+            "p": "dì"
           },
           {
             "t": "二",
-            "p": null
+            "p": "èr"
           },
           {
             "t": "步",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "穿",
-            "p": null
+            "p": "chuān"
           },
           {
             "t": "过",
-            "p": null
+            "p": "guò"
           },
           {
             "t": "云",
-            "p": null
+            "p": "yún"
           },
           {
             "t": "朵",
-            "p": null
+            "p": "duǒ"
           },
           {
             "t": "，",
@@ -66631,35 +66631,35 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "第",
-            "p": null
+            "p": "dì"
           },
           {
             "t": "三",
-            "p": null
+            "p": "sān"
           },
           {
             "t": "步",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "到",
-            "p": null
+            "p": "dào"
           },
           {
             "t": "达",
-            "p": null
+            "p": "dá"
           },
           {
             "t": "目",
-            "p": null
+            "p": "mù"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "地",
-            "p": null
+            "p": "de"
           },
           {
             "t": "。",
@@ -66672,27 +66672,27 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "这",
-            "p": null
+            "p": "zhè"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "复",
-            "p": null
+            "p": "fù"
           },
           {
             "t": "流",
-            "p": null
+            "p": "liú"
           },
           {
             "t": "程",
-            "p": null
+            "p": "chénɡ"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "。",
@@ -66700,27 +66700,27 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "中",
-            "p": null
+            "p": "zhōng"
           },
           {
             "t": "间",
-            "p": null
+            "p": "jiān"
           },
           {
             "t": "写",
-            "p": null
+            "p": "xiě"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "件",
-            "p": null
+            "p": "jiàn"
           },
           {
             "t": "事",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "，",
@@ -66728,23 +66728,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "左",
-            "p": null
+            "p": "zuǒ"
           },
           {
             "t": "边",
-            "p": null
+            "p": "biān"
           },
           {
             "t": "写",
-            "p": null
+            "p": "xiě"
           },
           {
             "t": "原",
-            "p": null
+            "p": "yuán"
           },
           {
             "t": "因",
-            "p": null
+            "p": "yīn"
           },
           {
             "t": "，",
@@ -66752,23 +66752,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "右",
-            "p": null
+            "p": "yòu"
           },
           {
             "t": "边",
-            "p": null
+            "p": "biān"
           },
           {
             "t": "写",
-            "p": null
+            "p": "xiě"
           },
           {
             "t": "结",
-            "p": null
+            "p": "jié"
           },
           {
             "t": "果",
-            "p": null
+            "p": "guǒ"
           },
           {
             "t": "。",
@@ -66781,23 +66781,23 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "比",
-            "p": null
+            "p": "bǐ"
           },
           {
             "t": "如",
-            "p": null
+            "p": "rú"
           },
           {
             "t": "看",
-            "p": null
+            "p": "kàn"
           },
           {
             "t": "电",
-            "p": null
+            "p": "diàn"
           },
           {
             "t": "视",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "。",
@@ -66805,35 +66805,35 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "原",
-            "p": null
+            "p": "yuán"
           },
           {
             "t": "因",
-            "p": null
+            "p": "yīn"
           },
           {
             "t": "可",
-            "p": null
+            "p": "kě"
           },
           {
             "t": "能",
-            "p": null
+            "p": "nénɡ"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "想",
-            "p": null
+            "p": "xiǎng"
           },
           {
             "t": "休",
-            "p": null
+            "p": "xiū"
           },
           {
             "t": "息",
-            "p": null
+            "p": "xī"
           },
           {
             "t": "、",
@@ -66841,23 +66841,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "想",
-            "p": null
+            "p": "xiǎng"
           },
           {
             "t": "看",
-            "p": null
+            "p": "kàn"
           },
           {
             "t": "动",
-            "p": null
+            "p": "dòng"
           },
           {
             "t": "画",
-            "p": null
+            "p": "huà"
           },
           {
             "t": "片",
-            "p": null
+            "p": "piàn"
           },
           {
             "t": "。",
@@ -66865,31 +66865,31 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "结",
-            "p": null
+            "p": "jié"
           },
           {
             "t": "果",
-            "p": null
+            "p": "guǒ"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "眼",
-            "p": null
+            "p": "yǎn"
           },
           {
             "t": "睛",
-            "p": null
+            "p": "jīng"
           },
           {
             "t": "累",
-            "p": null
+            "p": "lèi"
           },
           {
             "t": "了",
-            "p": null
+            "p": "le"
           },
           {
             "t": "、",
@@ -66897,23 +66897,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "学",
-            "p": null
+            "p": "xué"
           },
           {
             "t": "到",
-            "p": null
+            "p": "dào"
           },
           {
             "t": "了",
-            "p": null
+            "p": "le"
           },
           {
             "t": "知",
-            "p": null
+            "p": "zhī"
           },
           {
             "t": "识",
-            "p": null
+            "p": "shí"
           },
           {
             "t": "。",
@@ -66926,23 +66926,23 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "这",
-            "p": null
+            "p": "zhè"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "桥",
-            "p": null
+            "p": "qiáo"
           },
           {
             "t": "形",
-            "p": null
+            "p": "xíng"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "。",
@@ -66950,27 +66950,27 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "它",
-            "p": null
+            "p": "tā"
           },
           {
             "t": "像",
-            "p": null
+            "p": "xiànɡ"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "座",
-            "p": null
+            "p": "zuò"
           },
           {
             "t": "小",
-            "p": null
+            "p": "xiǎo"
           },
           {
             "t": "桥",
-            "p": null
+            "p": "qiáo"
           },
           {
             "t": "，",
@@ -66978,55 +66978,55 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "上",
-            "p": null
+            "p": "shàng"
           },
           {
             "t": "面",
-            "p": null
+            "p": "miàn"
           },
           {
             "t": "和",
-            "p": null
+            "p": "hé"
           },
           {
             "t": "下",
-            "p": null
+            "p": "xià"
           },
           {
             "t": "面",
-            "p": null
+            "p": "miàn"
           },
           {
             "t": "写",
-            "p": null
+            "p": "xiě"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "对",
-            "p": null
+            "p": "duì"
           },
           {
             "t": "相",
-            "p": null
+            "p": "xiānɡ"
           },
           {
             "t": "似",
-            "p": null
+            "p": "sì"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "事",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "物",
-            "p": null
+            "p": "wù"
           },
           {
             "t": "。",
@@ -67039,31 +67039,31 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "比",
-            "p": null
+            "p": "bǐ"
           },
           {
             "t": "如",
-            "p": null
+            "p": "rú"
           },
           {
             "t": "波",
-            "p": null
+            "p": "bō"
           },
           {
             "t": "浪",
-            "p": null
+            "p": "làng"
           },
           {
             "t": "和",
-            "p": null
+            "p": "hé"
           },
           {
             "t": "山",
-            "p": null
+            "p": "shān"
           },
           {
             "t": "脉",
-            "p": null
+            "p": "mài"
           },
           {
             "t": "。",
@@ -67071,35 +67071,35 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "它",
-            "p": null
+            "p": "tā"
           },
           {
             "t": "们",
-            "p": null
+            "p": "men"
           },
           {
             "t": "都",
-            "p": null
+            "p": "dōu"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "上",
-            "p": null
+            "p": "shàng"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "下",
-            "p": null
+            "p": "xià"
           },
           {
             "t": "、",
@@ -67107,23 +67107,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "连",
-            "p": null
+            "p": "lián"
           },
           {
             "t": "绵",
-            "p": null
+            "p": "mián"
           },
           {
             "t": "不",
-            "p": null
+            "p": "bù"
           },
           {
             "t": "断",
-            "p": null
+            "p": "duàn"
           },
           {
             "t": "的",
-            "p": null
+            "p": "de"
           },
           {
             "t": "，",
@@ -67131,23 +67131,23 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "样",
-            "p": null
+            "p": "yàng"
           },
           {
             "t": "子",
-            "p": null
+            "p": "zǐ"
           },
           {
             "t": "很",
-            "p": null
+            "p": "hěn"
           },
           {
             "t": "相",
-            "p": null
+            "p": "xiānɡ"
           },
           {
             "t": "似",
-            "p": null
+            "p": "sì"
           },
           {
             "t": "。",
@@ -67160,23 +67160,23 @@ window.BOOK_CONTENT = [
         "chars": [
           {
             "t": "这",
-            "p": null
+            "p": "zhè"
           },
           {
             "t": "是",
-            "p": null
+            "p": "shì"
           },
           {
             "t": "心",
-            "p": null
+            "p": "xīn"
           },
           {
             "t": "智",
-            "p": null
+            "p": "zhì"
           },
           {
             "t": "图",
-            "p": null
+            "p": "tú"
           },
           {
             "t": "。",
@@ -67184,31 +67184,31 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "它",
-            "p": null
+            "p": "tā"
           },
           {
             "t": "像",
-            "p": null
+            "p": "xiànɡ"
           },
           {
             "t": "一",
-            "p": null
+            "p": "yī"
           },
           {
             "t": "只",
-            "p": null
+            "p": "zhī"
           },
           {
             "t": "八",
-            "p": null
+            "p": "bā"
           },
           {
             "t": "爪",
-            "p": null
+            "p": "zhǎo"
           },
           {
             "t": "鱼",
-            "p": null
+            "p": "yú"
           },
           {
             "t": "，",
@@ -67216,43 +67216,43 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "把",
-            "p": null
+            "p": "bǎ"
           },
           {
             "t": "知",
-            "p": null
+            "p": "zhī"
           },
           {
             "t": "识",
-            "p": null
+            "p": "shí"
           },
           {
             "t": "和",
-            "p": null
+            "p": "hé"
           },
           {
             "t": "想",
-            "p": null
+            "p": "xiǎng"
           },
           {
             "t": "象",
-            "p": null
+            "p": "xiàng"
           },
           {
             "t": "结",
-            "p": null
+            "p": "jié"
           },
           {
             "t": "合",
-            "p": null
+            "p": "hé"
           },
           {
             "t": "起",
-            "p": null
+            "p": "qǐ"
           },
           {
             "t": "来",
-            "p": null
+            "p": "lái"
           },
           {
             "t": "，",
@@ -67260,43 +67260,43 @@ window.BOOK_CONTENT = [
           },
           {
             "t": "帮",
-            "p": null
+            "p": "bāng"
           },
           {
             "t": "助",
-            "p": null
+            "p": "zhù"
           },
           {
             "t": "我",
-            "p": null
+            "p": "wǒ"
           },
           {
             "t": "们",
-            "p": null
+            "p": "men"
           },
           {
             "t": "全",
-            "p": null
+            "p": "quán"
           },
           {
             "t": "面",
-            "p": null
+            "p": "miàn"
           },
           {
             "t": "思",
-            "p": null
+            "p": "sī"
           },
           {
             "t": "考",
-            "p": null
+            "p": "kǎo"
           },
           {
             "t": "问",
-            "p": null
+            "p": "wèn"
           },
           {
             "t": "题",
-            "p": null
+            "p": "tí"
           },
           {
             "t": "。",
