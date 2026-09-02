@@ -15024,13 +15024,15 @@ window.__monoBack = function () {
   .mb-hero-name{color:#fff;font-size:17px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.08)}
   .mb-hero-sub{color:#fff;opacity:.95;font-size:12px;margin-top:3px}
   .mb-hero-link{color:#fff;text-decoration:underline;cursor:pointer;opacity:1}
-  .mb-tile{background:#FFFFFF;border:3px solid var(--c);border-radius:18px;padding:18px 16px;cursor:pointer;transition:transform .12s,box-shadow .12s;box-shadow:0 4px 12px rgba(120,120,140,.08);color:#111827}
+  .mb-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding:11px 14px}
+  .mb-tools-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:6px 14px 0}
+  .mb-tile{border-radius:15px;padding:12px 6px 10px;text-align:center;border:3px solid var(--c);background:#fff;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:transform .12s,box-shadow .12s;box-shadow:0 4px 12px rgba(120,120,140,.08);color:#111827}
   .mb-tile:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(120,120,140,.18)}
   .mb-tile:active{transform:translateY(1px)}
-  .mb-tile-ic{width:42px;height:42px;border-radius:50%;background:var(--c);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.12);margin-bottom:10px}
-  .mb-tile-t{font-size:16px;font-weight:900;color:#111827;letter-spacing:-.3px}
-  .mb-tile-s{font-size:12px;margin-top:4px;line-height:1.5;color:#374151;font-weight:600}
-  .mb-tools-h{font-size:15px;font-weight:900;color:#111827;margin:4px 0 12px;display:flex;align-items:center;gap:6px}
+  .mb-tile-ic{width:44px;height:44px;display:inline-flex}
+  .mb-tile-ic svg{width:100%;height:100%;display:block}
+  .mb-tile-t{font-weight:900;font-size:12px;color:#111827}
+  .mb-tile-s{font-size:9.5px;color:var(--ink-soft);margin-top:-2px;line-height:1.35}
   .mb-search{background:#FFFFFF;border:2px solid #A8D8F0}
   .mb-search input::placeholder{color:#6B7280}
   .mb-recent .mb-chip{background:var(--cc);border:2px solid var(--cc);color:#fff;font-weight:800}
@@ -15163,7 +15165,7 @@ window.__monoBack = function () {
   .ez-h .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
   .mb-ez.o .ez-h .dot{background:#F7B88A}.mb-ez.b .ez-h .dot{background:#87D3F5}.mb-ez.g .ez-h .dot{background:#A8E6BF}
   .mb-ver-row{display:flex;gap:8px}
-  .mb-ver{flex:1;border-radius:13px;padding:10px 4px;text-align:center;background:#EFF6FB;border:2.5px solid transparent;font-weight:800;font-size:12.5px;cursor:pointer;color:#3D4852;transition:.12s}
+  .mb-ver{flex:1;border-radius:13px;padding:10px 4px;text-align:center;background:#EFF6FB;border:2.5px solid transparent;font-weight:800;font-size:12.5px;cursor:pointer;color:#3D4852;transition:.12s;display:flex;flex-direction:column;align-items:center;gap:4px}
   .mb-ver.on{border-color:#EACF55;background:#FFFBE6}
   .mb-grow{display:flex;gap:7px;flex-wrap:wrap}
   .mb-gn{position:relative;width:44px;height:44px;flex:0 0 auto;border-radius:12px;background:#EFF6FB;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;color:#3D4852;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,.05);transition:.12s}
@@ -15785,7 +15787,10 @@ function mbGoBack(){
     var hero='<div class="mb-hero"><div class="mb-mascot">'+MB_MASCOT_SVG+'</div>'
       +'<div class="mb-hero-txt"><div class="mb-hero-name">数学宝典</div><div class="mb-hero-sub">选教材 · 选年级 · 选学期，开启你的宝典</div></div>'
       +'<span class="mb-hero-back" onclick="mbGoBack()">← 返回</span></div>';
-    var vers=[['rj','人教版'],['bs','北师大版']].map(function(v){return '<div class="mb-ver'+(v[0]===mbState.version?' on':'')+'" onclick="mbChooseVersion(\''+v[0]+'\')">'+v[1]+'</div>';}).join('');
+    var vers=[
+      ['rj','人教版','<svg viewBox="0 0 24 24" width="24" height="24"><rect x="4" y="3" width="16" height="18" rx="2" fill="#F7B88A"/><path d="M7 8h10M7 12h10M7 16h5" stroke="#fff" stroke-width="1.8"/></svg>'],
+      ['bs','北师大版','<svg viewBox="0 0 24 24" width="24" height="24"><rect x="4" y="3" width="16" height="18" rx="2" fill="#87D3F5"/><path d="M7 8h10M7 12h10M7 16h5" stroke="#fff" stroke-width="1.8"/></svg>']
+    ].map(function(v){return '<div class="mb-ver'+(v[0]===mbState.version?' on':'')+'" onclick="mbChooseVersion(\''+v[0]+'\')">'+v[2]+v[1]+'</div>';}).join('');
     var gcards=[1,2,3,4,5,6].map(function(n){var has=mbHasGrade(n);var cls='mb-gn'+(n===g?' on':'')+(has?'':' lock');var attr=has?(' onclick="mbChooseGrade('+n+')"'):' title="敬请期待"';return '<div class="'+cls+'"'+attr+'>'+n+'</div>';}).join('');
     var seg=['上','下'].map(function(x){var has=mbHasTerm(x);var cls=(x===t?' on':'')+(has?'':' lock');var attr=has?(' onclick="mbChooseTerm(\''+x+'\')"'):' title="敬请期待"';return '<div class="'+cls+'"'+attr+'>'+x+'册</div>';}).join('');
     return '<div class="mb-card mb-entry">'+hero
@@ -15814,17 +15819,17 @@ function mbGoBack(){
       +'<div class="mb-hero-txt"><div class="mb-hero-name">'+name+' 的宝典</div><div class="mb-hero-sub">'+(mbState.version==='bs'?'北师大版数学':'人教版数学')+' · '+mbState.grade+'年级'+mbState.term+'册 · <span class="mb-hero-link" onclick="mbState.view=\'entry\';renderMathbook()">换年级</span></div></div>'
       +'</div>';
     var entries=[
-      ['<svg viewBox="0 0 24 24" width="24" height="24" fill="#fff"><path d="M12 6C10.5 5 8 4.5 6 4.5V18c2 0 4.5.5 6 1.5 1.5-1 4-1.5 6-1.5V4.5C16 4.5 13.5 5 12 6z"/><path d="M12 6v13" stroke="rgba(0,0,0,.18)" stroke-width="1.2" fill="none"/></svg>','按年级学','跟着课本一单元一单元来','units','#F7B88A','#E0966A','#7A4A22'],
-      ['<svg viewBox="0 0 24 24" width="24" height="24" fill="#fff"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>','按板块攻','按知识板块归类，哪弱补哪','board','#F6A9B8','#E07F94','#7A2E44'],
-      ['<svg viewBox="0 0 24 24" width="24" height="24" fill="#fff"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14" stroke="rgba(0,0,0,.15)" stroke-width="1" fill="none"/></svg>','一图看全册','本册知识全图','mindmap','#A8E6BF','#79C99A','#2E6B47'],
-      ['<svg viewBox="0 0 24 24" width="24" height="24" fill="#fff"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 10h16M4 14.5h16M10 5v14M16.5 5v14" stroke="rgba(0,0,0,.15)" stroke-width="1" fill="none"/></svg>','速查大表','必考概念一本全收','quickref','#C8BCE8','#A895D0','#3F3470']
+      ['<svg viewBox="0 0 44 44"><rect x="7" y="5" width="13" height="34" rx="2" fill="#F7B88A"/><rect x="22" y="5" width="15" height="34" rx="2" fill="#FFE0A3"/><path d="M7 12h30M7 31h30" stroke="#fff" stroke-width="2" fill="none"/><circle cx="13" cy="18" r="2" fill="#fff"/><circle cx="13" cy="25" r="2" fill="#fff"/><circle cx="29" cy="18" r="2" fill="#F7B88A"/><circle cx="29" cy="25" r="2" fill="#F7B88A"/></svg>','按年级学','一单元一单元','units','#F7B88A','#E0966A','#7A4A22'],
+      ['<svg viewBox="0 0 44 44"><rect x="5" y="5" width="14" height="14" rx="2" fill="#F6A9B8"/><rect x="25" y="5" width="14" height="14" rx="2" fill="#FCE88A"/><rect x="5" y="25" width="14" height="14" rx="2" fill="#A8E6BF"/><rect x="25" y="25" width="14" height="14" rx="2" fill="#C8BCE8"/><path d="M19 12h6M22 9v6" stroke="#fff" stroke-width="2"/><path d="M12 19v6M9 22h6" stroke="#fff" stroke-width="2"/><path d="M32 19v6M29 22h6" stroke="#fff" stroke-width="2"/></svg>','按板块攻','哪弱补哪','board','#F6A9B8','#E07F94','#7A2E44'],
+      ['<svg viewBox="0 0 44 44"><path d="M6 32 L6 10 L22 4 L38 10 L38 32 L22 38 Z" fill="#E8F8EE" stroke="#A8E6BF" stroke-width="2.5"/><path d="M22 4 L22 38" stroke="#A8E6BF" stroke-width="1.5" stroke-dasharray="3,2"/><path d="M6 10 L38 32" stroke="#A8E6BF" stroke-width="1.5" stroke-dasharray="3,2" opacity=".6"/><circle cx="22" cy="21" r="5" fill="#F7B88A"/><circle cx="14" cy="16" r="3" fill="#F6A9B8"/><circle cx="30" cy="27" r="3" fill="#C8BCE8"/></svg>','一图看全册','知识全图','mindmap','#A8E6BF','#79C99A','#2E6B47'],
+      ['<svg viewBox="0 0 44 44"><rect x="5" y="6" width="34" height="32" rx="3" fill="#F6F2FF" stroke="#C8BCE8" stroke-width="2.5"/><line x1="5" y1="16" x2="39" y2="16" stroke="#C8BCE8" stroke-width="2"/><line x1="5" y1="27" x2="39" y2="27" stroke="#C8BCE8" stroke-width="2"/><line x1="15" y1="6" x2="15" y2="38" stroke="#C8BCE8" stroke-width="2"/><line x1="28" y1="6" x2="28" y2="38" stroke="#C8BCE8" stroke-width="2"/></svg>','速查大表','一本全收','quickref','#C8BCE8','#A895D0','#3F3470']
     ];
-    var cards=entries.map(function(c){return '<div class="mb-tile" style="--c:'+c[4]+';--cd:'+c[5]+';--ct:'+c[6]+'" onclick="mbGoto(\''+c[3]+'\')"><div class="mb-tile-ic">'+c[0]+'</div><div class="mb-tile-t">'+c[1]+'</div><div class="mb-tile-s">'+c[2]+'</div></div>';}).join('');
+    var cards=entries.map(function(c){return '<div class="mb-tile" style="--c:'+c[4]+'" onclick="mbGoto(\''+c[3]+'\')"><div class="mb-tile-ic">'+c[0]+'</div><div class="mb-tile-t">'+c[1]+'</div><div class="mb-tile-s">'+c[2]+'</div></div>';}).join('');
     var tools=[
-      ['<svg viewBox="0 0 24 24" width="24" height="24"><text x="12" y="17" font-size="15" font-weight="900" text-anchor="middle" fill="#fff">+−×</text></svg>','数学符号大全','常用符号童趣讲解','symbols','#FCE88A','#EACF55','#7A5C00'],
-      ['<svg viewBox="0 0 24 24" width="24" height="24" fill="#fff"><path d="M4 20l3-1 11-11-2-2L5 17z"/><path d="M15 6l3 3" stroke="#fff" stroke-width="2" fill="none"/></svg>','数字写法','0~20 田字格描红','numbers','#87D3F5','#5BB8E8','#0E4E72']
+      ['<svg viewBox="0 0 44 44"><rect x="6" y="8" width="32" height="28" rx="3" fill="#FFFBE6" stroke="#EACF55" stroke-width="2"/><text x="22" y="30" font-size="20" font-weight="900" text-anchor="middle" fill="#7A5C00">+−×</text></svg>','数学符号','','symbols','#FCE88A','#EACF55','#7A5C00'],
+      ['<svg viewBox="0 0 44 44"><rect x="8" y="6" width="28" height="32" rx="3" fill="#E8F5FC" stroke="#87D3F5" stroke-width="2"/><path d="M16 14 L16 34" stroke="#5BB8E8" stroke-width="3" stroke-linecap="round"/><path d="M16 14 L25 20" stroke="#5BB8E8" stroke-width="3" stroke-linecap="round"/><circle cx="29" cy="12" r="4" fill="#FFD25F"/></svg>','数字写法','','numbers','#87D3F5','#5BB8E8','#0E4E72']
     ];
-    var toolCards=tools.map(function(c){return '<div class="mb-tile" style="--c:'+c[4]+';--cd:'+c[5]+';--ct:'+c[6]+'" onclick="mbGoto(\''+c[3]+'\')"><div class="mb-tile-ic">'+c[0]+'</div><div class="mb-tile-t">'+c[1]+'</div><div class="mb-tile-s">'+c[2]+'</div></div>';}).join('');
+    var toolCards=tools.map(function(c){return '<div class="mb-tile" style="--c:'+c[4]+'" onclick="mbGoto(\''+c[3]+'\')"><div class="mb-tile-ic">'+c[0]+'</div><div class="mb-tile-t">'+c[1]+'</div></div>';}).join('');
     var _all=mbAllTopics();
     var _hasQ=function(t){return !!(t.practice&&((t.practice.basic||[]).length));};
     var recs=_all.filter(_hasQ).concat(_all.filter(function(t){return !_hasQ(t);})).slice(0,8);
@@ -15832,11 +15837,10 @@ function mbGoBack(){
     var recHtml=recs.map(function(t,i){var col=chipCols[i%chipCols.length];return '<div class="mb-chip" style="--cc:'+col+'" onclick="mbOpenTopic(\''+t.id+'\')">'+t.title+'</div>';}).join('');
     return '<div class="mb-card mb-home">'+hero
       +'<div class="mb-search"><span class="mb-sic"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="7" cy="7" r="5" fill="none" stroke="#9CA3AF" stroke-width="2"/><line x1="11" y1="11" x2="14.5" y2="14.5" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/></svg></span><input id="mbSearchInput" placeholder="想学什么？搜搜看：周长、分数、毫米…" onkeydown="if(event.key===\'Enter\')mbDoSearch()"></div>'
-      +'<div class="mb-grid4">'+cards+'</div>'
-      +'<div class="mb-tools-h">趣味工具</div>'
-      +'<div class="mb-grid4">'+toolCards+'</div>'
-      +'<div style="font-size:13px;font-weight:800;margin:6px 0 8px">推荐先学（'+mbState.grade+'年级'+mbState.term+'册）</div>'
-      +'<div class="mb-recent">'+recHtml+'</div></div>';
+      +'<div class="mb-tiles">'+cards+'</div>'
+      +'<div class="mb-tools-row">'+toolCards+'</div>'
+      +'<div style="font-size:13px;font-weight:800;margin:6px 0 8px;padding:0 14px">推荐先学（'+mbState.grade+'年级'+mbState.term+'册）</div>'
+      +'<div class="mb-recent" style="padding:0 14px">'+recHtml+'</div></div>';
   }
   function bindHome(){var i=document.getElementById('mbSearchInput');if(i)i.focus();}
   function mbGoto(v){mbPushState();mbState.view=v;renderMathbook();}
