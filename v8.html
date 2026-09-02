@@ -1918,9 +1918,14 @@
   .tm-skins{display:flex;gap:10px}
   .tm-sk{width:58px;height:58px;border-radius:14px;background:#fff;border:2px solid var(--line,#f0d9c8);display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;transition:.14s}
   .tm-sk.on{border-color:#F5A623;background:#FFF8E8;transform:translateY(-2px);box-shadow:0 5px 12px rgba(245,166,35,.25)}
-  .tm-tasks{display:flex;gap:8px;flex-wrap:wrap}
-  .tm-tk{padding:11px 17px;border-radius:13px;background:#fff;border:2px solid var(--line,#f0d9c8);font-size:13.5px;font-weight:800;color:#5b4a3a;cursor:pointer;transition:.12s}
+  .tm-tasks{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+  .tm-tk{display:flex;align-items:center;gap:6px;padding:9px 12px;border-radius:13px;background:#fff;border:2px solid var(--line,#f0d9c8);font-size:13.5px;font-weight:800;color:#5b4a3a;cursor:pointer;transition:.12s}
   .tm-tk.on{border-color:#7ED321;background:#F0FAE6;color:#2E6B47}
+  .tm-tk .tk-t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tm-tk .tk-x{width:22px;height:22px;flex:none;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#C7B3A8;border-radius:7px;transition:.12s}
+  .tm-tk .tk-x:hover{background:#FFE9E9;color:#E5563B}
+  .tm-tk.add{padding:9px 14px;background:#FFF8EC;border:2px dashed #F0C97A;color:#B08227;font-weight:900}
+  .tm-tk.add:hover{background:#FFF1D8}
 
   /* ---- 3. 魔法宝箱 + 商店 ---- */
 
@@ -4783,17 +4788,17 @@
             <div class="tm-panel">
               <div class="tm-panel-t">专注时长</div>
               <div class="tm-presets" id="tmPresets">
+                <div class="tm-p" onclick="tmSetMin(5,this)">5</div>
                 <div class="tm-p" onclick="tmSetMin(10,this)">10</div>
                 <div class="tm-p" onclick="tmSetMin(15,this)">15</div>
                 <div class="tm-p on" onclick="tmSetMin(25,this)">25</div>
                 <div class="tm-p" onclick="tmSetMin(30,this)">30</div>
-                <div class="tm-p" onclick="tmSetMin(40,this)">40</div>
               </div>
               <div class="tm-step">
                 <button onclick="tmAdj(-5)">−</button>
                 <input id="tmMinInput" value="25" readonly>
                 <button onclick="tmAdj(5)">+</button>
-                <span>分钟（5–120 可自定义）</span>
+                <span>分钟（1–120 可自定义）</span>
               </div>
             </div>
 
@@ -4809,12 +4814,7 @@
 
             <div class="tm-panel">
               <div class="tm-panel-t">📝 今天做什么</div>
-              <div class="tm-tasks" id="tmTasks">
-                <div class="tm-tk" onclick="tmSetTask('写生字',this)">✍️ 写生字</div>
-                <div class="tm-tk" onclick="tmSetTask('口算',this)">🔢 口算</div>
-                <div class="tm-tk" onclick="tmSetTask('读绘本',this)">📖 读绘本</div>
-                <div class="tm-tk on" onclick="tmSetTask('',this)">🎈 自由专注</div>
-              </div>
+              <div class="tm-tasks" id="tmTasks"></div>
             </div>
           </div>
         </div>
@@ -12996,9 +12996,10 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   /* ---- 2. 专注番茄钟（新版：大数字布局 + 4 皮肤） ---- */
   let tmMode='focus',tmMin=25,tmBreakMin=5,tmLeft=1500,tmTotal=1500,tmId=null,tmRun=false,tmSkin='tomato',tmTask='',tmSound=true,tmAC=null;
   var TM_TICKS=60, TM_SKINS=['tomato','hourglass','train','cat'];
+  var tmTaskList=['写生字','口算','读绘本'];
 
-  function tmLoad(){try{var s=JSON.parse(localStorage.getItem('v8_tomato')||'{}');if(s.skin&&TM_SKINS.indexOf(s.skin)>=0)tmSkin=s.skin;if(s.min)tmMin=Math.max(5,Math.min(120,s.min));if(typeof s.sound==='boolean')tmSound=s.sound;}catch(e){}}
-  function tmSave(){try{localStorage.setItem('v8_tomato',JSON.stringify({skin:tmSkin,min:tmMin,sound:tmSound}));}catch(e){}}
+  function tmLoad(){try{var s=JSON.parse(localStorage.getItem('v8_tomato')||'{}');if(s.skin&&TM_SKINS.indexOf(s.skin)>=0)tmSkin=s.skin;if(s.min)tmMin=Math.max(1,Math.min(120,s.min));if(typeof s.sound==='boolean')tmSound=s.sound;if(Array.isArray(s.tasks)&&s.tasks.length)tmTaskList=s.tasks.slice();}catch(e){}}
+  function tmSave(){try{localStorage.setItem('v8_tomato',JSON.stringify({skin:tmSkin,min:tmMin,sound:tmSound,tasks:tmTaskList}));}catch(e){}}
   function tmFmt(s){var m=Math.floor(s/60),x=s%60;return String(m).padStart(2,'0')+':'+String(x).padStart(2,'0');}
   function tmProg(){return tmTotal>0?Math.min(1,Math.max(0,1-tmLeft/tmTotal)):0;}
   function tmBeep(f,d){if(!tmSound)return;try{var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;if(!tmAC)tmAC=new AC();var o=tmAC.createOscillator(),g=tmAC.createGain();o.connect(g);g.connect(tmAC.destination);o.type='sine';o.frequency.value=f||880;var t=tmAC.currentTime,dur=d||.18;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.22,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.start(t);o.stop(t+dur);}catch(e){}}
@@ -13011,11 +13012,29 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   function tmReset(){tmStop();tmLeft=(tmMode==='focus'?tmMin:tmBreakMin)*60;tmTotal=tmLeft;tmRenderAll();}
 
   function tmSetMode(m,el){tmMode=m;tmStop();tmLeft=(m==='focus'?tmMin:tmBreakMin)*60;tmTotal=tmLeft;document.querySelectorAll('.tm-md').forEach(function(x){x.classList.remove('on')});if(el)el.classList.add('on');tmRenderAll();}
-  function tmSetMin(v,el){tmMin=Math.max(5,Math.min(120,v));tmSave();if(tmMode==='focus'){tmStop();tmLeft=tmMin*60;tmTotal=tmLeft;}document.querySelectorAll('.tm-p').forEach(function(x){x.classList.remove('on')});if(el)el.classList.add('on');tmRenderAll();}
+  function tmSetMin(v,el){tmMin=Math.max(1,Math.min(120,v));tmSave();if(tmMode==='focus'){tmStop();tmLeft=tmMin*60;tmTotal=tmLeft;}document.querySelectorAll('.tm-p').forEach(function(x){x.classList.remove('on')});if(el)el.classList.add('on');tmRenderAll();}
   function tmAdj(d){tmSetMin(tmMin+d,null);}
   function tmSetSkin(k,el){tmSkin=k;tmSave();document.querySelectorAll('.tm-sk').forEach(function(x){x.classList.remove('on')});if(el)el.classList.add('on');tmRenderAll();}
   function tmCycleSkin(){var i=(TM_SKINS.indexOf(tmSkin)+1)%TM_SKINS.length;var els=document.querySelectorAll('.tm-sk');tmSetSkin(TM_SKINS[i],els[i]);}
-  function tmSetTask(t,el){tmTask=t;document.querySelectorAll('.tm-tk').forEach(function(x){x.classList.remove('on')});if(el)el.classList.add('on');tmRenderAll();}
+  function tmSetTask(t,el){tmTask=t;tmRenderAll();}
+  function tmEsc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function tmRenderTasks(){
+    var box=document.getElementById('tmTasks'); if(!box) return;
+    var html='<div class="tm-tk'+(tmTask===''?' on':'')+'" onclick="tmSetTask(\'\',this)">🎈 自由专注</div>';
+    tmTaskList.forEach(function(t,i){
+      html+='<div class="tm-tk'+(tmTask===t?' on':'')+'">'
+        +'<span class="tk-t" onclick="tmPickTask('+i+')">'+tmEsc(t)+'</span>'
+        +'<span class="tk-x" title="修改" onclick="tmEditTask('+i+')">✎</span>'
+        +'<span class="tk-x" title="删除" onclick="tmDelTask('+i+')">✕</span>'
+        +'</div>';
+    });
+    html+='<div class="tm-tk add" onclick="tmAddTask()">➕ 添加</div>';
+    box.innerHTML=html;
+  }
+  function tmPickTask(i){ tmTask=tmTaskList[i]; tmRenderAll(); }
+  function tmAddTask(){ var v=prompt('新任务名称：'); if(v===null) return; v=v.trim(); if(!v) return; tmTaskList.push(v); tmTask=v; tmSave(); tmRenderAll(); }
+  function tmEditTask(i){ var v=prompt('修改任务名称（留空=删除）：',tmTaskList[i]); if(v===null) return; v=v.trim(); if(!v){ tmDelTask(i); return; } tmTaskList[i]=v; tmTask=v; tmSave(); tmRenderAll(); }
+  function tmDelTask(i){ var t=tmTaskList[i]; tmTaskList.splice(i,1); if(tmTask===t) tmTask=''; tmSave(); tmRenderAll(); }
   function tmToggleSound(){tmSound=!tmSound;tmSave();var b=document.getElementById('tmSoundBtn');if(b)b.textContent=tmSound?'🔊':'🔇';toast(tmSound?'🔊 提示音已开':'🔇 提示音已关');}
 
   /* --- 表盘各皮肤 --- */
@@ -13063,14 +13082,21 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
       +'<g class="tm-spin" style="transform-origin:113px 114px"><circle cx="113" cy="114" r="8" fill="#2C3E50"/><line x1="113" y1="106" x2="113" y2="122" stroke="#8fa3b5" stroke-width="2"/><line x1="105" y1="114" x2="121" y2="114" stroke="#8fa3b5" stroke-width="2"/></g></g>';
   }
   function tmCat(p){
-    var h=p*60, y=134-h;
-    return '<g><defs><clipPath id="tmCatClip"><circle cx="100" cy="104" r="30"/></clipPath></defs>'
-      +'<path d="M76 74 L84 54 L98 72 Z" fill="#FF8FB1"/><path d="M124 74 L116 54 L102 72 Z" fill="#FF8FB1"/>'
-      +'<circle cx="100" cy="104" r="30" fill="#FFE7EF"/>'
-      +'<rect x="70" y="'+y.toFixed(1)+'" width="60" height="'+h.toFixed(1)+'" fill="#FF8FB1" clip-path="url(#tmCatClip)"/>'
-      +'<circle cx="90" cy="97" r="4.5" fill="#3D2B1F"/><circle cx="110" cy="97" r="4.5" fill="#3D2B1F"/>'
-      +'<path d="M95 108 q5 5 10 0" stroke="#3D2B1F" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
-      +'<circle cx="86" cy="104" r="4" fill="#FFB3C8" opacity=".7"/><circle cx="114" cy="104" r="4" fill="#FFB3C8" opacity=".7"/></g>';
+    var h=p*62, y=135-h;
+    return '<g><defs><clipPath id="tmCatClip"><circle cx="100" cy="105" r="31"/></clipPath></defs>'
+      +'<path d="M73 74 L82 49 L100 70 Z" fill="#FF6FA5"/><path d="M127 74 L118 49 L100 70 Z" fill="#FF6FA5"/>'
+      +'<path d="M80 70 L84 56 L93 67 Z" fill="#FF4F93"/><path d="M120 70 L116 56 L107 67 Z" fill="#FF4F93"/>'
+      +'<circle cx="100" cy="105" r="31" fill="#FFC9DE"/>'
+      +'<rect x="69" y="'+y.toFixed(1)+'" width="62" height="'+h.toFixed(1)+'" fill="#FF8FB1" clip-path="url(#tmCatClip)"/>'
+      +'<circle cx="90" cy="99" r="4.8" fill="#3D2B1F"/><circle cx="110" cy="99" r="4.8" fill="#3D2B1F"/>'
+      +'<circle cx="91.6" cy="97.4" r="1.6" fill="#fff"/><circle cx="111.6" cy="97.4" r="1.6" fill="#fff"/>'
+      +'<path d="M97 108 L103 108 L100 111 Z" fill="#E0557E"/>'
+      +'<path d="M100 111 q-4 4 -8 2 M100 111 q4 4 8 2" stroke="#3D2B1F" stroke-width="1.8" fill="none" stroke-linecap="round"/>'
+      +'<g stroke="#C98BA0" stroke-width="1.5" stroke-linecap="round" opacity=".75">'
+      +'<line x1="83" y1="103" x2="65" y2="99"/><line x1="83" y1="108" x2="65" y2="109"/><line x1="83" y1="113" x2="66" y2="119"/>'
+      +'<line x1="117" y1="103" x2="135" y2="99"/><line x1="117" y1="108" x2="135" y2="109"/><line x1="117" y1="113" x2="134" y2="119"/>'
+      +'</g>'
+      +'<circle cx="85" cy="108" r="3.4" fill="#FF9DBE" opacity=".55"/><circle cx="115" cy="108" r="3.4" fill="#FF9DBE" opacity=".55"/></g>';
   }
   function tmHourglass(p){
     var topY=44+p*56, fillTop=156-p*56, sand='#F5A623', sandD='#E0961A', g='';
@@ -13102,6 +13128,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     var s=document.getElementById('tmSub');
     if(s) s.innerHTML=(tmMode==='focus'?'认真 '+tmMin+' 分':'休息 '+tmBreakMin+' 分')+(tmTask?' · '+tmTask:'')+' · 完成可得 '+(tmMode==='focus'?10:5)+'⭐';
     var mi=document.getElementById('tmMinInput'); if(mi) mi.value=tmMin;
+    tmRenderTasks();
   }
 
   function tmComplete(){
