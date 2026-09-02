@@ -1908,6 +1908,10 @@
   /* 右侧卡片 */
   .tm-panel{background:#FFFBF7;border:2px solid var(--line,#f0d9c8);border-radius:16px;padding:13px 15px}
   .tm-panel-t{font-size:13px;font-weight:900;color:#5b4a3a;margin-bottom:11px}
+  .tm-tasks-hd{display:flex;align-items:center;justify-content:space-between}
+  .tm-edit-btn{appearance:none;border:2px solid #f0d9c8;background:#fff;color:#7a6a5a;font-size:12px;font-weight:900;border-radius:11px;padding:5px 12px;cursor:pointer;transition:.12s;margin:0}
+  .tm-edit-btn:hover{background:#FFF6EC;border-color:#F0C97A;color:#B08227}
+  .tm-edit-btn.on{background:#7ED321;border-color:#7ED321;color:#fff}
   .tm-presets{display:flex;gap:7px;margin-bottom:10px}
   .tm-p{flex:1;text-align:center;padding:10px 0;border-radius:11px;background:#FFF0E0;font-weight:900;font-size:14px;color:#7a5c3a;cursor:pointer;transition:.12s}
   .tm-p.on{background:#F5A623;color:#fff}
@@ -4813,7 +4817,10 @@
             </div>
 
             <div class="tm-panel">
-              <div class="tm-panel-t">📝 今天做什么</div>
+              <div class="tm-panel-t tm-tasks-hd">
+                <span>📝 今天做什么</span>
+                <button type="button" class="tm-edit-btn" id="tmEditBtn" onclick="tmToggleEdit()">✎ 编辑</button>
+              </div>
               <div class="tm-tasks" id="tmTasks"></div>
             </div>
           </div>
@@ -12997,6 +13004,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   let tmMode='focus',tmMin=25,tmBreakMin=5,tmLeft=1500,tmTotal=1500,tmId=null,tmRun=false,tmSkin='tomato',tmTask='',tmSound=true,tmAC=null;
   var TM_TICKS=60, TM_SKINS=['tomato','hourglass','train','cat'];
   var tmTaskList=['写生字','口算','读绘本'];
+  var tmEditMode=false;
 
   function tmLoad(){try{var s=JSON.parse(localStorage.getItem('v8_tomato')||'{}');if(s.skin&&TM_SKINS.indexOf(s.skin)>=0)tmSkin=s.skin;if(s.min)tmMin=Math.max(1,Math.min(120,s.min));if(typeof s.sound==='boolean')tmSound=s.sound;if(Array.isArray(s.tasks)&&s.tasks.length)tmTaskList=s.tasks.slice();}catch(e){}}
   function tmSave(){try{localStorage.setItem('v8_tomato',JSON.stringify({skin:tmSkin,min:tmMin,sound:tmSound,tasks:tmTaskList}));}catch(e){}}
@@ -13021,17 +13029,24 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   function tmRenderTasks(){
     var box=document.getElementById('tmTasks'); if(!box) return;
     var html='<div class="tm-tk'+(tmTask===''?' on':'')+'" onclick="tmSetTask(\'\',this)">🎈 自由专注</div>';
-    tmTaskList.forEach(function(t,i){
-      html+='<div class="tm-tk'+(tmTask===t?' on':'')+'">'
-        +'<span class="tk-t" onclick="tmPickTask('+i+')">'+tmEsc(t)+'</span>'
-        +'<span class="tk-x" title="修改" onclick="tmEditTask('+i+')">✎</span>'
-        +'<span class="tk-x" title="删除" onclick="tmDelTask('+i+')">✕</span>'
-        +'</div>';
-    });
-    html+='<div class="tm-tk add" onclick="tmAddTask()">➕ 添加</div>';
+    if(tmEditMode){
+      tmTaskList.forEach(function(t,i){
+        html+='<div class="tm-tk'+(tmTask===t?' on':'')+'">'
+          +'<span class="tk-t">'+tmEsc(t)+'</span>'
+          +'<span class="tk-x" title="修改" onclick="tmEditTask('+i+')">✎</span>'
+          +'<span class="tk-x" title="删除" onclick="tmDelTask('+i+')">✕</span>'
+          +'</div>';
+      });
+      html+='<div class="tm-tk add" onclick="tmAddTask()">➕ 添加</div>';
+    }else{
+      tmTaskList.forEach(function(t,i){
+        html+='<div class="tm-tk'+(tmTask===t?' on':'')+'" onclick="tmPickTask('+i+')">'+tmEsc(t)+'</div>';
+      });
+    }
     box.innerHTML=html;
   }
   function tmPickTask(i){ tmTask=tmTaskList[i]; tmRenderAll(); }
+  function tmToggleEdit(){ tmEditMode=!tmEditMode; tmRenderAll(); }
   function tmAddTask(){ var v=prompt('新任务名称：'); if(v===null) return; v=v.trim(); if(!v) return; tmTaskList.push(v); tmTask=v; tmSave(); tmRenderAll(); }
   function tmEditTask(i){ var v=prompt('修改任务名称（留空=删除）：',tmTaskList[i]); if(v===null) return; v=v.trim(); if(!v){ tmDelTask(i); return; } tmTaskList[i]=v; tmTask=v; tmSave(); tmRenderAll(); }
   function tmDelTask(i){ var t=tmTaskList[i]; tmTaskList.splice(i,1); if(tmTask===t) tmTask=''; tmSave(); tmRenderAll(); }
@@ -13128,6 +13143,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     var s=document.getElementById('tmSub');
     if(s) s.innerHTML=(tmMode==='focus'?'认真 '+tmMin+' 分':'休息 '+tmBreakMin+' 分')+(tmTask?' · '+tmTask:'')+' · 完成可得 '+(tmMode==='focus'?10:5)+'⭐';
     var mi=document.getElementById('tmMinInput'); if(mi) mi.value=tmMin;
+    var eb=document.getElementById('tmEditBtn'); if(eb){ eb.textContent=tmEditMode?'完成':'✎ 编辑'; eb.classList.toggle('on',tmEditMode); }
     tmRenderTasks();
   }
 
