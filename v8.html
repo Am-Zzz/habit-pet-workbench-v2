@@ -15150,6 +15150,58 @@ window.__monoBack = function () {
   .mb-numcard .tip{font-size:12px;color:var(--ink-soft);margin-top:9px;line-height:1.5}
   .mb-tools-h{font-size:13px;font-weight:800;margin:8px 0 8px;color:#3D4852}
   .mb-entry.tool{background:linear-gradient(160deg,#FFFFFF,#F2F9FD)}
+
+  /* ===== P0 视觉统一：入口页与首页同框 ===== */
+  .mb-entry{display:flex;flex-direction:column}
+  .mb-hero-back{margin-left:auto;color:#fff;opacity:.95;font-size:13px;font-weight:800;cursor:pointer;text-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .mb-entry3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:4px 2px 8px;align-items:stretch}
+  .mb-ez{background:#fff;border:3px solid;border-radius:16px;padding:11px;display:flex;flex-direction:column;gap:9px}
+  .mb-ez.o{border-color:#F7B88A}.mb-ez.o .ez-h{color:#C8772F}
+  .mb-ez.b{border-color:#87D3F5}.mb-ez.b .ez-h{color:#2E7FA8}
+  .mb-ez.g{border-color:#A8E6BF}.mb-ez.g .ez-h{color:#2E6B47}
+  .ez-h{font-size:12.5px;font-weight:900;display:flex;align-items:center;gap:6px;color:#3D4852}
+  .ez-h .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+  .mb-ez.o .ez-h .dot{background:#F7B88A}.mb-ez.b .ez-h .dot{background:#87D3F5}.mb-ez.g .ez-h .dot{background:#A8E6BF}
+  .mb-ver-row{display:flex;gap:8px}
+  .mb-ver{flex:1;border-radius:13px;padding:10px 4px;text-align:center;background:#EFF6FB;border:2.5px solid transparent;font-weight:800;font-size:12.5px;cursor:pointer;color:#3D4852;transition:.12s}
+  .mb-ver.on{border-color:#EACF55;background:#FFFBE6}
+  .mb-grow{display:flex;gap:7px;flex-wrap:wrap}
+  .mb-gn{position:relative;width:44px;height:44px;flex:0 0 auto;border-radius:12px;background:#EFF6FB;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;color:#3D4852;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,.05);transition:.12s}
+  .mb-gn.on{background:#FCE88A;color:#7A5C00}
+  .mb-gn.lock{opacity:.4;cursor:not-allowed}
+  .mb-gn.lock:after{content:"待上线";position:absolute;bottom:1px;left:0;right:0;font-size:7px;color:#9AA6B2;font-weight:700}
+  .mb-seg{display:flex;background:#EFF6FB;border-radius:12px;overflow:hidden;border:2px solid #E3EAF1}
+  .mb-seg div{flex:1;text-align:center;padding:11px;font-weight:800;font-size:14px;color:#3D4852;cursor:pointer;transition:.12s}
+  .mb-seg div.on{background:#FCE88A;color:#7A5C00}
+  .mb-seg div.lock{opacity:.4;cursor:not-allowed}
+  .mb-entry-act{display:flex;align-items:center;gap:10px;padding:8px 2px 2px}
+  .mb-entry-act .nm-lbl{font-size:11.5px;font-weight:800;color:var(--ink-soft);white-space:nowrap}
+  .mb-entry-act input{flex:1;border:2px solid var(--line);border-radius:12px;padding:10px;font-size:13px;font-weight:700;color:var(--ink);min-width:0}
+  .mb-entry-act button{background:#F6A9B8;color:#fff;border:none;border-radius:13px;padding:11px 18px;font-weight:900;font-size:14px;white-space:nowrap;box-shadow:0 3px 8px rgba(240,150,180,.4);cursor:pointer}
+  .mb-entry-note{font-size:11px;color:var(--ink-faint);text-align:center;margin-top:8px}
+
+  /* ===== P0 视觉统一：数字写法 两位数双田字格 ===== */
+  .mb-tian2{display:flex;gap:4px;justify-content:center}
+
+  /* ===== P0 视觉统一：速查大表 板块索引 + 概念卡墙 ===== */
+  .mb-quick3{display:grid;grid-template-columns:0.82fr 1.5fr;gap:13px;align-items:start}
+  .mb-q-idx{display:flex;flex-direction:column;gap:9px}
+  .mb-q-grp{background:#fff;border-radius:14px;padding:10px 11px;border:2px solid var(--line);border-left:6px solid var(--c);cursor:pointer;transition:.12s}
+  .mb-q-grp.on{border-color:var(--c);box-shadow:0 4px 12px rgba(120,120,140,.12)}
+  .mb-q-grp .gh{font-size:11px;font-weight:900;color:#fff;background:var(--c);display:inline-block;padding:2px 10px;border-radius:8px;margin-bottom:7px}
+  .mb-q-grp .gt{font-size:11.5px;font-weight:800;color:#3D4852;padding:3px 0;display:flex;align-items:center;gap:6px;line-height:1.25}
+  .mb-q-grp .gt .dot{width:7px;height:7px;border-radius:50%;background:var(--c);flex:0 0 auto}
+  .mb-q-right{display:flex;flex-direction:column;gap:9px;min-width:0}
+  .mb-q-right .rh{font-size:12.5px;font-weight:900;color:#C8772F;display:flex;align-items:center;gap:7px}
+  .mb-q-right .rh .tag{background:#F7B88A;color:#fff;padding:2px 10px;border-radius:8px;font-size:11px}
+  .mb-q-wall{display:grid;grid-template-columns:1fr 1fr;gap:11px;align-content:start}
+  .mb-qc{background:#fff;border-radius:14px;padding:11px 12px;border:2px solid var(--line);display:flex;flex-direction:column;gap:6px}
+  .mb-qc .qtop{display:flex;align-items:center;gap:8px}
+  .mb-qc .qci{width:28px;height:28px;border-radius:9px;flex:0 0 auto}
+  .mb-qc .qcn{font-size:13.5px;font-weight:900;color:#222}
+  .mb-qc .qck{font-size:11.5px;font-weight:800;color:#5b6670;line-height:1.4}
+  .mb-qc .qce{font-size:11px;font-weight:700;color:#8a939c;line-height:1.4;border-top:1px dashed var(--line);padding-top:6px}
+  @media(max-width:760px){.mb-quick3{grid-template-columns:1fr}.mb-q-wall{grid-template-columns:1fr}}
 </style>
 <script>
 (function(){
@@ -15729,18 +15781,24 @@ function mbGoBack(){
       var has=mbHasTerm(x);
       return '<div class="mb-terms tt'+(x===t?' sel':'')+(has?'':' locked')+'"'+(has?' onclick="mbChooseTerm(\''+x+'\')"':' title="敬请期待"')+'>'+x+'册'+(has?'':'<span class="badge">即将上线</span>')+'</div>';
     }).join('');
-    return '<div class="mb-card"><div class="mb-h"><span class="t">📘 小学数学宝典</span><span class="s" onclick="mbGoBack()">← 返回</span></div>'
-      +'<p style="font-size:13px;color:var(--ink-soft);text-align:center;margin:2px 0 14px">'+(mbState.version==='bs'?'北师大版 · 一年级（上册）已上线 · 其余年级持续更新':'人教版 · 一年级（上下册）已上线 · 其余年级持续更新')+'</p>'
-      +'<div style="font-size:13px;font-weight:800;margin-bottom:2px">教材版本</div>'
-      +'<div class="mb-grade-pick">'+[['rj','人教版'],['bs','北师大版']].map(function(v){return '<div class="mb-grade-pick g'+(v[0]===mbState.version?' sel':'')+'" onclick="mbChooseVersion(\''+v[0]+'\')">'+v[1]+'</div>';}).join('')+'</div>'
-      +'<div style="font-size:13px;font-weight:800;margin-bottom:2px">孩子名字</div>'
-      +'<input class="mb-name-in" id="mbName" value="'+mbState.name+'" placeholder="给宝典起个名字">'
-      +'<div style="font-size:13px;font-weight:800;margin-bottom:2px">选择年级</div>'
-      +'<div class="mb-grade-pick">'+grades+'</div>'
-      +'<div style="font-size:13px;font-weight:800;margin-bottom:2px">选择册别</div>'
-      +'<div class="mb-terms">'+terms+'</div>'
-      +'<button class="btn" style="width:100%;margin-top:6px" onclick="mbOpenBook()">📖 打开宝典</button>'
-      +'<p style="font-size:11px;color:var(--ink-faint);text-align:center;margin-top:10px">已收录：一年级（上、下）· 2~6 年级正在制作，做完一个解锁一个</p></div>';
+    var MB_MASCOT_SVG='<svg width="46" height="46" viewBox="0 0 46 46"><circle cx="23" cy="24" r="19" fill="#FFD25F"/><circle cx="16" cy="21" r="2.4" fill="#3a2e10"/><circle cx="30" cy="21" r="2.4" fill="#3a2e10"/><path d="M15 29 Q23 35 31 29" stroke="#3a2e10" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="13" cy="27" r="2.6" fill="#FFB0B0"/><circle cx="33" cy="27" r="2.6" fill="#FFB0B0"/></svg>';
+    var hero='<div class="mb-hero"><div class="mb-mascot">'+MB_MASCOT_SVG+'</div>'
+      +'<div class="mb-hero-txt"><div class="mb-hero-name">数学宝典</div><div class="mb-hero-sub">选教材 · 选年级 · 选学期，开启你的宝典</div></div>'
+      +'<span class="mb-hero-back" onclick="mbGoBack()">← 返回</span></div>';
+    var vers=[['rj','人教版'],['bs','北师大版']].map(function(v){return '<div class="mb-ver'+(v[0]===mbState.version?' on':'')+'" onclick="mbChooseVersion(\''+v[0]+'\')">'+v[1]+'</div>';}).join('');
+    var gcards=[1,2,3,4,5,6].map(function(n){var has=mbHasGrade(n);var cls='mb-gn'+(n===g?' on':'')+(has?'':' lock');var attr=has?(' onclick="mbChooseGrade('+n+')"'):' title="敬请期待"';return '<div class="'+cls+'"'+attr+'>'+n+'</div>';}).join('');
+    var seg=['上','下'].map(function(x){var has=mbHasTerm(x);var cls=(x===t?' on':'')+(has?'':' lock');var attr=has?(' onclick="mbChooseTerm(\''+x+'\')"'):' title="敬请期待"';return '<div class="'+cls+'"'+attr+'>'+x+'册</div>';}).join('');
+    return '<div class="mb-card mb-entry">'+hero
+      +'<div class="mb-entry3">'
+        +'<div class="mb-ez o"><div class="ez-h"><span class="dot"></span>① 选教材</div><div class="mb-ver-row">'+vers+'</div></div>'
+        +'<div class="mb-ez b"><div class="ez-h"><span class="dot"></span>② 选年级</div><div class="mb-grow">'+gcards+'</div></div>'
+        +'<div class="mb-ez g"><div class="ez-h"><span class="dot"></span>③ 选学期</div><div class="mb-seg">'+seg+'</div></div>'
+      +'</div>'
+      +'<div class="mb-entry-act"><span class="nm-lbl">给宝典起个名字</span>'
+        +'<input id="mbName" value="'+mbState.name+'" placeholder="给宝典起个名字">'
+        +'<button onclick="mbOpenBook()">打开宝典</button></div>'
+      +'<p class="mb-entry-note">已收录：一年级（上、下）· 2~6 年级正在制作，做完一个解锁一个</p>'
+      +'</div>';
   }
   function bindEntry(){}
   function mbChooseGrade(n){if(!mbHasGrade(n))return;mbState.grade=n;if(!mbHasTerm(mbState.term))mbState.term=mbCurGrade().terms[0].t;mbState.view='entry';renderMathbook();}
@@ -15756,15 +15814,15 @@ function mbGoBack(){
       +'<div class="mb-hero-txt"><div class="mb-hero-name">'+name+' 的宝典</div><div class="mb-hero-sub">'+(mbState.version==='bs'?'北师大版数学':'人教版数学')+' · '+mbState.grade+'年级'+mbState.term+'册 · <span class="mb-hero-link" onclick="mbState.view=\'entry\';renderMathbook()">换年级</span></div></div>'
       +'</div>';
     var entries=[
-      ['📚','按年级学','跟着课本一单元一单元来','units','#F7B88A','#E0966A','#7A4A22'],
-      ['🧩','按板块攻','按知识板块归类，哪弱补哪','board','#F6A9B8','#E07F94','#7A2E44'],
-      ['🗺️','一图看全册','本册知识全图','mindmap','#A8E6BF','#79C99A','#2E6B47'],
-      ['📋','速查大表','必考概念一本全收','quickref','#C8BCE8','#A895D0','#3F3470']
+      ['<svg viewBox="0 0 24 24" width="24" height="24" fill="#fff"><path d="M12 6C10.5 5 8 4.5 6 4.5V18c2 0 4.5.5 6 1.5 1.5-1 4-1.5 6-1.5V4.5C16 4.5 13.5 5 12 6z"/><path d="M12 6v13" stroke="rgba(0,0,0,.18)" stroke-width="1.2" fill="none"/></svg>','按年级学','跟着课本一单元一单元来','units','#F7B88A','#E0966A','#7A4A22'],
+      ['<svg viewBox="0 0 24 24" width="24" height="24" fill="#fff"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>','按板块攻','按知识板块归类，哪弱补哪','board','#F6A9B8','#E07F94','#7A2E44'],
+      ['<svg viewBox="0 0 24 24" width="24" height="24" fill="#fff"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14" stroke="rgba(0,0,0,.15)" stroke-width="1" fill="none"/></svg>','一图看全册','本册知识全图','mindmap','#A8E6BF','#79C99A','#2E6B47'],
+      ['<svg viewBox="0 0 24 24" width="24" height="24" fill="#fff"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 10h16M4 14.5h16M10 5v14M16.5 5v14" stroke="rgba(0,0,0,.15)" stroke-width="1" fill="none"/></svg>','速查大表','必考概念一本全收','quickref','#C8BCE8','#A895D0','#3F3470']
     ];
     var cards=entries.map(function(c){return '<div class="mb-tile" style="--c:'+c[4]+';--cd:'+c[5]+';--ct:'+c[6]+'" onclick="mbGoto(\''+c[3]+'\')"><div class="mb-tile-ic">'+c[0]+'</div><div class="mb-tile-t">'+c[1]+'</div><div class="mb-tile-s">'+c[2]+'</div></div>';}).join('');
     var tools=[
-      ['🔣','数学符号大全','常用符号童趣讲解','symbols','#FCE88A','#EACF55','#7A5C00'],
-      ['✏️','数字写法','0~20 田字格描红','numbers','#87D3F5','#5BB8E8','#0E4E72']
+      ['<svg viewBox="0 0 24 24" width="24" height="24"><text x="12" y="17" font-size="15" font-weight="900" text-anchor="middle" fill="#fff">+−×</text></svg>','数学符号大全','常用符号童趣讲解','symbols','#FCE88A','#EACF55','#7A5C00'],
+      ['<svg viewBox="0 0 24 24" width="24" height="24" fill="#fff"><path d="M4 20l3-1 11-11-2-2L5 17z"/><path d="M15 6l3 3" stroke="#fff" stroke-width="2" fill="none"/></svg>','数字写法','0~20 田字格描红','numbers','#87D3F5','#5BB8E8','#0E4E72']
     ];
     var toolCards=tools.map(function(c){return '<div class="mb-tile" style="--c:'+c[4]+';--cd:'+c[5]+';--ct:'+c[6]+'" onclick="mbGoto(\''+c[3]+'\')"><div class="mb-tile-ic">'+c[0]+'</div><div class="mb-tile-t">'+c[1]+'</div><div class="mb-tile-s">'+c[2]+'</div></div>';}).join('');
     var _all=mbAllTopics();
@@ -15900,35 +15958,29 @@ function mbGoBack(){
     '9':{start:[30,16],paths:['M 30 16 Q 12 16 12 32 Q 12 48 30 48 Q 48 48 48 32 Q 48 16 30 16 L 36 58']}
   };
   function mbNumArrow(n){
-    function render(o,dx,dy){
-      if(!o)return '';
-      var out='';
-      if(dx||dy) out+='<g transform="translate('+dx+','+dy+')">';
-      o.paths.forEach(function(p){
-        out+='<path d="'+p+'" stroke="#F2B84D" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 3" fill="none" marker-end="url(#mbArr)"/>';
-      });
-      if(dx||dy) out+='</g>';
-      return out;
-    }
-    if(n<10){ var o=MB_STROKE[String(n)]; return render(o,0,0); }
-    var ten=MB_STROKE['1'];
-    return render(ten,-16,0);
+    var o=MB_STROKE[String(n)]; if(!o)return '';
+    var out='';
+    o.paths.forEach(function(p){ out+='<path d="'+p+'" stroke="#F2B84D" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 3" fill="none" marker-end="url(#mbArr)"/>'; });
+    return out;
   }
   function mbTianGrid(n){
-    var label=String(n), fs=label.length>1?34:52;
-    var dot;
-    if(n<10){ dot=MB_STROKE[String(n)]?MB_STROKE[String(n)].start:[20,20]; }
-    else { dot=[MB_STROKE['1'].start[0]-16, MB_STROKE['1'].start[1]]; }
-    return '<svg viewBox="0 0 70 70" width="84" height="84">'
-      +'<defs><marker id="mbArr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M1,1 L6,3.5 L1,6 Z" fill="#F2B84D"/></marker></defs>'
-      +'<rect x="3" y="3" width="64" height="64" rx="10" fill="#FFFFFF" stroke="#FDD673" stroke-width="2.5"/>'
-      +'<line x1="35" y1="3" x2="35" y2="67" stroke="#EFE0E8" stroke-width="1" stroke-dasharray="3 3"/>'
-      +'<line x1="3" y1="35" x2="67" y2="35" stroke="#EFE0E8" stroke-width="1" stroke-dasharray="3 3"/>'
-      +'<text x="35" y="38" text-anchor="middle" dominant-baseline="central" font-size="'+fs+'" font-weight="800" fill="#FCE4EC" opacity=".55" font-family="KaiTi,STKaiti,楷体,serif">'+label+'</text>'
-      +mbNumArrow(n)
-      +'<circle cx="'+dot[0]+'" cy="'+dot[1]+'" r="4.5" fill="#F6A6C2"/>'
-      +'<text x="'+dot[0]+'" y="'+(dot[1]-7)+'" text-anchor="middle" font-size="9" font-weight="800" fill="#F6A6C2">起</text>'
-      +'</svg>';
+    function grid(d){
+      var o=MB_STROKE[String(d)];
+      var dot=o?o.start:[35,38];
+      return '<svg viewBox="0 0 70 70" width="58" height="58">'
+        +'<defs><marker id="mbArr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M1,1 L6,3.5 L1,6 Z" fill="#F2B84D"/></marker></defs>'
+        +'<rect x="3" y="3" width="64" height="64" rx="10" fill="#FFFFFF" stroke="#FDD673" stroke-width="2.5"/>'
+        +'<line x1="35" y1="3" x2="35" y2="67" stroke="#EFE0E8" stroke-width="1" stroke-dasharray="3 3"/>'
+        +'<line x1="3" y1="35" x2="67" y2="35" stroke="#EFE0E8" stroke-width="1" stroke-dasharray="3 3"/>'
+        +'<text x="35" y="38" text-anchor="middle" dominant-baseline="central" font-size="52" font-weight="800" fill="#FCE4EC" opacity=".55" font-family="KaiTi,STKaiti,楷体,serif">'+d+'</text>'
+        +mbNumArrow(d)
+        +'<circle cx="'+dot[0]+'" cy="'+dot[1]+'" r="4.5" fill="#F6A6C2"/>'
+        +'<text x="'+dot[0]+'" y="'+(dot[1]-7)+'" text-anchor="middle" font-size="9" font-weight="800" fill="#F6A6C2">起</text>'
+        +'</svg>';
+    }
+    if(n<10) return grid(n);
+    var t=Math.floor(n/10), o=n%10;
+    return '<div class="mb-tian2">'+grid(t)+grid(o)+'</div>';
   }
   function mbNumberWritingHTML(){
     var cards=[];
@@ -15958,18 +16010,34 @@ function mbGoBack(){
 
   // ---- 速查大表 ----
   function mbQuickrefHTML(){
-    var items=[];mbAllTopics().forEach(function(t){(t.flashcards||[]).forEach(function(f){items.push({t:t.title,c:f.concept,p:f.plain,e:f.example});});});
-    var list=items.map(function(it){return '<div class="mb-flash"><div class="c">'+it.c+'</div><div class="p">'+it.p+'</div><div class="e">例：'+it.e+'</div></div>';}).join('');
-    var modes='<div class="mb-modes"><div class="m'+(mbState.flashMode==='list'?' sel':'')+'" onclick="mbFlashMode(\'list\')">列表</div><div class="m'+(mbState.flashMode==='card'?' sel':'')+'" onclick="mbFlashMode(\'card\')">闪卡</div><div class="m'+(mbState.flashMode==='exam'?' sel':'')+'" onclick="mbFlashMode(\'exam\')">考前5分钟</div></div>';
-    var body='';
-    if(mbState.flashMode==='list'){body=list;}
-    else{
-      var it=items[mbState.flashIdx%items.length];
-      if(it){body='<div class="mb-fcard'+(mbState.flashMode==='exam'?' flip':'')+'" id="mbFcard" onclick="mbFlipCard()"><div class="inner"><div class="face front"><div class="big">'+it.c+'</div><div style="font-size:11px;opacity:.8;margin-top:6px">点击翻面</div></div><div class="face back"><div class="p">'+it.p+'</div><div class="e">'+it.e+'</div></div></div></div>'
-        +'<div style="text-align:center"><button class="btn ghost" onclick="mbFlashNext()">下一张 →</button></div>';}
-    }
-    return '<div class="mb-card"><div class="mb-h"><span class="t">⚡ 速查大表 · '+items.length+' 条</span><span class="s" onclick="mbGoBack()">← 返回</span></div>'+modes+'<div id="mbFlashBody">'+body+'</div></div>';
+    var QCOLOR={'数与运算':'#F7B88A','图形与几何':'#79C99A','分类与统计':'#C8BCE8','认识时间':'#5BB8E8','位置与方向':'#F6A9B8','认识人民币':'#EACF55'};
+    var BOARD_ORDER=['数与运算','图形与几何','分类与统计','认识时间','位置与方向','认识人民币'];
+    var byBoard={};
+    mbAllTopics().forEach(function(t){ var b=mbBoardOf(t.unitTitle)||'数与运算'; (byBoard[b]=byBoard[b]||[]).push(t); });
+    var boards=BOARD_ORDER.filter(function(b){return byBoard[b]&&byBoard[b].length;});
+    var cardsByBoard={};
+    boards.forEach(function(b){
+      var arr=[];
+      byBoard[b].forEach(function(t){(t.flashcards||[]).forEach(function(f){arr.push({c:f.concept,p:f.plain,e:f.example});});});
+      cardsByBoard[b]=arr;
+    });
+    boards=boards.filter(function(b){return cardsByBoard[b].length;});
+    if(!mbState.quickBoard||boards.indexOf(mbState.quickBoard)<0) mbState.quickBoard=boards[0];
+    var sel=mbState.quickBoard, qc=QCOLOR[sel]||'#F7B88A';
+    var total=0; boards.forEach(function(b){total+=cardsByBoard[b].length;});
+    var idx=boards.map(function(b){
+      var bc=QCOLOR[b]||'#F7B88A';
+      var names=cardsByBoard[b].map(function(it){return '<div class="gt"><span class="dot"></span>'+it.c+'</div>';}).join('');
+      return '<div class="mb-q-grp'+(b===sel?' on':'')+'" style="--c:'+bc+'" onclick="mbQuickBoard(\''+b+'\')"><div class="gh">'+b+'</div>'+names+'</div>';
+    }).join('');
+    var wall=cardsByBoard[sel].map(function(it){
+      return '<div class="mb-qc" style="--c:'+qc+'"><div class="qtop"><span class="qci" style="background:'+qc+'"></span><span class="qcn">'+it.c+'</span></div><div class="qck">'+it.p+'</div><div class="qce">例：'+it.e+'</div></div>';
+    }).join('');
+    return '<div class="mb-card"><div class="mb-h"><span class="t">⚡ 速查大表 · '+total+' 条</span><span class="s" onclick="mbGoBack()">← 返回</span></div>'
+      +'<div class="mb-quick3"><div class="mb-q-idx">'+idx+'</div>'
+      +'<div class="mb-q-right"><div class="rh"><span class="tag">'+sel+'</span>速查卡 · 点左侧板块切换</div><div class="mb-q-wall">'+wall+'</div></div></div></div>';
   }
+  function mbQuickBoard(b){mbState.quickBoard=b;renderMathbook();}
   function bindQuickref(){}
   var mbFlashExamTimer=null;
   function mbStopFlashTimer(){if(mbFlashExamTimer){clearInterval(mbFlashExamTimer);mbFlashExamTimer=null;}}
