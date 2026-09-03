@@ -17495,31 +17495,39 @@ function mbGoBack(){
   <button id="bgmBtn" class="bgm-fab" onclick="bgmToggle()" aria-label="背景音乐开关" title="背景音乐">🎵</button>
 <script>
 /* ============ 学习安排：课程表 + 作业日历 ============ */
-var TT_KEY='mp_timetable_v1';
+var TT_KEY='mp_timetable_v2';
 var TT_SUBJECTS=[
  {id:'chinese',name:'语文',color:'#F2994A'},
  {id:'math',name:'数学',color:'#5B8FD0'},
  {id:'english',name:'英语',color:'#9B6DD6'},
- {id:'pe',name:'体育',color:'#E07B53'},
  {id:'music',name:'音乐',color:'#E26D9C'},
  {id:'art',name:'美术',color:'#7C6FD6'},
  {id:'science',name:'科学',color:'#2FA8A0'},
  {id:'moral',name:'道法',color:'#8A8079'},
- {id:'info',name:'信息',color:'#5B8FB0'},
+ {id:'pe',name:'体育',color:'#E07B53'},
+ {id:'pehealth',name:'体育保健',color:'#D46A45'},
+ {id:'calligraphy',name:'书法',color:'#C19A6B'},
+ {id:'labor',name:'劳动',color:'#7CB342'},
+ {id:'practice',name:'综合实践',color:'#5B8FB0'},
+ {id:'local',name:'地方课程',color:'#78909C'},
+ {id:'schoolbased',name:'校本课程',color:'#8D6E63'},
+ {id:'activity',name:'活动',color:'#AB47BC'},
+ {id:'info',name:'信息',color:'#4A90A4'},
  {id:'classmeet',name:'班队',color:'#C0504D'},
  {id:'selfstudy',name:'自习',color:'#9AA0A6'}
 ];
 function ttSubj(id){var m=null;TT_SUBJECTS.forEach(function(s){if(s.id===id)m=s;});return m||{id:'',name:'',color:'#ccc'};}
 function defaultTT(){
+ /* 金华市东莱小学 2025-2026 学年度第一学期 一年级 6 班课程表 + 夏令作息时间 */
  return {periods:[
-   {s:'08:20',e:'09:00'},{s:'09:10',e:'09:50'},{s:'10:10',e:'10:50'},{s:'11:00',e:'11:40'},
-   {s:'14:30',e:'15:10'},{s:'15:20',e:'16:00'},{s:'16:10',e:'16:50'}],
+   {s:'08:30',e:'09:10'},{s:'09:40',e:'10:20'},{s:'10:30',e:'11:10'},{s:'11:25',e:'12:05'},
+   {s:'13:55',e:'14:35'},{s:'14:55',e:'15:35'}],
   grid:[
-   ['chinese','math','pe','chinese','music','art','selfstudy'],
-   ['math','chinese','english','pe','moral','info','selfstudy'],
-   ['chinese','math','chinese','science','pe','music','classmeet'],
-   ['english','math','chinese','art','pe','science','selfstudy'],
-   ['math','chinese','english','moral','music','pe','info']
+   /* 周一 */ ['chinese','math','music','chinese','calligraphy','pehealth'],
+   /* 周二 */ ['chinese','labor','art','chinese','pe','activity'],
+   /* 周三 */ ['math','chinese','art','music','practice','activity'],
+   /* 周四 */ ['math','pe','chinese','moral','local','schoolbased'],
+   /* 周五 */ ['math','chinese','science','pe','moral','activity']
   ]};
 }
 function loadTT(){try{var d=JSON.parse(LS.getItem(TT_KEY));if(d&&d.grid)return d;}catch(e){}var d=defaultTT();saveTT(d);return d;}
