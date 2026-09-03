@@ -285,7 +285,7 @@
     .screen#sc-home .home-wrap{align-items:stretch}
     .screen#sc-home .home-main{min-width:0}
     .screen#sc-home .grid3{
-      grid-template-columns:1.1fr 1.2fr 1.1fr;
+      grid-template-columns:1.05fr 1.28fr 290px;
       gap:18px;
       align-items:stretch;
     }
@@ -315,33 +315,25 @@
     .screen#sc-home .learn .t{font-size:12px;margin-top:5px}
     .screen#sc-home .learn{padding:12px 5px 10px}
     .screen#sc-home .learn .sub{font-size:10px;line-height:1.3}
-    /* 右栏探索卡放大 */
-    .screen#sc-home .grid3 > .card:last-child .coll-card .ct{font-size:16px}
-    .screen#sc-home .grid3 > .card:last-child .coll-card .cs{font-size:12px;margin-top:4px}
+    /* 右栏：里程碑 + 作业进度 + 明日课程 + 快捷入口（纵向分配，填满不空） */
     .screen#sc-home .grid3 > .card:last-child{
       display:flex;
       flex-direction:column;
-      gap:12px;
-      padding:14px;
+      gap:11px;
+      padding:13px;
     }
-    .screen#sc-home .grid3 > .card:last-child .milestone-card{flex:0 0 auto}
-    .screen#sc-home .grid3 > .card:last-child .coll-card{
-      flex:1 1 0;
-      min-height:62px;
-      margin-bottom:0;
-      padding:12px 14px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-    }
+    .screen#sc-home .grid3 > .card:last-child .milestone-card{flex:0 0 auto;margin-bottom:0}
+    .screen#sc-home .grid3 > .card:last-child .hp-card{flex:0 0 auto}
+    .screen#sc-home .grid3 > .card:last-child .tmr-card{flex:1 1 auto;min-height:0}
+    .screen#sc-home .grid3 > .card:last-child .qk-grid{flex:0 0 auto}
     .screen#sc-home .grid3 > .card:last-child .home-link-list{display:none}
     .screen#sc-home .learn-grid{grid-template-columns:repeat(3,1fr);gap:11px}
     .screen#sc-home .pet-stage{width:150px;height:150px}
     /* 左栏：宠物互动区自然展开，禁止内部滚动 */
     .screen#sc-home .grid3 > .card:first-child{
-      height:auto;
-      align-self:flex-start;
-      overflow:visible;
+      height:100%;
+      align-self:stretch;
+      justify-content:space-between;
       padding:6px;
     }
     .screen#sc-home .grid3 > .card:first-child .card-h{margin-bottom:2px}
@@ -386,6 +378,10 @@
     .screen#sc-home .grid3 > .card:first-child .pet-stage{width:80px;height:80px}
     .screen#sc-home .grid3 > .card:first-child .stat-block{padding:2px 3px;gap:3px}
     .screen#sc-home .grid3 > .card:first-child .btn{padding:4px 10px}
+    /* 小高度横屏：右栏让位给明日课程表 */
+    .screen#sc-home .grid3 > .card:last-child .ms-dots{display:none}
+    .screen#sc-home .grid3 > .card:last-child .hp-ring{width:50px;height:50px}
+    .screen#sc-home .grid3 > .card:last-child .hp-pct{font-size:13px}
   }
   .version-badge{font-size:9px;font-weight:700;color:var(--ink-faint);background:var(--surface-2);padding:2px 6px;border-radius:8px;margin-left:8px;letter-spacing:.3px}
 
@@ -3091,6 +3087,46 @@
 .hcb-p .hcb-dot{position:absolute;top:4px;right:4px;width:9px;height:9px;border-radius:50%;background:#F7C948;box-shadow:0 0 0 2px #fff}
 @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
 .hcb-rest{font-size:13px;color:var(--ink-soft);padding:6px 0}
+/* ===== 主页右栏：作业进度 / 明日课程 / 快捷入口 / 一周打卡点（沿用原配色） ===== */
+.hp-card{background:linear-gradient(135deg,var(--sage-s),#FFF);border:1px solid var(--line);border-radius:16px;padding:11px;cursor:pointer;transition:.15s;box-shadow:var(--shadow-s)}
+.hp-card:active{transform:scale(.99)}
+.hp-card .hp-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.hp-card .hp-title{font-size:13px;font-weight:800;color:#3F8A45;display:flex;align-items:center;gap:5px}
+.hp-card .hp-go{font-size:12px;font-weight:700;color:#3F8A45;background:#E6F4EA;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.hp-card .hp-body{display:flex;align-items:center;gap:11px;margin-top:8px}
+.hp-ring{width:58px;height:58px;border-radius:50%;flex:none;display:grid;place-items:center;position:relative;background:conic-gradient(var(--sage) 0%,var(--sage-s) 0%)}
+.hp-ring::before{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff}
+.hp-pct{position:relative;font-size:14px;font-weight:900;color:#3F8A45}
+.hp-info{flex:1;min-width:0}
+.hp-stat{font-size:14px;font-weight:900;color:var(--ink);margin-bottom:3px}
+.hp-tip{font-size:11px;color:var(--ink-soft);line-height:1.5}
+.tmr-card{background:linear-gradient(135deg,var(--sky-s),#FFF);border:1px solid var(--line);border-radius:16px;padding:11px;cursor:pointer;transition:.15s;box-shadow:var(--shadow-s);display:flex;flex-direction:column;min-height:0}
+.tmr-card:active{transform:scale(.99)}
+.tmr-card .tmr-h{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:nowrap}
+.tmr-card .tmr-t{font-size:13px;font-weight:800;color:#5B8FD0;display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tmr-card .tmr-date{font-size:11px;font-weight:700;color:var(--ink-soft);white-space:nowrap}
+.tmr-card .tmr-go{font-size:11px;font-weight:700;color:#5B8FD0;background:var(--sky-s);padding:4px 8px;border-radius:999px;white-space:nowrap;flex:none}
+.tmr-list{display:flex;flex-direction:column;gap:5px;margin-top:8px;overflow-y:auto;min-height:0;padding-right:2px}
+.tmr-row{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:3px 8px}
+.tmr-row .tmr-time{font-size:11px;font-weight:800;color:var(--ink-soft);flex:none;width:44px}
+.tmr-row .hcb-subj{font-size:12px;padding:2px 8px}
+.tmr-empty{font-size:12px;color:var(--ink-faint);padding:8px 0}
+.tmr-pack{margin-top:7px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:6px 9px;font-size:11px;color:var(--ink-soft);line-height:1.5}
+.qk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.qk{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:.15s}
+.qk:active{transform:scale(.97)}
+.qk .qk-ic{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-size:17px}
+.qk.q1 .qk-ic{background:var(--brand-s)}
+.qk.q2 .qk-ic{background:var(--sky-s)}
+.qk.q3 .qk-ic{background:linear-gradient(135deg,#FFF3C9,#FFE0EC)}
+.qk.q4 .qk-ic{background:var(--sage-s)}
+.qk .qk-t{font-size:11px;font-weight:800;color:var(--ink)}
+.ms-dots{display:flex;gap:4px;margin-top:6px}
+.ms-dots .dow{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.ms-dots .dow i{font-style:normal;font-size:9px;color:var(--ink-faint)}
+.ms-dots .dow span{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.ms-dots .dow span.on{background:var(--sage)}
+.ms-dots .dow i.today{color:var(--brand-d);font-weight:800}
 /* 学习安排屏 */
 .plan-tabs{display:flex;gap:10px;padding:14px 16px 4px}
 .plan-tabs button{border:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:800;padding:10px 20px;border-radius:99px;background:var(--surface);color:var(--ink-soft);box-shadow:var(--shadow-s)}
@@ -3264,7 +3300,6 @@
               <span class="hcard-edit" id="hwEditBtn" onclick="toggleHomeEdit('hw')">✎ 作业</span>
             </span>
           </div>
-          <div class="home-course-bar" id="homeCourseBar" onclick="goPlan('tt')"></div>
           <div class="must-area" id="mustArea">
             <div class="must-sub">✅ 今日打卡</div>
             <div id="homeTaskList"></div>
@@ -3286,9 +3321,9 @@
           </div>
         </div>
 
-        <!-- 右：图鉴 + 游戏中心 + 在线学习 -->
+        <!-- 右：打卡里程碑 + 作业进度 + 明日课程 + 快捷入口 -->
         <div class="card">
-          <!-- 打卡里程碑：连续天数 / 累计天数 -->
+          <!-- 打卡里程碑：连续天数 / 累计天数 / 本周打卡点 -->
           <div class="milestone-card" onclick="go('report')">
             <div class="msb-head">
               <div class="msb-title">🔥 打卡里程碑</div>
@@ -3298,36 +3333,37 @@
               <div class="msb-item"><div class="msb-v" id="msStreak">🔥 0</div><div class="msb-k">连续打卡</div></div>
               <div class="msb-item"><div class="msb-v" id="msTotalDays">📅 0</div><div class="msb-k">累计天数</div></div>
             </div>
-          </div>
-          <div class="coll-card" onclick="go('pets')">
-            <div class="ch"><span class="ct">宠物图鉴</span><span class="ca">查看 ›</span></div>
-            <div class="cs">已收集 3 / 8</div>
+            <div class="ms-dots" id="msWeekDots"></div>
           </div>
 
-          <!-- 游戏中心：单张入口卡（链接 sc-games 屏，含萌趣学园12玩法+4小游戏） -->
-          <div class="coll-card" onclick="go('games')">
-            <div class="ch"><span class="ct">🎮 游戏中心</span><span class="ca">进入 ›</span></div>
-            <div class="cs">12 大玩法 + 休闲小游戏</div>
-          </div>
-
-          <!-- 🎰 学习扭蛋机：首页常驻入口，答题抽好礼 -->
-          <div class="coll-card gacha-entry" onclick="go('gacha')">
-            <div class="ch"><span class="ct">🎰 学习扭蛋机</span><span class="ca">抽好礼 ›</span></div>
-            <div class="cs">答题攒硬币，转出积分好礼 🎁</div>
-          </div>
-
-          <!-- 在线学习：与宠物图鉴/游戏中心统一的 coll-card 样式 -->
-          <div class="coll-card" onclick="toggleMiniClass()">
-            <div class="ch"><span class="ct">📚 在线学习</span><span class="ca">展开 ›</span></div>
-            <div class="cs">小教室 · 我的网盘</div>
-            <div class="home-link-list" style="margin-top:10px">
-              <div class="home-link-row" onclick="event.stopPropagation();go('netdisk')">
-                <span class="e">🌐</span>
-                <span>我的网盘</span>
-                <span class="more">...</span>
+          <!-- 今日作业进度（一眼看到完成程度） -->
+          <div class="hp-card" onclick="go('report')">
+            <div class="hp-head"><span class="hp-title">📊 今日作业进度</span><span class="hp-go">详情 ›</span></div>
+            <div class="hp-body">
+              <div class="hp-ring" id="hwRing"><span class="hp-pct" id="hwPct">0%</span></div>
+              <div class="hp-info">
+                <div class="hp-stat" id="hwStat">已完成 0 / 0</div>
+                <div class="hp-tip" id="hwTip">今天还没有作业，点「✎ 作业」添加吧～</div>
               </div>
             </div>
-            <div class="mini-grid" id="miniClassGrid" style="display:none;margin-top:8px"></div>
+          </div>
+
+          <!-- 明日 / 下次上学课程（点击进一周课表 + 作业日历） -->
+          <div class="tmr-card" onclick="goPlan('tt')">
+            <div class="tmr-h">
+              <span class="tmr-t">🎒 <span id="tmrTitle">明日课程</span><span class="tmr-date" id="tmrDate"></span></span>
+              <span class="tmr-go">一周 ›</span>
+            </div>
+            <div class="tmr-list" id="tmrCourseList"></div>
+            <div class="tmr-pack" id="tmrPack">🌙 今晚按课表收拾书包吧～</div>
+          </div>
+
+          <!-- 快捷入口 -->
+          <div class="qk-grid">
+            <div class="qk q1" onclick="go('pets')"><span class="qk-ic">🐾</span><span class="qk-t">图鉴</span></div>
+            <div class="qk q2" onclick="go('games')"><span class="qk-ic">🎮</span><span class="qk-t">游戏</span></div>
+            <div class="qk q3" onclick="go('gacha')"><span class="qk-ic">🎰</span><span class="qk-t">扭蛋</span></div>
+            <div class="qk q4" onclick="go('netdisk')"><span class="qk-ic">🌐</span><span class="qk-t">网盘</span></div>
           </div>
         </div>
           </div><!-- /grid3 -->
@@ -5872,7 +5908,7 @@
     else if(target==='sc-hanzi'){ initHanzi(); }
     else if(target==='sc-qbank'){ renderQBank(); }
     else if(target==='sc-mathbook'){ try{mbHistory.length=0;}catch(e){} renderMathbook(); }
-    else if(target==='sc-home'){renderGrowthTrack();updateHomePartnerIcon();renderHomeTasks();renderLearnGrid();renderMiniClass();renderHomeCourse();}
+    else if(target==='sc-home'){renderGrowthTrack();updateHomePartnerIcon();renderHomeTasks();renderLearnGrid();renderMiniClass();renderHomeCourse();renderTomorrowCourses();renderWeekDots();}
     else if(target==='sc-pset'){renderCheckins();renderStudies();renderPerm();renderBankTabs();renderBankList();renderMonoBank();}
     else if(target==='sc-recycle'){renderRecycle();}
     else if(target==='sc-plan'){renderPlan('tt');}
@@ -12500,6 +12536,26 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     var hTot=card.querySelectorAll('#homeHwList .task').length;
     var n=tDone+hDone, tot=tTot+hTot;
     var el=document.getElementById('homeMergeCount');if(el)el.textContent=n+'/'+tot+' 完成';
+    updateHwProgressCard(hDone,hTot,card);
+  }
+  /* 右栏「今日作业进度」：环形进度 + 已完成/总数 + 剩余项提示 */
+  function updateHwProgressCard(hDone,hTot,card){
+    var ring=document.getElementById('hwRing');if(!ring)return;
+    var pct=document.getElementById('hwPct'),stat=document.getElementById('hwStat'),tip=document.getElementById('hwTip');
+    var p=hTot?Math.round(hDone/hTot*100):0;
+    ring.style.background='conic-gradient(var(--sage) 0% '+p+'%, var(--sage-s) '+p+'% 100%)';
+    if(pct)pct.textContent=p+'%';
+    if(stat)stat.textContent='已完成 '+hDone+' / '+hTot;
+    if(tip){
+      if(!hTot)tip.textContent='今天还没有作业，点「✎ 作业」添加吧～';
+      else if(hDone>=hTot)tip.textContent='全部完成啦，去陪小萌玩一会儿吧 🎉';
+      else{
+        var rest=[];
+        var box=card?card.querySelectorAll('#homeHwList .task:not(.done) .t-name'):[];
+        for(var i=0;i<box.length&&rest.length<3;i++){var t=(box[i].textContent||'').trim();if(t)rest.push(t);}
+        tip.textContent='还剩 '+(hTot-hDone)+' 项：'+rest.join('、');
+      }
+    }
   }
 
 
@@ -17658,7 +17714,7 @@ function pickTT(di,pi){
   opts.push({value:'',label:'🧹 清空这一格'});
   showInputDlg({title:'选择科目',options:opts,onOk:function(v){
     if(v===null)return;
-    var tt=loadTT();if(!tt.grid[di])tt.grid[di]=[];tt.grid[di][pi]=v;saveTT(tt);renderTimetable();renderHomeCourse();
+    var tt=loadTT();if(!tt.grid[di])tt.grid[di]=[];tt.grid[di][pi]=v;saveTT(tt);renderTimetable();renderHomeCourse();renderTomorrowCourses();
   }});
 }
 function editPeriod(pi){
@@ -17777,6 +17833,66 @@ function renderHomeCourse(){
   html+='</div>';
   box.innerHTML=html;
 }
+/* 右栏：明日 / 下次上学课程表（自动跳过周末；点卡片进一周课表 + 作业日历） */
+function renderTomorrowCourses(){
+  var box=document.getElementById('tmrCourseList');if(!box)return;
+  var tt=loadTT();if(!tt||!tt.periods||!tt.grid)return;
+  var n=planNowDate();
+  var found=null,k,d,wd;
+  for(k=1;k<=7;k++){
+    d=new Date(n.y,n.mo-1,n.d+k);wd=d.getDay();
+    if(wd!==0&&wd!==6){found={y:d.getFullYear(),mo:d.getMonth()+1,d:d.getDate(),wd:wd};break;}
+  }
+  var title=document.getElementById('tmrTitle'),dateEl=document.getElementById('tmrDate'),pack=document.getElementById('tmrPack');
+  if(!found){
+    if(title)title.textContent='近期课程';
+    if(dateEl)dateEl.textContent='';
+    box.innerHTML='<div class="tmr-empty">🎉 接下来都是休息日，好好玩吧～</div>';
+    if(pack)pack.textContent='🌙 好好休息，明天见～';
+    return;
+  }
+  var WK=['日','一','二','三','四','五','六'];
+  var di=found.wd-1;
+  if(title)title.textContent=(k===1?'明日课程':'下次上学');
+  if(dateEl)dateEl.textContent=found.mo+'月'+found.d+'日（周'+WK[found.wd]+'）';
+  var html='',names=[];
+  tt.periods.forEach(function(p,pi){
+    var id=tt.grid[di]&&tt.grid[di][pi]?tt.grid[di][pi]:'';
+    if(!id)return;
+    var subj=ttSubj(id);
+    if(!subj.name)return;
+    if(names.indexOf(subj.name)<0)names.push(subj.name);
+    html+='<div class="tmr-row"><span class="tmr-time">'+p.s+'</span><span class="hcb-subj" style="background:'+subj.color+'">'+esc(subj.name)+'</span></div>';
+  });
+  box.innerHTML=html||'<div class="tmr-empty">还没有排课，去「学习安排」添加吧～</div>';
+  if(pack)pack.textContent=names.length?('🌙 今晚准备：'+names.join('、')):'🌙 今晚按课表收拾书包吧～';
+}
+/* 右栏：本周打卡点阵 */
+function renderWeekDots(){
+  var box=document.getElementById('msWeekDots');if(!box)return;
+  try{
+    var n=planNowDate();
+    var mon=new Date(n.y,n.mo-1,n.d);
+    var off=(mon.getDay()+6)%7;
+    mon.setDate(mon.getDate()-off);
+    var cd=(typeof STATS!=='undefined'&&STATS&&STATS.checkinDates)?STATS.checkinDates:{};
+    var WK=['一','二','三','四','五','六','日'],html='';
+    for(var i=0;i<7;i++){
+      var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i);
+      var key=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+      var on=!!cd[key];
+      var isToday=(d.getFullYear()===n.y&&(d.getMonth()+1)===n.mo&&d.getDate()===n.d);
+      html+='<div class="dow"><i'+(isToday?' class="today"':'')+'>'+WK[i]+'</i><span'+(on?' class="on"':'')+'></span></div>';
+    }
+    box.innerHTML=html;
+  }catch(e){}
+}
+/* 首屏（未经过 go() 直接停在主页）也要渲染右栏新卡片 */
+(function(){
+  function initHomeRight(){ try{renderTomorrowCourses();renderWeekDots();}catch(e){} }
+  if(document.readyState==='complete'||document.readyState==='interactive') setTimeout(initHomeRight,0);
+  else window.addEventListener('DOMContentLoaded',function(){setTimeout(initHomeRight,0);});
+})();
 </script>
 </body>
 </html>
