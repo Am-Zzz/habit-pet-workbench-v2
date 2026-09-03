@@ -11382,10 +11382,13 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
       '</div>'+
     '</div>';
     document.body.appendChild(m);
-    m.addEventListener('click',function(e){if(e.target===m&&m._back)closeDlg(m._cancelVal);});
+    m.addEventListener('click',function(e){if(e.target===m&&m._back)closeDlg(m._cancelVal,true);});
+    var cn=document.getElementById('wbDlgCancel');
+    if(cn)cn.onclick=function(){closeDlg(m._cancelVal!==undefined?m._cancelVal:null,true);};
     return m;
   }
-  function closeDlg(v){var m=document.getElementById('wbDlg');if(m){m.style.display='none';var cb=m._cb;m._cb=null;if(cb)cb(v);}}
+  /* cancelled=true 表示用户主动取消：只关闭弹窗、不触发 onOk（链式弹窗因此整条终止） */
+  function closeDlg(v,cancelled){var m=document.getElementById('wbDlg');if(m){m.style.display='none';var cb=m._cb;m._cb=null;if(cb&&!cancelled)cb(v);}}
   function showInputDlg(o){
     var m=_ensureDlg();m._cb=o.onOk;m._back=true;m._cancelVal=(o.cancelVal!==undefined)?o.cancelVal:null;
     document.getElementById('wbDlgTitle').textContent=o.title||'提示';
