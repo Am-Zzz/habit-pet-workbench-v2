@@ -63,7 +63,7 @@
 
   /* 屏幕内容 */
   .screen{padding:22px;display:none}
-  .screen.on{display:block;animation:fade .3s ease}
+  .screen.on{display:block;animation:fade .3s ease;opacity:1}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
   .grid3{display:grid;grid-template-columns:1.05fr 1.25fr .95fr;gap:16px;align-items:start}
@@ -3006,7 +3006,72 @@
   #sc-qbank .qb-prog{margin-top:10px;font-size:12px;color:var(--ink-soft);text-align:right}
 
 </style>
-</head>
+<style id="plan-css">
+/* 主页今日课程条 */
+.home-course-bar{background:linear-gradient(180deg,#FFF7FB,#FFF);border:1.5px solid var(--brand-s);border-radius:16px;padding:12px 14px;margin-bottom:14px;cursor:pointer;box-shadow:var(--shadow-s)}
+.home-course-bar .hcb-h{display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:14px;margin-bottom:9px;color:var(--ink)}
+.home-course-bar .hcb-date{font-size:12px;font-weight:700;color:var(--ink-soft)}
+.hcb-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+.hcb-p{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:64px;padding:7px 8px;border-radius:12px;background:var(--surface-2);position:relative}
+.hcb-p .hcb-subj{font-size:12.5px;font-weight:800;color:#fff;padding:3px 8px;border-radius:8px;line-height:1.2;text-align:center}
+.hcb-p .hcb-t{font-size:10.5px;color:var(--ink-soft)}
+.hcb-p.now{outline:3px solid var(--brand);animation:breathe 1.6s ease-in-out infinite}
+.hcb-p .hcb-dot{position:absolute;top:4px;right:4px;width:9px;height:9px;border-radius:50%;background:#F7C948;box-shadow:0 0 0 2px #fff}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.hcb-rest{font-size:13px;color:var(--ink-soft);padding:6px 0}
+/* 学习安排屏 */
+.plan-tabs{display:flex;gap:10px;padding:14px 16px 4px}
+.plan-tabs button{border:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:800;padding:10px 20px;border-radius:99px;background:var(--surface);color:var(--ink-soft);box-shadow:var(--shadow-s)}
+.plan-tabs button.on{background:var(--brand);color:#fff}
+.plan-pane{display:none;padding:0 16px 8px}
+.plan-pane.on{display:block}
+.plan-toolbar{display:flex;align-items:center;gap:10px;margin:10px 0 14px;flex-wrap:wrap}
+.plan-toolbar .spacer{flex:1}
+.cal-head{display:flex;align-items:center;justify-content:center;gap:16px;margin:6px 0 12px;font-weight:800;font-size:15px}
+.cal-head button{border:none;background:var(--surface);border-radius:10px;width:34px;height:34px;font-size:16px;cursor:pointer;box-shadow:var(--shadow-s)}
+/* 课程表 */
+.tt-grid{display:grid;grid-template-columns:56px repeat(5,1fr);gap:7px}
+.tt-cell{background:var(--surface);border-radius:12px;min-height:54px;padding:6px;display:flex;flex-direction:column;justify-content:center;align-items:center;font-size:12px;text-align:center;position:relative;box-shadow:var(--shadow-s)}
+.tt-cell.head{background:var(--surface-2);font-weight:800;color:var(--ink-soft);min-height:auto;padding:8px 4px}
+.tt-cell.time{font-size:11px;color:var(--ink-soft);font-weight:700;line-height:1.35}
+.tt-cell.today{outline:2px solid var(--brand)}
+.tt-cell .tsubj{color:#fff;font-weight:800;padding:3px 7px;border-radius:8px;font-size:12.5px;line-height:1.25}
+.tt-cell .tname{font-size:10px;color:var(--ink-soft);margin-top:2px}
+.tt-cell.empty{color:var(--ink-faint);font-size:18px}
+.tt-cell.editable{cursor:pointer}
+.tt-cell.editable:hover{outline:2px dashed var(--brand)}
+.tt-legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.tt-legend span{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--ink-soft)}
+.tt-legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
+/* 作业日历 */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.cal-cell{background:var(--surface);border-radius:12px;min-height:62px;padding:6px;display:flex;flex-direction:column;gap:4px;cursor:pointer;box-shadow:var(--shadow-s);position:relative}
+.cal-cell.dim{opacity:.4;cursor:default}
+.cal-cell.today{outline:2px solid var(--brand)}
+.cal-cell.sel{outline:2px solid var(--sky)}
+.cal-cell .cd{font-size:12px;font-weight:700;color:var(--ink)}
+.cal-cell .cdot{width:10px;height:10px;border-radius:50%}
+.cal-cell .cdot.done{background:#7FC8A0}
+.cal-cell .cdot.todo{background:#F7C948}
+.cal-cell .ccount{font-size:10px;color:var(--ink-soft);position:absolute;right:6px;bottom:5px}
+.cal-side{margin-top:16px;background:var(--surface);border-radius:16px;padding:14px;box-shadow:var(--shadow-s)}
+.cal-side .cs-h{font-weight:800;font-size:14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.hw-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.hw-row:last-child{border-bottom:none}
+.hw-row .ck{width:24px;height:24px;border-radius:50%;border:2px solid var(--ink-faint);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;flex:0 0 auto}
+.hw-row.done .ck{background:var(--sage);border-color:var(--sage);color:#fff}
+.hw-row .ht{flex:1;font-size:13px}
+.hw-row.done .ht{text-decoration:line-through;color:var(--ink-soft)}
+.hw-row .hs{padding:2px 8px;border-radius:8px;font-size:11px;font-weight:700}
+.hw-row .he{font-size:13px;cursor:pointer;color:var(--ink-soft)}
+.hw-row .hd{font-size:13px;cursor:pointer;color:#D9534F}
+.cal-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px}
+.cal-tag.past{background:#FDE8E8;color:#C9503F}
+.cal-tag.future{background:#E6F0FB;color:#5B8FD0}
+.cal-tag.today{background:var(--brand-s);color:var(--brand)}
+.empty-mini{font-size:12.5px;color:var(--ink-soft);padding:10px 2px}
+</style>
+</head></head>
 <body>
 <style id="gateStyle">
 #gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(165deg,#FDF8F4 0%,#FBF1EC 58%,#F9ECEC 100%);display:flex;align-items:center;justify-content:center;font-family:var(--font),system-ui,sans-serif}
@@ -3118,6 +3183,7 @@
         </div>
 
         <!-- 中：打卡 + 作业 + 学习乐园 -->
+<div class="home-course-bar" id="homeCourseBar" onclick="goPlan('tt')"></div>
         <div class="card" id="homeTasks">
           <div class="card-h">
             <span class="t">✅ 今日打卡</span>
@@ -3154,6 +3220,7 @@
 
           <div class="learn-section-h"><span class="l">🎓 学习乐园 · <b id="learnCount">9 大模块</b></span></div>
           <div class="learn-grid" id="learnGrid"></div>
+          <div class="learn-grid" style="margin-top:12px"><div class="learn plan-entry" onclick="go('sc-plan')">📅 学习安排</div></div>
         </div>
 
         <!-- 右：图鉴 + 游戏中心 + 在线学习 -->
@@ -3438,7 +3505,40 @@
       </div>
     </div>
 
-    <!-- 屏幕：宠物图鉴 -->
+<div class="screen" id="sc-plan">
+      <div class="card" style="max-width:1080px;margin:0 auto">
+        <div class="app-head skin-plain">
+          <div class="ah-icon"><span class="bi">📅</span></div>
+          <div class="ah-txt"><div class="ah-t">学习安排</div></div>
+          <div class="ah-sp"></div>
+          <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+          <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
+        <div class="plan-tabs">
+          <button data-t="tt" class="on" onclick="planTab('tt')">📚 课程表</button>
+          <button data-t="cal" onclick="planTab('cal')">📅 作业日历</button>
+        </div>
+        <div class="plan-pane on" id="planTt">
+          <div class="plan-toolbar">
+            <span class="s" style="font-size:12px;color:var(--ink-soft)">点「✎ 编辑」可填科目（无需打字）</span>
+            <span class="spacer"></span>
+            <span class="hcard-edit" id="ttEditBtn" onclick="toggleTTEdit()">✎ 编辑</span>
+          </div>
+          <div id="ttBody"></div>
+        </div>
+        <div class="plan-pane" id="planCal">
+          <div class="cal-head">
+            <button onclick="calMonthPrev()">‹</button>
+            <span id="calMonthLabel">2026 年 09 月</span>
+            <button onclick="calMonthNext()">›</button>
+          </div>
+          <div id="calBody"></div>
+          <div class="cal-side" id="calSide"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 屏幕：宠物图鉴 -->    <!-- 屏幕：宠物图鉴 -->
     <div class="screen" id="sc-pets">
         <div class="app-head skin-plain">
           <div class="ah-icon"><span class="bi">🐾</span></div>
@@ -5670,7 +5770,7 @@
       english:'sc-english-hub',phonics:'sc-phonics',read:'sc-read',write:'sc-write',math:'sc-math',mathbook:'sc-mathbook',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
       science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',
-      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',qbank:'sc-qbank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',challenge:'sc-challenge',role:'sc-role',quiz:'sc-quiz',script:'sc-script',playbook:'sc-playbook',recycle:'sc-recycle',
+      timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',qbank:'sc-qbank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',challenge:'sc-challenge',role:'sc-role',quiz:'sc-quiz',script:'sc-script',playbook:'sc-playbook',recycle:'sc-recycle',plan:'sc-plan',
       'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff','game-phonics':'sc-game-phonics'};
     let target=map[screen];
     if(!target){ target = document.getElementById(screen)? screen : 'sc-home'; }
@@ -5709,9 +5809,10 @@
     else if(target==='sc-hanzi'){ initHanzi(); }
     else if(target==='sc-qbank'){ renderQBank(); }
     else if(target==='sc-mathbook'){ try{mbHistory.length=0;}catch(e){} renderMathbook(); }
-    else if(target==='sc-home'){renderGrowthTrack();updateHomePartnerIcon();renderHomeTasks();renderLearnGrid();renderMiniClass();}
+    else if(target==='sc-home'){renderGrowthTrack();updateHomePartnerIcon();renderHomeTasks();renderLearnGrid();renderMiniClass();renderHomeCourse();}
     else if(target==='sc-pset'){renderCheckins();renderStudies();renderPerm();renderBankTabs();renderBankList();renderMonoBank();}
     else if(target==='sc-recycle'){renderRecycle();}
+    else if(target==='sc-plan'){renderPlan('tt');}
     navSync(screen);
     window.scrollTo({top:0,behavior:'smooth'});
   }
@@ -12820,7 +12921,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     var becameDone=false;
     if(h.done){h.done=false;}else{h.done=true;becameDone=true;}
     saveHomework(all);renderHomework();
-    if(becameDone)onHomeworkCompleted(h.text,all[k]);
+    if(becameDone)onHomeworkCompleted(h.text,all[k],getTodayKey());
   }
   function addHomework(){
     showInputDlg({title:'添加今日作业',msg:'先选科目',options:HW_SUBJ.map(function(s){return{value:s.k,label:s.k};}),value:'语文',okText:'下一步',onOk:function(subj){
@@ -12877,15 +12978,16 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     try{b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');}catch(e){}
     try{playSfx('good');}catch(e2){}
   }
-  function onHomeworkCompleted(text,list){
+  function onHomeworkCompleted(text,list,dateKey){
     gachaPoints+=1;gachaSet(GACHA_KEYS.p,gachaPoints);
     addEarn('star',1,'homework','完成作业：'+(text||''));
     floatStar(1);toast('完成作业 +1⭐');
     if(window.celebrate)window.celebrate({type:'small',emoji:'⭐',text:'+1⭐'});
     refreshPointsUI();homePetCheer();
     setTimeout(function(){showEmotionPop(text||'作业');},350);
+    var dk=dateKey||getTodayKey();
     var arr=list||getHomework();var n=0;arr.forEach(function(h){if(h.done)n++;});
-    if(arr.length>0&&n>=arr.length&&STATS.hwBonus!==getTodayKey()){
+    if(arr.length>0&&n>=arr.length&&dk===getTodayKey()&&STATS.hwBonus!==getTodayKey()){
       STATS.hwBonus=getTodayKey();saveStats();
       gachaPoints+=2;gachaSet(GACHA_KEYS.p,gachaPoints);addEarn('star',2,'homework','今日作业全清');
       refreshPointsUI();bumpMood(5);
@@ -17391,5 +17493,205 @@ function mbGoBack(){
 
   <!-- 全局背景音乐开关（悬浮，一键开关） -->
   <button id="bgmBtn" class="bgm-fab" onclick="bgmToggle()" aria-label="背景音乐开关" title="背景音乐">🎵</button>
+<script>
+/* ============ 学习安排：课程表 + 作业日历 ============ */
+var TT_KEY='mp_timetable_v1';
+var TT_SUBJECTS=[
+ {id:'chinese',name:'语文',color:'#F2994A'},
+ {id:'math',name:'数学',color:'#5B8FD0'},
+ {id:'english',name:'英语',color:'#9B6DD6'},
+ {id:'pe',name:'体育',color:'#E07B53'},
+ {id:'music',name:'音乐',color:'#E26D9C'},
+ {id:'art',name:'美术',color:'#7C6FD6'},
+ {id:'science',name:'科学',color:'#2FA8A0'},
+ {id:'moral',name:'道法',color:'#8A8079'},
+ {id:'info',name:'信息',color:'#5B8FB0'},
+ {id:'classmeet',name:'班队',color:'#C0504D'},
+ {id:'selfstudy',name:'自习',color:'#9AA0A6'}
+];
+function ttSubj(id){var m=null;TT_SUBJECTS.forEach(function(s){if(s.id===id)m=s;});return m||{id:'',name:'',color:'#ccc'};}
+function defaultTT(){
+ return {periods:[
+   {s:'08:20',e:'09:00'},{s:'09:10',e:'09:50'},{s:'10:10',e:'10:50'},{s:'11:00',e:'11:40'},
+   {s:'14:30',e:'15:10'},{s:'15:20',e:'16:00'},{s:'16:10',e:'16:50'}],
+  grid:[
+   ['chinese','math','pe','chinese','music','art','selfstudy'],
+   ['math','chinese','english','pe','moral','info','selfstudy'],
+   ['chinese','math','chinese','science','pe','music','classmeet'],
+   ['english','math','chinese','art','pe','science','selfstudy'],
+   ['math','chinese','english','moral','music','pe','info']
+  ]};
+}
+function loadTT(){try{var d=JSON.parse(LS.getItem(TT_KEY));if(d&&d.grid)return d;}catch(e){}var d=defaultTT();saveTT(d);return d;}
+function saveTT(d){try{LS.setItem(TT_KEY,JSON.stringify(d));}catch(e){}}
+var PLAN_EDIT={tt:false};
+var PLAN_MONTH=null;
+var PLAN_CAL_SEL=null;
+function planKeyOf(y,mo,d){return y+'-'+mo+'-'+d;}
+function planParseKey(k){var p=String(k).split('-');return {y:+p[0],mo:+p[1],d:+p[2]};}
+function planNowDate(){var n=new Date();return {y:n.getFullYear(),mo:n.getMonth()+1,d:n.getDate(),wd:n.getDay()};}
+function toMin(t){var p=String(t).split(':');return (+p[0])*60+(+p[1]||0);}
+function goPlan(tab){ if(tab==='cal'||tab==='tt') planTab(tab); go('plan'); }
+function planTab(t){
+  document.querySelectorAll('.plan-tabs button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-t')===t);});
+  document.getElementById('planTt').classList.toggle('on',t==='tt');
+  document.getElementById('planCal').classList.toggle('on',t==='cal');
+  if(t==='tt')renderTimetable(); else renderCal();
+}
+function renderPlan(tab){
+  PLAN_EDIT.tt=false;
+  var n=planNowDate();
+  if(!PLAN_MONTH)PLAN_MONTH={y:n.y,mo:n.mo};
+  planTab(tab||'tt');
+}
+function toggleTTEdit(){PLAN_EDIT.tt=!PLAN_EDIT.tt;renderTimetable();}
+function renderTimetable(){
+  var tt=loadTT();var n=planNowDate();var ed=PLAN_EDIT.tt;
+  var html='<div class="tt-grid">';
+  html+='<div class="tt-cell head"></div>';
+  var wd=['周一','周二','周三','周四','周五'];
+  wd.forEach(function(w,i){html+='<div class="tt-cell head'+(n.wd===i+1?' today':'')+'">'+w+'</div>';});
+  tt.periods.forEach(function(p,pi){
+    html+='<div class="tt-cell time'+(ed?' editable':'')+'"'+(ed?' onclick="editPeriod('+pi+')"':'')+'>'+p.s+'<br>'+p.e+'</div>';
+    for(var di=0;di<5;di++){
+      var id=tt.grid[di]&&tt.grid[di][pi]?tt.grid[di][pi]:'';
+      var subj=ttSubj(id);
+      var cls='tt-cell'+(n.wd===di+1?' today':'')+(ed?' editable':'');
+      var inner= id? '<div class="tsubj" style="background:'+subj.color+'">'+esc(subj.name)+'</div>' : '<div class="empty">＋</div>';
+      html+='<div class="'+cls+'"'+(ed?' onclick="pickTT('+di+','+pi+')"':'')+'>'+inner+'</div>';
+    }
+  });
+  html+='</div>';
+  html+='<div class="tt-legend">';
+  TT_SUBJECTS.forEach(function(s){html+='<span><i style="background:'+s.color+'"></i>'+esc(s.name)+'</span>';});
+  html+='</div>';
+  var body=document.getElementById('ttBody');if(body)body.innerHTML=html;
+  var btn=document.getElementById('ttEditBtn');if(btn)btn.textContent=ed?'✓ 完成':'✎ 编辑';
+}
+function pickTT(di,pi){
+  var opts=TT_SUBJECTS.map(function(s){return {value:s.id,label:s.name};});
+  opts.push({value:'',label:'🧹 清空这一格'});
+  showInputDlg({title:'选择科目',options:opts,onOk:function(v){
+    if(v===null)return;
+    var tt=loadTT();if(!tt.grid[di])tt.grid[di]=[];tt.grid[di][pi]=v;saveTT(tt);renderTimetable();renderHomeCourse();
+  }});
+}
+function editPeriod(pi){
+  var tt=loadTT();var p=tt.periods[pi];
+  showInputDlg({title:'第 '+(pi+1)+' 节时间',msg:'格式 08:20-09:00',value:p.s+'-'+p.e,required:true,onOk:function(v){
+    if(v===null)return;var m=String(v).split('-');if(m.length<2||m[0].indexOf(':')<0||m[1].indexOf(':')<0){toast('格式不对，请用 08:20-09:00');return;}
+    tt.periods[pi]={s:m[0].trim(),e:m[1].trim()};saveTT(tt);renderTimetable();
+  }});
+}
+function hwStatus(k){var arr=loadHomework()[k];if(!arr||!arr.length)return 'none';var all=arr.every(function(h){return h.done;});return all?'done':'todo';}
+function calMonthPrev(){PLAN_MONTH.mo--;if(PLAN_MONTH.mo<1){PLAN_MONTH.mo=12;PLAN_MONTH.y--;}renderCal();}
+function calMonthNext(){PLAN_MONTH.mo++;if(PLAN_MONTH.mo>12){PLAN_MONTH.mo=1;PLAN_MONTH.y++;}renderCal();}
+function renderCal(){
+  if(!PLAN_MONTH){var nn=planNowDate();PLAN_MONTH={y:nn.y,mo:nn.mo};}
+  var y=PLAN_MONTH.y,mo=PLAN_MONTH.mo;var n=planNowDate();
+  var first=new Date(y,mo-1,1);
+  var startOff=(first.getDay()+6)%7;
+  var daysInMo=new Date(y,mo,0).getDate();
+  var html='<div class="cal-grid">';
+  ['一','二','三','四','五','六','日'].forEach(function(w){html+='<div class="tt-cell head">周'+w+'</div>';});
+  var total=Math.ceil((startOff+daysInMo)/7)*7;
+  for(var i=0;i<total;i++){
+    var dayNum=i-startOff+1;
+    if(dayNum<1||dayNum>daysInMo){html+='<div class="cal-cell dim"></div>';continue;}
+    var k=planKeyOf(y,mo,dayNum);
+    var st=hwStatus(k);
+    var cls='cal-cell'+(n.y===y&&n.mo===mo&&n.d===dayNum?' today':'')+(PLAN_CAL_SEL===k?' sel':'');
+    var arr=loadHomework()[k]||[];
+    var dot= st==='none'?'':'<div class="cdot '+st+'"></div>';
+    var cnt= arr.length? '<div class="ccount">'+arr.filter(function(h){return h.done;}).length+'/'+arr.length+'</div>':'';
+    html+='<div class="'+cls+'" data-k="'+k+'" onclick="selCalDay(this.dataset.k)"><div class="cd">'+dayNum+'</div>'+dot+cnt+'</div>';
+  }
+  html+='</div>';
+  var body=document.getElementById('calBody');if(body)body.innerHTML=html;
+  var lab=document.getElementById('calMonthLabel');if(lab)lab.textContent=y+' 年 '+(mo<10?'0'+mo:mo)+' 月';
+  if(!PLAN_CAL_SEL)PLAN_CAL_SEL=planKeyOf(n.y,n.mo,n.d);
+  renderCalSide();
+}
+function selCalDay(k){PLAN_CAL_SEL=k;renderCal();}
+function renderCalSide(){
+  var k=PLAN_CAL_SEL;var box=document.getElementById('calSide');if(!box)return;
+  if(!k){box.innerHTML='<div class="empty-mini">点上面的日期查看当天作业</div>';return;}
+  var pk=planParseKey(k);var n=planNowDate();
+  var todayK=planKeyOf(n.y,n.mo,n.d);
+  var tag = k===todayK ? '<span class="cal-tag today">今天</span>'
+    : ((pk.y<n.y||(pk.y===n.y&&pk.mo<n.mo)||(pk.y===n.y&&pk.mo===n.mo&&pk.d<n.d)) ? '<span class="cal-tag past">已过去</span>' : '<span class="cal-tag future">未来</span>');
+  var arr=loadHomework()[k]||[];
+  var html='<div class="cs-h"><span>'+pk.y+'/'+(pk.mo<10?'0'+pk.mo:pk.mo)+'/'+pk.d+' 作业</span>'+tag+'</div>';
+  if(!arr.length)html+='<div class="empty-mini">这一天还没有作业记录</div>';
+  arr.forEach(function(h,i){
+    var col=hwSubjColor(h.subj);
+    html+='<div class="hw-row'+(h.done?' done':'')+'" id="calhw-'+i+'">'
+      +'<span class="ck" onclick="toggleCalHw('+i+')">'+(h.done?'✓':'')+'</span>'
+      +'<span class="ht">'+esc(h.text)+'</span>'
+      +'<span class="hs" style="background:'+col+'22;color:'+col+'">'+esc(h.subj||'其他')+'</span>'
+      +'<span class="he" onclick="editCalHw('+i+')">✎</span>'
+      +'<span class="hd" onclick="delCalHw('+i+')">✕</span>'
+      +'</div>';
+  });
+  html+='<button class="btn sm" style="margin-top:10px" onclick="addCalHw()">＋ 添加这一天作业</button>';
+  box.innerHTML=html;
+}
+function toggleCalHw(i){
+  var all=loadHomework();var k=PLAN_CAL_SEL;if(!all[k])return;var h=all[k][i];if(!h)return;
+  var was=h.done;h.done=!h.done;saveHomework(all);renderCal();
+  if(h.done&&!was)onHomeworkCompleted(h.text,all[k],k);
+}
+function addCalHw(){
+  var k=PLAN_CAL_SEL;
+  showInputDlg({title:'添加作业',msg:'先选科目',options:HW_SUBJ.map(function(s){return{value:s.k,label:s.k};}),value:'语文',okText:'下一步',onOk:function(subj){
+    if(subj===null)return;
+    showInputDlg({title:'作业内容',msg:'科目：'+(subj||'其他'),placeholder:'如：抄写第 5 课生字',required:true,okText:'添加',onOk:function(v){
+      if(v===null||!String(v).trim())return;
+      var all=loadHomework();if(!all[k])all[k]=[];
+      all[k].push({id:newHwId(),text:String(v).trim(),subj:subj||'其他',done:false});
+      saveHomework(all);renderCal();renderHomework();toast('已添加');
+    }});
+  }});
+}
+function editCalHw(i){
+  var all=loadHomework();var k=PLAN_CAL_SEL;var h=all[k]&&all[k][i];if(!h)return;
+  showInputDlg({title:'修改作业',value:h.text,placeholder:'作业内容',required:true,okText:'下一步',onOk:function(v){
+    if(v===null||!String(v).trim())return;
+    showInputDlg({title:'科目',options:HW_SUBJECTS.map(function(s){return{value:s.name,label:s.name};}).concat([{value:'其他',label:'其他'}]),value:h.subj||'其他',okText:'保存',onOk:function(subj){
+      if(subj===null)return;
+      all[k][i].text=String(v).trim();all[k][i].subj=subj||'其他';saveHomework(all);renderCal();renderHomework();toast('已修改');
+    }});
+  }});
+}
+function delCalHw(i){
+  var all=loadHomework();var k=PLAN_CAL_SEL;var h=all[k]&&all[k][i];if(!h)return;
+  showConfirmDlg({title:'删除作业',msg:'确定删除「'+h.text+'」？',okText:'删除',onOk:function(ok){
+    if(!ok)return;all[k].splice(i,1);saveHomework(all);renderCal();renderHomework();toast('已删除');
+  }});
+}
+function renderHomeCourse(){
+  var box=document.getElementById('homeCourseBar');if(!box)return;
+  var tt=loadTT();var n=planNowDate();
+  if(n.wd===0||n.wd===6){
+    box.innerHTML='<div class="hcb-h"><span>📚 今日课程</span><span class="hcb-date">'+n.y+'/'+(n.mo<10?'0'+n.mo:n.mo)+'/'+n.d+'</span></div><div class="hcb-rest">🎉 今天是休息日，好好玩吧～</div>';
+    return;
+  }
+  var di=n.wd-1;
+  var todayHw=loadHomework()[planKeyOf(n.y,n.mo,n.d)]||[];
+  var now=new Date();var nowMin=now.getHours()*60+now.getMinutes();
+  var html='<div class="hcb-h"><span>📚 今日课程</span><span class="hcb-date">'+n.y+'/'+(n.mo<10?'0'+n.mo:n.mo)+'/'+n.d+' · 周'+['日','一','二','三','四','五','六'][n.wd]+'</span></div><div class="hcb-row">';
+  tt.periods.forEach(function(p,pi){
+    var id=tt.grid[di]&&tt.grid[di][pi]?tt.grid[di][pi]:'';
+    if(!id)return;
+    var subj=ttSubj(id);
+    var ps=toMin(p.s),pe=toMin(p.e);
+    var nowc=(nowMin>=ps&&nowMin<=pe)?' now':'';
+    var hasHw=todayHw.some(function(h){return h.subj===subj.name;});
+    html+='<div class="hcb-p'+nowc+'"><div class="hcb-subj" style="background:'+subj.color+'">'+esc(subj.name)+'</div><div class="hcb-t">'+p.s+'</div>'+(hasHw?'<div class="hcb-dot"></div>':'')+'</div>';
+  });
+  html+='</div>';
+  box.innerHTML=html;
+}
+</script>
 </body>
 </html>
