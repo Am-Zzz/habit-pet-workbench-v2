@@ -5605,7 +5605,7 @@
     else if(target==='sc-game-diff'){ initDiff(); }
     else if(target==='sc-hanzi'){ initHanzi(); }
     else if(target==='sc-qbank'){ renderQBank(); }
-    else if(target==='sc-mathbook'){ renderMathbook(); }
+    else if(target==='sc-mathbook'){ try{mbHistory.length=0;}catch(e){} renderMathbook(); }
     else if(target==='sc-home'){renderGrowthTrack();updateHomePartnerIcon();renderHomeTasks();renderLearnGrid();renderMiniClass();}
     else if(target==='sc-pset'){renderCheckins();renderStudies();renderPerm();renderBankTabs();renderBankList();renderMonoBank();}
     else if(target==='sc-recycle'){renderRecycle();}
@@ -16352,6 +16352,12 @@ function mbGoBack(){
   mbState.flashMode=st.flashMode;mbState.flashIdx=st.flashIdx;
   renderMathbook();
 }
+  // 统一返回入口：有历史就站内回退；已退到根视图（首页/入口页）时退出数学宝典回到上一屏
+  function mbBack(){
+    if(mbHistory.length){mbGoBack();return;}
+    if(mbState.view==='home'||mbState.view==='entry'){if(typeof goBack==='function')goBack();return;}
+    mbGoBack();
+  }
 
   function renderMathbook(){
     if(!mbLoaded){mbLoaded=true;mbLoad();}
@@ -16384,7 +16390,7 @@ function mbGoBack(){
     var hero='<div class="app-head skin-mathbook"><div class="ah-icon">'+MB_MASCOT_SVG+'</div>'
       +'<div class="ah-txt"><div class="ah-t">数学宝典</div><div class="ah-s">选教材 · 选年级 · 选学期，开启你的宝典</div></div>'
       +'<div class="ah-sp"></div><div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>'
-      +'<div class="ah-back" onclick="mbGoBack()">← 返回</div></div>';
+      +'<div class="ah-back" onclick="mbBack()">← 返回</div></div>';
     var vers=[
       ['rj','人教版','<svg viewBox="0 0 24 24" width="24" height="24"><rect x="4" y="3" width="16" height="18" rx="2" fill="#F7B88A"/><path d="M7 8h10M7 12h10M7 16h5" stroke="#fff" stroke-width="1.8"/></svg>'],
       ['bs','北师大版','<svg viewBox="0 0 24 24" width="24" height="24"><rect x="4" y="3" width="16" height="18" rx="2" fill="#87D3F5"/><path d="M7 8h10M7 12h10M7 16h5" stroke="#fff" stroke-width="1.8"/></svg>']
@@ -16416,7 +16422,7 @@ function mbGoBack(){
       +'<div class="ah-icon"><svg width="46" height="46" viewBox="0 0 46 46"><circle cx="23" cy="24" r="19" fill="#FFD25F"/><circle cx="16" cy="21" r="2.4" fill="#3a2e10"/><circle cx="30" cy="21" r="2.4" fill="#3a2e10"/><path d="M15 29 Q23 35 31 29" stroke="#3a2e10" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="13" cy="27" r="2.6" fill="#FFB0B0"/><circle cx="33" cy="27" r="2.6" fill="#FFB0B0"/></svg></div>'
       +'<div class="ah-txt"><div class="ah-t">'+name+' 的宝典</div><div class="ah-s">'+(mbState.version==='bs'?'北师大版数学':'人教版数学')+' · '+mbState.grade+'年级'+mbState.term+'册 · <span class="mb-hero-link" onclick="mbState.view=\'entry\';renderMathbook()">换年级</span></div></div>'
       +'<div class="ah-sp"></div><div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>'
-      +'<div class="ah-back" onclick="mbGoBack()">← 返回</div></div>';
+      +'<div class="ah-back" onclick="mbBack()">← 返回</div></div>';
     var entries=[
       ['<svg viewBox="0 0 44 44"><rect x="7" y="5" width="13" height="34" rx="2" fill="#F7B88A"/><rect x="22" y="5" width="15" height="34" rx="2" fill="#FFE0A3"/><path d="M7 12h30M7 31h30" stroke="#fff" stroke-width="2" fill="none"/><circle cx="13" cy="18" r="2" fill="#fff"/><circle cx="13" cy="25" r="2" fill="#fff"/><circle cx="29" cy="18" r="2" fill="#F7B88A"/><circle cx="29" cy="25" r="2" fill="#F7B88A"/></svg>','按年级学','一单元一单元','units','#F7B88A','#E0966A','#7A4A22'],
       ['<svg viewBox="0 0 44 44"><rect x="5" y="5" width="14" height="14" rx="2" fill="#F6A9B8"/><rect x="25" y="5" width="14" height="14" rx="2" fill="#FCE88A"/><rect x="5" y="25" width="14" height="14" rx="2" fill="#A8E6BF"/><rect x="25" y="25" width="14" height="14" rx="2" fill="#C8BCE8"/><path d="M19 12h6M22 9v6" stroke="#fff" stroke-width="2"/><path d="M12 19v6M9 22h6" stroke="#fff" stroke-width="2"/><path d="M32 19v6M29 22h6" stroke="#fff" stroke-width="2"/></svg>','按板块攻','哪弱补哪','board','#F6A9B8','#E07F94','#7A2E44'],
@@ -16449,7 +16455,7 @@ function mbGoBack(){
   function mbListHTML(){
     var title=mbState.view==='board'?('按板块攻 · '+mbState.grade+'年级'+mbState.term+'册分板块'):('按年级学 · '+mbState.grade+'年级'+mbState.term+'册');
     var units=mbCurTerm().units;
-    var html='<div class="mb-card"><div class="mb-h"><span class="t">'+title+'</span><span class="s" onclick="mbGoBack()">← 返回</span></div><div class="mb-list">';
+    var html='<div class="mb-card"><div class="mb-h"><span class="t">'+title+'</span><span class="s" onclick="mbBack()">← 返回</span></div><div class="mb-list">';
     units.forEach(function(u){
       var board=mbBoardOf(u.title);
       var head= mbState.view==='board' ? u.title : mbUnitHead(u);
@@ -16519,7 +16525,7 @@ function mbGoBack(){
   function mbSymbolsHTML(){
     var pal=['#F2B33D','#5FB87A','#EF8FA8','#B97AC4','#4FA0D8','#E0934B','#7BA8D4','#C9A24B','#8FBF6F','#E58FB0','#6FB6C9','#D49B5B'];
     var cards=MB_SYMBOLS.map(function(s,i){return '<div class="mb-sym"><span class="sc" style="background:'+pal[i%pal.length]+'"></span><div class="sg">'+s.s+'</div><div class="sn">'+s.name+'</div><div class="sd">'+s.say+'</div></div>';}).join('');
-    return '<div class="mb-card"><div class="mb-h"><span class="t">🔣 数学符号大全</span><span class="s" onclick="mbGoBack()">← 返回</span></div>'
+    return '<div class="mb-card"><div class="mb-h"><span class="t">🔣 数学符号大全</span><span class="s" onclick="mbBack()">← 返回</span></div>'
       +'<p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:10px">这些符号像小精灵，记住它们，数学题就不难啦～</p>'
       +'<div class="mb-symbols">'+cards+'</div></div>';
   }
@@ -16595,7 +16601,7 @@ function mbGoBack(){
         +'<div class="mb-num-tip">'+mbNumTip(n)+'</div></div>'
         +'</div>');
     }
-    return '<div class="mb-card"><div class="mb-h"><span class="t">✏️ 数字写法 · 0~20</span><span class="s" onclick="mbGoBack()">← 返回</span></div>'
+    return '<div class="mb-card"><div class="mb-h"><span class="t">✏️ 数字写法 · 0~20</span><span class="s" onclick="mbBack()">← 返回</span></div>'
       +'<p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:12px">左边照着田字格写，右边看写法和口诀～</p>'
       +'<div class="mb-nums">'+cards.join('')+'</div></div>';
   }
@@ -16607,7 +16613,7 @@ function mbGoBack(){
       var board=mbBoardOf(u.title);
       return '<div class="mb-unit open" style="--cu:'+mbBoardColor(board)+'"><div class="mb-unit-h"><span class="un">'+mbUnitHead(u)+'</span><span class="mb-unit-tag">'+board+'</span></div><div class="mb-topics">'+ts+'</div></div>';
     }).join('');
-    return '<div class="mb-card"><div class="mb-h"><span class="t">🗺️ 一图看全册 · '+mbState.grade+'年级'+mbState.term+'册</span><span class="s" onclick="mbGoBack()">← 返回</span></div><p style="font-size:12px;color:var(--ink-soft);margin-bottom:10px">点单元展开，点知识点直接进入学习。</p><div class="mb-list">'+nodes+'</div></div>';
+    return '<div class="mb-card"><div class="mb-h"><span class="t">🗺️ 一图看全册 · '+mbState.grade+'年级'+mbState.term+'册</span><span class="s" onclick="mbBack()">← 返回</span></div><p style="font-size:12px;color:var(--ink-soft);margin-bottom:10px">点单元展开，点知识点直接进入学习。</p><div class="mb-list">'+nodes+'</div></div>';
   }
   function bindMindmap(){}
 
@@ -16636,7 +16642,7 @@ function mbGoBack(){
     var wall=cardsByBoard[sel].map(function(it){
       return '<div class="mb-qc" style="--c:'+qc+'"><div class="qtop"><span class="qci" style="background:'+qc+'"></span><span class="qcn">'+it.c+'</span></div><div class="qck">'+it.p+'</div><div class="qce">例：'+it.e+'</div></div>';
     }).join('');
-    return '<div class="mb-card"><div class="mb-h"><span class="t">⚡ 速查大表 · '+total+' 条</span><span class="s" onclick="mbGoBack()">← 返回</span></div>'
+    return '<div class="mb-card"><div class="mb-h"><span class="t">⚡ 速查大表 · '+total+' 条</span><span class="s" onclick="mbBack()">← 返回</span></div>'
       +'<div class="mb-quick3"><div class="mb-q-idx">'+idx+'</div>'
       +'<div class="mb-q-right"><div class="rh"><span class="tag">'+sel+'</span>速查卡 · 点左侧板块切换</div><div class="mb-q-wall">'+wall+'</div></div></div></div>';
   }
@@ -16653,7 +16659,7 @@ function mbGoBack(){
     var q=mbState.searchQ.toLowerCase();
     var res=mbAllTopics().filter(function(t){return (t.title+t.oneLiner+(t.steps||[]).join('')).toLowerCase().indexOf(q)>=0;});
     var list=res.length? res.map(function(t){return '<div class="mb-topic" style="display:block;margin-bottom:8px" onclick="mbOpenTopic(\''+t.id+'\')"><span class="dot"></span>'+t.title+' <span style="font-size:11px;color:var(--ink-faint);font-weight:600">· '+t.unitTitle+'</span><div style="font-size:11.5px;color:var(--ink-soft);margin-top:3px">'+t.oneLiner+'</div></div>';}).join('') : '<p style="color:var(--ink-soft);font-size:13px">没找到「'+mbState.searchQ+'」，换个词试试～</p>';
-    return '<div class="mb-card"><div class="mb-h"><span class="t">🔍 搜索：'+mbState.searchQ+'</span><span class="s" onclick="mbGoBack()">← 返回</span></div>'+list+'</div>';
+    return '<div class="mb-card"><div class="mb-h"><span class="t">🔍 搜索：'+mbState.searchQ+'</span><span class="s" onclick="mbBack()">← 返回</span></div>'+list+'</div>';
   }
   function bindSearch(){}
 
@@ -16679,7 +16685,7 @@ function mbGoBack(){
       var f=(t.flashcards||[]).map(function(f){return '<div class="mb-flash"><div class="c">'+f.concept+'</div><div class="p">'+f.plain+'</div><div class="e">例：'+f.example+'</div></div>';}).join('');
       right='<div class="mb-box"><div style="font-size:13px;font-weight:800;margin-bottom:8px">⚡ 本知识点速查</div>'+f+'</div>';
     }
-    return '<div class="mb-card"><div class="mb-h"><span class="t">'+t.title+'</span><span class="s" onclick="mbGoBack()">← 返回</span></div>'
+    return '<div class="mb-card"><div class="mb-h"><span class="t">'+t.title+'</span><span class="s" onclick="mbBack()">← 返回</span></div>'
       +'<div class="mb-tabs">'+tabs+'</div>'
       +'<div class="mb-detail">'+left+right+'</div></div>';
   }
