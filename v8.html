@@ -1890,6 +1890,21 @@
   .app-head.skin-tomato .ah-mini:active,.app-head.skin-tomato .ah-back:active{background:rgba(255,255,255,.4)}
   /* 皮肤 · 普通页：浅底深字 */
   .app-head.skin-plain{--ah-bg:#fff;--ah-fg:#5b4a3a;--ah-icobg:#FFF3E4;--ah-btn:#F6EFE7;--ah-shadow:0 3px 10px rgba(0,0,0,.05)}
+  /* 皮肤 · 数学宝典：糖果蓝 */
+  .app-head.skin-mathbook{--ah-bg:linear-gradient(135deg,#A8E0F7 0%,#7FC6E8 100%);--ah-fg:#fff;
+    --ah-icobg:transparent;--ah-btn:rgba(255,255,255,.26);--ah-shadow:0 6px 14px rgba(127,198,232,.28)}
+  .app-head.skin-mathbook .ah-t{text-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .app-head.skin-mathbook .ah-icon{box-shadow:none;line-height:0}
+  .app-head.skin-mathbook .ah-mini:active,.app-head.skin-mathbook .ah-back:active{background:rgba(255,255,255,.42)}
+  /* 皮肤 · 绘本：暖米糖果粉 */
+  .app-head.skin-book{--ah-bg:linear-gradient(120deg,#FFE3EC 0%,#FFD6C2 100%);--ah-fg:#7a4a52;
+    --ah-icobg:#fff;--ah-btn:rgba(255,255,255,.55);--ah-shadow:0 5px 14px rgba(255,179,186,.26)}
+  /* flat 变体：贴合所在容器顶部（用于绘本等自带白卡容器的页面，避免卡片套卡片） */
+  .app-head.flat{margin-bottom:0;border-radius:0;box-shadow:none}
+  .app-head.skin-book .bk-tabs{background:rgba(255,255,255,.75)}
+  /* 通用 mini 星星（外壳条隐藏后星星住进顶栏右槽） */
+  .app-head .ah-mini.star{gap:4px}
+  .app-head .ah-mini.star .ah-star-n{font-variant-numeric:tabular-nums}
   /* 顶栏接管时隐藏全局外壳条（消除双层顶栏） */
   body.ah-full .device-bar{display:none}
   .tm-hero{display:flex;align-items:center;gap:13px;background:linear-gradient(120deg,#FF6B6B 0%,#F5A623 100%);border-radius:18px;padding:13px 16px;margin-bottom:18px;box-shadow:0 6px 16px rgba(255,107,107,.28)}
@@ -3119,7 +3134,13 @@
     <!-- 屏幕：家长设置 -->
     <div class="screen" id="sc-pset">
       <div class="card" style="max-width:620px;margin:0 auto">
-        <div class="card-h"><span class="t">家长设置</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">⚙️</span></div>
+        <div class="ah-txt"><div class="ah-t">家长设置</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="sec">
           <div class="sec-h">📚 难度等级（按教材 / 年级）</div>
           <div class="seg">
@@ -3266,7 +3287,13 @@
     <!-- 屏幕：素材库（家长端内容管理） -->
     <div class="screen" id="sc-library">
       <div class="card" style="max-width:680px;margin:0 auto">
-        <div class="card-h"><span class="t">📚 素材库（家长）</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">📚</span></div>
+        <div class="ah-txt"><div class="ah-t">素材库（家长）</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <p style="font-size:12px;color:var(--ink-soft);margin:2px 0 10px">所有学习内容都存在本机浏览器里。改完点「保存」即生效；也可「导出 JSON」备份，或「导入 JSON」批量更新——导入时系统会按学段(stage)/分类(cat) <b>自动归类</b>。</p>
         <div class="lib-bar">
           <button class="btn ghost" onclick="exportContent()">⬇ 导出JSON</button>
@@ -3292,7 +3319,13 @@
     <!-- 屏幕：回收站（家长模式专属，v3-α-5） -->
     <div class="screen" id="sc-recycle">
       <div class="card" style="max-width:680px;margin:0 auto">
-        <div class="card-h"><span class="t">♻️ 回收站</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">♻️</span></div>
+        <div class="ah-txt"><div class="ah-t">回收站</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <p style="font-size:12px;color:var(--ink-soft);margin:2px 0 10px">误删的绘本在这里暂存。可一键恢复或彻底删除。仅家长模式可见。</p>
         <div class="recycle-toolbar">
           <span id="recycleCount" class="muted" style="font-size:12px;font-weight:700;color:var(--ink-soft)">共 0 项</span>
@@ -3305,6 +3338,13 @@
 
     <!-- 屏幕：宠物图鉴 -->
     <div class="screen" id="sc-pets">
+        <div class="app-head skin-plain">
+          <div class="ah-icon"><span class="bi">🐾</span></div>
+          <div class="ah-txt"><div class="ah-t">宠物图鉴</div><div class="ah-s" id="petCount">已收集 0 / 9</div></div>
+          <div class="ah-sp"></div>
+          <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+          <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="card" style="max-width:680px;margin:0 auto">
           <div class="pet-gacha" id="petGachaBox">
             <div class="pg-head">🎁 宠物盲盒机</div>
@@ -3315,7 +3355,7 @@
             </div>
             <div class="pg-hint" id="petGachaHint"></div>
           </div>
-          <div class="card-h"><span class="t">宠物图鉴</span><span class="s" id="petCount">已收集 0 / 9</span></div>
+          <div class="card-h"><span class="t">🐾 我的伙伴</span></div>
           <div class="grid-pet" id="petGrid"></div>
         <div id="snakeGrow" style="display:none;margin-top:16px">
           <div class="sec-h" style="color:var(--brand-d)">🐍 小蛇蛇 · 6 级成长之路</div>
@@ -3344,6 +3384,13 @@
 
     <div class="screen chars-landscape" id="sc-chars">
       <div class="chars-wrap">
+        <div class="app-head skin-plain" style="flex:none">
+          <div class="ah-icon"><span class="bi">📘</span></div>
+          <div class="ah-txt"><div class="ah-t">识字</div></div>
+          <div class="ah-sp"></div>
+          <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+          <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="chars-summary">
           <div class="chars-summary-icon">📘</div>
           <div class="chars-summary-main">
@@ -3427,7 +3474,13 @@
     <!-- ==================== 已学会收藏屏 ==================== -->
     <div class="screen" id="sc-learned">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">⭐ 我的已学会</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">⭐</span></div>
+        <div class="ah-txt"><div class="ah-t">我的已学会</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="learned-head">
           <div class="lh-ic">🌟</div>
           <div class="lh-tx">已学会 <b id="learnedCount">0</b> 个字</div>
@@ -3440,7 +3493,13 @@
 
     <div class="screen" id="sc-pinyin">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🔡 拼音学习</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🔡</span></div>
+        <div class="ah-txt"><div class="ah-t">拼音学习</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div style="text-align:center;margin-bottom:14px">
           <div class="lrn-pill" id="pyPill">
             <button class="sel" data-t="single" onclick="switchPyTab('single',this)">❤️ 单韵母</button>
@@ -3481,7 +3540,13 @@
     <!-- ==================== 口算闯关屏（增强版） ==================== -->
     <div class="screen" id="sc-math">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">🎮 口算闯关</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🎮</span></div>
+        <div class="ah-txt"><div class="ah-t">口算闯关</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
 
         <!-- 60天打卡日历 -->
         <div style="margin-bottom:14px">
@@ -3541,7 +3606,13 @@
     <!-- ==================== 英语类目屏（纯导航，不改动各子屏内部） ==================== -->
     <div class="screen" id="sc-english-hub">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">🔤 英语乐园</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🔤</span></div>
+        <div class="ah-txt"><div class="ah-t">英语乐园</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <p style="font-size:13px;color:var(--ink-soft);text-align:center;margin:4px 0 16px">选择你想练习的内容</p>
         <div style="display:flex;flex-direction:column;gap:12px">
           <div class="eng-entry" onclick="openPhonics()">
@@ -3577,7 +3648,13 @@
     <!-- ==================== 自然拼读屏（原版列表） ==================== -->
     <div class="screen" id="sc-phonics">
       <div class="card" style="max-width:820px;margin:0 auto">
-        <div class="card-h"><span class="t">🧩 自然拼读</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🧩</span></div>
+        <div class="ah-txt"><div class="ah-t">自然拼读</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <!-- Hero 欢迎 -->
         <div class="ph-hero" role="button" tabindex="0" onclick="openPhonicsMapGame()" title="点击进入拼读大闯关，整页打开地图游戏">
           <div class="txt">
@@ -3614,7 +3691,13 @@
     <!-- ==================== 英语单词屏 ==================== -->
     <div class="screen sc-words" id="sc-words">
       <div class="card">
-        <div class="card-h"><span class="t">🔤 英语单词</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🔤</span></div>
+        <div class="ah-txt"><div class="ah-t">英语单词</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="word-info-strip">
           <div class="wis-progress">
             <span class="wis-pg-lbl">📊 我的进度</span>
@@ -3657,7 +3740,13 @@
     <!-- ==================== 英语对话屏 ==================== -->
     <div class="screen" id="sc-dialogue">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">🗣️ 英语对话</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🗣️</span></div>
+        <div class="ah-txt"><div class="ah-t">英语对话</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="dlg-list" id="dlgList"></div>
         <div class="lrn-foot">
           <button class="btn ghost" onclick="loadDialogue()">🔁 再练一次</button>
@@ -3669,7 +3758,13 @@
     <!-- ==================== 跟读练习屏（保留原版） ==================== -->
     <div class="screen" id="sc-read">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">🎤 跟读练习</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🎤</span></div>
+        <div class="ah-txt"><div class="ah-t">跟读练习</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div style="text-align:center;margin-bottom:14px">
           <div class="lrn-pill" id="readPill">
             <button class="sel" data-t="eng" onclick="switchRead('eng',this)">🗣️ 英语跟读</button>
@@ -3704,7 +3799,13 @@
     <!-- ==================== 书写练习屏 ==================== -->
     <div class="screen" id="sc-write">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">✍️ 书写练习</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">✍️</span></div>
+        <div class="ah-txt"><div class="ah-t">书写练习</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div style="text-align:center;margin-bottom:14px">
           <div class="lrn-pill" id="writePill">
             <button class="sel" data-t="trace" onclick="switchWrite(this)">📝 生字描红</button>
@@ -3782,7 +3883,13 @@
     <!-- ==================== 科普阅读屏 ==================== -->
     <div class="screen" id="sc-science">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">🔬 科普阅读</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🔬</span></div>
+        <div class="ah-txt"><div class="ah-t">科普阅读</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="sci-title" id="sciTitle">🌈 天上的彩虹是怎么来的？</div>
         <div class="sci-body" id="sciBody"></div>
         <div style="text-align:center;margin-bottom:14px">
@@ -3802,7 +3909,13 @@
     <!-- ==================== 古诗全文屏 ==================== -->
     <div class="screen" id="sc-poem">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">📜 古诗</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">📜</span></div>
+        <div class="ah-txt"><div class="ah-t">古诗</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <!-- 统一分段：古诗学习 / 已学会 / 古诗听写 -->
         <div style="text-align:center;margin-bottom:12px">
           <div class="lrn-pill" id="poemSeg">
@@ -3870,13 +3983,19 @@
     <div class="screen" id="sc-books">
       <div class="bk-layout">
         <!-- 顶部：返回 + 中英文绘本 Tab + 搜索 -->
-        <div class="bk-topbar">
-          <span class="bk-back" onclick="goBack()">←</span>
-          <div class="bk-tabs" id="bookLangTabs">
-            <button class="sel" data-lang="cn" onclick="switchBookLang('cn',this)">中文绘本</button>
-            <button data-lang="en" onclick="switchBookLang('en',this)">英文绘本</button>
+        <div class="app-head skin-book flat">
+          <div class="ah-icon"><span class="bi">📚</span></div>
+          <div class="ah-txt"><div class="ah-t">绘本馆</div><div class="ah-s">选一本，读给小萌听</div></div>
+          <div class="ah-sp"></div>
+          <div class="ah-act">
+            <div class="bk-tabs" id="bookLangTabs">
+              <button class="sel" data-lang="cn" onclick="switchBookLang('cn',this)">中文绘本</button>
+              <button data-lang="en" onclick="switchBookLang('en',this)">英文绘本</button>
+            </div>
+            <div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div>
+            <div class="ah-mini" onclick="toggleBookSearch()" title="搜索绘本">🔍</div>
           </div>
-          <span class="bk-search-btn" onclick="toggleBookSearch()">🔍</span>
+          <div class="ah-back" onclick="goBack()">← 返回</div>
         </div>
 
         <div class="bk-main">
@@ -4172,7 +4291,13 @@
     <!-- ==================== 逻辑思维屏 ==================== -->
     <div class="screen" id="sc-logic">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">🧠 逻辑思维</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🧠</span></div>
+        <div class="ah-txt"><div class="ah-t">逻辑思维</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div style="text-align:center;margin-bottom:14px">
           <div class="lrn-pill" id="logicPill">
             <button class="sel" data-t="pattern" onclick="switchLogic('pattern',this)">🔍 找规律</button>
@@ -4209,7 +4334,13 @@
     <!-- ==================== 晨读屏 ==================== -->
     <div class="screen" id="sc-morning">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🌅 晨读 15 分钟</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🌅</span></div>
+        <div class="ah-txt"><div class="ah-t">晨读 15 分钟</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="mr-intro">选一篇，跟着小萌大声朗读吧～读完点「完成晨读」就能打卡！</div>
         <div class="mr-timer" id="mrTimer" style="text-align:center;font-size:26px;font-weight:900;color:var(--brand-d);margin:10px 0">⏱️ 剩余 15:00</div>
         <div class="mr-actions" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:6px 0 14px">
@@ -4234,7 +4365,13 @@
     <!-- ==================== 户外运动屏 ==================== -->
     <div class="screen" id="sc-outdoor">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🏃 户外运动 30 分钟</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🏃</span></div>
+        <div class="ah-txt"><div class="ah-t">户外运动 30 分钟</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="od-timer" id="odTimer" style="text-align:center;font-size:26px;font-weight:900;color:var(--brand-d);margin:10px 0">⏱️ 剩余 30:00</div>
         <div style="text-align:center;margin-bottom:12px">
           <button class="btn ghost" onclick="startOutdoorTimer()">▶ 开始计时</button>
@@ -4251,7 +4388,13 @@
     <!-- ==================== 整理书包屏 ==================== -->
     <div class="screen" id="sc-pack">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🎒 整理书包</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🎒</span></div>
+        <div class="ah-txt"><div class="ah-t">整理书包</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="pk-bar"><i id="pkBar" style="width:0%"></i></div>
         <div class="pk-num" id="pkNum" style="text-align:center;font-weight:800;margin:6px 0">0/0 已装好</div>
         <div class="pk-list" id="pkList"></div>
@@ -4263,7 +4406,13 @@
     <!-- ==================== 游戏中心屏 ==================== -->
     <div class="screen" id="sc-games">
       <div class="card" style="max-width:680px;margin:0 auto">
-        <div class="card-h"><span class="t">🎮 游戏中心</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🎮</span></div>
+        <div class="ah-txt"><div class="ah-t">游戏中心</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="games-balance">
           <div class="gb-chip"><span>⭐ 积分</span><b id="gbPoints">0</b></div>
           <div class="gb-chip"><span>🪙 硬币</span><b id="gbCoins">0</b></div>
@@ -4304,7 +4453,13 @@
     <!-- ==================== 玩法说明书屏（萌趣学园汇总页） ==================== -->
     <div class="screen" id="sc-playbook">
       <div class="card" style="max-width:640px;margin:0 auto">
-        <div class="card-h"><span class="t">📖 玩法说明书</span><span class="s" onclick="go('games')" style="cursor:pointer">← 游戏中心</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">📖</span></div>
+        <div class="ah-txt"><div class="ah-t">玩法说明书</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="go('games')">← 游戏中心</div>
+        </div>
         <div class="pb-intro">12 个游戏化学习法，看懂玩法，一键开玩 →</div>
         <div class="pb-list" id="pbList"></div>
       </div>
@@ -4313,7 +4468,13 @@
     <!-- ==================== 汉字对对碰屏 ==================== -->
     <div class="screen" id="sc-hanzi">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">🀄 汉字对对碰</span><span class="s" style="display:flex;gap:9px;align-items:center"><span class="gm-howto" onclick="showGameGuide('hanzi')">? 玩法</span><span onclick="goBack()" style="cursor:pointer">← 返回</span></span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🀄</span></div>
+        <div class="ah-txt"><div class="ah-t">汉字对对碰</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini gm-howto" onclick="showGameGuide('hanzi')">? 玩法</div><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="hm-bar">
           <span class="hm-lv" id="hmLevel">第1级·启蒙</span>
           <span class="hm-st">得分 <b id="hmScore">0</b></span>
@@ -4342,7 +4503,13 @@
     <!-- ==================== 学习扭蛋机屏 ==================== -->
     <div class="screen" id="sc-gacha">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🎰 学习扭蛋机</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🎰</span></div>
+        <div class="ah-txt"><div class="ah-t">学习扭蛋机</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
 
         <div class="gacha-top">
           <div class="gt-chip">🪙 硬币 <b id="gachaCoins">0</b></div>
@@ -4421,7 +4588,13 @@
     <!-- ==================== 打卡屏 ==================== -->
     <div class="screen" id="sc-checkin">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">✅ 今日打卡</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">✅</span></div>
+        <div class="ah-txt"><div class="ah-t">今日打卡</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="prog"><span class="rkt">🚀</span><div class="ptxt"><div class="l">成长进度</div><div class="n" id="ckProg">已完成 0 项</div></div><div class="bar"><i id="ckBar" style="width:0%"></i></div></div>
         <div class="ck-milestone">
           <div class="ckm"><b id="ckStreak">🔥 0</b><span>连续打卡</span></div>
@@ -4437,7 +4610,13 @@
     <!-- ==================== 商城屏 ==================== -->
     <div class="screen" id="sc-store">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🛒 魔法商店</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🛒</span></div>
+        <div class="ah-txt"><div class="ah-t">魔法商店</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="store-bal">⭐ 积分 <b id="storePoints">0</b> · 🪙 硬币 <b id="storeCoins">0</b></div>
 
         <div class="chest-room" style="margin-bottom:18px">
@@ -4463,7 +4642,13 @@
 
     <div class="screen" id="sc-bank">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🏦 积分银行制</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🏦</span></div>
+        <div class="ah-txt"><div class="ah-t">积分银行制</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="bank-tagline">让学习和家务变成一场有趣的游戏！</div>
         <div class="bank-cta">
           <button class="btn" onclick="goGachaStore()">🎰 去扭蛋机花积分</button>
@@ -4493,7 +4678,13 @@
     <!-- 屏幕：题库闯关（读取家长题库，孩子答题赚⭐） -->
     <div class="screen" id="sc-qbank">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">📚 题库闯关</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">📚</span></div>
+        <div class="ah-txt"><div class="ah-t">题库闯关</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <p style="font-size:12px;color:var(--ink-soft);margin:4px 2px 10px">题目来自「家长设置 → 学科题库」，答对得 ⭐。黄色标记的题目是 AI 占位内容，答案以家长审核为准。</p>
         <div class="seg" id="qbSubject"></div>
         <div id="qbBody" style="margin-top:12px"></div>
@@ -4503,7 +4694,13 @@
     <!-- ==================== #4 闯关升级制 ==================== -->
     <div class="screen" id="sc-level">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🗡️ 闯关升级制</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🗡️</span></div>
+        <div class="ah-txt"><div class="ah-t">闯关升级制</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="bank-tagline">把一周学习目标拆成 5 关，每天过一关！</div>
 
         <div class="bank-section">
@@ -4572,7 +4769,13 @@
   </div>
 <div class="screen" id="sc-passport">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">📔 学习护照</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">📔</span></div>
+        <div class="ah-txt"><div class="ah-t">学习护照</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="bank-tagline">完成每日打卡，印章自动盖上，集满六章就能兑换奖励！</div>
 
         <div class="bank-section">
@@ -4599,7 +4802,13 @@
     <!-- ==================== 时间挑战赛 ==================== -->
     <div class="screen" id="sc-challenge">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">⏳ 时间挑战赛</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">⏳</span></div>
+        <div class="ah-txt"><div class="ah-t">时间挑战赛</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="bank-tagline">和沙漏赛跑，把专注变成一场闯关！</div>
 
         <div class="bank-section">
@@ -4645,7 +4854,13 @@
     <!-- ==================== 角色扮演屏 ==================== -->
     <div class="screen" id="sc-role">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🎭 角色扮演</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🎭</span></div>
+        <div class="ah-txt"><div class="ah-t">角色扮演</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="bank-tagline">换上角色，把学习变成一场戏！</div>
         <div class="bank-section">
           <div class="bank-h">🎯 玩法说明</div>
@@ -4671,7 +4886,13 @@
     <!-- ==================== 家庭知识竞赛屏 ==================== -->
     <div class="screen" id="sc-quiz">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🏆 家庭知识竞赛</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🏆</span></div>
+        <div class="ah-txt"><div class="ah-t">家庭知识竞赛</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="bank-tagline">全家一起答题，知识记得更牢！</div>
         <div class="bank-section">
           <div class="bank-h">🎯 玩法说明</div>
@@ -4702,7 +4923,13 @@
     <!-- ==================== 学习剧本杀屏 ==================== -->
     <div class="screen" id="sc-script">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🎬 学习剧本杀</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🎬</span></div>
+        <div class="ah-txt"><div class="ah-t">学习剧本杀</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="bank-tagline">把知识藏进故事，边演边学！</div>
         <div class="bank-section">
           <div class="bank-h">🎯 玩法说明</div>
@@ -4724,7 +4951,13 @@
     <!-- ==================== 我的屏 ==================== -->
     <div class="screen" id="sc-me">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">👤 我的</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">👤</span></div>
+        <div class="ah-txt"><div class="ah-t">我的</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="me-pet"><div class="pet-stage" id="mePet">🐶</div><div class="me-name" id="meName">小萌</div><button class="btn ghost" onclick="rename()">✏️ 改名</button></div>
         <div class="me-stats" id="meStats"></div>
         <div class="me-actions">
@@ -4740,7 +4973,13 @@
     <!-- ==================== 游戏：植物方块 ==================== -->
     <div class="screen" id="sc-game-block">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">🧩 口算消消乐</span><span class="s" style="display:flex;gap:9px;align-items:center"><span class="gm-howto" onclick="showGameGuide('block')">? 玩法</span><span onclick="goBack()" style="cursor:pointer">← 返回</span></span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🧩</span></div>
+        <div class="ah-txt"><div class="ah-t">口算消消乐</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini gm-howto" onclick="showGameGuide('block')">? 玩法</div><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="gm-score">得分 <b id="blockScore">0</b> · <span id="blockMsg">点同色相连（≥2 个）的方块消除</span></div>
         <div class="gm-board" id="blockBoard"></div>
         <div class="lrn-foot"><button class="btn ghost" onclick="initBlock()">🔄 重开</button></div>
@@ -4750,7 +4989,13 @@
     <!-- ==================== 游戏：记忆翻牌 ==================== -->
     <div class="screen" id="sc-game-memory">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">🃏 字词翻翻乐</span><span class="s" style="display:flex;gap:9px;align-items:center"><span class="gm-howto" onclick="showGameGuide('memory')">? 玩法</span><span onclick="goBack()" style="cursor:pointer">← 返回</span></span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🃏</span></div>
+        <div class="ah-txt"><div class="ah-t">字词翻翻乐</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini gm-howto" onclick="showGameGuide('memory')">? 玩法</div><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="gm-score">步数 <b id="memMoves">0</b> · <span id="memMsg">翻开两张，找出相同的配对</span></div>
         <div class="gm-board mem" id="memBoard"></div>
         <div class="lrn-foot"><button class="btn ghost" onclick="initMemory()">🔄 重开</button></div>
@@ -4760,7 +5005,13 @@
     <!-- ==================== 游戏：图形序列 ==================== -->
     <div class="screen" id="sc-game-seq">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">🔢 数字规律</span><span class="s" style="display:flex;gap:9px;align-items:center"><span class="gm-howto" onclick="showGameGuide('seq')">? 玩法</span><span onclick="goBack()" style="cursor:pointer">← 返回</span></span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🔢</span></div>
+        <div class="ah-txt"><div class="ah-t">数字规律</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini gm-howto" onclick="showGameGuide('seq')">? 玩法</div><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="gm-score">连对 <b id="seqStreak">0</b> · <span id="seqMsg">看规律，选出下一个</span></div>
         <div class="seq-show" id="seqShow"></div>
         <div class="seq-opts" id="seqOpts"></div>
@@ -4771,7 +5022,13 @@
     <!-- ==================== 游戏：找不同 ==================== -->
     <div class="screen" id="sc-game-diff">
       <div class="card" style="max-width:560px;margin:0 auto">
-        <div class="card-h"><span class="t">🔍 火眼金睛</span><span class="s" style="display:flex;gap:9px;align-items:center"><span class="gm-howto" onclick="showGameGuide('diff')">? 玩法</span><span onclick="goBack()" style="cursor:pointer">← 返回</span></span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🔍</span></div>
+        <div class="ah-txt"><div class="ah-t">火眼金睛</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini gm-howto" onclick="showGameGuide('diff')">? 玩法</div><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="gm-score">连对 <b id="diffStreak">0</b> · <span id="diffMsg">里面有一个不一样，点它！</span></div>
         <div class="gm-board diff" id="diffBoard"></div>
         <div class="lrn-foot"><button class="btn ghost" onclick="initDiff()">🔄 重开</button></div>
@@ -4781,7 +5038,13 @@
     <!-- ==================== 游戏：自然拼读大闯关（听音拼读六关） ==================== -->
     <div class="screen" id="sc-game-phonics">
       <div class="card" style="max-width:1000px;margin:0 auto;padding:16px">
-        <div class="card-h"><span class="t">🔤 自然拼读·听音拼读</span><span class="s" style="display:flex;gap:9px;align-items:center"><span class="gm-howto" onclick="showGameGuide('phonics')">? 玩法</span><span onclick="backPhonicsGame()" style="cursor:pointer">← 返回</span></span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🔤</span></div>
+        <div class="ah-txt"><div class="ah-t">自然拼读·听音拼读</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini gm-howto" onclick="showGameGuide('phonics')">? 玩法</div><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="backPhonicsGame()">← 返回</div>
+        </div>
         <div id="phxGame" class="phx-game"></div>
       </div>
     </div>
@@ -4797,7 +5060,7 @@
           </div>
           <div class="ah-sp"></div>
           <div class="ah-act">
-            <div class="ah-mini" onclick="go('bank')" title="星星积分"><span>⭐</span><span id="tmTopStar">0</span></div>
+            <div class="ah-mini star" onclick="go('bank')" title="星星积分"><span>⭐</span><span id="tmTopStar" class="ah-star-n">0</span></div>
             <div class="ah-mini gear" onclick="go('parent')" title="家长模式">⚙️</div>
           </div>
           <div class="ah-back" onclick="goBack()">← 返回</div>
@@ -4870,7 +5133,13 @@
     <!-- ==================== 学习报告 ==================== -->
     <div class="screen" id="sc-report">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">📊 学习报告</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">📊</span></div>
+        <div class="ah-txt"><div class="ah-t">学习报告</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="report-tabs" id="reportTabs">
           <span class="sel" onclick="switchReportTab('today',this)">今日</span>
           <span onclick="switchReportTab('week',this)">本周</span>
@@ -4912,7 +5181,13 @@
     <!-- ==================== 成就勋章墙 ==================== -->
     <div class="screen" id="sc-achievements">
       <div class="card" style="max-width:600px;margin:0 auto">
-        <div class="card-h"><span class="t">🏅 成就勋章墙</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🏅</span></div>
+        <div class="ah-txt"><div class="ah-t">成就勋章墙</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="ach-header">
           <div class="medal" id="achMainMedal">🏆</div>
           <div class="title" id="achMainTitle">学习小达人</div>
@@ -5277,8 +5552,15 @@
    导航
    ================================================================ */
   let navStack=[];
-  /* 已迁移到统一顶栏 .app-head 的页面：进这些页时隐藏全局 device-bar（后续每迁移一页，在此登记一个 id） */
-  var AH_HEAD_PAGES=['sc-timer'];
+  /* 已迁移到统一顶栏 .app-head 的页面清单（供核对用；实际显隐见下方 ah-full 判断）
+     全站 46 页已迁移：sc-timer(番茄钟·橙红) / sc-mathbook(数学宝典·糖果蓝，JS 渲染) / sc-books(绘本·flat 贴合)
+     其余 43 个原 card-h 页面统一 skin-plain。未迁移：sc-home(首页保留外壳条)、sc-rich(大富翁游戏 HUD)、sc-parent(密码锁屏) */
+  var AH_HEAD_PAGES=['sc-timer','sc-mathbook','sc-books','sc-chars','sc-pets','sc-pset','sc-library','sc-recycle',
+    'sc-learned','sc-pinyin','sc-math','sc-english-hub','sc-phonics','sc-words','sc-dialogue','sc-read','sc-write',
+    'sc-science','sc-poem','sc-logic','sc-morning','sc-outdoor','sc-pack','sc-games','sc-playbook','sc-hanzi',
+    'sc-gacha','sc-checkin','sc-store','sc-bank','sc-qbank','sc-level','sc-passport','sc-challenge','sc-role',
+    'sc-quiz','sc-script','sc-me','sc-game-block','sc-game-memory','sc-game-seq','sc-game-diff','sc-game-phonics',
+    'sc-report','sc-achievements','sc-flash','sc-netdisk'];
   function go(screen, opts){
     try{ if(window.beep)window.beep(600,60); }catch(e){}
     if(quizTimer){clearInterval(quizTimer);quizTimer=null;}
@@ -5295,8 +5577,8 @@
     if(!(opts&&opts.noHistory) && curId && curId!==target){ navStack.push(curId); }
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
     document.getElementById(target).classList.add('on');
-    /* 顶栏接管：已迁移到 .app-head 的页面隐藏全局外壳条，消除双层顶栏 */
-    try{ document.body.classList.toggle('ah-full', AH_HEAD_PAGES.indexOf(target)>=0); }catch(e){}
+    /* 顶栏接管：device-bar 收归首页，其余页面由各自顶栏承载，消除双层顶栏 */
+    try{ document.body.classList.toggle('ah-full', target!=='sc-home'); }catch(e){}
     if(target==='sc-parent'){pinInput='';renderPinDots();renderGameDiffUI();}
     if(target==='sc-checkin')initCheckin();
     else if(target==='sc-store')initStore();
@@ -12272,6 +12554,8 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   function refreshPointsUI(){
     ['topStar','tmTopStar','gachaPoints','storePoints','bankPoints','gbPoints','rpPoints'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=gachaPoints;});
     ['gachaCoins','storeCoins','bankCoins','gbCoins','rpCoins'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=gachaCoins;});
+    /* 统一顶栏上的 mini 星星（外壳条隐藏后，星星住进各页顶栏右槽） */
+    try{ document.querySelectorAll('.ah-star-n').forEach(function(e){ e.textContent=gachaPoints; }); }catch(e){}
     refreshTopBar();
     if(document.getElementById('sc-me').classList.contains('on'))initMe();
   }
@@ -13991,7 +14275,13 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     <!-- ==================== 英语闪卡屏 ==================== -->
     <div class="screen" id="sc-flash">
       <div class="card" style="max-width:760px;margin:0 auto">
-        <div class="card-h"><span class="t">🃏 英语闪卡</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🃏</span></div>
+        <div class="ah-txt"><div class="ah-t">英语闪卡</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="flash-bar">
           <button class="btn" onclick="openFlashStudy(currentFlashSet)">▶️ 学习模式</button>
           <label class="btn ghost">📷 批量导入图<input type="file" accept="image/*" multiple webkitdirectory style="display:none" onchange="batchImportImages(currentFlashSet,this.files)"></label>
@@ -14020,7 +14310,13 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     <!-- ==================== 网盘内容中心 ==================== -->
     <div class="screen" id="sc-netdisk">
       <div class="card" style="max-width:780px;margin:0 auto">
-        <div class="card-h"><span class="t">🌐 我的网盘</span><span class="ch-actions"><span class="s" onclick="openNetAcct()" style="cursor:pointer;margin-right:12px">⚙️ 账号/解析</span><span class="s" onclick="goBack()" style="cursor:pointer">← 返回</span></span></div>
+        <div class="app-head skin-plain">
+        <div class="ah-icon"><span class="bi">🌐</span></div>
+        <div class="ah-txt"><div class="ah-t">我的网盘</div></div>
+        <div class="ah-sp"></div>
+        <div class="ah-act"><div class="ah-mini" onclick="openNetAcct()">⚙️ 账号/解析</div><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+        <div class="ah-back" onclick="goBack()">← 返回</div>
+        </div>
         <div class="mb-form">
           <div class="net-tabs">
             <div class="net-tab" data-board="video" onclick="switchNetTab('video')">📺 动画片</div>
@@ -16085,9 +16381,10 @@ function mbGoBack(){
       return '<div class="mb-terms tt'+(x===t?' sel':'')+(has?'':' locked')+'"'+(has?' onclick="mbChooseTerm(\''+x+'\')"':' title="敬请期待"')+'>'+x+'册'+(has?'':'<span class="badge">即将上线</span>')+'</div>';
     }).join('');
     var MB_MASCOT_SVG='<svg width="46" height="46" viewBox="0 0 46 46"><circle cx="23" cy="24" r="19" fill="#FFD25F"/><circle cx="16" cy="21" r="2.4" fill="#3a2e10"/><circle cx="30" cy="21" r="2.4" fill="#3a2e10"/><path d="M15 29 Q23 35 31 29" stroke="#3a2e10" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="13" cy="27" r="2.6" fill="#FFB0B0"/><circle cx="33" cy="27" r="2.6" fill="#FFB0B0"/></svg>';
-    var hero='<div class="mb-hero"><div class="mb-mascot">'+MB_MASCOT_SVG+'</div>'
-      +'<div class="mb-hero-txt"><div class="mb-hero-name">数学宝典</div><div class="mb-hero-sub">选教材 · 选年级 · 选学期，开启你的宝典</div></div>'
-      +'<span class="mb-hero-back" onclick="mbGoBack()">← 返回</span></div>';
+    var hero='<div class="app-head skin-mathbook"><div class="ah-icon">'+MB_MASCOT_SVG+'</div>'
+      +'<div class="ah-txt"><div class="ah-t">数学宝典</div><div class="ah-s">选教材 · 选年级 · 选学期，开启你的宝典</div></div>'
+      +'<div class="ah-sp"></div><div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>'
+      +'<div class="ah-back" onclick="mbGoBack()">← 返回</div></div>';
     var vers=[
       ['rj','人教版','<svg viewBox="0 0 24 24" width="24" height="24"><rect x="4" y="3" width="16" height="18" rx="2" fill="#F7B88A"/><path d="M7 8h10M7 12h10M7 16h5" stroke="#fff" stroke-width="1.8"/></svg>'],
       ['bs','北师大版','<svg viewBox="0 0 24 24" width="24" height="24"><rect x="4" y="3" width="16" height="18" rx="2" fill="#87D3F5"/><path d="M7 8h10M7 12h10M7 16h5" stroke="#fff" stroke-width="1.8"/></svg>']
@@ -16115,10 +16412,11 @@ function mbGoBack(){
   // ---- 首页 ----
   function mbHomeHTML(){
     var name=mbState.name;
-    var hero='<div class="mb-hero">'
-      +'<div class="mb-mascot"><svg width="46" height="46" viewBox="0 0 46 46"><circle cx="23" cy="24" r="19" fill="#FFD25F"/><circle cx="16" cy="21" r="2.4" fill="#3a2e10"/><circle cx="30" cy="21" r="2.4" fill="#3a2e10"/><path d="M15 29 Q23 35 31 29" stroke="#3a2e10" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="13" cy="27" r="2.6" fill="#FFB0B0"/><circle cx="33" cy="27" r="2.6" fill="#FFB0B0"/></svg></div>'
-      +'<div class="mb-hero-txt"><div class="mb-hero-name">'+name+' 的宝典</div><div class="mb-hero-sub">'+(mbState.version==='bs'?'北师大版数学':'人教版数学')+' · '+mbState.grade+'年级'+mbState.term+'册 · <span class="mb-hero-link" onclick="mbState.view=\'entry\';renderMathbook()">换年级</span></div></div>'
-      +'</div>';
+    var hero='<div class="app-head skin-mathbook">'
+      +'<div class="ah-icon"><svg width="46" height="46" viewBox="0 0 46 46"><circle cx="23" cy="24" r="19" fill="#FFD25F"/><circle cx="16" cy="21" r="2.4" fill="#3a2e10"/><circle cx="30" cy="21" r="2.4" fill="#3a2e10"/><path d="M15 29 Q23 35 31 29" stroke="#3a2e10" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="13" cy="27" r="2.6" fill="#FFB0B0"/><circle cx="33" cy="27" r="2.6" fill="#FFB0B0"/></svg></div>'
+      +'<div class="ah-txt"><div class="ah-t">'+name+' 的宝典</div><div class="ah-s">'+(mbState.version==='bs'?'北师大版数学':'人教版数学')+' · '+mbState.grade+'年级'+mbState.term+'册 · <span class="mb-hero-link" onclick="mbState.view=\'entry\';renderMathbook()">换年级</span></div></div>'
+      +'<div class="ah-sp"></div><div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>'
+      +'<div class="ah-back" onclick="mbGoBack()">← 返回</div></div>';
     var entries=[
       ['<svg viewBox="0 0 44 44"><rect x="7" y="5" width="13" height="34" rx="2" fill="#F7B88A"/><rect x="22" y="5" width="15" height="34" rx="2" fill="#FFE0A3"/><path d="M7 12h30M7 31h30" stroke="#fff" stroke-width="2" fill="none"/><circle cx="13" cy="18" r="2" fill="#fff"/><circle cx="13" cy="25" r="2" fill="#fff"/><circle cx="29" cy="18" r="2" fill="#F7B88A"/><circle cx="29" cy="25" r="2" fill="#F7B88A"/></svg>','按年级学','一单元一单元','units','#F7B88A','#E0966A','#7A4A22'],
       ['<svg viewBox="0 0 44 44"><rect x="5" y="5" width="14" height="14" rx="2" fill="#F6A9B8"/><rect x="25" y="5" width="14" height="14" rx="2" fill="#FCE88A"/><rect x="5" y="25" width="14" height="14" rx="2" fill="#A8E6BF"/><rect x="25" y="25" width="14" height="14" rx="2" fill="#C8BCE8"/><path d="M19 12h6M22 9v6" stroke="#fff" stroke-width="2"/><path d="M12 19v6M9 22h6" stroke="#fff" stroke-width="2"/><path d="M32 19v6M29 22h6" stroke="#fff" stroke-width="2"/></svg>','按板块攻','哪弱补哪','board','#F6A9B8','#E07F94','#7A2E44'],
