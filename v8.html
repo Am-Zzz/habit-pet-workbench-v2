@@ -1862,6 +1862,36 @@
 
   /* ---- 2. 专注番茄钟（横屏大版：左表盘+右面板，数字在图下） ---- */
   .tm-card{max-width:1120px;margin:0 auto;padding:16px 22px 26px}
+  /* ====== 统一顶栏组件 .app-head（右侧返回版 · 五槽）======
+     槽位顺序：ah-icon(可选) → ah-txt(标题+副标/副标可选) → ah-sp(弹性空白) → ah-act(可选右操作) → ah-back(固定最右)
+     规则：可选槽不填就不渲染，结构自动收拢，不会塌。皮肤只换 CSS 变量，不换结构。 */
+  .app-head{display:flex;align-items:center;gap:12px;border-radius:18px;padding:13px 16px;margin-bottom:18px;
+    background:var(--ah-bg,#fff);color:var(--ah-fg,#5b4a3a);box-shadow:var(--ah-shadow,0 4px 12px rgba(0,0,0,.06))}
+  .app-head .ah-icon{width:46px;height:46px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+    font-size:26px;background:var(--ah-icobg,#FFF3E4);box-shadow:0 2px 7px rgba(0,0,0,.13)}
+  .app-head .ah-icon .bi{display:inline-block;transform:translateY(-2px)}
+  .app-head .ah-txt{min-width:0;flex:none}
+  .app-head .ah-t{font-size:20px;font-weight:900;letter-spacing:.6px;line-height:1.25;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .app-head .ah-s{margin-top:3px;font-size:12px;font-weight:700;opacity:.85;line-height:1.2;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .app-head .ah-sp{flex:1}
+  .app-head .ah-act{display:flex;align-items:center;gap:8px;flex:none}
+  .app-head .ah-mini{display:flex;align-items:center;justify-content:center;gap:5px;height:34px;padding:0 13px;border-radius:999px;
+    background:var(--ah-btn,rgba(0,0,0,.06));color:inherit;font-size:13px;font-weight:800;cursor:pointer;transition:.12s;flex:none}
+  .app-head .ah-mini.gear{width:34px;padding:0;font-size:16px}
+  .app-head .ah-back{height:34px;display:flex;align-items:center;padding:0 17px;border-radius:14px;
+    background:var(--ah-btn,rgba(0,0,0,.06));color:inherit;font-size:13.5px;font-weight:800;cursor:pointer;flex:none;transition:.12s}
+  .app-head .ah-mini:active,.app-head .ah-back:active{transform:scale(.96);filter:brightness(1.06)}
+  /* 皮肤 · 番茄钟：橙红渐变品牌条 */
+  .app-head.skin-tomato{--ah-bg:linear-gradient(120deg,#FF6B6B 0%,#F5A623 100%);--ah-fg:#fff;
+    --ah-icobg:#fff;--ah-btn:rgba(255,255,255,.25);--ah-shadow:0 6px 16px rgba(255,107,107,.28)}
+  .app-head.skin-tomato .ah-t{text-shadow:0 1px 3px rgba(0,0,0,.15)}
+  .app-head.skin-tomato .ah-mini:active,.app-head.skin-tomato .ah-back:active{background:rgba(255,255,255,.4)}
+  /* 皮肤 · 普通页：浅底深字 */
+  .app-head.skin-plain{--ah-bg:#fff;--ah-fg:#5b4a3a;--ah-icobg:#FFF3E4;--ah-btn:#F6EFE7;--ah-shadow:0 3px 10px rgba(0,0,0,.05)}
+  /* 顶栏接管时隐藏全局外壳条（消除双层顶栏） */
+  body.ah-full .device-bar{display:none}
   .tm-hero{display:flex;align-items:center;gap:13px;background:linear-gradient(120deg,#FF6B6B 0%,#F5A623 100%);border-radius:18px;padding:13px 16px;margin-bottom:18px;box-shadow:0 6px 16px rgba(255,107,107,.28)}
   .tm-hero .badge{position:relative;top:auto;right:auto;width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;flex:none;box-shadow:0 2px 7px rgba(0,0,0,.13)}
   .tm-hero .badge .bi{display:inline-block;transform:translateY(-2px)}
@@ -4759,10 +4789,18 @@
     <!-- ==================== 专注番茄钟 ==================== -->
         <div class="screen" id="sc-timer">
       <div class="card tm-card">
-        <div class="tm-hero">
-          <div class="badge"><span class="bi">🍅</span></div>
-          <div class="ttl">专注番茄钟</div>
-          <div class="back" onclick="goBack()">← 返回</div>
+        <div class="app-head skin-tomato">
+          <div class="ah-icon"><span class="bi">🍅</span></div>
+          <div class="ah-txt">
+            <div class="ah-t">专注番茄钟</div>
+            <div class="ah-s" id="tmHeadSub">今天完成 0 个 · 本轮 25 分钟</div>
+          </div>
+          <div class="ah-sp"></div>
+          <div class="ah-act">
+            <div class="ah-mini" onclick="go('bank')" title="星星积分"><span>⭐</span><span id="tmTopStar">0</span></div>
+            <div class="ah-mini gear" onclick="go('parent')" title="家长模式">⚙️</div>
+          </div>
+          <div class="ah-back" onclick="goBack()">← 返回</div>
         </div>
 
         <div class="tm-body">
@@ -5239,6 +5277,8 @@
    导航
    ================================================================ */
   let navStack=[];
+  /* 已迁移到统一顶栏 .app-head 的页面：进这些页时隐藏全局 device-bar（后续每迁移一页，在此登记一个 id） */
+  var AH_HEAD_PAGES=['sc-timer'];
   function go(screen, opts){
     try{ if(window.beep)window.beep(600,60); }catch(e){}
     if(quizTimer){clearInterval(quizTimer);quizTimer=null;}
@@ -5255,6 +5295,8 @@
     if(!(opts&&opts.noHistory) && curId && curId!==target){ navStack.push(curId); }
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
     document.getElementById(target).classList.add('on');
+    /* 顶栏接管：已迁移到 .app-head 的页面隐藏全局外壳条，消除双层顶栏 */
+    try{ document.body.classList.toggle('ah-full', AH_HEAD_PAGES.indexOf(target)>=0); }catch(e){}
     if(target==='sc-parent'){pinInput='';renderPinDots();renderGameDiffUI();}
     if(target==='sc-checkin')initCheckin();
     else if(target==='sc-store')initStore();
@@ -12228,7 +12270,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   function getEarnSum(fn){return STATS.ledger.filter(fn).reduce(function(s,x){return s+x.amount;},0);}
   // 统一刷新顶部积分/硬币展示
   function refreshPointsUI(){
-    ['topStar','gachaPoints','storePoints','bankPoints','gbPoints','rpPoints'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=gachaPoints;});
+    ['topStar','tmTopStar','gachaPoints','storePoints','bankPoints','gbPoints','rpPoints'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=gachaPoints;});
     ['gachaCoins','storeCoins','bankCoins','gbCoins','rpCoins'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=gachaCoins;});
     refreshTopBar();
     if(document.getElementById('sc-me').classList.contains('on'))initMe();
@@ -13138,7 +13180,18 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     return '<svg viewBox="0 0 200 200">'+tmArcRing(p,'#FFEAF1','#FF8FB1')+'<circle cx="100" cy="100" r="70" fill="#fff"/>'+tmCat(p)+tmMarker(p,'#FF8FB1')+'</svg>';
   }
 
+  /* 今日完成的番茄数：复用 STATS.ledger（date + source='timer'），不新增存储 */
+  function tmTodayDone(){
+    try{
+      var k=(typeof getTodayKey==='function')?getTodayKey():'';
+      var L=(typeof STATS!=='undefined'&&STATS&&STATS.ledger)?STATS.ledger:[];
+      var n=0; for(var i=0;i<L.length;i++){ var r=L[i]; if(r&&r.date===k&&r.source==='timer'&&r.type==='star') n++; }
+      return n;
+    }catch(e){ return 0; }
+  }
   function tmRenderAll(){
+    var hs=document.getElementById('tmHeadSub');
+    if(hs) hs.textContent=(tmMode==='focus'?('今天完成 '+tmTodayDone()+' 个 · 本轮 '+tmMin+' 分钟'):('休息中 · '+tmBreakMin+' 分钟'));
     var d=document.getElementById('tmDial'); if(d) d.innerHTML=tmDialHTML();
     var n=document.getElementById('tmNum'); if(n) n.textContent=tmFmt(Math.max(0,tmLeft));
     var s=document.getElementById('tmSub');
