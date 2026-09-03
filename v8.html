@@ -294,7 +294,30 @@
       display:flex;
       flex-direction:column;
       min-width:0;
+      overflow-y:auto;
+      min-height:0;
     }
+    /* 中栏：合并必做流 + 九宫格贴底 + 栏内滚动（修看不全） */
+    .screen#sc-home .card#homeTasks .home-course-bar{margin:0 0 12px}
+    .screen#sc-home .card#homeTasks .must-area{flex:1 1 auto;min-height:0;overflow-y:auto;margin:2px -4px 0;padding:0 4px}
+    .screen#sc-home .card#homeTasks .must-area .hcard-addbar{margin:8px 0 4px;flex-wrap:wrap}
+    .screen#sc-home .card#homeTasks{overflow:visible}
+    .screen#sc-home .card#homeTasks .learn-sec{flex:none;margin-top:10px}
+    .screen#sc-home .card#homeTasks .learn-section-h{margin:14px 0 10px}
+    .must-sub{display:flex;align-items:center;font-size:12px;font-weight:800;color:var(--ink-soft);margin:14px 0 6px;padding-left:9px;position:relative}
+    .must-sub::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:4px;border-radius:3px;background:linear-gradient(180deg,var(--brand),var(--brand-d))}
+    .must-sub:first-child{margin-top:2px}
+    .t-kind{display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;padding:2px 7px;border-radius:7px;flex:none;line-height:1;margin-right:2px;white-space:nowrap}
+    .t-kind.k-ck{background:#FBE4EC;color:#D24B7E}
+    .t-kind.k-hw{background:#E6F4EA;color:#3F8A45}
+    /* 九宫格磁贴放大（适龄） */
+    .screen#sc-home .learn .e{font-size:24px}
+    .screen#sc-home .learn .t{font-size:12px;margin-top:5px}
+    .screen#sc-home .learn{padding:12px 5px 10px}
+    .screen#sc-home .learn .sub{font-size:10px;line-height:1.3}
+    /* 右栏探索卡放大 */
+    .screen#sc-home .grid3 > .card:last-child .coll-card .ct{font-size:16px}
+    .screen#sc-home .grid3 > .card:last-child .coll-card .cs{font-size:12px;margin-top:4px}
     .screen#sc-home .grid3 > .card:last-child{
       display:flex;
       flex-direction:column;
@@ -314,6 +337,11 @@
     .screen#sc-home .grid3 > .card:last-child .home-link-list{display:none}
     .screen#sc-home .learn-grid{grid-template-columns:repeat(3,1fr);gap:11px}
     .screen#sc-home .pet-stage{width:150px;height:150px}
+    /* 高度链贯通：横屏约束 home 屏高度，栏内滚动彻底修「看不全」 */
+    #sc-home.screen{height:calc(100vh - 150px);display:flex;flex-direction:column;overflow:hidden;box-sizing:border-box}
+    #sc-home .home-wrap{flex:1;min-height:0}
+    #sc-home .home-main{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column}
+    #sc-home .grid3{flex:1;min-height:0}
   }
   .version-badge{font-size:9px;font-weight:700;color:var(--ink-faint);background:var(--surface-2);padding:2px 6px;border-radius:8px;margin-left:8px;letter-spacing:.3px}
 
@@ -3182,45 +3210,37 @@
           <button class="btn" onclick="openPlayPet()">陪小萌玩 →</button>
         </div>
 
-        <!-- 中：打卡 + 作业 + 学习乐园 -->
-<div class="home-course-bar" id="homeCourseBar" onclick="goPlan('tt')"></div>
+        <!-- 中：今日必做（合并打卡+作业）+ 学习乐园 -->
         <div class="card" id="homeTasks">
           <div class="card-h">
-            <span class="t">✅ 今日打卡</span>
-            <span class="ch-right"><span class="s" id="homeTaskCount">0/0 完成</span><span class="hcard-edit" id="ckEditBtn" onclick="toggleHomeEdit('ck')">✎ 编辑</span></span>
+            <span class="t">📋 今日必做</span>
+            <span class="ch-right">
+              <span class="s" id="homeMergeCount">0/0 完成</span>
+              <span class="hcard-edit" id="ckEditBtn" onclick="toggleHomeEdit('ck')">✎ 打卡</span>
+              <span class="hcard-edit" id="hwEditBtn" onclick="toggleHomeEdit('hw')">✎ 作业</span>
+            </span>
           </div>
-          <div class="prog">
-            <span class="rkt">🚀</span>
-            <div class="ptxt"><div class="l">成长进度</div><div class="n" id="homeProgNum">已完成 0 项</div></div>
-            <div class="bar"><i id="homeProgBar" style="width:0%;background:linear-gradient(90deg,#F7A8BC,var(--brand))"></i></div>
-          </div>
-          <div id="homeTaskList"></div>
-          <div class="hcard-addbar" id="homeCkAddBar" style="display:none">
-            <span class="hcard-add" onclick="addHomeCheckin()">＋ 添加打卡项</span>
-            <span class="hcard-tip">编辑中圆圈不可点，点「✓ 完成」退出</span>
-          </div>
-
-          <div class="hw-sec">
-            <div class="card-h" style="margin-bottom:10px">
-              <span class="t">📝 今日作业</span>
-              <span class="ch-right"><span class="s" id="hwCount">0/0 完成</span><span class="hcard-edit" id="hwEditBtn" onclick="toggleHomeEdit('hw')">✎ 编辑</span></span>
-            </div>
-            <div class="prog hw">
-              <span class="rkt">📝</span>
-              <div class="ptxt"><div class="l">作业进度</div><div class="n" id="hwProgNum">今天还没有作业</div></div>
-              <div class="bar"><i id="hwBar" style="width:0%;background:linear-gradient(90deg,#9CCC65,var(--sage))"></i></div>
-            </div>
+          <div class="home-course-bar" id="homeCourseBar" onclick="goPlan('tt')"></div>
+          <div class="must-area" id="mustArea">
+            <div class="must-sub">✅ 今日打卡</div>
+            <div id="homeTaskList"></div>
+            <div class="must-sub">📝 今日作业</div>
             <div id="homeHwList" class="hw-list"></div>
+            <div class="hcard-addbar" id="homeCkAddBar" style="display:none">
+              <span class="hcard-add" onclick="addHomeCheckin()">＋ 添加打卡项</span>
+              <span class="hcard-tip">编辑中圆圈不可点，点「✓ 完成」退出</span>
+            </div>
             <div class="hcard-addbar" id="homeHwAddBar" style="display:none">
               <span class="hcard-add" onclick="addHomework()">＋ 添加作业</span>
               <span class="hcard-add ghost" onclick="carryOverHomework()">↺ 顺延未完成</span>
               <span class="hcard-tip">每天一张新表，没做完的第二天自动清空</span>
             </div>
           </div>
-
-          <div class="learn-section-h"><span class="l">🎓 学习乐园 · <b id="learnCount">9 大模块</b></span></div>
-          <div class="learn-grid" id="learnGrid"></div>
-          <div class="learn-grid" style="margin-top:12px"><div class="learn plan-entry" onclick="go('sc-plan')">📅 学习安排</div></div>
+          <div class="learn-sec">
+            <div class="learn-section-h"><span class="l">🎓 学习乐园 · <b id="learnCount">9 大模块</b></span></div>
+            <div class="learn-grid" id="learnGrid"></div>
+            <div class="learn-grid" style="margin-top:12px"><div class="learn plan-entry" onclick="go('sc-plan')">📅 学习安排</div></div>
+          </div>
         </div>
 
         <!-- 右：图鉴 + 游戏中心 + 在线学习 -->
@@ -12426,6 +12446,17 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     const pct=Math.round(n/tasks.length*100);
     const bar=card.querySelector('.bar i');if(bar)bar.style.width=pct+'%';
     const nEl=card.querySelector('.prog .n');if(nEl)nEl.textContent='已完成 '+n+' 项';
+    updateMergeProgress();
+  }
+  /* 合并进度：打卡 + 作业 合计，显示在「今日必做」卡头 */
+  function updateMergeProgress(){
+    var card=document.getElementById('homeTasks');if(!card)return;
+    var tDone=card.querySelectorAll('#homeTaskList .task.done').length;
+    var tTot=card.querySelectorAll('#homeTaskList .task').length;
+    var hDone=card.querySelectorAll('#homeHwList .task.done').length;
+    var hTot=card.querySelectorAll('#homeHwList .task').length;
+    var n=tDone+hDone, tot=tTot+hTot;
+    var el=document.getElementById('homeMergeCount');if(el)el.textContent=n+'/'+tot+' 完成';
   }
 
 
@@ -12805,8 +12836,8 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   }
   function syncHomeEditBtns(){
     var b1=document.getElementById('ckEditBtn'),b2=document.getElementById('hwEditBtn');
-    if(b1){b1.textContent=HOME_EDIT.ck?'✓ 完成':'✎ 编辑';b1.classList.toggle('on',HOME_EDIT.ck);}
-    if(b2){b2.textContent=HOME_EDIT.hw?'✓ 完成':'✎ 编辑';b2.classList.toggle('on',HOME_EDIT.hw);}
+    if(b1){b1.textContent=HOME_EDIT.ck?'✓ 完成打卡':'✎ 打卡';b1.classList.toggle('on',HOME_EDIT.ck);}
+    if(b2){b2.textContent=HOME_EDIT.hw?'✓ 完成作业':'✎ 作业';b2.classList.toggle('on',HOME_EDIT.hw);}
     var a=document.getElementById('homeCkAddBar');if(a)a.style.display=HOME_EDIT.ck?'flex':'none';
     var c=document.getElementById('homeHwAddBar');if(c)c.style.display=HOME_EDIT.hw?'flex':'none';
     var card=document.getElementById('homeTasks');if(card)card.classList.toggle('any-editing',!!(HOME_EDIT.ck||HOME_EDIT.hw));
@@ -12823,6 +12854,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
       var tap=ed?('editHomeCheckin('+i+')'):('homeTaskGo('+i+')');
       html+='<div class="task'+(isD?' done':'')+(ed?' editing':'')+(!c.on?' dim':'')+'" id="ht-'+i+'">'
         +'<span class="check" onclick="toggleHomeCheckin('+i+',event)">'+(isD?'✓':'')+'</span>'
+        +'<span class="t-kind k-ck">打卡</span>'
         +'<div class="t-main" onclick="'+tap+'"><div class="t-name">'+esc(c.name)+'</div>'+(c.tag?'<div class="t-tag">'+esc(c.tag)+'</div>':'')+'</div>'
         +(ed
           ? '<span class="row-eye" onclick="toggleHomeCheckinOn('+i+',event)" title="'+(c.on?'点击隐藏':'点击恢复显示')+'">'+(c.on?'👁':'🚫')+'</span><span class="row-edit" onclick="editHomeCheckin('+i+')">✎</span><span class="row-del" onclick="delHomeCheckin('+i+')">✕</span>'
@@ -12899,6 +12931,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
       var col=hwSubjColor(h.subj);
       html+='<div class="task hw'+(h.done?' done':'')+(ed?' editing':'')+'" id="hw-'+i+'">'
         +'<span class="check" onclick="toggleHomework('+i+',event)">'+(h.done?'✓':'')+'</span>'
+        +'<span class="t-kind k-hw">作业</span>'
         +'<div class="t-main"'+(ed?' onclick="editHomework('+i+')"':'')+'><div class="t-name">'+esc(h.text)+'</div></div>'
         +'<span class="hw-subj" style="background:'+col+'22;color:'+col+'">'+esc(h.subj||'其他')+'</span>'
         +(ed?'<span class="row-edit" onclick="editHomework('+i+')">✎</span><span class="row-del" onclick="delHomework('+i+')">✕</span>':'')
@@ -12907,6 +12940,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     if(!html)html='<div class="empty-mini">今天还没有作业，点右上角「✎ 编辑」添加</div>';
     box.innerHTML=html;
     updateHomeworkProgress();
+    updateMergeProgress();
   }
   function updateHomeworkProgress(){
     var list=getHomework(),n=0;
