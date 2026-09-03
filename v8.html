@@ -176,6 +176,34 @@
   .ptag{font-size:11px;font-weight:700;color:var(--brand-d);background:var(--brand-s);padding:4px 9px;border-radius:999px;white-space:nowrap}
   .ptag.req,.rtag.req{color:#9A7416;background:var(--butter-s)}
   .rtag{font-size:11px;font-weight:700;color:var(--brand-d);background:var(--brand-s);padding:4px 9px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  /* 主页卡片标题右侧组 + 编辑胶囊（默认只读防误触） */
+  .ch-right{display:flex;align-items:center;gap:8px}
+  .hcard-edit{flex:none;font-size:11px;font-weight:800;color:var(--brand-d);background:var(--brand-s);border:1.5px solid transparent;padding:5px 11px;border-radius:999px;cursor:pointer;transition:.15s;user-select:none}
+  .hcard-edit:active{transform:scale(.95)}
+  .hcard-edit.on{background:var(--sage);color:#fff}
+  .hcard-addbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:10px}
+  .hcard-add{font-size:12px;font-weight:800;color:#fff;background:var(--brand);padding:7px 13px;border-radius:999px;cursor:pointer}
+  .hcard-add.ghost{background:var(--surface-2);color:var(--ink-soft);border:1px solid var(--line)}
+  .hcard-add:active{transform:scale(.97)}
+  .hcard-tip{font-size:11px;color:var(--ink-faint)}
+  /* 编辑态：行尾操作键；圆圈置灰不可点 */
+  .task.editing{background:var(--surface-2);border-radius:10px;padding-left:8px;padding-right:8px}
+  .task.editing .check{opacity:.35;pointer-events:none}
+  .task.editing .t-main{cursor:pointer}
+  .row-edit,.row-del{flex:none;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-size:13px;font-weight:800;cursor:pointer;border:1px solid var(--line);background:var(--surface)}
+  .row-edit{color:var(--sky)}
+  .row-del{color:#D9534F;margin-left:4px}
+  .row-edit:active,.row-del:active{transform:scale(.92)}
+  .empty-mini{padding:16px 0;text-align:center;font-size:12px;color:var(--ink-faint)}
+  /* 今日作业板块 */
+  .hw-sec{margin-top:16px;padding-top:14px;border-top:2px dashed var(--line)}
+  .prog.hw{margin-bottom:10px}
+  .hw-list{margin-bottom:2px}
+  .task.hw .t-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hw-subj{flex:none;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;margin-left:8px}
+  .task.hw.editing .hw-subj{margin-right:2px}
+  @keyframes bubblePop{0%{transform:scale(.9)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
+  .bubble.pop{animation:bubblePop .35s ease}
 
   .acts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px}
   .act{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 4px;text-align:center;cursor:pointer;transition:.15s}
@@ -3050,15 +3078,40 @@
           <button class="btn" onclick="openPlayPet()">陪小萌玩 →</button>
         </div>
 
-        <!-- 中：打卡 + 学习乐园 -->
+        <!-- 中：打卡 + 作业 + 学习乐园 -->
         <div class="card" id="homeTasks">
-          <div class="card-h"><span class="t">今日打卡</span><span class="s" id="homeTaskCount">3/5 完成</span></div>
+          <div class="card-h">
+            <span class="t">✅ 今日打卡</span>
+            <span class="ch-right"><span class="s" id="homeTaskCount">0/0 完成</span><span class="hcard-edit" id="ckEditBtn" onclick="toggleHomeEdit('ck')">✎ 编辑</span></span>
+          </div>
           <div class="prog">
             <span class="rkt">🚀</span>
-            <div class="ptxt"><div class="l">成长进度</div><div class="n" id="homeProgNum">已完成 3 项</div></div>
-            <div class="bar"><i id="homeProgBar" style="width:60%;background:linear-gradient(90deg,#F7A8BC,var(--brand))"></i></div>
+            <div class="ptxt"><div class="l">成长进度</div><div class="n" id="homeProgNum">已完成 0 项</div></div>
+            <div class="bar"><i id="homeProgBar" style="width:0%;background:linear-gradient(90deg,#F7A8BC,var(--brand))"></i></div>
           </div>
           <div id="homeTaskList"></div>
+          <div class="hcard-addbar" id="homeCkAddBar" style="display:none">
+            <span class="hcard-add" onclick="addHomeCheckin()">＋ 添加打卡项</span>
+            <span class="hcard-tip">编辑中圆圈不可点，点「✓ 完成」退出</span>
+          </div>
+
+          <div class="hw-sec">
+            <div class="card-h" style="margin-bottom:10px">
+              <span class="t">📝 今日作业</span>
+              <span class="ch-right"><span class="s" id="hwCount">0/0 完成</span><span class="hcard-edit" id="hwEditBtn" onclick="toggleHomeEdit('hw')">✎ 编辑</span></span>
+            </div>
+            <div class="prog hw">
+              <span class="rkt">📝</span>
+              <div class="ptxt"><div class="l">作业进度</div><div class="n" id="hwProgNum">今天还没有作业</div></div>
+              <div class="bar"><i id="hwBar" style="width:0%;background:linear-gradient(90deg,#9CCC65,var(--sage))"></i></div>
+            </div>
+            <div id="homeHwList" class="hw-list"></div>
+            <div class="hcard-addbar" id="homeHwAddBar" style="display:none">
+              <span class="hcard-add" onclick="addHomework()">＋ 添加作业</span>
+              <span class="hcard-add ghost" onclick="carryOverHomework()">↺ 顺延未完成</span>
+              <span class="hcard-tip">每天一张新表，没做完的第二天自动清空</span>
+            </div>
+          </div>
 
           <div class="learn-section-h"><span class="l">🎓 学习乐园 · <b id="learnCount">9 大模块</b></span></div>
           <div class="learn-grid" id="learnGrid"></div>
@@ -5579,6 +5632,7 @@
     document.getElementById(target).classList.add('on');
     /* 顶栏接管：device-bar 收归首页，其余页面由各自顶栏承载，消除双层顶栏 */
     try{ document.body.classList.toggle('ah-full', target!=='sc-home'); }catch(e){}
+    if(target==='sc-home'){renderHomeTasks();renderHomework();}
     if(target==='sc-parent'){pinInput='';renderPinDots();renderGameDiffUI();}
     if(target==='sc-checkin')initCheckin();
     else if(target==='sc-store')initStore();
@@ -11216,7 +11270,25 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     {name:'整理书包',act:'pack',req:true}
   ];
   function syncCheckinActs(){mgmtData.checkins.forEach(function(c){var m=CANON_CHECKINS.find(function(x){return c.name===x.name;});if(m){if(!c.act)c.act=m.act;if(m.req&&c.req===undefined)c.req=m.req;}});}
-  function loadMgmt(){var changed=false;const raw=LS.getItem(MGMT_KEY);if(raw){try{const d=JSON.parse(raw);if(Array.isArray(d.checkins)){mgmtData.checkins=d.checkins;changed=true;}if(Array.isArray(d.studies))mgmtData.studies=d.studies;}catch(e){}}syncCheckinActs();if(changed)saveMgmt();}
+  function loadMgmt(){var changed=false;const raw=LS.getItem(MGMT_KEY);if(raw){try{const d=JSON.parse(raw);if(Array.isArray(d.checkins)){mgmtData.checkins=d.checkins;changed=true;}if(Array.isArray(d.studies))mgmtData.studies=d.studies;}catch(e){}}syncCheckinActs();migrateCheckinIds();if(changed)saveMgmt();}
+  function newCkId(){return 'ck'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+  /* 打卡项可增删改后序号会整体前移，完成记录必须按稳定 id 存，否则勾选会串到别的项上 */
+  function migrateCheckinIds(){
+    var changed=false;
+    mgmtData.checkins.forEach(function(c){if(!c.id){c.id=newCkId();changed=true;}});
+    try{
+      if(!LS.getItem('mp_ckid_mig_v1')){
+        var all=JSON.parse(LS.getItem('mp_checkin_v1')||'{}');
+        Object.keys(all).forEach(function(k){
+          var arr=all[k];if(!Array.isArray(arr))return;
+          all[k]=arr.map(function(v){return (typeof v==='number'&&mgmtData.checkins[v])?mgmtData.checkins[v].id:v;}).filter(Boolean);
+        });
+        LS.setItem('mp_checkin_v1',JSON.stringify(all));
+        LS.setItem('mp_ckid_mig_v1','1');
+      }
+    }catch(e){}
+    if(changed)saveMgmt();
+  }
   function saveMgmt(){try{LS.setItem(MGMT_KEY,JSON.stringify(mgmtData));}catch(e){}}
   function renderCheckins(){
     const box=document.getElementById('checkinList');if(!box)return;
@@ -12186,9 +12258,9 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   }
   function updateHomeProgress(){
     const card=document.getElementById('homeTasks');if(!card)return;
-    const tasks=card.querySelectorAll('.task');
+    const tasks=card.querySelectorAll('#homeTaskList .task');
     let n=0;tasks.forEach(t=>{if(t.classList.contains('done'))n++;});
-    const hdr=card.querySelector('.card-h .s');if(hdr)hdr.textContent=n+'/'+tasks.length+' 完成';
+    const hdr=document.getElementById('homeTaskCount');if(hdr)hdr.textContent=n+'/'+tasks.length+' 完成';
     const pct=Math.round(n/tasks.length*100);
     const bar=card.querySelector('.bar i');if(bar)bar.style.width=pct+'%';
     const nEl=card.querySelector('.prog .n');if(nEl)nEl.textContent='已完成 '+n+' 项';
@@ -12562,19 +12634,203 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   function refreshTopBar(){
     // 顶栏当前只保留星星与设置，后续如需扩展可在此刷新
   }
+  /* ===== 主页「今日打卡 / 今日作业」就地编辑：默认只读防误触，点「✎ 编辑」才进编辑态 ===== */
+  var HOME_EDIT={ck:false,hw:false};
+  function toggleHomeEdit(kind){
+    if(kind!=='ck'&&kind!=='hw')return;
+    HOME_EDIT[kind]=!HOME_EDIT[kind];
+    renderHomeTasks();renderHomework();syncHomeEditBtns();
+  }
+  function syncHomeEditBtns(){
+    var b1=document.getElementById('ckEditBtn'),b2=document.getElementById('hwEditBtn');
+    if(b1){b1.textContent=HOME_EDIT.ck?'✓ 完成':'✎ 编辑';b1.classList.toggle('on',HOME_EDIT.ck);}
+    if(b2){b2.textContent=HOME_EDIT.hw?'✓ 完成':'✎ 编辑';b2.classList.toggle('on',HOME_EDIT.hw);}
+    var a=document.getElementById('homeCkAddBar');if(a)a.style.display=HOME_EDIT.ck?'flex':'none';
+    var c=document.getElementById('homeHwAddBar');if(c)c.style.display=HOME_EDIT.hw?'flex':'none';
+    var card=document.getElementById('homeTasks');if(card)card.classList.toggle('any-editing',!!(HOME_EDIT.ck||HOME_EDIT.hw));
+  }
   function renderHomeTasks(){
     var list=document.getElementById('homeTaskList');if(!list)return;
     var done=(loadCheckinDone()[getTodayKey()]||[]);
+    var ed=!!HOME_EDIT.ck;
     var html='';
-    mgmtData.checkins.forEach(function(c,i){if(!c.on)return;var isD=done.indexOf(i)>=0;html+='<div class="task'+(isD?' done':'')+'" id="ht-'+i+'"><span class="check" onclick="toggleHomeCheckin('+i+',event)">'+(isD?'✓':'')+'</span><div class="t-main" onclick="homeTaskGo('+i+')"><div class="t-name">'+esc(c.name)+'</div><div class="t-tag">'+esc(c.tag||'')+'</div></div>'+(c.right?'<span class="rtag'+(c.req?' req':'')+'">'+esc(c.right)+'</span>':'')+'</div>';});
+    mgmtData.checkins.forEach(function(c,i){
+      if(!c.on)return;
+      var isD=done.indexOf(c.id)>=0;
+      if(!isD&&done.indexOf(i)>=0)isD=true; /* 兼容未迁移的旧序号记录 */
+      var tap=ed?('editHomeCheckin('+i+')'):('homeTaskGo('+i+')');
+      html+='<div class="task'+(isD?' done':'')+(ed?' editing':'')+'" id="ht-'+i+'">'
+        +'<span class="check" onclick="toggleHomeCheckin('+i+',event)">'+(isD?'✓':'')+'</span>'
+        +'<div class="t-main" onclick="'+tap+'"><div class="t-name">'+esc(c.name)+'</div>'+(c.tag?'<div class="t-tag">'+esc(c.tag)+'</div>':'')+'</div>'
+        +(ed
+          ? '<span class="row-edit" onclick="editHomeCheckin('+i+')">✎</span><span class="row-del" onclick="delHomeCheckin('+i+')">✕</span>'
+          : (c.right?'<span class="rtag'+(c.req?' req':'')+'">'+esc(c.right)+'</span>':''))
+        +'</div>';
+    });
+    if(!html)html='<div class="empty-mini">还没有打卡项，点右上角「✎ 编辑」添加</div>';
     list.innerHTML=html;
-    updateHomeProgress();updateMilestone();refreshTopBar();
+    updateHomeProgress();updateMilestone();refreshTopBar();syncHomeEditBtns();
+  }
+  function addHomeCheckin(){
+    showInputDlg({title:'添加打卡项',msg:'例如：练琴 20 分钟',placeholder:'输入打卡项名称',required:true,okText:'下一步',onOk:function(v){
+      if(v===null||!String(v).trim())return;
+      showInputDlg({title:'副标题（可留空）',msg:'例如：钢琴·哈农',placeholder:'可留空',okText:'添加',onOk:function(t){
+        mgmtData.checkins.push({id:newCkId(),name:String(v).trim(),tag:(t||'').trim(),right:'',on:true,req:false});
+        saveMgmt();renderCheckins();renderHomeTasks();renderCheckinTasks();toast('已添加打卡项');
+      }});
+    }});
+  }
+  function editHomeCheckin(i){
+    var c=mgmtData.checkins[i];if(!c)return;
+    showInputDlg({title:'修改打卡项',value:c.name,placeholder:'打卡项名称',required:true,okText:'下一步',onOk:function(v){
+      if(v===null||!String(v).trim())return;
+      showInputDlg({title:'副标题（可留空）',value:c.tag||'',placeholder:'可留空',okText:'保存',onOk:function(t){
+        mgmtData.checkins[i].name=String(v).trim();mgmtData.checkins[i].tag=(t||'').trim();
+        saveMgmt();renderCheckins();renderHomeTasks();renderCheckinTasks();toast('已修改');
+      }});
+    }});
+  }
+  function delHomeCheckin(i){
+    var c=mgmtData.checkins[i];if(!c)return;
+    showConfirmDlg({title:'删除打卡项',msg:'确定删除「'+c.name+'」？删除后今天的勾选也会一起清掉。',okText:'删除',onOk:function(ok){
+      if(!ok)return;
+      var id=c.id;
+      mgmtData.checkins.splice(i,1);
+      try{var all=loadCheckinDone();Object.keys(all).forEach(function(k){
+        if(!Array.isArray(all[k]))return;
+        var ix=all[k].indexOf(id);if(ix>=0)all[k].splice(ix,1);
+      });saveCheckinDone(all);}catch(e){}
+      saveMgmt();renderCheckins();renderHomeTasks();renderCheckinTasks();toast('已删除');
+    }});
   }
   function updateMilestone(){
     var s=document.getElementById('msStreak');if(s)s.textContent='🔥 '+STATS.streak;
     var t=document.getElementById('msTotalDays');if(t)t.textContent='📅 '+getTotalCheckinDays();
   }
-  function toggleHomeCheckin(i,ev){if(ev&&ev.stopPropagation)ev.stopPropagation();var el=document.getElementById('ht-'+i);if(!el)return;var all=loadCheckinDone();var key=getTodayKey();if(!all[key])all[key]=[];var arr=all[key];var ix=arr.indexOf(i);var becameDone=false;if(ix>=0){arr.splice(ix,1);el.classList.remove('done');el.querySelector('.check').textContent='';}else{arr.push(i);el.classList.add('done');el.querySelector('.check').textContent='✓';becameDone=true;}saveCheckinDone(all);updateHomeProgress();if(document.getElementById('sc-checkin').classList.contains('on'))renderCheckinTasks();if(becameDone)onTaskCompleted(i);}
+  function toggleHomeCheckin(i,ev){if(ev&&ev.stopPropagation)ev.stopPropagation();if(HOME_EDIT.ck)return;
+    var c=mgmtData.checkins[i];if(!c||!c.id)return;
+    var el=document.getElementById('ht-'+i);if(!el)return;
+    var all=loadCheckinDone();var key=getTodayKey();if(!all[key])all[key]=[];var arr=all[key];
+    var ix=arr.indexOf(c.id);
+    if(ix<0){var ni=arr.indexOf(i);if(ni>=0){arr[ni]=c.id;ix=ni;}} /* 旧序号记录就地升 id */
+    var becameDone=false;
+    if(ix>=0){arr.splice(ix,1);el.classList.remove('done');el.querySelector('.check').textContent='';}
+    else{arr.push(c.id);el.classList.add('done');el.querySelector('.check').textContent='✓';becameDone=true;}
+    saveCheckinDone(all);updateHomeProgress();if(document.getElementById('sc-checkin').classList.contains('on'))renderCheckinTasks();if(becameDone)onTaskCompleted(i);}
+
+  /* ===== 今日作业（主页板块 · 每日一张表 · 可增删改 · 打勾划线 + 宠物互动） ===== */
+  const HW_KEY='mp_homework_v1';
+  const HW_SUBJ=[{k:'语文',c:'#F2994A'},{k:'数学',c:'#5B8FD0'},{k:'英语',c:'#9B6DD6'},{k:'其他',c:'#5FB37A'}];
+  function loadHomework(){try{return JSON.parse(LS.getItem(HW_KEY)||'{}');}catch(e){return {};}}
+  function saveHomework(o){try{LS.setItem(HW_KEY,JSON.stringify(o));}catch(e){}
+    /* 只保留最近 60 天，避免长期堆积 */
+    try{var ks=Object.keys(o).sort();while(ks.length>60){delete o[ks.shift()];}LS.setItem(HW_KEY,JSON.stringify(o));}catch(e2){}
+  }
+  function getHomework(){var all=loadHomework();var k=getTodayKey();if(!Array.isArray(all[k]))all[k]=[];return all[k];}
+  function newHwId(){return 'hw'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+  function hwSubjColor(k){var m=null;HW_SUBJ.forEach(function(s){if(s.k===k)m=s;});return m?m.c:'#5FB37A';}
+  function renderHomework(){
+    var box=document.getElementById('homeHwList');if(!box)return;
+    var list=getHomework(),ed=!!HOME_EDIT.hw,html='';
+    list.forEach(function(h,i){
+      var col=hwSubjColor(h.subj);
+      html+='<div class="task hw'+(h.done?' done':'')+(ed?' editing':'')+'" id="hw-'+i+'">'
+        +'<span class="check" onclick="toggleHomework('+i+',event)">'+(h.done?'✓':'')+'</span>'
+        +'<div class="t-main"'+(ed?' onclick="editHomework('+i+')"':'')+'><div class="t-name">'+esc(h.text)+'</div></div>'
+        +'<span class="hw-subj" style="background:'+col+'22;color:'+col+'">'+esc(h.subj||'其他')+'</span>'
+        +(ed?'<span class="row-edit" onclick="editHomework('+i+')">✎</span><span class="row-del" onclick="delHomework('+i+')">✕</span>':'')
+        +'</div>';
+    });
+    if(!html)html='<div class="empty-mini">今天还没有作业，点右上角「✎ 编辑」添加</div>';
+    box.innerHTML=html;
+    updateHomeworkProgress();
+  }
+  function updateHomeworkProgress(){
+    var list=getHomework(),n=0;
+    list.forEach(function(h){if(h.done)n++;});
+    var el=document.getElementById('hwCount');if(el)el.textContent=n+'/'+list.length+' 完成';
+    var bar=document.getElementById('hwBar');if(bar)bar.style.width=Math.round(n/(list.length||1)*100)+'%';
+    var nt=document.getElementById('hwProgNum');if(nt)nt.textContent=list.length?('已完成 '+n+' 项'):'今天还没有作业';
+  }
+  function toggleHomework(i,ev){if(ev&&ev.stopPropagation)ev.stopPropagation();if(HOME_EDIT.hw)return;
+    var all=loadHomework();var k=getTodayKey();if(!Array.isArray(all[k]))all[k]=[];
+    var h=all[k][i];if(!h)return;
+    var becameDone=false;
+    if(h.done){h.done=false;}else{h.done=true;becameDone=true;}
+    saveHomework(all);renderHomework();
+    if(becameDone)onHomeworkCompleted(h.text,all[k]);
+  }
+  function addHomework(){
+    showInputDlg({title:'添加今日作业',msg:'先选科目',options:HW_SUBJ.map(function(s){return{value:s.k,label:s.k};}),value:'语文',okText:'下一步',onOk:function(subj){
+      if(subj===null)return;
+      showInputDlg({title:'作业内容',msg:'科目：'+(subj||'其他'),placeholder:'如：抄写第 5 课生字',required:true,okText:'添加',onOk:function(v){
+        if(v===null||!String(v).trim())return;
+        var all=loadHomework();var k=getTodayKey();if(!Array.isArray(all[k]))all[k]=[];
+        all[k].push({id:newHwId(),text:String(v).trim(),subj:subj||'其他',done:false});
+        saveHomework(all);renderHomework();toast('已添加作业');
+      }});
+    }});
+  }
+  function editHomework(i){
+    var h=getHomework()[i];if(!h)return;
+    showInputDlg({title:'修改作业',value:h.text,placeholder:'作业内容',required:true,okText:'下一步',onOk:function(v){
+      if(v===null||!String(v).trim())return;
+      showInputDlg({title:'科目',options:HW_SUBJ.map(function(s){return{value:s.k,label:s.k};}),value:h.subj||'其他',okText:'保存',onOk:function(subj){
+        if(subj===null)return;
+        var all=loadHomework();var k=getTodayKey();if(!all[k][i])return;
+        all[k][i].text=String(v).trim();all[k][i].subj=subj||'其他';
+        saveHomework(all);renderHomework();toast('已修改');
+      }});
+    }});
+  }
+  function delHomework(i){
+    var h=getHomework()[i];if(!h)return;
+    showConfirmDlg({title:'删除作业',msg:'确定删除「'+h.text+'」？',okText:'删除',onOk:function(ok){
+      if(!ok)return;
+      var all=loadHomework();var k=getTodayKey();if(!all[k])return;
+      all[k].splice(i,1);saveHomework(all);renderHomework();toast('已删除');
+    }});
+  }
+  /* 顺延：把最近一次有记录的、未完成的作业复制一份到今天（默认每天全新，需要时才手动顺延） */
+  function carryOverHomework(){
+    var all=loadHomework();var k=getTodayKey();
+    var keys=Object.keys(all).filter(function(x){return x!==k;}).sort();
+    var un=[];
+    for(var j=keys.length-1;j>=0;j--){
+      var arr=all[keys[j]]||[];
+      un=arr.filter(function(h){return h&&!h.done;});
+      if(un.length)break;
+    }
+    if(!un.length){toast('上次没有未完成的作业');return;}
+    if(!Array.isArray(all[k]))all[k]=[];
+    var have={};all[k].forEach(function(h){have[h.text]=1;});
+    var n=0;
+    un.forEach(function(h){if(!have[h.text]){all[k].push({id:newHwId(),text:h.text,subj:h.subj||'其他',done:false});n++;}});
+    saveHomework(all);renderHomework();toast(n?('已顺延 '+n+' 项未完成作业'):'这些作业已经在今天列表里了');
+  }
+  var HOME_CHEERS=['太棒啦！你又完成一项 🎉','我为你骄傲，继续加油！','哇，你好厉害呀 ⭐','坚持的孩子最闪亮 ✨','做完啦！我们一起去玩吧 🐾','你今天超级棒 💪','又进步一点点啦 🌱','我好开心，亲亲你 😘'];
+  function homePetCheer(kind){
+    var b=document.getElementById('bubble');if(!b)return;
+    b.textContent=(kind==='all')?'今天的作业全部做完啦！我太开心啦 🎊':HOME_CHEERS[Math.floor(Math.random()*HOME_CHEERS.length)];
+    try{b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');}catch(e){}
+    try{playSfx('good');}catch(e2){}
+  }
+  function onHomeworkCompleted(text,list){
+    gachaPoints+=1;gachaSet(GACHA_KEYS.p,gachaPoints);
+    addEarn('star',1,'homework','完成作业：'+(text||''));
+    floatStar(1);toast('完成作业 +1⭐');
+    if(window.celebrate)window.celebrate({type:'small',emoji:'⭐',text:'+1⭐'});
+    refreshPointsUI();homePetCheer();
+    setTimeout(function(){showEmotionPop(text||'作业');},350);
+    var arr=list||getHomework();var n=0;arr.forEach(function(h){if(h.done)n++;});
+    if(arr.length>0&&n>=arr.length&&STATS.hwBonus!==getTodayKey()){
+      STATS.hwBonus=getTodayKey();saveStats();
+      gachaPoints+=2;gachaSet(GACHA_KEYS.p,gachaPoints);addEarn('star',2,'homework','今日作业全清');
+      refreshPointsUI();bumpMood(5);
+      setTimeout(function(){floatStar(2);toast('作业全清 +2⭐');if(window.celebrate)window.celebrate({type:'big',emoji:'🌟',text:'作业全清 +2⭐'});},500);
+      setTimeout(function(){homePetCheer('all');},700);
+    }
+  }
 
   /* ============ 陪宠物玩弹窗 ============ */
   function bumpMood(delta){
@@ -12802,13 +13058,13 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     var list=document.getElementById('checkinTaskList');if(!list)return;
     var done=(loadCheckinDone()[getTodayKey()]||[]);
     var html='';
-    mgmtData.checkins.forEach(function(c,i){var isD=done.indexOf(i)>=0;html+='<div class="task'+(isD?' done':'')+'" id="ck-'+i+'"><span class="check" onclick="toggleCheckinTask('+i+',event)">'+(isD?'✓':'')+'</span><div class="t-main" onclick="homeTaskGo('+i+')"><div class="t-name">'+esc(c.name)+'</div><div class="t-tag">'+esc(c.tag||'')+'</div></div>'+(c.right?'<span class="rtag'+(c.req?' req':'')+'">'+esc(c.right)+'</span>':'')+'</div>';});
+    mgmtData.checkins.forEach(function(c,i){var isD=(done.indexOf(c.id)>=0)||(!c.id&&done.indexOf(i)>=0);html+='<div class="task'+(isD?' done':'')+'" id="ck-'+i+'"><span class="check" onclick="toggleCheckinTask('+i+',event)">'+(isD?'✓':'')+'</span><div class="t-main" onclick="homeTaskGo('+i+')"><div class="t-name">'+esc(c.name)+'</div><div class="t-tag">'+esc(c.tag||'')+'</div></div>'+(c.right?'<span class="rtag'+(c.req?' req':'')+'">'+esc(c.right)+'</span>':'')+'</div>';});
     list.innerHTML=html;
-    var total=mgmtData.checkins.length,n=done.length;
+    var total=mgmtData.checkins.filter(function(c){return c.on!==false;}).length,n=done.length;
     var prog=document.getElementById('ckProg');if(prog)prog.textContent='已完成 '+n+' 项';
     var bar=document.getElementById('ckBar');if(bar)bar.style.width=Math.round(n/(total||1)*100)+'%';
   }
-  function toggleCheckinTask(i,ev){if(ev&&ev.stopPropagation)ev.stopPropagation();var el=document.getElementById('ck-'+i);if(!el)return;var all=loadCheckinDone();var key=getTodayKey();if(!all[key])all[key]=[];var arr=all[key];var ix=arr.indexOf(i);var becameDone=false;if(ix>=0){arr.splice(ix,1);el.classList.remove('done');el.querySelector('.check').textContent='';}else{arr.push(i);el.classList.add('done');el.querySelector('.check').textContent='✓';becameDone=true;}saveCheckinDone(all);var total=mgmtData.checkins.length,n=arr.length;var prog=document.getElementById('ckProg');if(prog)prog.textContent='已完成 '+n+' 项';var bar=document.getElementById('ckBar');if(bar)bar.style.width=Math.round(n/(total||1)*100)+'%';renderHomeTasks();if(becameDone)onTaskCompleted(i);}
+  function toggleCheckinTask(i,ev){if(ev&&ev.stopPropagation)ev.stopPropagation();var c=mgmtData.checkins[i];if(!c||!c.id)return;var el=document.getElementById('ck-'+i);if(!el)return;var all=loadCheckinDone();var key=getTodayKey();if(!all[key])all[key]=[];var arr=all[key];var ix=arr.indexOf(c.id);if(ix<0){var ni=arr.indexOf(i);if(ni>=0){arr[ni]=c.id;ix=ni;}}var becameDone=false;if(ix>=0){arr.splice(ix,1);el.classList.remove('done');el.querySelector('.check').textContent='';}else{arr.push(c.id);el.classList.add('done');el.querySelector('.check').textContent='✓';becameDone=true;}saveCheckinDone(all);var total=mgmtData.checkins.filter(function(c){return c.on!==false;}).length,n=arr.length;var prog=document.getElementById('ckProg');if(prog)prog.textContent='已完成 '+n+' 项';var bar=document.getElementById('ckBar');if(bar)bar.style.width=Math.round(n/(total||1)*100)+'%';renderHomeTasks();if(becameDone)onTaskCompleted(i);}
   function initCheckinCalendar(){
     var g=document.getElementById('ckCalGrid');if(!g)return;g.innerHTML='';
     var dates=STATS.checkinDates;var d=new Date();
@@ -13374,8 +13630,8 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   }
   function tmPickTask(i){ tmTask=tmTaskList[i]; tmRenderAll(); }
   function tmToggleEdit(){ tmEditMode=!tmEditMode; tmRenderAll(); }
-  function tmAddTask(){ var v=prompt('新任务名称：'); if(v===null) return; v=v.trim(); if(!v) return; tmTaskList.push(v); tmTask=v; tmSave(); tmRenderAll(); }
-  function tmEditTask(i){ var v=prompt('修改任务名称（留空=删除）：',tmTaskList[i]); if(v===null) return; v=v.trim(); if(!v){ tmDelTask(i); return; } tmTaskList[i]=v; tmTask=v; tmSave(); tmRenderAll(); }
+  function tmAddTask(){ showInputDlg({title:'新任务',msg:'写一句今天要专注做的事',placeholder:'如：写语文作业',required:true,okText:'添加',onOk:function(v){ if(v===null) return; v=String(v).trim(); if(!v) return; tmTaskList.push(v); tmTask=v; tmSave(); tmRenderAll(); }}); }
+  function tmEditTask(i){ showInputDlg({title:'修改任务',msg:'留空则删除该任务',value:tmTaskList[i]||'',placeholder:'任务名称',okText:'保存',onOk:function(v){ if(v===null) return; v=String(v).trim(); if(!v){ tmDelTask(i); return; } tmTaskList[i]=v; tmTask=v; tmSave(); tmRenderAll(); }}); }
   function tmDelTask(i){ var t=tmTaskList[i]; tmTaskList.splice(i,1); if(tmTask===t) tmTask=''; tmSave(); tmRenderAll(); }
   function tmToggleSound(){tmSound=!tmSound;tmSave();var b=document.getElementById('tmSoundBtn');if(b)b.textContent=tmSound?'🔊':'🔇';toast(tmSound?'🔊 提示音已开':'🔇 提示音已关');}
 
@@ -13503,7 +13759,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
 
   /* ---- 3. 情绪打卡 ---- */
   let emotionPick=null,emotionTask=null;
-  function showEmotionPop(taskName){emotionPick=null;emotionTask=taskName||'任务';document.querySelectorAll('.emo-btn').forEach(function(b){b.classList.remove('sel');});document.getElementById('emotionPop').classList.add('on');}
+  function showEmotionPop(taskName){var pop=document.getElementById('emotionPop');if(!pop)return;emotionPick=null;emotionTask=taskName||'任务';document.querySelectorAll('.emo-btn').forEach(function(b){b.classList.remove('sel');});pop.classList.add('on');}
   function pickEmotion(v,label,el){emotionPick={v:v,label:label};document.querySelectorAll('.emo-btn').forEach(function(b){b.classList.remove('sel');});el.classList.add('sel');}
   function saveEmotion(){if(!emotionPick)return;logMood(emotionPick.v,emotionPick.label,emotionTask);closeEmotion();toast('情绪已记录 '+emotionPick.label+' 😊');}
   function skipEmotion(){closeEmotion();}
@@ -14018,7 +14274,8 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     floatStar(1);toast('完成打卡 +1⭐');
     if(window.celebrate)window.celebrate({type:'small',emoji:'⭐',text:'+1⭐'});
     var done=(loadCheckinDone()[getTodayKey()]||[]);
-    if(mgmtData.checkins.length>0&&done.length>=mgmtData.checkins.length&&STATS.dailyBonus!==getTodayKey()){
+    var onN=mgmtData.checkins.filter(function(c){return c.on!==false;}).length;
+    if(onN>0&&done.length>=onN&&STATS.dailyBonus!==getTodayKey()){
       STATS.dailyBonus=getTodayKey();gachaPoints+=2;gachaSet(GACHA_KEYS.p,gachaPoints);addEarn('star',2,'checkin','今日全勤奖励');
       setTimeout(function(){floatStar(2);toast('今日全勤 +2⭐'); if(window.celebrate)window.celebrate({type:'big',emoji:'🌟',text:'今日全勤 +2⭐'});},500);
     }
@@ -14050,7 +14307,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     renderPet(); renderGrowthTrack(); renderGrowGrid(currentPartner); updatePetButtons();
     decayPet(); renderPetVitals(); renderPetBag(); refreshPointsUI();
     initCalendar(); initKeypad(); refreshPinNow(); initPsetCtrls();
-    loadMgmt(); renderCheckins(); renderStudies();
+    loadMgmt(); renderCheckins(); renderStudies(); renderHomeTasks(); renderHomework();
     loadBank();
     buildCharIndex(); loadStudy(); loadLearned(); loadPoemMastered(); updateStudyDisplays(); updateLearnedUI(); initHanzi();
     loadModules(); loadPerm(); loadGameScore();
