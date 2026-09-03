@@ -337,11 +337,55 @@
     .screen#sc-home .grid3 > .card:last-child .home-link-list{display:none}
     .screen#sc-home .learn-grid{grid-template-columns:repeat(3,1fr);gap:11px}
     .screen#sc-home .pet-stage{width:150px;height:150px}
-    /* 高度链贯通：横屏约束 home 屏高度，栏内滚动彻底修「看不全」 */
+    /* 左栏：宠物互动区自然展开，禁止内部滚动 */
+    .screen#sc-home .grid3 > .card:first-child{
+      height:auto;
+      align-self:flex-start;
+      overflow:visible;
+      padding:6px;
+    }
+    .screen#sc-home .grid3 > .card:first-child .card-h{margin-bottom:2px}
+    .screen#sc-home .grid3 > .card:first-child .ptab-row{margin-bottom:4px}
+    .screen#sc-home .grid3 > .card:first-child .ptab{height:26px;padding:0 9px;font-size:11px}
+    .screen#sc-home .grid3 > .card:first-child .pet-face{margin:0 0 2px}
+    .screen#sc-home .grid3 > .card:first-child .pet-stage{width:85px;height:85px;border-width:3px}
+    .screen#sc-home .grid3 > .card:first-child .name-row{margin-bottom:6px;gap:5px}
+    .screen#sc-home .grid3 > .card:first-child .pet-name{font-size:17px}
+    .screen#sc-home .grid3 > .card:first-child .edit-name{font-size:13px}
+    .screen#sc-home .grid3 > .card:first-child .pet-lv{margin:-4px 0 5px;font-size:11px}
+    .screen#sc-home .grid3 > .card:first-child .growth-track{margin:0 0 6px;display:flex;justify-content:center;flex-wrap:wrap;gap:3px;white-space:normal;overflow:visible;padding-bottom:0}
+    .screen#sc-home .grid3 > .card:first-child .growth-track .growth-dot{margin-right:0}
+    .screen#sc-home .grid3 > .card:first-child .stat-block{margin:0 0 5px;padding:3px 4px;gap:4px}
+    .screen#sc-home .grid3 > .card:first-child .stat-row{gap:2px}
+    .screen#sc-home .grid3 > .card:first-child .stat-top{font-size:11px}
+    .screen#sc-home .grid3 > .card:first-child .bar{height:6px}
+    .screen#sc-home .grid3 > .card:first-child .mood{margin-bottom:5px}
+    .screen#sc-home .grid3 > .card:first-child .mood-pick{margin-top:5px;gap:3px}
+    .screen#sc-home .grid3 > .card:first-child .mood-pick button{padding:2px 0;border-radius:6px;font-size:13px}
+    .screen#sc-home .grid3 > .card:first-child .chips{margin-bottom:6px;gap:5px}
+    .screen#sc-home .grid3 > .card:first-child .chip{padding:5px 3px;border-radius:9px}
+    .screen#sc-home .grid3 > .card:first-child .chip .v{font-size:17px}
+    .screen#sc-home .grid3 > .card:first-child .chip .k{font-size:10px;margin-top:1px}
+    .screen#sc-home .grid3 > .card:first-child .chip .mini-bar{height:4px;margin-top:3px}
+    .screen#sc-home .grid3 > .card:first-child .pet-bag{margin-bottom:5px;padding:4px 5px;overflow-x:hidden}
+    .screen#sc-home .grid3 > .card:first-child .pb-head{font-size:11px}
+    .screen#sc-home .grid3 > .card:first-child .pb-go{font-size:9px}
+    .screen#sc-home .grid3 > .card:first-child .pb-cnts{margin:5px 0 2px;gap:5px}
+    .screen#sc-home .grid3 > .card:first-child .pb-cnt{font-size:10px;padding:4px 2px;border-radius:7px}
+    .screen#sc-home .grid3 > .card:first-child .bubble{margin-bottom:5px;padding:4px 5px;font-size:11px;line-height:1.4}
+    .screen#sc-home .grid3 > .card:first-child .btn{padding:5px 10px;font-size:12px;height:auto;border-radius:10px}
+    /* 高度链贯通：横屏约束 home 屏高度，栏内滚动彻底修「看不全」。左栏自然展开，故放宽 30px 给它空间 */
     #sc-home.screen{height:calc(100vh - 150px);display:flex;flex-direction:column;overflow:hidden;box-sizing:border-box}
     #sc-home .home-wrap{flex:1;min-height:0}
     #sc-home .home-main{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column}
     #sc-home .grid3{flex:1;min-height:0}
+  }
+  /* iPad mini / 小高度横屏：隐藏气泡、进一步压缩宠物区，保证左栏不溢出 */
+  @media (min-width:960px) and (max-height:780px){
+    .screen#sc-home .grid3 > .card:first-child .bubble{display:none}
+    .screen#sc-home .grid3 > .card:first-child .pet-stage{width:80px;height:80px}
+    .screen#sc-home .grid3 > .card:first-child .stat-block{padding:2px 3px;gap:3px}
+    .screen#sc-home .grid3 > .card:first-child .btn{padding:4px 10px}
   }
   .version-badge{font-size:9px;font-weight:700;color:var(--ink-faint);background:var(--surface-2);padding:2px 6px;border-radius:8px;margin-left:8px;letter-spacing:.3px}
 
