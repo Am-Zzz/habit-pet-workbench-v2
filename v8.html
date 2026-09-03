@@ -1532,6 +1532,45 @@
   .lib-status{text-align:center;color:var(--sage);font-size:12px;font-weight:700;min-height:16px;margin-top:8px}
   .sync-box{border:1.5px dashed var(--brand-s);background:var(--brand-s);border-radius:14px;padding:12px 14px;margin-top:12px}
   .sync-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  /* ===== 家长设置 · 卡片格布局（横屏三列，板块清晰） ===== */
+  .pset-card{max-width:1180px;margin:0 auto}
+  .pset-grid{margin-top:14px}
+  .pset-grid .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+  .pset-grid .pcard{background:linear-gradient(180deg,#FFFFFF,#FFFCF9);border:1px solid var(--line);border-radius:16px;padding:13px 14px 14px;box-shadow:0 3px 10px rgba(120,70,80,.05)}
+  .pset-grid .pcard.w2{grid-column:span 2}
+  .pset-grid .pcard.w3{grid-column:1/-1}
+  .pset-grid .pc-h{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+  .pset-grid .pc-ic{width:32px;height:32px;border-radius:11px;display:grid;place-items:center;font-size:16px;flex:none}
+  .pset-grid .pc-h .t{font-size:13.5px;font-weight:800}
+  .pset-grid .pc-h .s{font-size:11px;color:var(--ink-soft);margin-top:1px}
+  .pset-grid .pc-more{margin-left:auto;font-size:11px;font-weight:800;color:var(--brand-d);background:var(--brand-s);padding:4px 10px;border-radius:999px;white-space:nowrap;cursor:pointer;flex:none}
+  .pset-grid .pc-more.gray{color:var(--ink-soft);background:var(--surface-2)}
+  .pset-grid .c1{background:var(--brand-s)}
+  .pset-grid .c2{background:var(--sky-s)}
+  .pset-grid .c3{background:var(--sage-s)}
+  .pset-grid .c4{background:var(--butter-s)}
+  .pset-grid .c5{background:#F3EAFB}
+  .pset-grid .c6{background:#FDEEEE}
+  .pset-grid .pc-sub{font-size:11px;font-weight:800;color:var(--ink-soft);margin:11px 0 6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .pset-grid .pc-hint{font-size:10.5px;color:var(--ink-faint);margin-top:8px;line-height:1.55}
+  .pset-grid .ptabs{display:flex;gap:6px;margin-bottom:10px}
+  .pset-grid .ptab{flex:1;text-align:center;font-size:11.5px;font-weight:800;padding:6px 4px;border-radius:9px;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}
+  .pset-grid .ptab.sel{background:var(--ink);color:#fff}
+  .pset-grid .mgmt{max-height:235px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .pset-grid .prow{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--line);border-radius:11px;margin-bottom:7px;background:var(--surface);font-size:12.5px;font-weight:700}
+  .pset-grid .prow .nm{flex:1;min-width:0}
+  .pset-grid .prow .tg{font-size:10px;color:var(--ink-faint);font-weight:500;margin-left:5px}
+  .pset-grid .prow .go{width:26px;height:26px;border-radius:9px;background:var(--brand-s);color:var(--brand-d);display:grid;place-items:center;cursor:pointer;font-size:12px;font-weight:800;flex:none}
+  .pset-grid .prow .in{flex:1;min-width:0;padding:7px 10px;border:1.5px solid var(--line);border-radius:9px;font-size:13px;background:var(--surface);font-family:inherit;color:var(--ink)}
+  .pset-grid .pbtn{flex:1;text-align:center;font-size:12px;font-weight:800;padding:9px 6px;border-radius:10px;background:var(--surface-2);color:var(--ink-soft);cursor:pointer;border:1px solid var(--line)}
+  .pset-grid .pbtn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+  .pset-grid .pwide{width:100%;text-align:center;font-size:12.5px;font-weight:800;padding:10px;border-radius:11px;background:var(--butter-s);color:#8A6416;cursor:pointer;border:1px solid var(--line);margin-top:8px}
+  @media(max-width:1040px){.pset-grid .grid{grid-template-columns:repeat(2,1fr)}.pset-grid .pcard.w2{grid-column:span 2}}
+  @media(max-width:700px){.pset-grid .grid{grid-template-columns:1fr}.pset-grid .pcard.w2{grid-column:span 1}}
+  /* 主页打卡编辑态：显示/隐藏开关（原家长设置「打卡管理」迁移补偿） */
+  .row-eye{flex:none;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-size:13px;cursor:pointer;border:1px solid var(--line);background:var(--surface)}
+  .task.dim{opacity:.5}
+  .task.dim .t-name{text-decoration:line-through;text-decoration-style:dotted}
   .sync-row .lf-in{flex:1;min-width:140px}
 
   /* ====== 逻辑思维屏 ====== */
@@ -3186,153 +3225,163 @@
 
     <!-- 屏幕：家长设置 -->
     <div class="screen" id="sc-pset">
-      <div class="card" style="max-width:620px;margin:0 auto">
-        <div class="app-head skin-plain">
-        <div class="ah-icon"><span class="bi">⚙️</span></div>
-        <div class="ah-txt"><div class="ah-t">家长设置</div></div>
-        <div class="ah-sp"></div>
-        <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
-        <div class="ah-back" onclick="goBack()">← 返回</div>
+      <div class="card pset-card">
+        <div class="app-head skin-plain" style="margin:-4px -4px 0">
+          <div class="ah-icon"><span class="bi">⚙️</span></div>
+          <div class="ah-txt"><div class="ah-t">家长设置</div><div class="ah-s">6 个板块 · 一眼找到要改的地方</div></div>
+          <div class="ah-sp"></div>
+          <div class="ah-act"><div class="ah-mini star">⭐ <span class="ah-star-n">0</span></div></div>
+          <div class="ah-back" onclick="goBack()">← 返回</div>
         </div>
-        <div class="sec">
-          <div class="sec-h">📚 难度等级（按教材 / 年级）</div>
-          <div class="seg">
-            <button>幼儿园</button><button class="sel">幼升小</button>
-            <button>人教版 1–3 年级</button><button>人教版 4–6 年级</button>
-            <button>小升初</button>            <button>+ 自定义</button>
-          </div>
-        </div>
-        <div class="sec">
-          <div class="sec-h">🎮 游戏难度（给孩子玩的游戏）</div>
-          <div class="seg" id="gameDiffSeg">
-            <button data-gdiff="pre" onclick="setGameDiff('pre')">幼儿园</button>
-            <button data-gdiff="g13" onclick="setGameDiff('g13')">小学1–3</button>
-            <button data-gdiff="g36" onclick="setGameDiff('g36')">小学3–6</button>
-          </div>
-          <p style="font-size:11px;color:var(--ink-soft);margin:6px 0 0">默认「幼儿园」（幼小衔接），切换后游戏按此难度出题。</p>
-        </div>
-        <div class="sec">
-          <div class="sec-h">🧩 学习内容分类（可多选）</div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <span class="tog-chip on"><span class="ck">✓</span>识字</span>
-            <span class="tog-chip on"><span class="ck">✓</span>拼音</span>
-            <span class="tog-chip on"><span class="ck">✓</span>口算闯关</span>
-            <span class="tog-chip on"><span class="ck">✓</span>英语单词</span>
-            <span class="tog-chip on"><span class="ck">✓</span>英语对话</span>
-            <span class="tog-chip on"><span class="ck">✓</span>古诗</span>
-            <span class="tog-chip on"><span class="ck">✓</span>科普阅读</span>
-            <span class="tog-chip on"><span class="ck">✓</span>逻辑思维</span>
-            <span class="tog-chip on"><span class="ck">✓</span>专注力训练</span>
-            <span class="tog-chip on"><span class="ck">✓</span>家务劳动</span>
-          </div>
-        </div>
-        <div class="sec">
-          <div class="sec-h">✅ 打卡内容管理</div>
-          <div class="mgmt" id="checkinList"></div>
-          <div class="add-row" onclick="addCheckin()">＋ 添加打卡项</div>
-        </div>
-        <div class="sec">
-          <div class="sec-h">📖 学习内容管理</div>
-          <div class="mgmt" id="studyList"></div>
-          <div class="add-row" onclick="addStudy()">＋ 添加学习内容</div>
-        </div>
-        <div class="sec">
-          <div class="sec-h">📚 学科题库（可编辑 · 占位待审）</div>
-          <p style="font-size:11px;color:var(--ink-soft);margin:0 0 8px">这里录入真实题目，孩子端「题库闯关」会直接读取。🟡 黄色 = AI 占位内容，答案以真人教研审核后勾选「已审」为准。</p>
-          <div class="seg" id="bankTab"></div>
-          <div class="mgmt" id="bankList"></div>
-          <div class="add-row" onclick="addBankItem()">＋ 添加题目</div>
-          <div class="add-row ghost" onclick="resetBank()">↺ 恢复占位题库（清空后重装示例）</div>
-        </div>
-        <div class="sec">
-          <div class="sec-h">🎲 大富翁大题库（自定义 · 家长添加）</div>
-          <p style="font-size:11px;color:var(--ink-soft);margin:0 0 8px">这里添加的题目会和大富翁内置 132 题<b>混在一起随机抽取</b>，孩子玩大富翁就能抽到你加的卡。已添加 <b id="monoBankCount">0</b> 题。</p>
-          <div class="mgmt" id="monoBankList"></div>
-          <div class="add-row" onclick="addMonoBankItem()">＋ 添加大富翁题</div>
-        </div>
-        <div class="sec">
-          <div class="sec-h">🔐 权限管理（游戏开放）</div>
-          <div class="mgmt" id="permList"></div>
-          <p style="font-size:11px;color:var(--ink-soft);margin:6px 0 0">关闭后，该游戏在孩子端游戏中心不显示。</p>
-        </div>
-        <div class="sec" id="aaSec" style="border:2px solid var(--brand);background:linear-gradient(160deg,#fff,#FFF6F9)">
-          <div class="sec-h">🛡️ 防沉迷设置（护眼护身 · 家长）</div>
-          <div class="sync-row" style="align-items:center">
-            <span style="font-weight:700">开启防沉迷</span>
-            <label class="switch"><input type="checkbox" id="aaOn" onchange="aaSave()"><span class="slider"></span></label>
-          </div>
-          <div class="sec-sub">📅 每日可使用总时长</div>
-          <div class="seg" id="aaDailySeg">
-            <button data-v="20" onclick="aaSet('daily',20)">20 分钟</button>
-            <button data-v="30" onclick="aaSet('daily',30)">30 分钟</button>
-            <button data-v="40" onclick="aaSet('daily',40)">40 分钟</button>
-            <button data-v="60" onclick="aaSet('daily',60)">60 分钟</button>
-          </div>
-          <div class="sec-sub">⏱️ 连续使用多久提醒休息</div>
-          <div class="seg" id="aaBreakSeg">
-            <button data-v="15" onclick="aaSet('break',15)">15 分钟</button>
-            <button data-v="20" onclick="aaSet('break',20)">20 分钟</button>
-            <button data-v="30" onclick="aaSet('break',30)">30 分钟</button>
-          </div>
-          <div class="sec-sub">💤 单次休息时长</div>
-          <div class="seg" id="aaRestSeg">
-            <button data-v="5" onclick="aaSet('rest',5)">5 分钟</button>
-            <button data-v="10" onclick="aaSet('rest',10)">10 分钟</button>
-          </div>
-          <div class="sync-row" style="align-items:center;margin-top:10px">
-            <span>🐾 宠物也要休息（精力耗尽会睡觉）</span>
-            <label class="switch"><input type="checkbox" id="aaPet" onchange="aaSave()"><span class="slider"></span></label>
-          </div>
-          <div class="sync-row" style="align-items:center;margin-top:10px">
-            <span>🌙 晚上到点自动休息</span>
-            <label class="switch"><input type="checkbox" id="aaBed" onchange="aaSave()"><span class="slider"></span></label>
-            <input type="time" id="aaBedTime" value="21:00" onchange="aaSave()" style="margin-left:8px">
-          </div>
-          <div class="sync-row" style="align-items:center;margin-top:10px">
-            <span>🔊 音效（奖励音 / 点击音）</span>
-            <label class="switch"><input type="checkbox" id="aaSound" onchange="aaSave()"><span class="slider"></span></label>
-          </div>
-          <div class="sec-sub" style="margin-top:14px">🔓 每次解锁加多少时间（找爸爸妈妈延长）</div>
-          <div class="seg" id="aaUnlockMinSeg">
-            <button data-v="5" onclick="aaSetUnlockMin(5)">5 分钟</button>
-            <button data-v="10" onclick="aaSetUnlockMin(10)">10 分钟</button>
-            <button data-v="15" onclick="aaSetUnlockMin(15)">15 分钟</button>
-            <button data-v="30" onclick="aaSetUnlockMin(30)">30 分钟</button>
-          </div>
-          <div class="sync-row" style="align-items:center;margin-top:10px">
-            <span><b>🔒 关闭「+时间」解锁</b><br><span style="font-size:11px;color:var(--ink-faint);font-weight:400">打开后，到点/到晚上都没有「找爸爸妈妈解锁」按钮，孩子需等明天自动恢复（更严格的护眼设置）</span></span>
-            <label class="switch"><input type="checkbox" id="aaUnlockOff" onchange="aaSave()"><span class="slider"></span></label>
-          </div>
-          <div class="sync-row" style="align-items:center;margin-top:10px">
-            <span>🎵 背景音乐 BGM（轻音乐循环）</span>
-            <label class="switch"><input type="checkbox" id="bgmOn" onchange="bgmToggleSetting(this.checked)"><span class="slider"></span></label>
-          </div>
-          <p style="font-size:11px;color:var(--ink-soft);margin:10px 0 0">建议幼儿单次≤20 分钟、每日累计≤40 分钟，并保留充足户外与睡眠。设置立即生效，孩子端无法修改。</p>
-        </div>
-        <div class="sec">
-          <div class="sec-h">🔑 家长密码</div>
-          <div class="sync-row">
-            <input id="pinInput" class="lf-in" maxlength="4" inputmode="numeric" placeholder="输入 4 位数字" style="width:140px">
-            <button class="btn ghost" onclick="setParentPin()">💾 修改密码</button>
-            <span id="pinStatus" style="font-size:12px;color:var(--sage);font-weight:700"></span>
-          </div>
-          <p style="font-size:12px;color:var(--ink-soft);margin:6px 0 0">当前密码：<b id="pinNow">1111</b>（进入家长模式时输入）</p>
-        </div>
-        <button class="btn butter" style="width:100%;margin-top:16px" onclick="openLibrary()">📚 进入素材库（增删改 / 导入导出 JSON）</button>
-        <div class="sec" style="margin-top:16px">
-          <div class="sec-h">💾 数据迁移（换设备 / 换链接用）</div>
-          <p style="font-size:12px;color:var(--ink-soft);margin:0 0 8px">「保存到本地」会把本机全部进度（打卡、宠物、关卡、星星…）下载成一个 <b>备份文件</b>，可存到电脑 / U盘 / 网盘；到另一端（如公网链接）打开家长设置 → 点「从本地上传」选中该文件即可恢复，<b>不影响本机</b>。</p>
-          <div class="sync-row">
-            <button class="btn ghost" onclick="exportAppFile()">💾 保存到本地</button>
-            <label class="btn ghost">📂 从本地上传<input type="file" accept="application/json,.json" style="display:none" onchange="if(this.files[0])importAppFile(this.files[0]);this.value=''"></label>
-          </div>
-          <details style="margin-top:10px">
-            <summary style="font-size:12px;color:var(--brand-d);cursor:pointer">📋 没有条件传文件？用文本方式（复制 / 粘贴）</summary>
-            <div class="sync-row" style="margin-top:8px">
-              <button class="btn ghost" onclick="exportAppData()">📤 导出全部数据为文本</button>
-              <button class="btn ghost" onclick="importAppData()">📥 从文本导入</button>
+        <div class="pset-grid">
+          <div class="grid">
+
+            <!-- 1 · 学习难度 -->
+            <div class="pcard">
+              <div class="pc-h"><div class="pc-ic c1">🎚️</div><div><div class="t">学习难度</div><div class="s">教材 / 年级 + 游戏难度</div></div></div>
+              <div class="seg" id="levelSeg">
+                <button>幼儿园</button><button class="sel">幼升小</button>
+                <button>人教版 1–3 年级</button><button>人教版 4–6 年级</button>
+                <button>小升初</button>            <button>+ 自定义</button>
+              </div>
+              <div class="pc-sub">🎮 游戏难度（给孩子玩的游戏）</div>
+              <div class="seg" id="gameDiffSeg">
+                <button data-gdiff="pre" onclick="setGameDiff('pre')">幼儿园</button>
+                <button data-gdiff="g13" onclick="setGameDiff('g13')">小学1–3</button>
+                <button data-gdiff="g36" onclick="setGameDiff('g36')">小学3–6</button>
+              </div>
+              <div class="pc-hint">默认「幼儿园」（幼小衔接），切换后游戏按此难度出题。</div>
             </div>
-          </details>
+
+            <!-- 2 · 学习内容分类 -->
+            <div class="pcard">
+              <div class="pc-h"><div class="pc-ic c2">🧩</div><div><div class="t">学习内容分类</div><div class="s">点一下开 / 关，可多选</div></div></div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <span class="tog-chip on"><span class="ck">✓</span>识字</span>
+                <span class="tog-chip on"><span class="ck">✓</span>拼音</span>
+                <span class="tog-chip on"><span class="ck">✓</span>口算闯关</span>
+                <span class="tog-chip on"><span class="ck">✓</span>英语单词</span>
+                <span class="tog-chip on"><span class="ck">✓</span>英语对话</span>
+                <span class="tog-chip on"><span class="ck">✓</span>古诗</span>
+                <span class="tog-chip on"><span class="ck">✓</span>科普阅读</span>
+                <span class="tog-chip on"><span class="ck">✓</span>逻辑思维</span>
+                <span class="tog-chip on"><span class="ck">✓</span>专注力训练</span>
+                <span class="tog-chip on"><span class="ck">✓</span>家务劳动</span>
+              </div>
+              <div class="pc-hint">关闭的分类，不再出现在学习乐园里。</div>
+            </div>
+
+            <!-- 3 · 安全与数据 -->
+            <div class="pcard">
+              <div class="pc-h"><div class="pc-ic c6">🔐</div><div><div class="t">安全与数据</div><div class="s">密码 / 素材库 / 备份</div></div></div>
+              <div class="pc-sub">🔑 家长密码</div>
+              <div class="prow"><input id="pinInput" class="in" maxlength="4" inputmode="numeric" placeholder="4 位数字" style="width:92px;flex:none"><span class="pbtn pri" style="flex:none;padding:7px 14px" onclick="setParentPin()">💾 修改</span><span class="tg">当前 <b id="pinNow">1111</b></span></div>
+              <div class="prow"><span class="nm">📚 素材库<span class="tg">增删改 / 导入导出</span></span><span class="go" onclick="openLibrary()">›</span></div>
+              <div class="pc-sub">💾 备份 / 恢复（换设备 · 换链接用）</div>
+              <div style="display:flex;gap:7px">
+                <span class="pbtn" onclick="exportAppFile()">💾 保存到本地</span>
+                <label class="pbtn" style="margin:0">📂 从本地上传<input type="file" accept="application/json,.json" style="display:none" onchange="if(this.files[0])importAppFile(this.files[0]);this.value=''"></label>
+              </div>
+              <details style="margin-top:8px">
+                <summary style="font-size:11px;color:var(--brand-d);cursor:pointer;font-weight:700">📋 没条件传文件？用文本方式（复制 / 粘贴）</summary>
+                <div style="display:flex;gap:7px;margin-top:7px">
+                  <span class="pbtn" onclick="exportAppData()">📤 导出为文本</span>
+                  <span class="pbtn" onclick="importAppData()">📥 从文本导入</span>
+                </div>
+              </details>
+              <div class="pc-hint" id="pinStatus" style="color:var(--sage);font-weight:700"></div>
+            </div>
+
+            <!-- 4 · 学习内容管理（宽卡 · 三 tab） -->
+            <div class="pcard w2">
+              <div class="pc-h"><div class="pc-ic c3">✅</div><div><div class="t">学习内容管理</div><div class="s">学习乐园显示什么 · 名称叫什么 · 题库内容</div></div></div>
+              <div class="ptabs" id="psetMgmtTabs">
+                <div class="ptab sel" onclick="psetTab(this,'paneStudy')">📖 学习内容</div>
+                <div class="ptab" onclick="psetTab(this,'paneBank')">📚 学科题库</div>
+                <div class="ptab" onclick="psetTab(this,'paneMono')">🎲 大富翁题库</div>
+              </div>
+              <div id="paneStudy">
+                <div class="mgmt" id="studyList"></div>
+                <div class="add-row" onclick="addStudy()">＋ 添加学习内容</div>
+              </div>
+              <div id="paneBank" style="display:none">
+                <div class="pc-hint" style="margin:0 0 7px">这里录入真实题目，孩子端「题库闯关」会直接读取。🟡 黄色 = AI 占位内容，答案以真人教研审核后勾选「已审」为准。</div>
+                <div class="seg" id="bankTab"></div>
+                <div class="mgmt" id="bankList" style="margin-top:8px"></div>
+                <div class="add-row" onclick="addBankItem()">＋ 添加题目</div>
+                <div class="add-row ghost" onclick="resetBank()">↺ 恢复占位题库（清空后重装示例）</div>
+              </div>
+              <div id="paneMono" style="display:none">
+                <div class="pc-hint" style="margin:0 0 7px">这里添加的题目会和大富翁内置题<b>混在一起随机抽取</b>，孩子玩大富翁就能抽到你加的卡。已添加 <b id="monoBankCount">0</b> 题。</div>
+                <div class="mgmt" id="monoBankList"></div>
+                <div class="add-row" onclick="addMonoBankItem()">＋ 添加大富翁题</div>
+              </div>
+            </div>
+
+            <!-- 5 · 游戏权限 -->
+            <div class="pcard">
+              <div class="pc-h"><div class="pc-ic c5">🎮</div><div><div class="t">游戏权限</div><div class="s">关掉的孩子端不显示</div></div><span class="pc-more gray" onclick="permAllOn()">全部开启</span></div>
+              <div class="mgmt" id="permList" style="padding:8px 10px"></div>
+              <div class="pc-hint">关闭后，该游戏在孩子端游戏中心不显示。</div>
+            </div>
+
+            <!-- 6 · 防沉迷（宽卡） -->
+            <div class="pcard w3" id="aaSec">
+              <div class="pc-h"><div class="pc-ic c4">🛡️</div><div><div class="t">防沉迷 · 护眼护身</div><div class="s">到点提醒休息，孩子端不可改</div></div></div>
+              <div class="sync-row" style="align-items:center">
+                <span style="font-weight:700;font-size:12.5px">开启防沉迷</span>
+                <label class="switch"><input type="checkbox" id="aaOn" onchange="aaSave()"><span class="slider"></span></label>
+              </div>
+              <div class="pc-sub">📅 每日可使用总时长</div>
+              <div class="seg" id="aaDailySeg">
+                <button data-v="20" onclick="aaSet('daily',20)">20 分钟</button>
+                <button data-v="30" onclick="aaSet('daily',30)">30 分钟</button>
+                <button data-v="40" onclick="aaSet('daily',40)">40 分钟</button>
+                <button data-v="60" onclick="aaSet('daily',60)">60 分钟</button>
+              </div>
+              <div class="pc-sub">⏱️ 连续使用多久提醒休息</div>
+              <div class="seg" id="aaBreakSeg">
+                <button data-v="15" onclick="aaSet('break',15)">15 分钟</button>
+                <button data-v="20" onclick="aaSet('break',20)">20 分钟</button>
+                <button data-v="30" onclick="aaSet('break',30)">30 分钟</button>
+              </div>
+              <div class="pc-sub">💤 单次休息时长</div>
+              <div class="seg" id="aaRestSeg">
+                <button data-v="5" onclick="aaSet('rest',5)">5 分钟</button>
+                <button data-v="10" onclick="aaSet('rest',10)">10 分钟</button>
+              </div>
+              <div class="pc-sub">🔓 每次解锁加多少时间（找爸爸妈妈延长）</div>
+              <div class="seg" id="aaUnlockMinSeg">
+                <button data-v="5" onclick="aaSetUnlockMin(5)">5 分钟</button>
+                <button data-v="10" onclick="aaSetUnlockMin(10)">10 分钟</button>
+                <button data-v="15" onclick="aaSetUnlockMin(15)">15 分钟</button>
+                <button data-v="30" onclick="aaSetUnlockMin(30)">30 分钟</button>
+              </div>
+              <div class="sync-row" style="align-items:center;margin-top:8px;gap:10px">
+                <span style="font-size:12.5px;font-weight:700">🌙 晚上到点自动休息</span>
+                <input type="time" id="aaBedTime" value="21:00" onchange="aaSave()" style="margin-left:auto;padding:5px 8px;border:1.5px solid var(--line);border-radius:9px;font-family:inherit;font-size:12px">
+                <label class="switch"><input type="checkbox" id="aaBed" onchange="aaSave()"><span class="slider"></span></label>
+              </div>
+              <div class="sync-row" style="align-items:center;margin-top:4px;gap:10px">
+                <span style="font-size:12.5px;font-weight:700">🔊 音效（奖励音 / 点击音）</span>
+                <label class="switch" style="margin-left:auto"><input type="checkbox" id="aaSound" onchange="aaSave()"><span class="slider"></span></label>
+              </div>
+              <div class="sync-row" style="align-items:center;margin-top:4px;gap:10px">
+                <span style="font-size:12.5px;font-weight:700">🎵 背景音乐 BGM（轻音乐循环）</span>
+                <label class="switch" style="margin-left:auto"><input type="checkbox" id="bgmOn" onchange="bgmToggleSetting(this.checked)"><span class="slider"></span></label>
+              </div>
+              <div class="sync-row" style="align-items:center;margin-top:4px;gap:10px">
+                <span style="font-size:12.5px;font-weight:700">🐾 宠物也要休息（精力耗尽会睡觉）</span>
+                <label class="switch" style="margin-left:auto"><input type="checkbox" id="aaPet" onchange="aaSave()"><span class="slider"></span></label>
+              </div>
+              <div class="sync-row" style="align-items:flex-start;margin-top:6px;gap:10px">
+                <span style="font-size:12.5px;font-weight:700;flex:1;min-width:0">🔒 关闭「+时间」解锁<span style="display:block;font-size:10.5px;color:var(--ink-faint);font-weight:400;margin-top:2px">打开后到点没有解锁按钮，需等明天自动恢复（更严格）</span></span>
+                <label class="switch" style="flex:none;margin-top:2px"><input type="checkbox" id="aaUnlockOff" onchange="aaSave()"><span class="slider"></span></label>
+              </div>
+              <div class="pc-hint">建议幼儿单次≤20 分钟、每日累计≤40 分钟，并保留充足户外与睡眠。设置立即生效，孩子端无法修改。</div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
@@ -4723,7 +4772,7 @@
         </div>
         <div class="bank-section">
           <div class="bank-h">🎁 可兑换特权</div>
-          <div class="bank-list" id="bankList"></div>
+          <div class="bank-list" id="bankListShop"></div>
         </div>
       </div>
     </div>
@@ -11207,7 +11256,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   /* 家长设置：难度等级单选 + 内容分类多选（本地保存偏好，已可点击） */
   const LEVEL_KEY='mp_level', CATS_KEY='mp_cats';
   function initPsetCtrls(){
-    const seg=document.querySelector('#sc-pset .seg');
+    const seg=document.getElementById('levelSeg');
     if(seg){
       seg.querySelectorAll('button').forEach(b=>{
         if(b.textContent.trim()==='+ 自定义'){
@@ -11224,7 +11273,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     loadPsetState();
   }
   function selLevel(btn){
-    document.querySelectorAll('#sc-pset .seg button').forEach(b=>b.classList.remove('sel'));
+    document.querySelectorAll('#levelSeg button').forEach(b=>b.classList.remove('sel'));
     btn.classList.add('sel');
     LS.setItem(LEVEL_KEY,btn.textContent.trim());
     syncStatusLib('已选难度：'+btn.textContent.trim());
@@ -11235,11 +11284,20 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
   }
   function loadPsetState(){
     const lv=LS.getItem(LEVEL_KEY);
-    if(lv){document.querySelectorAll('#sc-pset .seg button').forEach(b=>{b.classList.toggle('sel',b.textContent.trim()===lv);});}
+    if(lv){document.querySelectorAll('#levelSeg button').forEach(b=>{b.classList.toggle('sel',b.textContent.trim()===lv);});}
     const raw=LS.getItem(CATS_KEY);
     if(raw){try{const arr=JSON.parse(raw);arr.forEach(a=>{document.querySelectorAll('#sc-pset .tog-chip').forEach(c=>{if(c.textContent.replace('✓','').trim()===a.n)c.classList.toggle('on',!!a.on);});});}catch(e){}}
   }
   function syncStatusLib(m){const el=document.getElementById('pinStatus');if(el)el.textContent=m;}
+  /* 家长设置：学习内容管理卡内 tab 切换（学习内容 / 学科题库 / 大富翁题库） */
+  function psetTab(el,id){
+    var bar=document.getElementById('psetMgmtTabs');
+    if(bar)bar.querySelectorAll('.ptab').forEach(function(t){t.classList.remove('sel');});
+    if(el)el.classList.add('sel');
+    ['paneStudy','paneBank','paneMono'].forEach(function(pid){
+      var e=document.getElementById(pid); if(e)e.style.display=(pid===id?'block':'none');
+    });
+  }
 
   /* 家长设置：打卡 / 学习内容管理（数据驱动 · 可增删改 · 存本机） */
   const MGMT_KEY='mp_mgmt_v1';
@@ -12655,15 +12713,15 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     var ed=!!HOME_EDIT.ck;
     var html='';
     mgmtData.checkins.forEach(function(c,i){
-      if(!c.on)return;
+      if(!c.on&&!ed)return; /* 隐藏项只在编辑态出现，便于随时恢复显示 */
       var isD=done.indexOf(c.id)>=0;
       if(!isD&&done.indexOf(i)>=0)isD=true; /* 兼容未迁移的旧序号记录 */
       var tap=ed?('editHomeCheckin('+i+')'):('homeTaskGo('+i+')');
-      html+='<div class="task'+(isD?' done':'')+(ed?' editing':'')+'" id="ht-'+i+'">'
+      html+='<div class="task'+(isD?' done':'')+(ed?' editing':'')+(!c.on?' dim':'')+'" id="ht-'+i+'">'
         +'<span class="check" onclick="toggleHomeCheckin('+i+',event)">'+(isD?'✓':'')+'</span>'
         +'<div class="t-main" onclick="'+tap+'"><div class="t-name">'+esc(c.name)+'</div>'+(c.tag?'<div class="t-tag">'+esc(c.tag)+'</div>':'')+'</div>'
         +(ed
-          ? '<span class="row-edit" onclick="editHomeCheckin('+i+')">✎</span><span class="row-del" onclick="delHomeCheckin('+i+')">✕</span>'
+          ? '<span class="row-eye" onclick="toggleHomeCheckinOn('+i+',event)" title="'+(c.on?'点击隐藏':'点击恢复显示')+'">'+(c.on?'👁':'🚫')+'</span><span class="row-edit" onclick="editHomeCheckin('+i+')">✎</span><span class="row-del" onclick="delHomeCheckin('+i+')">✕</span>'
           : (c.right?'<span class="rtag'+(c.req?' req':'')+'">'+esc(c.right)+'</span>':''))
         +'</div>';
     });
@@ -12671,6 +12729,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     list.innerHTML=html;
     updateHomeProgress();updateMilestone();refreshTopBar();syncHomeEditBtns();
   }
+  function toggleHomeCheckinOn(i,ev){if(ev&&ev.stopPropagation)ev.stopPropagation();var c=mgmtData.checkins[i];if(!c)return;c.on=!c.on;saveMgmt();renderCheckins();renderHomeTasks();renderCheckinTasks();toast(c.on?'已恢复显示':'已隐藏（编辑态可恢复）');}
   function addHomeCheckin(){
     showInputDlg({title:'添加打卡项',msg:'例如：练琴 20 分钟',placeholder:'输入打卡项名称',required:true,okText:'下一步',onOk:function(v){
       if(v===null||!String(v).trim())return;
@@ -13835,7 +13894,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     var bc=document.getElementById('bankCoins'),bp=document.getElementById('bankPoints');
     if(bc)bc.textContent=gachaCoins;
     if(bp)bp.textContent=gachaPoints;
-    var list=document.getElementById('bankList');
+    var list=document.getElementById('bankListShop');
     if(list){
       list.innerHTML=BANK_REWARDS.map(function(r,i){
         var have=r.cur==='coin'?gachaCoins:gachaPoints;
