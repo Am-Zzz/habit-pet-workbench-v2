@@ -2872,7 +2872,7 @@
     .reader[data-rtheme="lav"] .page-ill .grass{display:none;}
 
     /* ===== 打卡里程碑 / 星星积分统计 ===== */
-    .milestone-card{display:flex;flex-direction:column;gap:8px;cursor:pointer;background:linear-gradient(135deg,#FFF6F0,#FFF);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:12px;transition:.15s}
+    .milestone-card{display:flex;flex-direction:column;gap:8px;cursor:pointer;background:linear-gradient(135deg,var(--brand-s),#FFF);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:12px;transition:.15s}
     .milestone-card:active{transform:scale(.99)}
     .milestone-card .msb-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
     .milestone-card .msb-title{font-size:13px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:5px}
@@ -3104,10 +3104,11 @@
 .hp-tip{font-size:11px;color:var(--ink-soft);line-height:1.5}
 .tmr-card{background:linear-gradient(135deg,var(--sky-s),#FFF);border:1px solid var(--line);border-radius:16px;padding:11px;cursor:pointer;transition:.15s;box-shadow:var(--shadow-s);display:flex;flex-direction:column;min-height:0}
 .tmr-card:active{transform:scale(.99)}
-.tmr-card .tmr-h{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:nowrap}
+.tmr-card .tmr-h{display:flex;align-items:center;justify-content:flex-start;gap:6px;flex-wrap:nowrap}
 .tmr-card .tmr-t{font-size:13px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tmr-card .tmr-date{font-size:11px;font-weight:700;color:var(--ink-soft);white-space:nowrap}
-.tmr-card .tmr-go{font-size:11px;font-weight:700;color:var(--brand-d);background:var(--brand-s);padding:4px 8px;border-radius:999px;white-space:nowrap;flex:none}
+.tmr-sub{font-size:10.5px;color:var(--ink-faint);margin-top:3px;line-height:1.4}
+.tmr-sj{font-size:12.5px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:6px;min-width:0}
 .tmr-list{display:flex;flex-direction:column;gap:5px;margin-top:8px;overflow-y:auto;min-height:0;padding-right:2px}
 .tmr-row{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:3px 8px}
 .tmr-row .tmr-time{font-size:11px;font-weight:800;color:var(--ink-soft);flex:none;width:44px}
@@ -3354,8 +3355,8 @@
           <div class="tmr-card" onclick="goPlan('tt')">
             <div class="tmr-h">
               <span class="tmr-t">🎒 <span id="tmrTitle">明日课程</span><span class="tmr-date" id="tmrDate"></span></span>
-              <span class="tmr-go">一周 ›</span>
             </div>
+            <div class="tmr-sub">点这里查看完整一周课程 + 作业日历</div>
             <div class="tmr-list" id="tmrCourseList"></div>
             <div class="tmr-pack" id="tmrPack">🌙 今晚按课表收拾书包吧～</div>
           </div>
@@ -17836,6 +17837,18 @@ function renderHomeCourse(){
   box.innerHTML=html;
 }
 /* 右栏：明日 / 下次上学课程表（自动跳过周末；点卡片进一周课表 + 作业日历） */
+/* 科目 → emoji（明日课程行用 emoji + 文字，不用彩色色块） */
+function ttEmoji(id){
+  var m={chinese:'📖',math:'➗',english:'🔤',music:'🎵',art:'🎨',science:'🔬',pe:'⚽',pehealth:'🏃',
+    calligraphy:'🖌️',moral:'📘',labor:'🧹',practice:'🧭',local:'🗺️',schoolbased:'⭐',
+    activity:'🎈',info:'💻',classmeet:'🚩',selfstudy:'📚'};
+  return m[id]||'📕';
+}
+/* 科目 → 今晚要带的物品（收拾书包提示） */
+var TMR_PACK={chinese:'语文书',math:'数学练习册',english:'英语书',music:'音乐书',art:'画笔',
+  science:'科学材料',pe:'跳绳',pehealth:'跳绳',calligraphy:'毛笔字帖',moral:'道法书',
+  labor:'劳动工具',practice:'实践材料',local:'地方课本',schoolbased:'校本课本',
+  activity:'活动用品',info:'信息课本',classmeet:'班队用品',selfstudy:'文具'};
 function renderTomorrowCourses(){
   var box=document.getElementById('tmrCourseList');if(!box)return;
   var tt=loadTT();if(!tt||!tt.periods||!tt.grid)return;
@@ -17863,11 +17876,12 @@ function renderTomorrowCourses(){
     if(!id)return;
     var subj=ttSubj(id);
     if(!subj.name)return;
-    if(names.indexOf(subj.name)<0)names.push(subj.name);
-    html+='<div class="tmr-row"><span class="tmr-time">'+p.s+'</span><span class="hcb-subj" style="background:'+subj.color+'">'+esc(subj.name)+'</span></div>';
+    if(names.indexOf(id)<0)names.push(id);
+    html+='<div class="tmr-row"><span class="tmr-time">'+p.s+'</span><span class="tmr-sj">'+ttEmoji(id)+' '+esc(subj.name)+'</span></div>';
   });
   box.innerHTML=html||'<div class="tmr-empty">还没有排课，去「学习安排」添加吧～</div>';
-  if(pack)pack.textContent=names.length?('🌙 今晚准备：'+names.join('、')):'🌙 今晚按课表收拾书包吧～';
+  var items=names.map(function(x){return TMR_PACK[x]||ttSubj(x).name;});
+  if(pack)pack.textContent=items.length?('🌙 今晚收拾好：'+items.join('、')):'🌙 今晚按课表收拾书包吧～';
 }
 /* 右栏：本周打卡点阵 */
 function renderWeekDots(){
