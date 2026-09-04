@@ -285,7 +285,7 @@
     .screen#sc-home .home-wrap{align-items:stretch}
     .screen#sc-home .home-main{min-width:0}
     .screen#sc-home .grid3{
-      grid-template-columns:1.05fr 1.28fr 290px;
+      grid-template-columns:1.05fr 1.28fr 280px;
       gap:18px;
       align-items:stretch;
     }
@@ -320,7 +320,7 @@
       display:flex;
       flex-direction:column;
       gap:11px;
-      padding:13px;
+      padding:11px;
     }
     .screen#sc-home .grid3 > .card:last-child .milestone-card{flex:0 0 auto;margin-bottom:0}
     .screen#sc-home .grid3 > .card:last-child .hp-card{flex:0 0 auto}
@@ -2872,15 +2872,15 @@
     .reader[data-rtheme="lav"] .page-ill .grass{display:none;}
 
     /* ===== 打卡里程碑 / 星星积分统计 ===== */
-    .milestone-card{display:flex;flex-direction:column;gap:8px;cursor:pointer;background:var(--brand-s);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:12px;transition:.15s}
+    .milestone-card{display:flex;flex-direction:column;gap:8px;cursor:pointer;background:var(--brand-s);border:1px solid var(--line);border-radius:16px;padding:11px;margin-bottom:12px;transition:.15s}
     .milestone-card:active{transform:scale(.99)}
     .milestone-card .msb-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
-    .milestone-card .msb-title{font-size:13px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:5px}
-    .milestone-card .msb-go{font-size:12px;font-weight:700;color:var(--brand-d);display:flex;align-items:center;gap:2px;white-space:nowrap}
+    .milestone-card .msb-title{font-size:13px;font-weight:900;color:var(--brand-d);display:flex;align-items:center;gap:5px}
+    .milestone-card .msb-go{font-size:10px;font-weight:800;color:var(--brand-d);display:flex;align-items:center;gap:2px;white-space:nowrap}
     .milestone-card .msb-body{display:flex;align-items:stretch;gap:8px}
-    .milestone-card .msb-item{flex:1;text-align:center;background:var(--surface);border-radius:12px;padding:10px 4px;border:1px solid var(--line)}
-    .milestone-card .msb-v{font-size:18px;font-weight:900;color:var(--brand-d);line-height:1.2}
-    .milestone-card .msb-k{font-size:11px;color:var(--ink-soft);margin-top:4px}
+    .milestone-card .msb-item{flex:1;text-align:center;background:var(--surface);border-radius:12px;padding:9px 4px}
+    .milestone-card .msb-v{font-size:20px;font-weight:900;color:var(--ink);line-height:1.2}
+    .milestone-card .msb-k{font-size:10px;color:var(--ink-soft);margin-top:2px}
     .ck-milestone{display:flex;gap:10px;margin:14px 0 4px}
     .ck-milestone .ckm{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:10px 0;text-align:center}
     .ck-milestone .ckm b{display:block;font-size:18px;font-weight:900;color:var(--brand-d)}
@@ -3093,39 +3093,39 @@
 .hp-card{background:var(--sage-s);border:1px solid var(--line);border-radius:16px;padding:11px;cursor:pointer;transition:.15s;box-shadow:var(--shadow-s)}
 .hp-card:active{transform:scale(.99)}
 .hp-card .hp-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.hp-card .hp-title{font-size:13px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:5px}
-.hp-card .hp-go{font-size:12px;font-weight:700;color:var(--brand-d);white-space:nowrap}
-.hp-card .hp-body{display:flex;align-items:center;gap:11px;margin-top:8px}
-.hp-ring{width:58px;height:58px;border-radius:50%;flex:none;display:grid;place-items:center;position:relative;background:conic-gradient(var(--sage) 0%,var(--sage-s) 0%)}
-.hp-ring::before{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--surface)}
-.hp-pct{position:relative;font-size:14px;font-weight:900;color:var(--brand-d)}
+.hp-card .hp-title{font-size:13px;font-weight:900;color:var(--sage);display:flex;align-items:center;gap:5px}
+.hp-card .hp-go{font-size:10px;font-weight:800;color:var(--sage);white-space:nowrap}
+.hp-card .hp-body{display:flex;align-items:center;gap:12px;margin-top:8px}
+.hp-ring{width:64px;height:64px;border-radius:50%;flex:none;display:grid;place-items:center;position:relative;background:conic-gradient(var(--sage) 0%,var(--sage-s) 0%)}
+.hp-ring::before{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--surface)}
+.hp-pct{position:relative;font-size:15px;font-weight:900;color:var(--sage)}
 .hp-info{flex:1;min-width:0}
 .hp-stat{font-size:14px;font-weight:900;color:var(--ink);margin-bottom:3px}
-.hp-tip{font-size:11px;color:var(--ink-soft);line-height:1.5}
+.hp-tip{font-size:10px;color:var(--ink-soft);line-height:1.45}
 .tmr-card{background:var(--sky-s);border:1px solid var(--line);border-radius:16px;padding:11px;cursor:pointer;transition:.15s;box-shadow:var(--shadow-s);display:flex;flex-direction:column;min-height:0}
 .tmr-card:active{transform:scale(.99)}
 .tmr-card .tmr-h{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:nowrap}
-.tmr-card .tmr-t{font-size:13px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tmr-card .tmr-date{font-size:11px;font-weight:700;color:var(--ink-soft);white-space:nowrap}
-.tmr-card .tmr-go{font-size:12px;font-weight:700;color:var(--brand-d);white-space:nowrap;flex:none}
-.tmr-sub{font-size:10.5px;color:var(--ink-faint);margin-top:3px;line-height:1.4}
-.tmr-sj{font-size:12.5px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:6px;min-width:0}
-.tmr-list{display:flex;flex-direction:column;gap:5px;margin-top:8px;overflow-y:auto;min-height:0;padding-right:2px}
-.tmr-row{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:3px 8px}
-.tmr-row .tmr-time{font-size:11px;font-weight:800;color:var(--ink-soft);flex:none;width:44px}
+.tmr-card .tmr-t{font-size:13px;font-weight:900;color:var(--sky);display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tmr-card .tmr-date{font-size:13px;font-weight:900;color:var(--sky);white-space:nowrap}
+.tmr-card .tmr-go{font-size:10px;font-weight:700;color:var(--ink-soft);white-space:nowrap;flex:none}
+.tmr-sub{font-size:10px;color:var(--ink-faint);margin-top:2px;line-height:1.4}
+.tmr-sj{font-size:11px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px;min-width:0}
+.tmr-list{display:flex;flex-direction:column;gap:5px;margin-top:9px;overflow-y:auto;min-height:0;padding-right:2px}
+.tmr-row{display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:11px;padding:6px 8px}
+.tmr-row .tmr-time{font-size:10px;font-weight:800;color:var(--ink-soft);flex:none;width:66px}
 .tmr-row .hcb-subj{font-size:12px;padding:2px 8px}
 .tmr-empty{font-size:12px;color:var(--ink-faint);padding:8px 0}
-.tmr-pack{margin-top:7px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:6px 9px;font-size:11px;color:var(--ink-soft);line-height:1.5}
+.tmr-pack{margin-top:8px;background:var(--surface);border-radius:11px;padding:7px 9px;font-size:10px;color:var(--ink-soft);line-height:1.45}
 .qk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.qk{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:.15s}
+.qk{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:9px 4px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:.15s}
 .qk:active{transform:scale(.97)}
-.qk .qk-ic{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-size:17px}
-.qk.q1 .qk-ic{background:var(--brand-s)}
+.qk .qk-ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:17px}
+.qk.q1 .qk-ic{background:var(--butter-s)}
 .qk.q2 .qk-ic{background:var(--sky-s)}
-.qk.q3 .qk-ic{background:linear-gradient(135deg,var(--butter-s),var(--brand-s))}
+.qk.q3 .qk-ic{background:var(--brand-s)}
 .qk.q4 .qk-ic{background:var(--sage-s)}
-.qk .qk-t{font-size:11px;font-weight:800;color:var(--ink)}
-.ms-dots{display:flex;gap:4px;margin-top:6px}
+.qk .qk-t{font-size:10px;font-weight:800;color:var(--ink)}
+.ms-dots{display:flex;justify-content:space-between;gap:4px;margin-top:8px}
 .ms-dots .dow{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
 .ms-dots .dow i{font-style:normal;font-size:9px;color:var(--ink-faint)}
 .ms-dots .dow span{width:10px;height:10px;border-radius:50%;background:var(--line)}
@@ -12557,8 +12557,8 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
       else{
         var rest=[];
         var box=card?card.querySelectorAll('#homeHwList .task:not(.done) .t-name'):[];
-        for(var i=0;i<box.length&&rest.length<3;i++){var t=(box[i].textContent||'').trim();if(t)rest.push(t);}
-        tip.textContent='还剩 '+(hTot-hDone)+' 项：'+rest.join('、');
+        for(var i=0;i<box.length&&rest.length<3;i++){var t=(box[i].textContent||'').trim();if(t)rest.push(esc(t));}
+        tip.innerHTML='还剩：'+rest.join('、')+'<br>完成作业可以让小萌更开心哦 🌟';
       }
     }
   }
@@ -17871,7 +17871,7 @@ function renderTomorrowCourses(){
   var WK=['日','一','二','三','四','五','六'];
   var di=found.wd-1;
   if(title)title.textContent=(k===1?'明日课程':'下次上学');
-  if(dateEl)dateEl.textContent=found.mo+'月'+found.d+'日（周'+WK[found.wd]+'）';
+  if(dateEl)dateEl.textContent=' · '+found.mo+'月'+found.d+'日（周'+WK[found.wd]+'）';
   var html='',names=[];
   tt.periods.forEach(function(p,pi){
     var id=tt.grid[di]&&tt.grid[di][pi]?tt.grid[di][pi]:'';
