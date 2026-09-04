@@ -3096,8 +3096,8 @@
 .hp-card .hp-title{font-size:13px;font-weight:900;color:var(--sage);display:flex;align-items:center;gap:5px}
 .hp-card .hp-go{font-size:10px;font-weight:800;color:var(--sage);white-space:nowrap}
 .hp-card .hp-body{display:flex;align-items:center;gap:12px;margin-top:8px}
-.hp-ring{width:64px;height:64px;border-radius:50%;flex:none;display:grid;place-items:center;position:relative;background:conic-gradient(var(--sage) 0%,var(--sage-s) 0%)}
-.hp-ring::before{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--surface)}
+.hp-ring{--ring-track:color-mix(in srgb,var(--sage) 45%,var(--sage-s));--p:0%;width:64px;height:64px;border-radius:50%;flex:none;display:grid;place-items:center;position:relative;background:conic-gradient(var(--sage) 0% var(--p),var(--ring-track) var(--p) 100%)}
+.hp-ring::before{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--sage-s)}
 .hp-pct{position:relative;font-size:15px;font-weight:900;color:var(--sage)}
 .hp-info{flex:1;min-width:0}
 .hp-stat{font-size:14px;font-weight:900;color:var(--ink);margin-bottom:3px}
@@ -12548,7 +12548,7 @@ const EXTRA_PY={"一":"yī","七":"qī","万":"wàn","三":"sān","上":"shàng"
     var ring=document.getElementById('hwRing');if(!ring)return;
     var pct=document.getElementById('hwPct'),stat=document.getElementById('hwStat'),tip=document.getElementById('hwTip');
     var p=hTot?Math.round(hDone/hTot*100):0;
-    ring.style.background='conic-gradient(var(--sage) 0% '+p+'%, var(--sage-s) '+p+'% 100%)';
+    ring.style.setProperty('--p',p+'%');
     if(pct)pct.textContent=p+'%';
     if(stat)stat.textContent='已完成 '+hDone+' / '+hTot;
     if(tip){
