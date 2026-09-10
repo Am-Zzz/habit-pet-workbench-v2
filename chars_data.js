@@ -49,7 +49,7 @@ const CHARS_DATA={
       {
         "ch": "两",
         "py": "liǎng",
-        "em": "②",
+        "em": "2️⃣",
         "mean": "数字两个"
       }
     ],
@@ -57,7 +57,7 @@ const CHARS_DATA={
       {
         "ch": "半",
         "py": "bàn",
-        "em": "🥯",
+        "em": "🌗",
         "mean": "一半半个"
       },
       {
@@ -315,7 +315,7 @@ const CHARS_DATA={
       {
         "ch": "南",
         "py": "nán",
-        "em": "🦜",
+        "em": "🌴",
         "mean": "南方南边"
       },
       {
@@ -773,13 +773,13 @@ const CHARS_DATA={
       {
         "ch": "躯",
         "py": "qū",
-        "em": "🫂",
+        "em": "🧍",
         "mean": "身躯躯体"
       },
       {
         "ch": "额",
         "py": "é",
-        "em": "👨",
+        "em": "👤",
         "mean": "额头"
       }
     ],
@@ -877,7 +877,7 @@ const CHARS_DATA={
       {
         "ch": "肠",
         "py": "cháng",
-        "em": "🫂",
+        "em": "🌭",
         "mean": "肠子"
       },
       {
@@ -1009,7 +1009,7 @@ const CHARS_DATA={
       {
         "ch": "己",
         "py": "jǐ",
-        "em": "🫂",
+        "em": "🧍",
         "mean": "自身本人"
       },
       {
@@ -1327,7 +1327,7 @@ const CHARS_DATA={
       {
         "ch": "都",
         "py": "dōu",
-        "em": "🗣️",
+        "em": "👥",
         "mean": "全部都是"
       }
     ],
@@ -1779,7 +1779,7 @@ const CHARS_DATA={
       {
         "ch": "凤",
         "py": "fèng",
-        "em": "✨",
+        "em": "🦚",
         "mean": "凤凰神鸟"
       },
       {
@@ -2349,13 +2349,13 @@ const CHARS_DATA={
       {
         "ch": "枣",
         "py": "zǎo",
-        "em": "🫒",
+        "em": "🔴",
         "mean": "红枣大枣"
       },
       {
         "ch": "柿",
         "py": "shì",
-        "em": "🍅",
+        "em": "🟠",
         "mean": "柿子"
       }
     ],
@@ -3019,7 +3019,7 @@ const CHARS_DATA={
       {
         "ch": "理",
         "py": "lǐ",
-        "em": "📐",
+        "em": "🧠",
         "mean": "道理整理"
       },
       {
@@ -3077,7 +3077,7 @@ const CHARS_DATA={
       {
         "ch": "屋",
         "py": "wū",
-        "em": "🏚️",
+        "em": "🏠",
         "mean": "屋子房屋"
       },
       {
@@ -3141,7 +3141,7 @@ const CHARS_DATA={
       {
         "ch": "壁",
         "py": "bì",
-        "em": "🏔️",
+        "em": "🧱",
         "mean": "墙壁石壁"
       }
     ],
@@ -3625,7 +3625,7 @@ const CHARS_DATA={
       {
         "ch": "波",
         "py": "bō",
-        "em": "🌫️",
+        "em": "〰️",
         "mean": "水波波纹"
       },
       {
@@ -5140,7 +5140,7 @@ const CHARS_DATA={
         "ch": "了",
         "py": "le",
         "em": "✅",
-        "mean": "助词，表示完成"
+        "mean": "助词，表示完成（轻声）"
       },
       {
         "ch": "不",
@@ -5154,7 +5154,7 @@ const CHARS_DATA={
         "ch": "的",
         "py": "de",
         "em": "📝",
-        "mean": "助词修饰词语"
+        "mean": "助词修饰词语（轻声）"
       },
       {
         "ch": "比",
@@ -5172,7 +5172,7 @@ const CHARS_DATA={
         "ch": "着",
         "py": "zhe",
         "em": "💫",
-        "mean": "助词表示状态"
+        "mean": "助词表示状态（轻声）"
       }
     ],
     [
@@ -5206,13 +5206,13 @@ const CHARS_DATA={
         "ch": "呀",
         "py": "ya",
         "em": "❗",
-        "mean": "感叹语气词"
+        "mean": "感叹语气词（轻声）"
       },
       {
         "ch": "吗",
         "py": "ma",
         "em": "❓",
-        "mean": "疑问语气词"
+        "mean": "疑问语气词（轻声）"
       },
       {
         "ch": "又",
@@ -5340,15 +5340,15 @@ const CHARS_DATA={
       },
       {
         "ch": "地",
-        "py": "de",
+        "py": "dì",
         "em": "🌍",
-        "mean": "土地助词"
+        "mean": "土地大地"
       },
       {
         "ch": "得",
-        "py": "de",
-        "em": "✌️",
-        "mean": "得到助词"
+        "py": "dé",
+        "em": "🎁",
+        "mean": "得到获得"
       },
       {
         "ch": "之",
@@ -5380,7 +5380,7 @@ const CHARS_DATA={
         "ch": "呢",
         "py": "ne",
         "em": "❓",
-        "mean": "疑问语气"
+        "mean": "疑问语气（轻声）"
       }
     ],
     [
@@ -5388,7 +5388,7 @@ const CHARS_DATA={
         "ch": "吧",
         "py": "ba",
         "em": "💬",
-        "mean": "感叹语气"
+        "mean": "感叹语气（轻声）"
       },
       {
         "ch": "啊",
@@ -5432,7 +5432,7 @@ const CHARS_DATA={
         "ch": "么",
         "py": "me",
         "em": "💬",
-        "mean": "什么助词"
+        "mean": "什么助词（轻声）"
       }
     ],
     [
@@ -5514,7 +5514,7 @@ const CHARS_DATA={
         "ch": "们",
         "py": "men",
         "em": "👥",
-        "mean": "复数，我们"
+        "mean": "复数，我们（轻声）"
       },
       {
         "ch": "圆",
@@ -6611,7 +6611,7 @@ const CHARS_DATA={
       {
         "ch": "恭",
         "py": "gōng",
-        "em": " bow",
+        "em": "🙇",
         "mean": "恭敬谦恭"
       },
       {
@@ -6692,13 +6692,13 @@ const HONGEN_GROUPS={
       "char": "两",
       "pinyin": "liǎng",
       "desc": "数字两个",
-      "emoji": "②"
+      "emoji": "2️⃣"
     },
     {
       "char": "半",
       "pinyin": "bàn",
       "desc": "一半半个",
-      "emoji": "🥯"
+      "emoji": "🌗"
     },
     {
       "char": "七",
@@ -6936,7 +6936,7 @@ const HONGEN_GROUPS={
       "char": "南",
       "pinyin": "nán",
       "desc": "南方南边",
-      "emoji": "🦜"
+      "emoji": "🌴"
     },
     {
       "char": "北",
@@ -7356,13 +7356,13 @@ const HONGEN_GROUPS={
       "char": "躯",
       "pinyin": "qū",
       "desc": "身躯躯体",
-      "emoji": "🫂"
+      "emoji": "🧍"
     },
     {
       "char": "额",
       "pinyin": "é",
       "desc": "额头",
-      "emoji": "👨"
+      "emoji": "👤"
     },
     {
       "char": "颜",
@@ -7452,7 +7452,7 @@ const HONGEN_GROUPS={
       "char": "肠",
       "pinyin": "cháng",
       "desc": "肠子",
-      "emoji": "🫂"
+      "emoji": "🌭"
     },
     {
       "char": "骨",
@@ -7574,7 +7574,7 @@ const HONGEN_GROUPS={
       "char": "己",
       "pinyin": "jǐ",
       "desc": "自身本人",
-      "emoji": "🫂"
+      "emoji": "🧍"
     },
     {
       "char": "爸",
@@ -7868,7 +7868,7 @@ const HONGEN_GROUPS={
       "char": "都",
       "pinyin": "dōu",
       "desc": "全部都是",
-      "emoji": "🗣️"
+      "emoji": "👥"
     },
     {
       "char": "凡",
@@ -8284,7 +8284,7 @@ const HONGEN_GROUPS={
       "char": "凤",
       "pinyin": "fèng",
       "desc": "凤凰神鸟",
-      "emoji": "✨"
+      "emoji": "🦚"
     },
     {
       "char": "龙",
@@ -8810,13 +8810,13 @@ const HONGEN_GROUPS={
       "char": "枣",
       "pinyin": "zǎo",
       "desc": "红枣大枣",
-      "emoji": "🫒"
+      "emoji": "🔴"
     },
     {
       "char": "柿",
       "pinyin": "shì",
       "desc": "柿子",
-      "emoji": "🍅"
+      "emoji": "🟠"
     },
     {
       "char": "麻",
@@ -9426,7 +9426,7 @@ const HONGEN_GROUPS={
       "char": "理",
       "pinyin": "lǐ",
       "desc": "道理整理",
-      "emoji": "📐"
+      "emoji": "🧠"
     },
     {
       "char": "城",
@@ -9480,7 +9480,7 @@ const HONGEN_GROUPS={
       "char": "屋",
       "pinyin": "wū",
       "desc": "屋子房屋",
-      "emoji": "🏚️"
+      "emoji": "🏠"
     },
     {
       "char": "厅",
@@ -9540,7 +9540,7 @@ const HONGEN_GROUPS={
       "char": "壁",
       "pinyin": "bì",
       "desc": "墙壁石壁",
-      "emoji": "🏔️"
+      "emoji": "🧱"
     },
     {
       "char": "棚",
@@ -9986,7 +9986,7 @@ const HONGEN_GROUPS={
       "char": "波",
       "pinyin": "bō",
       "desc": "水波波纹",
-      "emoji": "🌫️"
+      "emoji": "〰️"
     },
     {
       "char": "浪",
@@ -11381,7 +11381,7 @@ const HONGEN_GROUPS={
     {
       "char": "了",
       "pinyin": "le",
-      "desc": "助词，表示完成",
+      "desc": "助词，表示完成（轻声）",
       "emoji": "✅"
     },
     {
@@ -11393,7 +11393,7 @@ const HONGEN_GROUPS={
     {
       "char": "的",
       "pinyin": "de",
-      "desc": "助词修饰词语",
+      "desc": "助词修饰词语（轻声）",
       "emoji": "📝"
     },
     {
@@ -11411,7 +11411,7 @@ const HONGEN_GROUPS={
     {
       "char": "着",
       "pinyin": "zhe",
-      "desc": "助词表示状态",
+      "desc": "助词表示状态（轻声）",
       "emoji": "💫"
     },
     {
@@ -11441,13 +11441,13 @@ const HONGEN_GROUPS={
     {
       "char": "呀",
       "pinyin": "ya",
-      "desc": "感叹语气词",
+      "desc": "感叹语气词（轻声）",
       "emoji": "❗"
     },
     {
       "char": "吗",
       "pinyin": "ma",
-      "desc": "疑问语气词",
+      "desc": "疑问语气词（轻声）",
       "emoji": "❓"
     },
     {
@@ -11566,15 +11566,15 @@ const HONGEN_GROUPS={
     },
     {
       "char": "地",
-      "pinyin": "de",
-      "desc": "土地助词",
+      "pinyin": "dì",
+      "desc": "土地大地",
       "emoji": "🌍"
     },
     {
       "char": "得",
-      "pinyin": "de",
-      "desc": "得到助词",
-      "emoji": "✌️"
+      "pinyin": "dé",
+      "desc": "得到获得",
+      "emoji": "🎁"
     },
     {
       "char": "之",
@@ -11603,13 +11603,13 @@ const HONGEN_GROUPS={
     {
       "char": "呢",
       "pinyin": "ne",
-      "desc": "疑问语气",
+      "desc": "疑问语气（轻声）",
       "emoji": "❓"
     },
     {
       "char": "吧",
       "pinyin": "ba",
-      "desc": "感叹语气",
+      "desc": "感叹语气（轻声）",
       "emoji": "💬"
     },
     {
@@ -11651,7 +11651,7 @@ const HONGEN_GROUPS={
     {
       "char": "么",
       "pinyin": "me",
-      "desc": "什么助词",
+      "desc": "什么助词（轻声）",
       "emoji": "💬"
     },
     {
@@ -11725,7 +11725,7 @@ const HONGEN_GROUPS={
     {
       "char": "们",
       "pinyin": "men",
-      "desc": "复数，我们",
+      "desc": "复数，我们（轻声）",
       "emoji": "👥"
     },
     {
@@ -12740,7 +12740,7 @@ const HONGEN_GROUPS={
       "char": "恭",
       "pinyin": "gōng",
       "desc": "恭敬谦恭",
-      "emoji": " bow"
+      "emoji": "🙇"
     },
     {
       "char": "畏",
@@ -13085,7 +13085,7 @@ const HONGEN_1300=[
   {
     "char": "了",
     "pinyin": "le",
-    "desc": "助词，表示完成",
+    "desc": "助词，表示完成（轻声）",
     "emoji": "✅"
   },
   {
@@ -13223,7 +13223,7 @@ const HONGEN_1300=[
   {
     "char": "的",
     "pinyin": "de",
-    "desc": "助词修饰词语",
+    "desc": "助词修饰词语（轻声）",
     "emoji": "📝"
   },
   {
@@ -13367,7 +13367,7 @@ const HONGEN_1300=[
   {
     "char": "着",
     "pinyin": "zhe",
-    "desc": "助词表示状态",
+    "desc": "助词表示状态（轻声）",
     "emoji": "💫"
   },
   {
@@ -13392,7 +13392,7 @@ const HONGEN_1300=[
     "char": "己",
     "pinyin": "jǐ",
     "desc": "自身本人",
-    "emoji": "🫂"
+    "emoji": "🧍"
   },
   {
     "char": "画",
@@ -13463,7 +13463,7 @@ const HONGEN_1300=[
   {
     "char": "们",
     "pinyin": "men",
-    "desc": "复数，我们",
+    "desc": "复数，我们（轻声）",
     "emoji": "👥"
   },
   {
@@ -13740,7 +13740,7 @@ const HONGEN_1300=[
     "char": "两",
     "pinyin": "liǎng",
     "desc": "数字两个",
-    "emoji": "②"
+    "emoji": "2️⃣"
   },
   {
     "char": "哭",
@@ -13788,18 +13788,18 @@ const HONGEN_1300=[
     "char": "半",
     "pinyin": "bàn",
     "desc": "一半半个",
-    "emoji": "🥯"
+    "emoji": "🌗"
   },
   {
     "char": "呀",
     "pinyin": "ya",
-    "desc": "感叹语气词",
+    "desc": "感叹语气词（轻声）",
     "emoji": "❗"
   },
   {
     "char": "吗",
     "pinyin": "ma",
-    "desc": "疑问语气词",
+    "desc": "疑问语气词（轻声）",
     "emoji": "❓"
   },
   {
@@ -14148,7 +14148,7 @@ const HONGEN_1300=[
     "char": "波",
     "pinyin": "bō",
     "desc": "水波波纹",
-    "emoji": "🌫️"
+    "emoji": "〰️"
   },
   {
     "char": "浪",
@@ -15126,7 +15126,7 @@ const HONGEN_1300=[
     "char": "理",
     "pinyin": "lǐ",
     "desc": "道理整理",
-    "emoji": "📐"
+    "emoji": "🧠"
   },
   {
     "char": "智",
@@ -15528,7 +15528,7 @@ const HONGEN_1300=[
     "char": "屋",
     "pinyin": "wū",
     "desc": "屋子房屋",
-    "emoji": "🏚️"
+    "emoji": "🏠"
   },
   {
     "char": "厅",
@@ -15588,7 +15588,7 @@ const HONGEN_1300=[
     "char": "壁",
     "pinyin": "bì",
     "desc": "墙壁石壁",
-    "emoji": "🏔️"
+    "emoji": "🧱"
   },
   {
     "char": "顶",
@@ -16182,7 +16182,7 @@ const HONGEN_1300=[
     "char": "南",
     "pinyin": "nán",
     "desc": "南方南边",
-    "emoji": "🦜"
+    "emoji": "🌴"
   },
   {
     "char": "北",
@@ -16386,7 +16386,7 @@ const HONGEN_1300=[
     "char": "都",
     "pinyin": "dōu",
     "desc": "全部都是",
-    "emoji": "🗣️"
+    "emoji": "👥"
   },
   {
     "char": "凡",
@@ -16588,15 +16588,15 @@ const HONGEN_1300=[
   },
   {
     "char": "地",
-    "pinyin": "de",
-    "desc": "土地助词",
+    "pinyin": "dì",
+    "desc": "土地大地",
     "emoji": "🌍"
   },
   {
     "char": "得",
-    "pinyin": "de",
-    "desc": "得到助词",
-    "emoji": "✌️"
+    "pinyin": "dé",
+    "desc": "得到获得",
+    "emoji": "🎁"
   },
   {
     "char": "之",
@@ -16625,13 +16625,13 @@ const HONGEN_1300=[
   {
     "char": "呢",
     "pinyin": "ne",
-    "desc": "疑问语气",
+    "desc": "疑问语气（轻声）",
     "emoji": "❓"
   },
   {
     "char": "吧",
     "pinyin": "ba",
-    "desc": "感叹语气",
+    "desc": "感叹语气（轻声）",
     "emoji": "💬"
   },
   {
@@ -16691,7 +16691,7 @@ const HONGEN_1300=[
   {
     "char": "么",
     "pinyin": "me",
-    "desc": "什么助词",
+    "desc": "什么助词（轻声）",
     "emoji": "💬"
   },
   {
@@ -16782,7 +16782,7 @@ const HONGEN_1300=[
     "char": "躯",
     "pinyin": "qū",
     "desc": "身躯躯体",
-    "emoji": "🫂"
+    "emoji": "🧍"
   },
   {
     "char": "首",
@@ -16794,7 +16794,7 @@ const HONGEN_1300=[
     "char": "额",
     "pinyin": "é",
     "desc": "额头",
-    "emoji": "👨"
+    "emoji": "👤"
   },
   {
     "char": "颜",
@@ -16884,7 +16884,7 @@ const HONGEN_1300=[
     "char": "肠",
     "pinyin": "cháng",
     "desc": "肠子",
-    "emoji": "🫂"
+    "emoji": "🌭"
   },
   {
     "char": "骨",
@@ -17016,13 +17016,13 @@ const HONGEN_1300=[
     "char": "枣",
     "pinyin": "zǎo",
     "desc": "红枣大枣",
-    "emoji": "🫒"
+    "emoji": "🔴"
   },
   {
     "char": "柿",
     "pinyin": "shì",
     "desc": "柿子",
-    "emoji": "🍅"
+    "emoji": "🟠"
   },
   {
     "char": "梅",
@@ -17268,7 +17268,7 @@ const HONGEN_1300=[
     "char": "凤",
     "pinyin": "fèng",
     "desc": "凤凰神鸟",
-    "emoji": "✨"
+    "emoji": "🦚"
   },
   {
     "char": "龙",
@@ -18834,7 +18834,7 @@ const HONGEN_1300=[
     "char": "恭",
     "pinyin": "gōng",
     "desc": "恭敬谦恭",
-    "emoji": " bow"
+    "emoji": "🙇"
   },
   {
     "char": "畏",
