@@ -87,6 +87,9 @@
     .screen.on > .bk-layout,
     .screen.on > .pack,
     .screen.on > .wrap{width:100% !important;max-width:none !important;margin-top:auto !important;margin-bottom:auto !important;box-sizing:border-box}
+    /* 家长模式密码屏（.screen > .locked 唯一使用点）：纵向也居中。
+       基础规则 margin:26px auto 在 flex column 里只居中横向，纵向贴顶 → 卡片挤在屏幕上方 */
+    .screen.on > .locked{margin-top:auto !important;margin-bottom:auto !important}
     /* .card 特殊处理：撑满屏宽（让顶栏横跨 1324）+ 内部 flex column 居中内容组
        - width:100% !important 覆盖 inline style="margin:0 auto" 的"auto 横向 margin"逻辑（auto margin 在 width:100% 时无效）
        - 顶栏 align-self:stretch + width:100% 强制横跨；flex:0 0 auto 固定顶部
@@ -1134,9 +1137,11 @@
 
   /* 家长模式 */
   /* 仅作用于「整屏锁定占位」（如家长模式密码屏），不能让 .growth-dot.locked / .pcard.locked /
-     .ach-item.locked / .mb-sec.locked 等复合类误继承 340px 限宽与 30px auto 居中边距 */
-  .screen > .locked{max-width:340px;margin:30px auto;text-align:center}
-  .lock-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-s);padding:28px 24px}
+     .ach-item.locked / .mb-sec.locked 等复合类误继承 340px 限宽与 30px auto 居中边距。
+     ⛔ width:100% 不可删：父屏 #sc-parent 是 flex 列容器，若只给 max-width，auto 外边距会让
+        flex 子项「不拉伸」→ 卡片塌成内容宽（实测仅 184px），键盘被压成 38×56 的细条 */
+  .screen > .locked{width:100%;max-width:340px;margin:26px auto;text-align:center;box-sizing:border-box}
+  .lock-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-s);padding:26px 24px}
   .lock-ic{width:62px;height:62px;border-radius:20px;background:var(--sky-s);display:grid;place-items:center;font-size:30px;margin:0 auto 16px}
   .lock-card h3{font-size:17px;font-weight:800;margin-bottom:6px}
   .lock-card p{font-size:12px;color:var(--ink-soft);margin-bottom:18px}
@@ -1144,8 +1149,14 @@
   .dot{width:14px;height:14px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line)}
   .dot.f{background:var(--brand);border-color:var(--brand)}
   .kp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
-  .kp button{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:14px 0;font-size:18px;font-weight:800;cursor:pointer}
+  .kp button{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:16px 0;font-size:20px;font-weight:800;cursor:pointer}
   .kp button:active{background:var(--surface-2)}
+  .kp button.kp-del{background:var(--surface-2);color:var(--ink-soft);font-size:19px}
+  .kp button.kp-del:active{background:var(--line)}
+  /* 锁定屏独立返回键：浮在左上角，不占卡片高度 */
+  .screen#sc-parent{position:relative}
+  .lock-back{position:absolute;left:22px;top:20px;width:46px;height:46px;border-radius:50%;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-s);display:grid;place-items:center;font-size:20px;font-weight:800;color:var(--ink);cursor:pointer;z-index:6;user-select:none;-webkit-user-select:none}
+  .lock-back:active{background:var(--surface-2);transform:scale(.94)}
   .lock-card.shake{animation:shake .4s}
   @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
 
@@ -3964,6 +3975,7 @@
 
     <!-- 屏幕：家长模式（密码） -->
     <div class="screen" id="sc-parent" data-page-node-id="Pi8O3XbPEg4msQK9Q6DNIt">
+      <div class="lock-back" data-page-node-id="parentBack" onclick="goBack()" title="返回">←</div>
       <div class="locked" data-page-node-id="HtcI6BiKIMEyXcGzibgEIp">
         <div class="lock-card" data-page-node-id="ru9Lrg7nL5kVBKcmHyGYrK">
           <div class="lock-ic" data-page-node-id="GbpfameAGQTJyaTEcCQnwA">🔒</div>
@@ -3974,7 +3986,7 @@
             <button data-page-node-id="UbP1JCxZChSItV0MfxsV06">1</button><button data-page-node-id="B65gaDaqtPE6XKtJJOwTK6">2</button><button data-page-node-id="Cl7oUCFXfsck1XmGDKPJXB">3</button>
             <button data-page-node-id="SkzUbnR17ieD0spqZzMBSB">4</button><button data-page-node-id="jdMEjQx2fLNH7V36Un571l">5</button><button data-page-node-id="GmrnvVEO3cBtnADuARNWVq">6</button>
             <button data-page-node-id="p5TF4RmOLJDSt57YsVIGHn">7</button><button data-page-node-id="SbT4OhzTRc4yIcKF1EyxMJ">8</button><button data-page-node-id="vBsKAly6701R1A11Ar7pip">9</button>
-            <button style="visibility:hidden" data-page-node-id="PPL9qzNLF2xoUHDUnQlrLR">*</button><button data-page-node-id="3lflYA0KPc60nOGKv9f5RC">0</button><button style="visibility:hidden" data-page-node-id="lS2GCSAHPkTGUFWZol71MQ">#</button>
+            <button class="kp-del" data-page-node-id="PPL9qzNLF2xoUHDUnQlrLR" onclick="pinBack()" title="退格">⌫</button><button data-page-node-id="3lflYA0KPc60nOGKv9f5RC">0</button><button style="visibility:hidden" data-page-node-id="lS2GCSAHPkTGUFWZol71MQ">#</button>
           </div>
         </div>
       </div>
@@ -4047,6 +4059,20 @@
                 </div>
               </details>
               <div class="pc-hint" id="pinStatus" style="color:var(--sage);font-weight:700" data-page-node-id="QKGq5jhJ4q7g12zVesHOXC"></div>
+            </div>
+
+            <!-- 3.5 · 更新与刷新（宽卡 · 家长专用） -->
+            <div class="pcard w3" data-page-node-id="pcardRefresh">
+              <div class="pc-h" data-page-node-id="refresher01"><div class="pc-ic c2" data-page-node-id="refresher02">🔄</div><div data-page-node-id="refresher03"><div class="t" data-page-node-id="refresher04">更新与刷新</div><div class="s" data-page-node-id="refresher05">电脑上改完 · 同步后让 iPad 换成新版</div></div></div>
+              <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap" data-page-node-id="refresher06">
+                <div style="background:var(--surface-2);border-radius:11px;padding:8px 16px;min-width:180px" data-page-node-id="refresher07">
+                  <div style="font-size:10.5px;color:var(--ink-faint)" data-page-node-id="refresher12">当前版本</div>
+                  <div id="verNow" style="font-size:15px;font-weight:800;letter-spacing:.3px" data-page-node-id="refresher08">—</div>
+                </div>
+                <span class="pbtn pri" id="refreshBtn" style="flex:none;padding:13px 26px;font-size:13.5px" onclick="forceRefresh()" data-page-node-id="refresher09">🔄 立即刷新到最新版</span>
+                <span id="refreshTip" style="font-size:11.5px;color:var(--ink-soft);font-weight:700" data-page-node-id="refresher10"></span>
+              </div>
+              <div class="pc-hint" data-page-node-id="refresher11">点了会先清掉旧缓存，再重新下载整个页面。刷新后看左边「当前版本」的时间变成新的，就说明换成功了。这个按钮不适合孩子点，所以要输密码才进得来。</div>
             </div>
 
             <!-- 4 · 学习内容管理（宽卡 · 三 tab） -->
@@ -6688,6 +6714,7 @@
     try{ document.body.classList.toggle('on-pset', target==='sc-pset'); }catch(e){}
     if(target==='sc-home'){renderHomeTasks();renderHomework();}
     if(target==='sc-parent'){pinInput='';renderPinDots();renderGameDiffUI();}
+    if(target==='sc-pset'){try{renderVersionInfo();}catch(e){}}
     if(target==='sc-checkin')initCheckin();
     else if(target==='sc-store')initStore();
     else if(target==='sc-me')initMe();
@@ -13220,13 +13247,19 @@ LOGIC_LEVELS.forEach(function(L){
   let pinInput='';
   function initKeypad(){
     document.querySelectorAll('#sc-parent .kp button').forEach(b=>{
+      if(b.classList.contains('kp-del')) return;
       const v=b.textContent.trim();
-      if(!v || b.style.visibility==='hidden') return;
+      if(!/^\d$/.test(v) || b.style.visibility==='hidden') return;
       b.addEventListener('click',()=>pressPin(v));
     });
   }
   function renderPinDots(){
     document.querySelectorAll('#sc-parent .dots .dot').forEach((d,i)=>{ d.classList.toggle('f', i<pinInput.length); });
+  }
+  function pinBack(){
+    if(!pinInput.length) return;
+    pinInput=pinInput.slice(0,-1);
+    renderPinDots();
   }
   function pressPin(d){
     if(pinInput.length>=4)return;
@@ -13234,7 +13267,7 @@ LOGIC_LEVELS.forEach(function(L){
     if(pinInput.length===4){
       if(pinInput===getParentPin()){
         pinInput='';
-        setTimeout(()=>{renderPinDots();go('pset');},120);
+        setTimeout(()=>{renderPinDots();go('pset',{noHistory:true});},120);
       } else {
         const card=document.querySelector('#sc-parent .lock-card');
         if(card){card.classList.add('shake');setTimeout(()=>card.classList.remove('shake'),400);}
@@ -13251,6 +13284,56 @@ LOGIC_LEVELS.forEach(function(L){
     const s=document.getElementById('pinStatus');if(s)s.textContent='✅ 密码已修改为 '+v;
   }
   function refreshPinNow(){const now=document.getElementById('pinNow');if(now)now.textContent=getParentPin();}
+
+/* ================================================================
+   更新与刷新（家长设置内）：清缓存 + 带时间戳重载，绕开主屏顽固缓存
+   ================================================================ */
+  function renderVersionInfo(){
+    var el=document.getElementById('verNow'); if(!el) return;
+    var t='—';
+    try{
+      var d=new Date(document.lastModified);
+      if(!isNaN(d.getTime())){
+        var p=function(n){return (n<10?'0':'')+n;};
+        t=d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());
+      }
+    }catch(e){}
+    el.textContent=t;
+  }
+  function forceRefresh(){
+    var b=document.getElementById('refreshBtn'), tip=document.getElementById('refreshTip');
+    var fired=false;
+    function done(){
+      if(fired) return; fired=true;
+      if(location.protocol==='file:'){ try{location.reload();}catch(e){} return; }
+      var u=(location.href||'').split('#')[0];
+      u += (u.indexOf('?')<0?'?':'&')+'_r='+Date.now();
+      try{ location.replace(u); }catch(e){ try{location.reload();}catch(e2){} }
+    }
+    if(b){ b.style.pointerEvents='none'; b.textContent='⏳ 正在获取最新版本…'; }
+    if(tip) tip.textContent='正在清理旧缓存…';
+    var jobs=[];
+    try{
+      if(window.caches&&caches.keys) jobs.push(caches.keys().then(function(ks){
+        return Promise.all(ks.map(function(k){return caches.delete(k);}));
+      }));
+    }catch(e){}
+    try{
+      if(navigator.serviceWorker&&navigator.serviceWorker.getRegistrations) jobs.push(
+        navigator.serviceWorker.getRegistrations().then(function(rs){
+          return Promise.all(rs.map(function(r){return r.unregister();}));
+        })
+      );
+    }catch(e){}
+    try{
+      if(location.protocol!=='file:') jobs.push(
+        fetch(location.href,{cache:'no-store'}).then(function(r){return r.text();}).catch(function(){})
+      );
+    }catch(e){}
+    if(tip) tip.textContent='正在重新下载最新版本…';
+    if(jobs.length) Promise.all(jobs).then(done, done);
+    setTimeout(done, 3500);
+  }
 
   /* 家长设置：难度等级单选 + 内容分类多选（本地保存偏好，已可点击） */
   const LEVEL_KEY='mp_level', CATS_KEY='mp_cats';
