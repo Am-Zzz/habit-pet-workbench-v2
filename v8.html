@@ -468,23 +468,32 @@
     .screen#sc-home .learn-grid{grid-template-columns:repeat(3,1fr);gap:11px}
     .screen#sc-home .pet-stage{width:150px;height:150px}
     /* 左栏：宠物互动区自然展开，禁止内部滚动 */
+    /* ⛔ 原为 justify-content:space-between —— flex 会把剩余空间平摊给 12 处区块间隙
+       （实测 308px，占整卡 1/3），导致顶部被拉散、下面操作区被挤到 9~12px。
+       改 flex-start + 逐块小间距，把空间全部还给「孩子要读、要点的操作区」。 */
     .screen#sc-home .grid3 > .card:first-child{
       height:100%;
       align-self:stretch;
-      justify-content:space-between;
+      justify-content:flex-start;
       padding:6px;
     }
-    .screen#sc-home .grid3 > .card:first-child .card-h{margin-bottom:2px}
-    .screen#sc-home .grid3 > .card:first-child .ptab-row{margin-bottom:4px}
-    .screen#sc-home .grid3 > .card:first-child .ptab{height:30px;padding:0 14px;font-size:13px}
+    .screen#sc-home .grid3 > .card:first-child .card-h{margin-bottom:6px}
+    .screen#sc-home .grid3 > .card:first-child .ptab-row{margin-bottom:8px}
+    .screen#sc-home .grid3 > .card:first-child .ptab{height:36px;padding:0 16px;font-size:14px}
     .screen#sc-home .grid3 > .card:first-child .ptab.sel{background:var(--brand);color:#fff;border-color:var(--brand)}
-    .screen#sc-home .grid3 > .card:first-child .pet-face{margin:0 0 2px}
-    .screen#sc-home .grid3 > .card:first-child .pet-stage{width:120px;height:120px;border-width:4px}
-    .screen#sc-home .grid3 > .card:first-child .name-row{margin-bottom:6px;gap:5px}
-    .screen#sc-home .grid3 > .card:first-child .pet-name{font-size:17px}
-    .screen#sc-home .grid3 > .card:first-child .edit-name{font-size:13px}
-    .screen#sc-home .grid3 > .card:first-child .pet-lv{margin:-4px 0 5px;font-size:11px}
-    .screen#sc-home .grid3 > .card:first-child .growth-track{margin:0 0 6px;display:flex;justify-content:center;flex-wrap:wrap;gap:12px;white-space:normal;overflow:visible;padding-bottom:0}
+    .screen#sc-home .grid3 > .card:first-child .pet-face{margin:0 0 6px}
+    .screen#sc-home .grid3 > .card:first-child .pet-stage{width:104px;height:104px;border-width:4px}
+    /* 名字 + 等级并成一行（省一行高度 + 一处空隙），等级做成小药丸贴名字右侧 */
+    .screen#sc-home .grid3 > .card:first-child .name-row{margin-bottom:10px;gap:8px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap}
+    .screen#sc-home .grid3 > .card:first-child .pet-name{font-size:21px}
+    .screen#sc-home .grid3 > .card:first-child .edit-name{font-size:14px}
+    .screen#sc-home .grid3 > .card:first-child .pet-lv{margin:0;font-size:13px;font-weight:800;color:var(--ink-soft);background:var(--surface-2);border-radius:999px;padding:5px 13px}
+    /* 亲密度 / 连续天数徽章：11px 太小，提到 12.5px */
+    .screen#sc-home .grid3 > .card:first-child .bond-row{margin:0 0 8px;gap:7px}
+    .screen#sc-home .grid3 > .card:first-child .bond-row .bd{font-size:12.5px;padding:4px 10px}
+    .screen#sc-home .grid3 > .card:first-child .bond-row .bd b{font-size:13.5px}
+    /* flex:0 0 auto —— 保护等级图不被 flex column 压扁（曾实测被压到 42px，整条轨道变形） */
+    .screen#sc-home .grid3 > .card:first-child .growth-track{margin:0 0 10px;display:flex;justify-content:center;flex-wrap:wrap;gap:12px;white-space:normal;overflow:visible;padding-bottom:0;flex:0 0 auto}
     .screen#sc-home .grid3 > .card:first-child .growth-track .growth-dot{margin-right:0;width:60px;height:60px;border-width:2px}
     .screen#sc-home .grid3 > .card:first-child .growth-track .growth-dot img{width:100%;height:100%;object-fit:cover}
     /* 未解锁等级图提亮：保留「还没到」的暗示，但让孩子看清它会长成什么样（原 grayscale(1)+opacity .45/.55 太淡） */
@@ -492,27 +501,34 @@
     .screen#sc-home .grid3 > .card:first-child .growth-track .growth-dot.locked img{filter:grayscale(.28);opacity:1}
     .screen#sc-home .grid3 > .card:first-child .growth-track .growth-dot .lock{font-size:20px;background:rgba(255,255,255,.42);color:#B79EA6;text-shadow:0 1px 2px rgba(255,255,255,.9)}
     .screen#sc-home .grid3 > .card:first-child .growth-track .growth-dot .cur{font-size:12px;right:4px;bottom:2px}
-    .screen#sc-home .grid3 > .card:first-child .stat-block{margin:0 0 6px;padding:8px 11px;gap:7px}
-    .screen#sc-home .grid3 > .card:first-child .stat-row{gap:3px}
-    .screen#sc-home .grid3 > .card:first-child .stat-top{font-size:11px}
-    .screen#sc-home .grid3 > .card:first-child .bar{height:6px}
-    .screen#sc-home .grid3 > .card:first-child .routine{margin:0 0 5px}
-    .screen#sc-home .grid3 > .card:first-child .rt-head{margin-bottom:3px;font-size:10px}
-    .screen#sc-home .grid3 > .card:first-child .rt-dot{height:28px;font-size:13px;border-radius:8px}
-    .screen#sc-home .grid3 > .card:first-child .chips{margin-bottom:6px;gap:5px}
-    .screen#sc-home .grid3 > .card:first-child .chip{padding:5px 3px;border-radius:9px}
-    .screen#sc-home .grid3 > .card:first-child .chip .v{font-size:17px}
-    .screen#sc-home .grid3 > .card:first-child .chip .k{font-size:10px;margin-top:1px}
-    .screen#sc-home .grid3 > .card:first-child .chip .mini-bar{height:4px;margin-top:3px}
-    .screen#sc-home .grid3 > .card:first-child .pet-bag{margin-bottom:5px;padding:4px 5px;overflow-x:hidden}
-    .screen#sc-home .grid3 > .card:first-child .pb-head{font-size:11px}
-    .screen#sc-home .grid3 > .card:first-child .pb-go{font-size:9px}
-    .screen#sc-home .grid3 > .card:first-child .pb-cnts{margin:5px 0 2px;gap:5px}
-    .screen#sc-home .grid3 > .card:first-child .pb-cnt{font-size:10px;padding:4px 2px;border-radius:7px}
-    .screen#sc-home .grid3 > .card:first-child .bubble{margin-bottom:6px;padding:8px 12px;font-size:12px;line-height:1.55}
-    .screen#sc-home .grid3 > .card:first-child .btn{padding:5px 10px;font-size:12px;height:auto;border-radius:10px}
-    .screen#sc-home .grid3 > .card:first-child .partner-foot{gap:6px}
-    .screen#sc-home .grid3 > .card:first-child .partner-time{font-size:9px;padding:4px 7px}
+    /* ↓ 操作区（孩子实际要读、要点的）：字号 10→15、进度条 6→18、按钮 27→70 */
+    .screen#sc-home .grid3 > .card:first-child .stat-block{margin:0 0 10px;padding:12px 18px;gap:14px}
+    .screen#sc-home .grid3 > .card:first-child .stat-row{gap:7px}
+    .screen#sc-home .grid3 > .card:first-child .stat-top{font-size:15px;font-weight:800;color:var(--ink)}
+    .screen#sc-home .grid3 > .card:first-child .stat-top .care-tag{font-size:12px;padding:2px 8px}
+    .screen#sc-home .grid3 > .card:first-child .bar{height:18px;border-radius:9px}
+    .screen#sc-home .grid3 > .card:first-child .routine{margin:0 0 10px}
+    .screen#sc-home .grid3 > .card:first-child .rt-head{margin-bottom:8px;font-size:14px}
+    .screen#sc-home .grid3 > .card:first-child .rt-growth{font-size:13.5px;padding:6px 13px;border-radius:999px}
+    /* 未打卡节点提亮：原 grayscale(1)+opacity .5 放大后反而更糊，孩子认不出图标（.done/.cur 仍全彩） */
+    .screen#sc-home .grid3 > .card:first-child .rt-dot{height:56px;font-size:22px;border-radius:12px;filter:grayscale(.3);opacity:.88}
+    .screen#sc-home .grid3 > .card:first-child .rt-dot.done{filter:none;opacity:1}
+    .screen#sc-home .grid3 > .card:first-child .rt-dot.cur{filter:none;opacity:1}
+    .screen#sc-home .grid3 > .card:first-child .chips{margin-bottom:10px;gap:9px}
+    .screen#sc-home .grid3 > .card:first-child .chip{padding:12px 6px;border-radius:12px}
+    .screen#sc-home .grid3 > .card:first-child .chip .v{font-size:34px}
+    .screen#sc-home .grid3 > .card:first-child .chip .k{font-size:14px;margin-top:3px}
+    .screen#sc-home .grid3 > .card:first-child .chip .mini-bar{height:11px;margin-top:6px;border-radius:6px}
+    .screen#sc-home .grid3 > .card:first-child .pet-bag{margin-bottom:10px;padding:12px;overflow-x:hidden}
+    .screen#sc-home .grid3 > .card:first-child .pb-head{font-size:14px}
+    .screen#sc-home .grid3 > .card:first-child .pb-go{font-size:12.5px}
+    .screen#sc-home .grid3 > .card:first-child .pb-cnts{margin:8px 0 4px;gap:8px}
+    .screen#sc-home .grid3 > .card:first-child .pb-cnt{font-size:14px;padding:12px 6px;border-radius:10px}
+    .screen#sc-home .grid3 > .card:first-child .bubble{margin-bottom:10px;padding:14px 16px;font-size:15px;line-height:1.6}
+    .screen#sc-home .grid3 > .card:first-child .btn{padding:0 18px;font-size:16px;height:70px;border-radius:16px}
+    /* 底部按钮吸底：余量落在气泡与按钮之间，不会在区块中间重新长出缝隙 */
+    .screen#sc-home .grid3 > .card:first-child .partner-foot{gap:10px;margin-top:auto}
+    .screen#sc-home .grid3 > .card:first-child .partner-time{font-size:14px;padding:0 14px;height:70px;display:flex;align-items:center;white-space:nowrap}
     .screen#sc-home .grid3 > .card:first-child .partner-time.warn{color:#B3261E;border-color:#FCA5A5;background:#FEF2F2}
     /* 高度链贯通：横屏约束 home 屏高度，栏内滚动彻底修「看不全」。左栏自然展开，故放宽 30px 给它空间 */
     #sc-home.screen{flex:1 1 auto;min-height:0;flex-direction:column;overflow:hidden;box-sizing:border-box}
@@ -529,8 +545,8 @@
   @media (min-width:960px) and (max-height:780px){
     .screen#sc-home .grid3 > .card:first-child .bubble{display:none}
     .screen#sc-home .grid3 > .card:first-child .pet-stage{width:100px;height:100px}
-    .screen#sc-home .grid3 > .card:first-child .stat-block{padding:2px 3px;gap:3px}
-    .screen#sc-home .grid3 > .card:first-child .btn{padding:4px 10px}
+    .screen#sc-home .grid3 > .card:first-child .stat-block{padding:8px 12px;gap:10px}
+    .screen#sc-home .grid3 > .card:first-child .btn{padding:0 14px}
     /* 小高度横屏：右栏让位给明日课程表 */
     .screen#sc-home .grid3 > .card:last-child .ms-dots{display:none}
     .screen#sc-home .grid3 > .card:last-child .hp-ring{width:44px;height:44px}
@@ -3806,8 +3822,8 @@
           <div class="name-row" data-page-node-id="Mp8t5I1QhqLvmqBB42DPcD">
             <span class="pet-name" id="petName" data-page-node-id="c5a8OmcP1EOT1mf6wgjFCs">小萌</span>
             <span class="edit-name" onclick="rename()" title="改名" data-page-node-id="ZKJOkM6XXnP7iDcQUzQFmy">✏️</span>
+            <span class="pet-lv" data-page-node-id="g2pejQm020cvsG2CnMJj4Z">Lv.<span id="snakeLv" data-page-node-id="mBkMqImm9Mx6NDv7MoMsrL">1</span> · <span id="snakeStage" data-page-node-id="FrNEgS5pB3IhTiMdYgwEhD">窝里小狗</span></span>
           </div>
-          <div class="pet-lv" data-page-node-id="g2pejQm020cvsG2CnMJj4Z">Lv.<span id="snakeLv" data-page-node-id="mBkMqImm9Mx6NDv7MoMsrL">1</span> · <span id="snakeStage" data-page-node-id="FrNEgS5pB3IhTiMdYgwEhD">窝里小狗</span></div>
           <div class="bond-row" id="bondRow"></div>
           <div class="growth-track" id="growthTrack" data-page-node-id="YnZqfcAMX8Ka7yeqDKFEbi"></div>
           <div class="stat-block" data-page-node-id="uh34KA6I8XLI0O4PpUG02C">
