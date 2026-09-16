@@ -107,8 +107,16 @@
     }
     /* 顶栏横跨 1324 且固定在顶部（不被 flex 压缩） */
     .screen.on > .card > .app-head{align-self:stretch;width:100%;flex:0 0 auto;position:sticky;top:0;z-index:5}
-    /* 内容容器横向撑满（不再收缩堆挤屏幕中间） */
-    .screen.on > .card > *:not(.logic-deco){width:100%!important;box-sizing:border-box}
+    /* 内容容器横向撑满（不再收缩堆挤屏幕中间）
+       ⛔ 2026-09-15 修系统性 6px 右溢出：原为 width:100%!important —— 卡片是 flex 列容器且 padding:0，
+          于是每个带 `margin:0 6px` 的块（小镇超市/衣橱/邮局…共 10 处）实际占 1364(100%) + 12(左右外边距)
+          = 1376px，比卡片宽 12px：右侧「去逛逛 ›」被裁掉一角，卡片还会冒出横向滚动条
+          （实测 .card scrollWidth 1376 > clientWidth 1364）。改为 width:auto + align-self:stretch：
+          宽度 = 容器宽 − 外边距，有无外边距都正确；卡片是 block 时 block 级 auto 宽度同样填满。 */
+    .screen.on > .card > *:not(.logic-deco){width:auto!important;align-self:stretch;box-sizing:border-box}
+    /* 例外：家长设置顶栏用 inline 的 margin:-4px -4px 0 做「贴边」hack（v8.html 原样式），
+       width:auto 会让它被外边距撑到 1372px（左右各出 4px、卡片冒横向滚动条）→ 这里固定回 100%。 */
+    .screen.on > .card > .app-head{width:100%!important}
     /* 设备 .wrap 撑满 device（去 margin:0 auto 塌缩），内部 column flex 撑满 */
     .device > .wrap{margin:0;width:100%;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow:hidden}
     /* 例外：自然拼读 .card 是有意暖色调壳，保留 */
@@ -236,15 +244,20 @@
   .partner-card .pet-name{font-size:18px}
   .partner-card .pet-lv{margin:0;font-size:14px;font-weight:700;color:var(--brand-d)}
   /* 亲密度 · 方案 B：三胶囊一行（关系锚点，紧贴身份区） */
-  .partner-card .bond-row{display:flex;justify-content:center;gap:6px;margin:0 0 10px}
+  .partner-card .bond-row{display:flex;justify-content:center;align-items:center;gap:5px;margin:0 0 10px}
   .partner-card .bond-row .bd{background:var(--brand-s);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:700;color:var(--brand-d)}
   .partner-card .bond-row .bd b{font-size:13.5px;font-weight:800;color:var(--ink)}
-  .partner-card .growth-track{margin:0 0 10px;display:flex;justify-content:center;gap:6px;flex:0 0 auto;white-space:normal;overflow:visible}
-  .partner-card .growth-track .growth-dot{margin-right:0;width:34px;height:34px;border-width:2px}
-  .partner-card .growth-track .growth-dot img{width:100%;height:100%;object-fit:cover}
-  .partner-card .growth-track .growth-dot.locked{filter:grayscale(.35);opacity:1}
-  .partner-card .growth-track .growth-dot.locked img{filter:grayscale(.35);opacity:1}
-  .partner-card .growth-track .growth-dot .lock{font-size:15px;background:rgba(255,255,255,.42);color:#B79EA6}
+  /* ⛔ 2026-09-15 定稿：升级进度 = 独立一整行进度条（原「成长胶囊 + 6 头像成长轨道」已删）。
+     结构：Lv 徽章 + 12px 条 + 320/450，下面一行小字报下一级是什么。 */
+  .partner-card .grow-line{display:flex;align-items:center;gap:10px;margin:0 0 5px}
+  .partner-card .grow-line .gl-lv{flex:none;padding:3px 11px;border-radius:999px;background:var(--brand-s);color:var(--brand-d);font-size:12.5px;font-weight:800;white-space:nowrap}
+  .partner-card .grow-line .gl-lv b{font-size:14px;color:var(--ink)}
+  .partner-card .grow-line .gl-bar{flex:1;min-width:0;height:12px;border-radius:99px;background:#F1E6DC;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.05)}
+  .partner-card .grow-line .gl-bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#F8B2C8,#F26D92);transition:width .5s}
+  .partner-card .grow-line.done .gl-lv{background:#FFF3D6;color:#9A7416}
+  .partner-card .grow-line.done .gl-bar i{background:linear-gradient(90deg,#FBD188,#E7A23C)}
+  .partner-card .grow-line .gl-num{flex:none;font-size:12.5px;font-weight:800;color:var(--ink-soft);white-space:nowrap}
+  .partner-card .grow-tip{margin:0 0 10px;text-align:center;font-size:11.5px;color:#a89a86;line-height:1.4}
   /* 升级进度 + 心情：同风格分组条 */
   .partner-card .stat-block{margin:0 0 10px;padding:10px 12px;gap:10px}
   .partner-card .stat-top{font-size:14px;font-weight:700;color:var(--ink-soft)}
@@ -289,6 +302,72 @@
   .partner-card .btn{padding:13px;font-size:15px;border-radius:14px;width:100%}
   .partner-card .partner-time{margin-top:9px;font-size:14px;font-weight:800;color:var(--ink-soft);text-align:center}
   .partner-card .partner-time.warn{color:#B3261E}
+
+  /* ===== 「我的伙伴」三层结构（2026-09-15）：状态水位 / 背包行 / 双入口 =====
+     归并原则：宠物身上的值（会自己往下掉）→ 水位行；我兜里的东西（只增不减）→ 背包行。
+     禁把库存混进状态行（口粮曾占状态第三格），也禁把状态做成纯数字（看不见水位）。 */
+  /* 状态：心情 / 饱腹 / 清洁，各带水位条 */
+  .partner-card .vitals-row{display:flex;gap:8px;margin:0 0 19px}
+  .partner-card .vst{flex:1;min-width:0;border-radius:12px;padding:9px 10px 10px;border:1px solid transparent}
+  .partner-card .vst-top{display:flex;align-items:baseline;justify-content:space-between;gap:4px;margin-bottom:7px}
+  .partner-card .vst-top .k{font-size:12.5px;font-weight:700;color:#6E625C;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .partner-card .vst-top .k .mf{font-style:normal;font-size:12px}
+  .partner-card .vst-top b{font-size:16px;font-weight:800;line-height:1;white-space:nowrap}
+  .partner-card .vst-bar{height:6px;border-radius:99px;background:rgba(255,255,255,.85);overflow:hidden}
+  .partner-card .vst-bar i{display:block;height:100%;border-radius:99px;transition:width .4s}
+  .partner-card .vst.mood{background:#FFF1F5;border-color:#FBDCE7}
+  .partner-card .vst.mood .vst-top b{color:#D2496F}
+  .partner-card .vst.mood .vst-bar i{background:linear-gradient(90deg,#F8B2C8,#F26D92)}
+  .partner-card .vst.full{background:#FFF8E8;border-color:#F7E7C6}
+  .partner-card .vst.full .vst-top b{color:#C57A15}
+  .partner-card .vst.full .vst-bar i{background:linear-gradient(90deg,#FBD188,#EFA12E)}
+  .partner-card .vst.clean{background:#EAF2FB;border-color:#D3E4F5}
+  .partner-card .vst.clean .vst-top b{color:#2F7BB5}
+  .partner-card .vst.clean .vst-bar i{background:linear-gradient(90deg,#A9D3F5,#6BB6FF)}
+  .partner-card .vst.low{border-color:#FCA5A5}
+  .partner-card .vst.low .vst-top b{color:#EF4444}
+  /* 背包：口粮 / 洗护 / 医疗 / 装扮 —— 宠物用品唯一容器；有几类显几类 */
+  .partner-card .bagrow{display:flex;align-items:center;gap:6px;height:46px;background:#FAF6F2;
+    border:1px solid var(--line);border-radius:12px;padding:0 9px;margin:0 0 19px;overflow:hidden}
+  .partner-card .bagrow .bg-ic{font-size:15px;line-height:1;flex:0 0 auto}
+  .partner-card .bagrow .bg-chip{height:28px;display:inline-flex;align-items:center;gap:3px;padding:0 8px;
+    border-radius:99px;font-size:12.5px;font-weight:800;white-space:nowrap;flex:0 0 auto;border:1px solid}
+  .partner-card .bagrow .bg-chip b{font-size:13.5px;font-weight:800}
+  .partner-card .bagrow .bg-chip.hide{display:none}
+  .partner-card .bagrow .bg-empty{font-size:12.5px;font-weight:700;color:#B8AFA8;white-space:nowrap;overflow:hidden;flex:1 1 auto}
+  .partner-card .bagrow .bg-empty.hide{display:none}
+  .partner-card .bagrow .bg-add{margin-left:auto;flex:0 0 auto;width:26px;height:26px;border-radius:9px;
+    border:1.4px dashed #D9CFC8;background:transparent;color:#A79B93;font-size:15px;font-weight:800;
+    line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:inherit}
+  /* 互动层：气泡喊人 + 左右两条线入口（学习线 sky / 陪伴线 品牌粉），吸底 */
+  .partner-card .partner-foot{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-top:auto}
+  .partner-card .partner-foot .bubble{margin-bottom:0}
+  .partner-card .act-grid{display:flex;gap:12px}
+  .partner-card .act-grid .btn{flex:1;width:auto;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:3px;padding:10px 4px;min-height:68px;line-height:1.2}
+  .partner-card .act-grid .btn .sub{font-size:11px;font-weight:400;opacity:.75;white-space:nowrap}
+  .partner-card .act-grid .btn.qz{background:var(--sky-s);border:1.5px solid var(--sky);color:#2F6E9E;box-shadow:none}
+  .partner-card .act-grid .btn.qz .sub{color:#4E86B0}
+  .partner-card .act-grid .btn.qz:active{transform:scale(.98)}
+  /* 高度分配：块间统一 19px、头像放大到 184，让内容自然铺满 partner-scroll 的可视高度
+     （删掉重复的进度条 / 收掉口粮格 / 背包块压缩后腾出的空间，全部分给头像与间距，
+      不新增内容、不在卡中间留空洞） */
+  .partner-card .card-h{margin-bottom:19px}
+  .partner-card .ptab-row{margin-bottom:19px}
+  .partner-card .pet-face{margin:0 0 19px}
+  .partner-card .pet-stage{width:184px;height:184px}
+  .partner-card .name-row{margin-bottom:19px}
+  .partner-card .bond-row{margin-bottom:19px}
+  /* 2026-09-15：成长轨道已删（改为独立进度条），此处不再需要 dot 尺寸 / 下边距 */
+  .partner-card .rt-box{padding:11px 12px 12px;margin:0 0 19px}
+  .partner-card .rt-box .rt-d{height:44px;width:44px;min-width:44px;max-width:44px;flex:0 0 44px;font-size:18px}
+  .partner-card .act-grid .btn{min-height:78px}
+  /* 剩余高度微调：逐块加回，让卡片上中下三段均匀饱满、中间不留空洞（实测校正值） */
+  .partner-card .vst{padding:12px 10px 13px}
+  .partner-card .rt-box{padding:14px 12px 15px}
+  .partner-card .bubble{min-height:46px}
+  .partner-card .bond-row .bd{padding:6px 10px}
+  .partner-card .ptab{height:33px}
 
   /* 打卡 */
   .prog{display:flex;align-items:center;gap:12px;margin-bottom:16px}
@@ -540,7 +619,7 @@
     .screen#sc-home .grid3 > .card:last-child .qk-grid{flex:0 0 auto}
     .screen#sc-home .grid3 > .card:last-child .home-link-list{display:none}
     .screen#sc-home .learn-grid{grid-template-columns:repeat(3,1fr);gap:11px}
-    .screen#sc-home .pet-stage{width:140px;height:140px}
+    .screen#sc-home .pet-stage{width:184px;height:184px}   /* 2026-09-15：删掉重复进度条后腾出的空间分给头像 */
     /* 左栏：宠物互动区自然展开，禁止内部滚动 */
     /* ⛔ 原为 justify-content:space-between —— flex 会把剩余空间平摊给 12 处区块间隙
        （实测 308px，占整卡 1/3），导致顶部被拉散、下面操作区被挤到 9~12px。
@@ -574,10 +653,14 @@
     #sc-hwcal.screen.on{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;overflow:hidden;box-sizing:border-box;background:var(--surface-2);padding:0}
     #sc-hwcal .hwc-wrap{flex:1;min-height:0;height:auto;width:100%;max-width:1400px;align-self:stretch}
   }
-  /* iPad mini / 小高度横屏：隐藏气泡、进一步压缩宠物区，保证左栏不溢出 */
+  /* 小高度横屏：进一步压缩宠物区（仅内边距/右栏，不影响内容显示） */
+  /* ⛔ 2026-09-14 修复「iPad 上看不到气泡那句」：原规则里有
+       .bubble{display:none} + .pet-stage{width:104px;height:104px}
+     这两条量的是「真实视口高度」，但本应用是**固定虚拟壳 1366×1024**（fitShell 只缩不放，
+     壳内布局高度恒为 1024px）—— 视口高度根本衡量不到壳内空间。iPad 横屏视口 1024×768，
+     768 ≤ 780 会误命中，于是气泡整块被 display:none、头像被缩到 104。
+     故删掉这两条，气泡/头像回到与电脑一致。 */
   @media (min-width:960px) and (max-height:780px){
-    .screen#sc-home .grid3 > .card.partner-card .bubble{display:none}
-    .screen#sc-home .grid3 > .card.partner-card .pet-stage{width:104px;height:104px}
     .screen#sc-home .grid3 > .card.partner-card .stat-block{padding:8px 10px;gap:8px}
     .screen#sc-home .grid3 > .card.partner-card .rt-box{padding:7px 9px}
     /* 小高度横屏：右栏让位给明日课程表 */
@@ -2262,6 +2345,11 @@
   .reward-row .rw-name{font-weight:800;font-size:15px}
   .reward-row .rw-meta{font-size:13px;color:var(--ink-soft)}
   .reward-row input.rw-w{width:64px;padding:5px 7px;border:1px solid var(--line);border-radius:8px;font-size:15px;text-align:center}
+  /* ⛔ 2026-09-15 自定义奖励可改：图标 / 名称 / 数值 三个行内输入 */
+  .reward-row input.rw-ic-in{width:50px;flex:none;padding:6px;border:1px solid var(--line);border-radius:8px;font-size:16px;text-align:center;font-family:var(--font);background:#fff;box-sizing:border-box}
+  .reward-row input.rw-name-in{flex:1;min-width:108px;padding:6px 9px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-weight:700;font-family:var(--font);background:#fff;box-sizing:border-box}
+  .reward-row input.rw-val{width:64px;flex:none;padding:6px 7px;border:1px solid var(--line);border-radius:8px;font-size:15px;text-align:center;font-family:var(--font);background:#fff;box-sizing:border-box}
+  .reward-row .rw-tag{font-size:12px;font-weight:800;color:#7a6a4a;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 8px;flex:none;white-space:nowrap}
   .prob-bar{height:22px;border-radius:8px;background:var(--sky);display:flex;align-items:center;padding:0 8px;color:#fff;font-size:14px;font-weight:800;margin:6px 0;min-width:42px}
   .store-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
   .store-item{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center}
@@ -2410,11 +2498,18 @@
   .album-big{position:relative;background:#fff;border-radius:18px;padding:10px;box-shadow:0 18px 50px rgba(0,0,0,.28)}
   .album-big img{width:280px;display:block;border-radius:12px}
   /* P0.5 家长设置 · 作息时间配置 */
-  .rt-cfg{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:9px}
-  .rt-cfg-i{background:#FFF9FB;border:1px solid #FBDEE7;border-radius:12px;padding:8px 4px;text-align:center}
-  .rt-cfg-i .ri{display:block;font-size:18px}
+  .rt-cfg{display:flex;flex-direction:column;gap:7px;margin-bottom:9px}
+  .rt-cfg-i{background:#FFF9FB;border:1px solid #FBDEE7;border-radius:12px;padding:7px 9px;text-align:center}
+  .rt-cfg-i.rt-row{display:flex;align-items:center;gap:8px;text-align:left}
+  .rt-cfg-i .ri{display:block;font-size:18px;flex:none;width:24px}
   .rt-cfg-i .rn{display:block;font-size:13px;font-weight:800;color:#A9718A;margin:2px 0 5px}
   .rt-cfg-i .rt-time{width:100%;box-sizing:border-box;text-align:center;padding:5px 2px;font-size:14px;font-weight:700;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+  .rt-cfg-i.rt-row .rt-time{flex:none;width:98px}
+  .rt-cfg-i.rt-row .rt-name{flex:1 1 auto;min-width:0;padding:5px 8px;font-size:14px;font-weight:700;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+  .rt-cfg-i.rt-row .rt-rw{flex:none;padding:5px 6px;font-size:13px;font-weight:700;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+  .rt-cfg-i.rt-row .rt-amt{flex:none;width:64px;padding:5px 6px;font-size:14px;font-weight:700;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);text-align:center}
+  /* 家长页「宠物碎碎念」多行输入（一行一句） */
+  .chat-ta{display:block;width:100%;box-sizing:border-box;min-height:96px;resize:vertical;padding:10px 12px;font-size:13.5px;font-weight:700;line-height:1.75;font-family:inherit;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
   .play-chips{display:flex;flex-direction:column;gap:8px}
   .play-chips .pc{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;font-size:15px;color:var(--ink);text-align:left;cursor:pointer}
   .play-chips .pc:hover{background:#FFF3F0}
@@ -2534,6 +2629,9 @@
   .app-head .ah-mini{display:flex;align-items:center;justify-content:center;gap:5px;height:34px;padding:0 13px;border-radius:999px;
     background:var(--ah-btn,rgba(0,0,0,.06));color:inherit;font-size:15px;font-weight:800;cursor:pointer;transition:.12s;flex:none}
   .app-head .ah-mini.gear{width:34px;padding:0;font-size:16px}
+  /* ⛔ 2026-09-15 小镇超市顶栏「🛒 补货」：家长专属，点了先验证密码再就地开货架面板。
+     用白底深字（skin-tomato 是橙红渐变条，白底按钮比半透明底更好点） */
+  .app-head .ah-mini.restock{background:rgba(255,255,255,.92);color:#8A5A2B;font-size:13.5px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
   .app-head .ah-back{position:absolute;left:16px;top:0;bottom:0;margin:auto 0;height:34px;display:flex;align-items:center;padding:0 17px;border-radius:14px;
     background:var(--ah-btn,rgba(0,0,0,.06));color:inherit;font-size:13.5px;font-weight:800;cursor:pointer;flex:none;transition:.12s}
   .app-head .ah-mini:active,.app-head .ah-back:active{transform:scale(.96);filter:brightness(1.06)}
@@ -2636,7 +2734,11 @@
   .mall-coinbar .mc-left{text-align:center;flex:none}
   .mall-coinbar .mc-num{font-size:30px;font-weight:900;color:#BA7517;line-height:1}
   .mall-coinbar .mc-lab{font-size:13px;color:#9a7b3a;font-weight:800;margin-top:2px}
-  .mall-coinbar .mc-right{font-size:13.5px;color:#7a6a4a;font-weight:700;line-height:1.5}
+  .mall-coinbar .mc-right{font-size:13.5px;color:#7a6a4a;font-weight:700;line-height:1.5;flex:1;min-width:0}
+  /* ⛔ 2026-09-15 商店合并·第1批：钱包条新增「近 7 天节奏」两行（财商第 1 层） */
+  .mall-coinbar .mc-avg{font-size:14px;font-weight:900;color:#BA7517;margin-bottom:2px}
+  .mall-coinbar .mc-avg b{font-size:16px}
+  .mall-coinbar .mc-sub{font-size:12.5px;color:#9a8a6a;font-weight:700;line-height:1.45}
   .mall-tabs{display:flex;gap:10px;margin:0 6px 12px}
   .mall-tab{flex:1;text-align:center;padding:12px;border-radius:14px;background:#fff;border:1.5px solid var(--line,#f0d9c8);font-size:15px;font-weight:900;color:#9b8a78;cursor:pointer;transition:.12s}
   .mall-tab.on{background:#FBEAF0;border-color:#ED93B1;color:#993556}
@@ -2660,11 +2762,113 @@
   .mall-item .mi-em{width:54px;height:54px;border-radius:14px;background:#FBEAF0;display:flex;align-items:center;justify-content:center;font-size:28px}
   .mall-item .mi-n{font-size:14px;font-weight:900;color:#5A4636}
   .mall-item .mi-c{font-size:13px;font-weight:800;color:#BA7517}
+  /* ⛔ 2026-09-15 商店合并·第1批：现实奖励的三档标签（铜/银/金） */
+  .mall-item .mi-tier{font-size:11.5px;font-weight:800;padding:2px 8px;border-radius:999px;margin:4px auto 2px;display:inline-block}
+  .mall-item .mi-tier.t-bronze{background:#FAEEDA;color:#854F0B}
+  .mall-item .mi-tier.t-silver{background:#F1EFE8;color:#5F5E5A}
+  .mall-item .mi-tier.t-gold{background:#FBEAF0;color:#993556}
   .mall-item .mi-btn{margin-top:2px;padding:9px 18px;border-radius:11px;background:#ED93B1;color:#fff;font-weight:900;font-size:13.5px;cursor:pointer;transition:.12s}
   .mall-item .mi-btn.dis{background:#E6Dfd9;color:#a99;cursor:not-allowed}
   .mall-item .mi-btn.done{background:#9BD0A6;color:#fff;cursor:default}
   .mall-item .mi-wish{font-size:12.5px;font-weight:800;color:#C75078;cursor:pointer;margin-top:2px}
   .mall-item .mi-wish.on{color:#ED93B1}
+  /* ⛔ 2026-09-15 商店合并·第1批：财商账本「这周赚了多少」（近 7 天按来源拆账）
+     4 类来源横排 4 格（原竖排 4 行 166px 会贴到屏底，横排约 90px） */
+  .mall-ledger{margin:0 6px 12px;background:#FFFDF7;border:1.5px solid #EFE0C4;border-radius:16px;padding:12px 16px}
+  .mall-ledger .ml-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .mall-ledger .ml-t{font-size:14.5px;font-weight:900;color:#7A5A2E}
+  .mall-ledger .ml-s{font-size:12px;font-weight:700;color:#B39A78}
+  .mall-ledger .ml-rows{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .mall-ledger .ml-row{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 4px;border-radius:13px;background:#fff;border:1.5px solid #F3ECE0}
+  .mall-ledger .ml-ic{font-size:19px;line-height:1}
+  .mall-ledger .ml-n{font-size:12px;font-weight:900;color:#6B5642}
+  .mall-ledger .ml-bar{width:100%;height:6px;border-radius:999px;background:#F3ECE0;overflow:hidden}
+  .mall-ledger .ml-bar>i{display:block;height:100%;border-radius:999px;transition:width .3s}
+  .mall-ledger .ml-v{font-size:15px;font-weight:900;color:#8A6A3E}
+  .mall-ledger .k-study{border-color:#D8E6F6}
+  .mall-ledger .k-study .ml-bar>i{background:#8CB4DC}
+  .mall-ledger .k-study .ml-v{color:#4A7BA8}
+  .mall-ledger .k-checkin{border-color:#D6EAD5}
+  .mall-ledger .k-checkin .ml-bar>i{background:#8FBC8D}
+  .mall-ledger .k-checkin .ml-v{color:#4E8A4C}
+  .mall-ledger .k-read{border-color:#F6E5BE}
+  .mall-ledger .k-read .ml-bar>i{background:#E8B44A}
+  .mall-ledger .k-read .ml-v{color:#A87C1E}
+  .mall-ledger .k-play{border-color:#F8DCE6}
+  .mall-ledger .k-play .ml-bar>i{background:#F2A0BC}
+  .mall-ledger .k-play .ml-v{color:#C0607E}
+  .mall-ledger .ml-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+  .mall-ledger .ml-sum{font-size:13px;font-weight:800;color:#7A5A2E}
+  .mall-ledger .ml-sum b{font-size:16px;font-weight:900;color:#C75078;margin:0 2px}
+  .mall-ledger .ml-tip{font-size:12px;font-weight:700;color:#A98F6A}
+  .mall-ledger .ml-empty{font-size:12.5px;font-weight:700;color:#B39A78;line-height:1.7;padding:4px 0}
+
+  /* ⛔ 2026-09-15 商店合并·第2批：萌宠小镇「4 摊位卡」+ 3 个子屏（小镇超市/小镇衣橱/星星邮局）平铺白卡 */
+  .mall-stalls{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:0 6px 14px}
+  .mall-stall{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid var(--line,#f0d9c8);border-radius:18px;padding:16px;cursor:pointer;transition:.15s;box-shadow:0 2px 8px rgba(180,140,90,.08)}
+  .mall-stall:active{transform:translateY(1px)}
+  .mall-stall .ms-ic{width:54px;height:54px;border-radius:16px;background:#FFF3E6;display:flex;align-items:center;justify-content:center;font-size:30px;flex:none}
+  .mall-stall .ms-body{flex:1;min-width:0}
+  .mall-stall .ms-t{font-size:16px;font-weight:900;color:#5A4636}
+  .mall-stall .ms-d{font-size:12.5px;color:#9a8a6a;font-weight:700;margin-top:2px;line-height:1.4}
+  .mall-stall .ms-go{font-size:13px;font-weight:900;color:#ED93B1;flex:none;white-space:nowrap}
+  .mall-sub{padding:14px;display:flex;flex-direction:column;gap:14px;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .mall-sub .msub-coinbar{display:flex;align-items:baseline;gap:6px;justify-content:center;background:linear-gradient(180deg,#FFF6E9,#FFEFD6);border:1px solid #F6DCA8;border-radius:14px;padding:10px}
+  .mall-sub .msub-coinbar .msc-num{font-size:22px;font-weight:900;color:#C8841E}
+  .mall-sub .msub-coinbar .msc-lab{font-size:13px;font-weight:800;color:#B07A2E}
+  .mall-sub .msub-section{display:flex;flex-direction:column;gap:8px}
+  /* ⛔ 2026-09-15 尺寸统一：三子屏的翻页条压薄（默认 .bk-pager 上下各 14px 太厚，240 卡片放不下） */
+  .mall-sub .bk-pager{margin-top:8px;padding-top:8px}
+  .mall-sub .msub-h{font-size:15px;font-weight:900;color:#7a4a52;display:flex;align-items:center;gap:6px}
+  .mall-sub .msub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .mall-sub .msub-bag{margin-top:2px}
+  .mall-sub .msub-bag .bag-grid{gap:6px}
+  .mall-sub .msub-bag .bag-row{padding:4px 9px;font-size:12.5px;border-radius:999px;gap:4px}
+  .mall-sub .msub-bag .bag-row .bi{font-size:15px}
+  .mall-sub .msub-bag .bag-row .bn{font-weight:700}
+  .mall-sub .msub-bag .bag-empty{padding:3px 0;font-size:12.5px;margin:0;flex-direction:row;justify-content:flex-start;gap:6px;border:0;background:transparent;color:#a89a86}
+  .mall-sub .msub-bag .bag-empty::before{font-size:16px;animation:none}
+  .mall-sub .msub-tip{font-size:12.5px;line-height:1.6;color:#9a7b3a;background:#FFF8E8;border:1px dashed #E8CF95;border-radius:12px;padding:10px 12px}
+  .mall-sub .msub-item{background:#fff;border:1.5px solid var(--line,#f0d9c8);border-radius:16px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+  .mall-sub .msub-item.owned{opacity:.62}
+  .mall-sub .msub-item .mi-em{width:54px;height:54px;border-radius:14px;background:#FBEAF0;display:flex;align-items:center;justify-content:center;font-size:28px}
+  .mall-sub .msub-item .mi-n{font-size:14px;font-weight:900;color:#5A4636}
+  .mall-sub .msub-item .mi-d{font-size:12px;color:#9a8a6a;line-height:1.4}
+  .mall-sub .msub-item .mi-c{font-size:13px;font-weight:800;color:#BA7517}
+  .mall-sub .msub-item .mi-tier{font-size:11.5px;font-weight:800;padding:2px 8px;border-radius:999px;margin:2px 0;display:inline-block}
+  .mall-sub .msub-item .mi-tier.t-bronze{background:#FAEEDA;color:#854F0B}
+  .mall-sub .msub-item .mi-tier.t-silver{background:#F1EFE8;color:#5F5E5A}
+  .mall-sub .msub-item .mi-tier.t-gold{background:#FBEAF0;color:#993556}
+  .mall-sub .msub-item .mi-btn{margin-top:2px;padding:9px 18px;border-radius:11px;background:#ED93B1;color:#fff;font-weight:900;font-size:13.5px;cursor:pointer;transition:.12s}
+  .mall-sub .msub-item .mi-btn.dis{background:#E6Dfd9;color:#a99;cursor:not-allowed}
+  .mall-sub .msub-item .mi-btn.done{background:#9BD0A6;color:#fff;cursor:default}
+  .mall-sub .msub-item .mi-wish{font-size:12.5px;font-weight:800;color:#C75078;cursor:pointer;margin-top:2px}
+  .mall-sub .msub-item .mi-wish.on{color:#ED93B1}
+  /* ⛔ 2026-09-15 尺寸统一：三子屏「卡片网格 + 固定 240 + 翻页」（不滚动，超出进下一页） */
+  /* ⛔ 2026-09-15 尺寸统一：小镇超市 / 小镇衣橱 / 星星邮局 三屏卡片一律 240px 等高、3×3、超出翻页 */
+  .mall-sub .msub-wish,
+  .mall-sub .msub-grid.dress,
+  .mall-sub .msub-grid.fixed{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;grid-auto-rows:240px;align-content:start}
+  .mall-sub .msub-wish .msub-item,
+  .mall-sub .msub-grid.dress .msub-item,
+  .mall-sub .msub-grid.fixed .msub-item{height:240px;justify-content:space-between}
+  /* ⛔ 2026-09-15 尺寸统一：超市屏堆得最满 → 独立压紧留白 + 背包压成钱包条下一行小胶囊 */
+  /* ⛔ 2026-09-15 尺寸统一·超市纵向节奏：卡片升到 240 后，超市比衣橱/邮局多「钱包条 + 背包行 + 翻页条」三块，
+     原本靠把块间距压到 6px、翻页条贴卡片底边才塞下（对比：衣橱/邮局间距 14px）。
+     这里不再压间距，改从「钱包条内边距 + 翻页按钮」里省高度，把间距放回 10px、底部留出余量。
+     ⚠️ `.mall-sub` 的 padding 是死的——`.screen.on > .card{padding:0!important}` 会覆盖它，只有 gap 生效。 */
+  .mall-sub.tight{gap:10px}
+  .mall-sub.tight > .app-head{margin-bottom:4px}
+  .mall-sub.tight .msub-coinbar{padding:6px}
+  .mall-sub.tight .bk-pager .bk-pg-btn{padding:7px 16px}
+  .mall-sub.tight .bk-pager .bk-pg-info{padding:5px 12px;font-size:14px}
+  .mall-sub.tight .msub-section{gap:8px}
+  .mall-sub.tight .bk-pager{margin-top:0;padding-top:4px}
+  .mall-sub.tight .msub-bagline{display:flex;align-items:center;gap:6px;min-height:26px}
+  .mall-sub.tight .msub-bagline .mbl-ic{font-size:15px;flex:none}
+  .mall-sub.tight .msub-bagline .msub-bag{margin:0;flex:1;min-width:0}
+  .mall-sub.tight .msub-bag .bag-grid{display:flex;flex-wrap:nowrap;overflow:hidden;gap:6px}
+  .mall-sub.tight .msub-bag .bag-row{white-space:nowrap}
   .mall-coupons{margin:0 6px 14px;background:#FFF7EC;border:1.5px solid #FAC775;border-radius:16px;padding:14px}
   .mall-cp-h{font-size:14px;font-weight:900;color:#854F0B;margin-bottom:8px}
   .mall-cp{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px dashed #F0D9A8}
@@ -2687,14 +2891,46 @@
   .mall-real .mr-em{font-size:18px;flex:none}
   .mall-real .mr-name{flex:1;min-width:0;border:1px solid var(--line,#f0d9c8);border-radius:9px;padding:7px 10px;font-size:13px;font-weight:700;color:var(--ink,#2C2C2A)}
   .mall-real .mr-cost{width:68px;border:1px solid var(--line,#f0d9c8);border-radius:9px;padding:7px 8px;font-size:13px;font-weight:800;text-align:center;color:#BA7517}
-  .mall-real .mr-unit{font-size:12px;color:#9a7b3a;font-weight:700;flex:none}
+  .mall-real .mr-tier{border:1px solid var(--line,#f0d9c8);border-radius:9px;padding:7px 6px;font-size:12.5px;font-weight:800;color:#7a6a4a;background:#fff;flex:none;font-family:inherit}
+  .mall-real .mr-unit{font-size:12px;color:#9a7b3a;font-weight:700;flex:none;min-width:42px}
   .mall-real .mr-x{font-size:15px;color:#C7B3A8;cursor:pointer;flex:none;padding:0 4px}
   .mall-real-add{margin-top:8px;text-align:center;padding:9px;border:1.5px dashed #F0C97A;border-radius:11px;color:#B08227;font-weight:900;font-size:13px;cursor:pointer}
+  /* ⛔ 2026-09-15 小镇货架（家长端商品编辑）：与 .mall-real 同一套行式编辑语言 */
+  .gds-tabs{display:flex;gap:8px;margin:10px 0 6px}
+  .gds-tabs button{flex:1;padding:8px 10px;border-radius:10px;border:1.5px solid var(--line,#f0d9c8);background:#fff;font-family:inherit;font-size:13px;font-weight:800;color:var(--ink-soft,#7a6a4a);cursor:pointer}
+  .gds-tabs button.sel{background:#ED93B1;border-color:#ED93B1;color:#fff}
+  /* ⛔ 2026-09-15 小镇货架：行必须**两列网格**——单列时 .gd-name 的 flex:1 会被撑到 1100px（一片空输入框） */
+  .gds-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px}
+  .gds-grid .gds-row{min-width:0}
+  .gds-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px dashed var(--line,#f0d9c8)}
+  .gds-row.gd-off{opacity:.5}
+  .gds-row .gd-em{width:44px;flex:none;border:1px solid var(--line,#f0d9c8);border-radius:9px;padding:7px 4px;font-size:14px;text-align:center;font-family:inherit;color:var(--ink,#2C2C2A)}
+  .gds-row .gd-name{flex:1;min-width:0;border:1px solid var(--line,#f0d9c8);border-radius:9px;padding:7px 10px;font-size:13px;font-weight:700;color:var(--ink,#2C2C2A);font-family:inherit}
+  .gds-row .gd-kind{border:1px solid var(--line,#f0d9c8);border-radius:9px;padding:7px 6px;font-size:12px;font-weight:800;color:#7a6a4a;background:#fff;flex:none;font-family:inherit}
+  .gds-row .gd-gain{width:56px;flex:none;border:1px solid var(--line,#f0d9c8);border-radius:9px;padding:7px 6px;font-size:13px;font-weight:800;text-align:center;color:#3F7B52;font-family:inherit}
+  .gds-row .gd-cost{width:64px;flex:none;border:1px solid var(--line,#f0d9c8);border-radius:9px;padding:7px 8px;font-size:13px;font-weight:800;text-align:center;color:#BA7517;font-family:inherit}
+  .gds-row .gd-unit{font-size:12px;color:#9a7b3a;font-weight:700;flex:none}
+  .gds-row .gd-x{font-size:15px;color:#C7B3A8;cursor:pointer;flex:none;padding:0 4px}
+  .gds-row .gd-back{font-size:12.5px;color:#B08227;font-weight:900;flex:none;cursor:pointer;white-space:nowrap}
+  .gds-add{margin-top:8px;text-align:center;padding:9px;border:1.5px dashed #F0C97A;border-radius:11px;color:#B08227;font-weight:900;font-size:13px;cursor:pointer}
+  /* ⛔ 2026-09-15 小镇超市顶栏「🛒 补货」就地面板：挂在 .device 内（壳内禁 vh/vw，用 absolute + inset:0） */
+  .stock-mask{position:absolute;inset:0;background:rgba(46,41,38,.5);display:none;align-items:center;justify-content:center;z-index:120}
+  .stock-mask.on{display:flex}
+  .stock-mask .stock-box{width:1080px;max-height:920px;background:#fff;border-radius:20px;box-shadow:0 18px 50px rgba(0,0,0,.28);
+    display:flex;flex-direction:column;padding:16px 20px 14px;box-sizing:border-box;animation:popIn .28s ease}
+  .stock-mask .stock-head{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+  .stock-mask .st-t{font-size:17px;font-weight:900;color:#2C2C2A}
+  .stock-mask .st-sub{font-size:12.5px;color:#a89a86}
+  .stock-mask .st-x{margin-left:auto;font-size:18px;color:#a89a86;font-weight:800;cursor:pointer}
+  .stock-mask .stock-body{flex:1;min-height:0;overflow-y:auto;padding-right:6px}
+  .stock-mask .stock-foot{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:10px;border-top:1px dashed #f0d9c8}
+  .stock-mask .st-reset{font-size:12.5px;color:#a89a86;cursor:pointer;text-decoration:underline}
+  .stock-mask .st-done{margin-left:auto;padding:9px 24px;border:0;border-radius:12px;background:#F26D92;color:#fff;font-weight:900;font-size:14px;cursor:pointer;font-family:inherit}
 
   /* ---- 3. 魔法宝箱 + 商店 ---- */
 
   /* ---- 7. 积分银行（#1 游戏化学习法） ---- */
-  .bank-overview{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 6px 18px}
+  /* ⛔ 2026-09-15 商店合并·第1批：.bank-overview 已随「重复余额卡」删除（无使用者） */
   .bank-cta{display:flex;gap:10px;margin:0 6px 18px}
   .bank-cta .btn{flex:1;margin:0;font-size:15px;padding:12px 0}
   .bank-stat{background:var(--surface,#fff);border:1px solid var(--line,#f0d9c8);border-radius:14px;padding:10px 6px;display:flex;align-items:center;gap:8px;justify-content:center}
@@ -2742,6 +2978,8 @@
   .bank-item .bi-ic{font-size:22px;display:block;margin-bottom:4px}
   .bank-item .bi-name{font-weight:700;color:var(--ink,#2C2C2A);font-size:15px;display:block}
   .bank-item .bi-cost{font-size:13px;color:var(--brand,#DD5E86);margin-top:2px;display:block}
+  /* ⛔ 2026-09-15 商店合并·第1批：可兑换特权的档位标（与金币港同一套三档） */
+  .bank-item .bi-tier{font-size:10.5px;font-weight:800;color:#9a8a6a;margin-left:6px;background:var(--surface-2,#F1EFE8);border-radius:999px;padding:1px 7px;vertical-align:middle}
   .bank-item.disabled{opacity:.45;cursor:not-allowed}
   .rich-board{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px;background:var(--surface,#fff);border-radius:18px;border:1px solid var(--line,#f0d9c8);margin-bottom:12px}
   .rich-tile{aspect-ratio:1;display:grid;place-items:center;border-radius:12px;font-size:15px;font-weight:800;color:#fff;position:relative;transition:all .2s;box-shadow:0 2px 6px rgba(0,0,0,.08);cursor:default;text-align:center;padding:4px;line-height:1.1}
@@ -3907,7 +4145,7 @@
       <div class="top-status" data-page-node-id="aNymOQI9I5lN3FfBIMuu0q">
         <div class="ts-pill star" onclick="go('bank')" title="星星积分" data-page-node-id="46cp7ByiP06f7Eq67Lq2Xi"><span class="ic" data-page-node-id="DS6iNYunqmYY2JPq0Aq10h">⭐</span><span id="topStar" data-page-node-id="7vqturXR3FnqQgXx64nA9r">0</span></div>
       </div>
-      <div class="dev-coin" onclick="go('mall')" title="我的金币" data-page-node-id="mallBarCoin001">🪙 <span id="mallBarCoin">0</span></div>
+      <div class="dev-coin" onclick="go('mall')" title="萌宠小镇" data-page-node-id="mallBarCoin001">🪙 <span id="mallBarCoin">0</span></div>
       <div class="gear" onclick="go('parent')" title="家长模式" data-page-node-id="LhOpz8D690O0uFfyRhl653">⚙️</div>
       <span class="version-badge" id="verBadge" data-page-node-id="AEqZLTxUiXG4yADWQITXOy">v0819</span>
     </div>
@@ -3935,15 +4173,27 @@
             <span class="pet-lv">Lv.<span id="snakeLv">1</span> · <span id="snakeStage">窝里小狗</span></span>
           </div>
           <div class="bond-row" id="bondRow"></div>
-          <div class="growth-track" id="growthTrack"></div>
-          <div class="stat-block">
-            <div class="stat-row">
-              <div class="stat-top"><span>🌱 升级进度<i class="care-tag" id="careTag" title="照顾宠物攒下的成长值">❤️ +0</i></span><b id="growthNeed">成长中…</b></div>
-              <div class="bar stat-growth"><i id="growthBarFill"></i></div>
+          <!-- ⛔ 2026-09-15 升级进度可视化：原「6 个灰色阶段头像的成长轨道」整块删除（用户反馈挤、看不清），
+               改为独立一整行进度条：Lv 徽章 + 12px 条 + 320/450 + 下方小字「再攒 130 分 → 升级成「魔法小狗」」 -->
+          <div class="grow-line" id="growLine">
+            <span class="gl-lv">Lv.<b id="growLvN">1</b></span>
+            <div class="gl-bar"><i id="growthBarFill" style="width:0%"></i></div>
+            <span class="gl-num" id="growNum">0 / 100</span>
+          </div>
+          <div class="grow-tip" id="growTip">再攒 100 分 → 升级成「窝里小狗」</div>
+          <!-- 状态：只放会自己往下掉的值（心情 / 饱腹 / 清洁），各带水位条 -->
+          <div class="vitals-row">
+            <div class="vst mood">
+              <div class="vst-top"><span class="k">💗 心情 <i id="moodFace" class="mf">😊</i></span><b id="moodVal">85%</b></div>
+              <div class="vst-bar"><i id="moodBar" style="width:85%"></i></div>
             </div>
-            <div class="stat-row">
-              <div class="stat-top"><span>💗 心情 <i id="moodFace" class="mf">😊</i></span><b id="moodVal">85%</b></div>
-              <div class="bar stat-mood"><i id="moodBar" style="width:85%"></i></div>
+            <div class="vst full" id="chipFull">
+              <div class="vst-top"><span class="k">🍖 饱腹</span><b id="fullVal">80</b></div>
+              <div class="vst-bar"><i id="fullBar" style="width:80%"></i></div>
+            </div>
+            <div class="vst clean" id="chipClean">
+              <div class="vst-top"><span class="k">🛁 清洁</span><b id="cleanVal">85</b></div>
+              <div class="vst-bar"><i id="cleanBar" style="width:85%"></i></div>
             </div>
           </div>
           <div class="rt-box">
@@ -3953,22 +4203,25 @@
             </div>
             <div class="routine-bar" id="routineBar"></div>
           </div>
-          <div class="chips">
-            <div class="chip full" id="chipFull"><div class="v" id="fullVal">80</div><div class="k">🍖 饱腹</div><div class="mini-bar"><i id="fullBar" style="width:80%"></i></div></div>
-            <div class="chip clean" id="chipClean"><div class="v" id="cleanVal">85</div><div class="k">🛁 清洁</div><div class="mini-bar"><i id="cleanBar" style="width:85%"></i></div></div>
-            <div class="chip kibble" id="chipKibble"><div class="v" id="kibbleVal">0</div><div class="k">🍖 口粮</div></div>
+          <!-- 背包：只放只增不减的东西（口粮 / 洗护 / 医疗 / 装扮），宠物用品唯一容器 -->
+          <div class="bagrow" id="bagRow">
+            <span class="bg-ic">🎒</span>
+            <span class="bg-chip t-food" id="bgChipFood">🍖 口粮 <b id="bgFood">0</b></span>
+            <span class="bg-chip t-bath" id="bgChipBath">🧴 洗护 <b id="bgBath">0</b></span>
+            <span class="bg-chip t-med" id="bgChipMed">💊 医疗 <b id="bgMed">0</b></span>
+            <span class="bg-chip t-dress hide" id="bgChipDress">🎀 装扮 <b id="bgDress">0</b></span>
+            <span class="bg-empty" id="bgEmpty">空空的，去补充吧</span>
+            <button class="bg-add" onclick="go('mall-supply')" title="去补充" aria-label="去补充">＋</button>
           </div>
           <div class="pet-faint" id="petFaint" style="display:none"><span class="pf-t">😵 小萌饿晕了</span><button class="btn pf-btn" onclick="revivePet()">💊 用医疗包唤醒</button></div>
-          <div class="pet-bag" id="petBag">
-            <div class="pb-head" onclick="go('store')"><span>🎒 背包</span><span class="pb-go">去补充 ›</span></div>
-            <div class="pb-cnts">
-              <span class="pb-cnt" id="pbFood">🍖 零食 ×0</span>
-              <span class="pb-cnt" id="pbBath">🛁 洗浴 ×0</span>
+          <!-- 第 3 层 · 互动：气泡喊人 + 左右两条线入口（左学习 / 右陪伴） -->
+          <div class="partner-foot">
+            <div class="bubble" id="bubble">今天元气满满！要不要一起挑战趣题呀？😊</div>
+            <div class="act-grid">
+              <button class="btn qz" onclick="openQuizFromCard()">🧩 趣题挑战<span class="sub">答对得星星币</span></button>
+              <button class="btn" onclick="openPlayPet()">🐾 陪小萌玩<span class="sub">喂食 · 洗澡 · 哄睡</span></button>
             </div>
-            <div class="pb-items" id="pbItems"></div>
           </div>
-          <div class="bubble" id="bubble">今天元气满满！要不要一起挑战趣题呀？😊</div>
-          <button class="btn" onclick="openPlayPet()">陪小萌玩 →</button>
           </div>
           <div class="partner-time" id="partnerTimeInline">⏳ 今日剩余 38分7秒</div>
         </div>
@@ -4015,13 +4268,13 @@
             <div class="msb-body" data-page-node-id="uUEYTkyY4yqa0zA2ei7bDW">
               <div class="msb-item" data-page-node-id="43IsKEOvKpe4XysrCeTf1E"><div class="msb-v" id="msStreak" data-page-node-id="5ZqshmXUERa8kuU5uu63wk">🔥 0</div><div class="msb-k" data-page-node-id="hcXrwnVB3i8hFVAG5SfKnb">连续打卡</div></div>
               <div class="msb-item" data-page-node-id="DvweLZ4B8QwMSle8fC11AW"><div class="msb-v" id="msTotalDays" data-page-node-id="CrTHQXlCM0Z3MZ8vIysZ77">📅 0</div><div class="msb-k" data-page-node-id="C38piUipA8kE577BJdHifN">累计天数</div></div>
-              <div class="msb-item msb-coin" data-page-node-id="mallStat001"><div class="msb-v" id="mallHomeCoin" data-page-node-id="mallStatV001">🪙 0</div><div class="msb-k" data-page-node-id="mallStatK001">我的金币</div></div>
+              <div class="msb-item msb-coin" data-page-node-id="mallStat001"><div class="msb-v" id="mallHomeCoin" data-page-node-id="mallStatV001">⭐ 0</div><div class="msb-k" data-page-node-id="mallStatK001">我的星星币</div></div>
             </div>
             <div class="ms-dots" id="msWeekDots" data-page-node-id="pK4knp8NLYbSlo0zAh98J2"></div>
             <div class="msb-mall" onclick="go('mall')" data-page-node-id="mallRow001">
-              <span class="msb-mic" data-page-node-id="mallRowIc001">🛍️</span>
-              <span class="msb-mt" data-page-node-id="mallRowT001">兑换中心</span>
-              <span class="msb-ms" data-page-node-id="mallRowS001">赚金币换好礼</span>
+              <span class="msb-mic" data-page-node-id="mallRowIc001">⚓</span>
+              <span class="msb-mt" data-page-node-id="mallRowT001">萌宠小镇</span>
+              <span class="msb-ms" data-page-node-id="mallRowS001">攒星星币换好礼</span>
               <span class="msb-mgo" data-page-node-id="mallRowGo001">去逛逛 ›</span>
             </div>
           </div>
@@ -4248,7 +4501,14 @@
             <div class="pcard w3" id="routineSec" data-page-node-id="rtcfg00001">
               <div class="pc-h" data-page-node-id="rtcfg00002"><div class="pc-ic c4" data-page-node-id="rtcfg00003">🕐</div><div data-page-node-id="rtcfg00004"><div class="t" data-page-node-id="rtcfg00005">作息时间 · 宠物联动</div><div class="s" data-page-node-id="rtcfg00006">按孩子真实的一天设置，到点它会主动提醒</div></div><span class="pc-more gray" onclick="resetRoutineCfg()" data-page-node-id="rtcfg00007">↺ 恢复默认</span></div>
               <div class="rt-cfg" id="routineCfg" data-page-node-id="rtcfg00008"></div>
-              <div class="pc-hint" data-page-node-id="rtcfg00009">这七个时间会驱动首页左栏「我的伙伴」：到点了它主动开口提醒，孩子现实中做到了点一下 +1⭐，还会推高它的心情（作息完成度是心情公式的一部分）。</div>
+              <div class="pc-hint" data-page-node-id="rtcfg00009">每一行都能改：名称、时间、打卡奖励（🍖口粮 / ⭐星星 / 💗亲密度）和数量。到点<b>前后 30 分钟</b>内才能点，一天仅一次，错过就领不到了。作息完成度是它心情公式的一部分。</div>
+            </div>
+
+            <!-- 6b · 宠物碎碎念 · 可自定义（宽卡） -->
+            <div class="pcard w3" id="chatSec" data-page-node-id="chatcfg00001">
+              <div class="pc-h" data-page-node-id="chatcfg00002"><div class="pc-ic c4" data-page-node-id="chatcfg00003">💬</div><div data-page-node-id="chatcfg00004"><div class="t" data-page-node-id="chatcfg00005">宠物碎碎念 · 可自定义</div><div class="s" data-page-node-id="chatcfg00006">孩子在首页看到它说的话，闲时轮换</div></div><span class="pc-more gray" onclick="resetChatCfg()" data-page-node-id="chatcfg00007">↺ 恢复默认</span></div>
+              <textarea class="in chat-ta" id="chatTa" rows="4" spellcheck="false" placeholder="一行写一句，例如：今天也要一起加油呀，我陪着你💪" onchange="saveChatCfg(this.value)" data-page-node-id="chatcfg00008"></textarea>
+              <div class="pc-hint" data-page-node-id="chatcfg00009">一行写一句，最多 12 句、每句 40 字以内，改完点别处即可保存。它们只在<b>闲时</b>说 —— 它饿了、脏了、困了、想你了，或到作息打卡点时，会优先说那些提醒，不会被这里的话盖掉。</div>
             </div>
 
             <!-- 7 · 防沉迷（宽卡） -->
@@ -4307,12 +4567,24 @@
               <div class="pc-hint" data-page-node-id="HCsZB4mYp2Q6mMIaCkZsfA">建议幼儿单次≤20 分钟、每日累计≤40 分钟，并保留充足户外与睡眠。设置立即生效，孩子端无法修改。</div>
             </div>
 
-            <!-- 8 · 兑换中心 · 真实奖励（家长自定义） -->
+            <!-- 8 · 萌宠小镇 · 星星邮局 · 真实奖励（家长自定义） -->
             <div class="pcard w3" id="mallRealSec" data-page-node-id="mallRealSec01">
-              <div class="pc-h" data-page-node-id="mallRealSec02"><div class="pc-ic c3" data-page-node-id="mallRealSec03">🎁</div><div data-page-node-id="mallRealSec04"><div class="t" data-page-node-id="mallRealSec05">兑换中心 · 真实奖励</div><div class="s" data-page-node-id="mallRealSec06">孩子用金币兑换的「现实奖励」，由你在这里定义</div></div><span class="pc-more gray" onclick="renderMallRealEditor()" data-page-node-id="mallRealSec07">↺ 刷新</span></div>
-              <div class="pc-sub" data-page-node-id="mallRealSec08">🪙 孩子在「兑换中心 · 我的奖励」里花金币换这些，兑换后会生成一张兑换券，你按券兑现（看电视 / 买礼物 / 吃零食…）。</div>
+              <div class="pc-h" data-page-node-id="mallRealSec02"><div class="pc-ic c3" data-page-node-id="mallRealSec03">🎁</div><div data-page-node-id="mallRealSec04"><div class="t" data-page-node-id="mallRealSec05">萌宠小镇 · 星星邮局 · 真实奖励</div><div class="s" data-page-node-id="mallRealSec06">孩子用星星币兑换的「现实奖励」，由你在这里定义</div></div><span class="pc-more gray" onclick="renderMallRealEditor()" data-page-node-id="mallRealSec07">↺ 刷新</span></div>
+              <div class="pc-sub" data-page-node-id="mallRealSec08">⭐ 孩子在「萌宠小镇 · 星星邮局」里花星星币换这些，兑换后会生成一张礼物券，你按券兑现（选睡前故事 / 去公园 / 买小礼物…）。</div>
               <div id="mallRealList" data-page-node-id="mallRealSec09"></div>
-              <div class="pc-hint" data-page-node-id="mallRealSec10">这些奖励只出现在孩子端的「我的奖励」里，由你增删改名、改价。金币不会自动扣，需你亲手兑现兑换券。</div>
+              <div class="pc-hint" data-page-node-id="mallRealSec10">这些奖励只出现在孩子端的「星星邮局」里，由你增删改名、改价。<b>积分银行的可兑换特权已与这里合并成同一份清单</b>，改一处两边同步。星星币不会自动扣，需你亲手兑现礼物券。</div>
+            </div>
+
+            <!-- 9 · 萌宠小镇 · 小镇货架（超市 / 衣橱 商品增删改） -->
+            <div class="pcard w3" id="mallGoodsSec" data-page-node-id="mallGoodsSec01">
+              <div class="pc-h" data-page-node-id="mallGoodsSec02"><div class="pc-ic c4" data-page-node-id="mallGoodsSec03">🛒</div><div data-page-node-id="mallGoodsSec04"><div class="t" data-page-node-id="mallGoodsSec05">萌宠小镇 · 小镇货架</div><div class="s" data-page-node-id="mallGoodsSec06">孩子逛的超市和衣橱里卖什么、卖多少钱，由你定</div></div><span class="pc-more gray" onclick="mallGoodsReset()" data-page-node-id="mallGoodsSec07">↺ 恢复默认</span></div>
+              <div class="pc-sub" data-page-node-id="mallGoodsSec08">⭐「🛒 小镇超市」= 口粮 / 洗护 / 医疗 / 日用兑换，<b>可增删、改名、改价</b>；「👗 小镇衣橱」= 装扮，只能改名 / 改价 / 下架（新增装扮需要配套形象素材）。所有改动只记在<b>覆盖层</b>，不动原始数据，随时「恢复默认」。</div>
+              <div class="gds-tabs" id="mallGoodsTabs" data-page-node-id="mallGoodsTabs01">
+                <button class="sel" data-t="supply" onclick="mallGoodsTab('supply',this)" data-page-node-id="mallGoodsTabS01">🛒 超市货架</button>
+                <button data-t="dress" onclick="mallGoodsTab('dress',this)" data-page-node-id="mallGoodsTabD01">👗 衣橱</button>
+              </div>
+              <div id="mallGoodsList" data-page-node-id="mallGoodsSec09"></div>
+              <div class="pc-hint" data-page-node-id="mallGoodsSec10">参考星币定价：口粮 5~35 · 洗护 8~30 · 医疗 60 · 装扮 20~40。「✕ 下架」只是从货架藏起来，不删数据；下架后行会变灰，点「↺ 恢复」可以放回来。</div>
             </div>
 
           </div>
@@ -5480,7 +5752,7 @@
           <div class="ah-icon" data-page-node-id="logicHeadIco"><span class="bi" id="logicHeadBi">🧠</span></div>
           <div class="ah-txt" data-page-node-id="logicHeadTxt"><div class="ah-t" id="logicHeadTitle">逻辑思维</div><div class="ah-s" id="logicHeadSub">3 大类 · 12 小类 · 游戏化训练</div></div>
           <div class="ah-sp" data-page-node-id="logicHeadSp"></div>
-          <div class="ah-act" data-page-node-id="logicHeadAct"><div class="ah-mini star">🪙 <span class="ah-star-n" id="logicCoin">0</span></div>
+          <div class="ah-act" data-page-node-id="logicHeadAct"><div class="ah-mini star">⭐ <span class="ah-star-n" id="logicCoin">0</span></div>
             <div class="ah-mini gear" onclick="go('parent')" title="家长模式">⚙️</div></div>
         </div>
 
@@ -5643,9 +5915,8 @@
           <div class="ah-mini gear" onclick="go('parent')" title="家长模式">⚙️</div></div>
         </div>
         <div class="games-balance" data-page-node-id="sRahxXJwJJjBOnPNwLb9SZ">
-          <div class="gb-chip" data-page-node-id="fB12tiBtxc9hAsvhjqyCrQ"><span data-page-node-id="bx6SAd5PqsKHe8e6qE3XPe">⭐ 积分</span><b id="gbPoints" data-page-node-id="RKwYbDe7Z7uAe1Df5YhEcq">0</b></div>
-          <div class="gb-chip" data-page-node-id="TBGYAZ8XJK5tUuYqW3EFEu"><span data-page-node-id="64mOXUU3aTktYq4M4jesql">🪙 硬币</span><b id="gbCoins" data-page-node-id="2h1wfjBtPH52GaGgcyku26">0</b></div>
-          <button class="btn sm" onclick="goGachaStore()" data-page-node-id="k3uIBkhuUcrTWegxJE0RhF">🎰 去花积分</button>
+          <div class="gb-chip" data-page-node-id="fB12tiBtxc9hAsvhjqyCrQ"><span data-page-node-id="bx6SAd5PqsKHe8e6qE3XPe">⭐ 星星币</span><b id="gbPoints" data-page-node-id="RKwYbDe7Z7uAe1Df5YhEcq">0</b></div>
+          <button class="btn sm" onclick="goGachaStore()" data-page-node-id="k3uIBkhuUcrTWegxJE0RhF">🎰 去花星星币</button>
         </div>
 
         <!-- 萌趣学园 · 12 大玩法（8/1 设计：游戏中心当壳，萌趣学园降为其中一栏） -->
@@ -5736,15 +6007,14 @@
         <div class="app-head skin-plain" data-page-node-id="QYheMDPVkqv7QOpCW0B7Zo">
         <div class="ah-back" onclick="goBack()" data-page-node-id="GqjUUiYtQv8j0BFQSuUhAR">←</div>
         <div class="ah-icon" data-page-node-id="8avV2AvVcJJMsTQvBFmRS6"><span class="bi" data-page-node-id="kArzHyC688Qxjuy4Fru6nh">🎰</span></div>
-        <div class="ah-txt" data-page-node-id="8v7WDTAWh1HAMhVw1glZcV"><div class="ah-t" data-page-node-id="HVacNd1skKlYj6oKvlEByZ">学习扭蛋机</div></div>
+        <div class="ah-txt" data-page-node-id="8v7WDTAWh1HAMhVw1glZcV"><div class="ah-t" data-page-node-id="HVacNd1skKlYj6oKvlEByZ">扭蛋屋</div><div class="ah-s" data-page-node-id="gachaSubT001">松鼠的扭蛋机 · 答对题才有扭蛋</div></div>
         <div class="ah-sp" data-page-node-id="ZNRbWZceQz4t3hZgPoGFuX"></div>
         <div class="ah-act" data-page-node-id="BIChT8eg5t7ghFsT5Y2EWw"><div class="ah-mini star" data-page-node-id="DPtn4btWJZ0x0GCfx47Cbq">⭐ <span class="ah-star-n" data-page-node-id="jdb2EyUBQRFrOoTYxHcsIM">0</span></div>
           <div class="ah-mini gear" onclick="go('parent')" title="家长模式">⚙️</div></div>
         </div>
 
         <div class="gacha-top" data-page-node-id="BftO0FiyDEgltKdtCx23jq">
-          <div class="gt-chip" data-page-node-id="BfDl8bt4pUNo9eUCIz0Qjj">🪙 硬币 <b id="gachaCoins" data-page-node-id="nkkXTdGka26t7uqVSqA8AS">0</b></div>
-          <div class="gt-chip" data-page-node-id="i2FgWHfhpeDbYyEFFktOaz">⭐ 积分 <b id="gachaPoints" data-page-node-id="BYREr24qDGWYx8bOO38RAA">0</b></div>
+          <div class="gt-chip" data-page-node-id="i2FgWHfhpeDbYyEFFktOaz">⭐ 星星币 <b id="gachaPoints" data-page-node-id="BYREr24qDGWYx8bOO38RAA">0</b></div>
           <div class="gt-chip" data-page-node-id="QEhE8VG9wlwEO3Sl9nesBH">🎯 库存 <b id="gachaStock" data-page-node-id="riQC4Nui1OaVguCgobhmUW">0</b>/<b id="gachaCap" data-page-node-id="AefdQWOhifH6gE1F1uwTIf">100</b></div>
         </div>
 
@@ -5761,8 +6031,8 @@
               <div class="gm-drop" id="gmDrop" data-page-node-id="4mbIzPE3rKb5v4dFaC0xcJ"><div class="gm-capsule falling" id="gmFall" data-page-node-id="59HyyPBWEKEHefByYGARka"></div></div>
             </div>
             <div class="gacha-actions" data-page-node-id="YqVflH1vntVgcQllr0iTlz">
-              <button class="btn" onclick="startGachaQuiz()" data-page-node-id="ZMlEQWrZwSyHfOyJCPgzGM">📝 答题赚硬币</button>
-              <button class="btn" id="gachaDrawBtn" onclick="drawGacha()" data-page-node-id="WcpAAk82XST47eOVL0hzm3">🎰 抽扭蛋 (1🪙)</button>
+              <button class="btn" onclick="startGachaQuiz()" data-page-node-id="ZMlEQWrZwSyHfOyJCPgzGM">📝 答题赚扭蛋</button>
+              <button class="btn" id="gachaDrawBtn" onclick="drawGacha()" data-page-node-id="WcpAAk82XST47eOVL0hzm3">🎰 抽扭蛋（免费）</button>
             </div>
             <div class="gacha-hint" id="gachaHint" data-page-node-id="9SrbERWrm5Fvz8fvNShh8P"></div>
             <div class="gacha-recent" data-page-node-id="JVtX0UIhGVTNdOiYZIKuSj">
@@ -5797,6 +6067,18 @@
 
           <section id="gv-store" data-page-node-id="8sR2jiCWmLxDUEEg89OB4e">
             <div class="store-grid" id="gachaStore" data-page-node-id="z1w77QsP4JJzM3AXwvNrcu"></div>
+
+            <div class="chest-room" style="margin-top:18px" data-page-node-id="chestRoomGacha001">
+              <h3 data-page-node-id="chestRoomGachaT1">✨ 宝箱每日惊喜</h3>
+              <div class="sub" data-page-node-id="chestRoomGachaS1">和小萌一起开启宝箱，获得随机星星币</div>
+              <div class="chests" data-page-node-id="chestRoomGachaC1">
+                <div class="chest" id="chest1" onclick="openChest(1)" data-page-node-id="chest1Gacha"><span data-page-node-id="chest1GachaS">🎁</span><span class="chest-lock" id="lock1" data-page-node-id="lock1Gacha">免费</span><div class="chest-glow" data-page-node-id="chest1GachaG"></div></div>
+                <div class="chest" id="chest2" onclick="openChest(2)" data-page-node-id="chest2Gacha"><span data-page-node-id="chest2GachaS">🎁</span><span class="chest-lock" id="lock2" data-page-node-id="lock2Gacha">20⭐</span><div class="chest-glow" data-page-node-id="chest2GachaG"></div></div>
+                <div class="chest" id="chest3" onclick="openChest(3)" data-page-node-id="chest3Gacha"><span data-page-node-id="chest3GachaS">🎁</span><span class="chest-lock" id="lock3" data-page-node-id="lock3Gacha">50⭐</span><div class="chest-glow" data-page-node-id="chest3GachaG"></div></div>
+              </div>
+              <button class="btn butter" onclick="openAllChestsHint()" style="max-width:200px;margin:0 auto" data-page-node-id="chestRoomGachaBtn">🔑 选一个宝箱开启</button>
+            </div>
+
             <div class="gacha-actions" data-page-node-id="5ulIWjfvTRtfcUJuoT3Tse">
               <button class="btn ghost" onclick="gachaShow('home')" data-page-node-id="2rUyybknBu5RcP3iUhR4x0">↩ 返回扭蛋机</button>
             </div>
@@ -5839,40 +6121,6 @@
       </div>
     </div>
 
-    <!-- ==================== 商城屏 ==================== -->
-    <div class="screen" id="sc-store" data-page-node-id="5P9s3rbFTkIyr42IyOdNdD">
-      <div class="card" style="margin:0 auto" data-page-node-id="eNpEFjCuJITfpZtXRRPiCd">
-        <div class="app-head skin-plain" data-page-node-id="GwdO9nsGeBOE6xsCnIgHXs">
-        <div class="ah-back" onclick="goBack()" data-page-node-id="9zpeSxTRj0BCDRykMWss6B">←</div>
-        <div class="ah-icon" data-page-node-id="zu4ucbCCtFIDwtQcpQP2v8"><span class="bi" data-page-node-id="GHLKd2DpXmF4Q4WGZdKSq7">🛒</span></div>
-        <div class="ah-txt" data-page-node-id="gBDvRRCyvC0RuwGHAYobu0"><div class="ah-t" data-page-node-id="0Bi2Z97IvrB6AFoCu5sgBi">魔法商店</div></div>
-        <div class="ah-sp" data-page-node-id="ywBVDBKBgBVhf8LUCsewon"></div>
-        <div class="ah-act" data-page-node-id="dZOpLv6e5Jj067oey7HzWM"><div class="ah-mini star" data-page-node-id="cBX38Fe6XcCmj4e9zJXdet">⭐ <span class="ah-star-n" data-page-node-id="O7gHeDcLV2bUNk48EJ0gpu">0</span></div>
-          <div class="ah-mini gear" onclick="go('parent')" title="家长模式">⚙️</div></div>
-        </div>
-        <div class="store-bal" data-page-node-id="geCLelT5d1Hqhr6cQWPfOo">⭐ 积分 <b id="storePoints" data-page-node-id="afgmiJaJGEvdWMxr2fd1NG">0</b> · 🪙 硬币 <b id="storeCoins" data-page-node-id="CyN0gsWg5sijfvPR0FuUXf">0</b></div>
-
-        <div class="chest-room" style="margin-bottom:18px" data-page-node-id="F9R7Ji6YBD1lEFIbSUtDjy">
-          <h3 data-page-node-id="aZM7EJhJ6ECAQXaBWwDkjk">✨ 今日魔法能量集齐</h3>
-          <div class="sub" data-page-node-id="z5PdJFpWSEz1zd4ZXs7zL5">和小萌一起开启宝箱，获得随机奖励</div>
-          <div class="chests" data-page-node-id="tg6IHBCOdjg5vSERuDmmrw">
-            <div class="chest" id="chest1" onclick="openChest(1)" data-page-node-id="Ccq3MfHKqetvx5aoYACu9w"><span data-page-node-id="w5vbSTnSLiwipGWGmt2YsX">🎁</span><span class="chest-lock" id="lock1" data-page-node-id="zG1v9RbTctrgBNwZvAWNNE">免费</span><div class="chest-glow" data-page-node-id="i4xKtI43LZMb9qCbtxHCMI"></div></div>
-            <div class="chest" id="chest2" onclick="openChest(2)" data-page-node-id="NiRDVodEG2zxgvwSdD9Uvn"><span data-page-node-id="FLG2Cukwg04eM630IrrDXD">🎁</span><span class="chest-lock" id="lock2" data-page-node-id="DpcGQZ2FwaH8Szioc3yhvJ">20🪙</span><div class="chest-glow" data-page-node-id="xhCCF7SRpJd10EGcgOOZks"></div></div>
-            <div class="chest" id="chest3" onclick="openChest(3)" data-page-node-id="CraH8XLRtoeC9mj3wAJqS5"><span data-page-node-id="EbfYjbSw5Ss59fbATZueRY">🎁</span><span class="chest-lock" id="lock3" data-page-node-id="m7XulM6Nzm3jxzJhZEgVA7">50⭐</span><div class="chest-glow" data-page-node-id="A6Ed3gFyHUGF0Yiom8S2W1"></div></div>
-          </div>
-          <button class="btn butter" onclick="openAllChestsHint()" style="max-width:200px;margin:0 auto" data-page-node-id="2W32xUfFjz43CYxHHDbSeA">🔑 选一个宝箱开启</button>
-        </div>
-
-        <div class="store-tabs" data-page-node-id="jLnllradAeeTAs3Zif7pQa">
-          <span class="sel" onclick="switchShopTab('wish',this)" data-page-node-id="KLbb9MgDTFRUN6qqCB2ZzO">💝 心愿商店</span>
-          <span onclick="switchShopTab('monster',this)" data-page-node-id="Y1RrF1JCz2ZXg2qR6ZlF61">👾 怪兽商店</span>
-        </div>
-        <div class="shop-grid" id="shopGrid" data-page-node-id="vgXSVFa2EBxLfUlKNXvkGz"></div>
-        <div style="margin-top:14px" data-page-node-id="6F349Gz5JbD3wrkb8Xgamj"><div class="card-h" style="margin-bottom:10px" data-page-node-id="fAi42zXySryoA7atpx4PzH"><span class="t" data-page-node-id="kks0ev4BYCjR6fk17f2GgH">🎒 我的背包 · 喂宠 / 洗护</span></div><div id="bagList" data-page-node-id="XC201swF7JTJy9Q0izYsIL"></div></div>
-        <div style="margin-top:18px" data-page-node-id="9EJrrBRFSBcW0tPUAq2LFT"><div class="card-h" style="margin-bottom:10px" data-page-node-id="e5H7qBjAFwS75c0CvYllxl"><span class="t" data-page-node-id="1kFzBimf1M9XEFyzeg33WU">🎁 基础兑换</span></div><div id="storeList" data-page-node-id="yaoN2BDkmEavvow8ZhDF8y"></div></div>
-      </div>
-    </div>
-
     <div class="screen" id="sc-bank" data-page-node-id="IJdysSNZYe6sqHnWeHr4dn">
       <div class="card" style="margin:0 auto" data-page-node-id="pVG8YWdt1MjEvIgPu33Pwb">
         <div class="app-head skin-plain" data-page-node-id="ZPgkm2t3qeriuRHcdEHYzY">
@@ -5884,22 +6132,23 @@
           <div class="ah-mini gear" onclick="go('parent')" title="家长模式">⚙️</div></div>
         </div>
         <div class="bank-tagline" data-page-node-id="chpG6fllO9GPJibAfbv68H">让学习和家务变成一场有趣的游戏！</div>
+        <!-- ⛔ 2026-09-15 商店合并·第1批 / 改名：原「去扭蛋机花积分 / 积分商店」双按钮指向的屏
+             已全部并入「萌宠小镇」。 -->
         <div class="bank-cta" data-page-node-id="chBSM0tq5CHYmp60YPs2nU">
-          <button class="btn" onclick="goGachaStore()" data-page-node-id="I4MlEiAbyHsQ6roL1rkvXn">🎰 去扭蛋机花积分</button>
-          <button class="btn ghost" onclick="go('gacha')" data-page-node-id="9zLecvg0XhAGL6g4y6IcKy">🛍️ 积分商店</button>
+          <button class="btn" onclick="go('mall')" data-page-node-id="I4MlEiAbyHsQ6roL1rkvXn">🐾 去萌宠小镇花星星币</button>
+          <button class="btn ghost" onclick="go('mall')" data-page-node-id="9zLecvg0XhAGL6g4y6IcKy">🎟️ 星星邮局</button>
         </div>
-        <div class="bank-overview" data-page-node-id="bVr6Ss3BTCbVWDDuDloTVC">
-          <div class="bank-stat" data-page-node-id="AgBkk6NIR7uxWoHBWGVaTf"><span class="bs-ic" data-page-node-id="k6c01eYKhwq6lxpV9T25xr">🪙</span><div data-page-node-id="lx0r0zeWUwLTlCoFOWViW3"><b id="bankCoins" data-page-node-id="DoEpUQbHEDbxbDcvLHEQJU">0</b><span data-page-node-id="2HKUNcERU1h8weyblDy73j">硬币</span></div></div>
-          <div class="bank-stat" data-page-node-id="dz4iMlhCKCpFqnpR4dFblu"><span class="bs-ic" data-page-node-id="mOji0GG7HUOC7PrSvQfUBi">⭐</span><div data-page-node-id="r5i8dMIJu0rtTbt6MD0rXm"><b id="bankPoints" data-page-node-id="ipl1bCccI0rmTSUXBGlqhO">0</b><span data-page-node-id="YYsEr9OYk33ilOS3swDHsw">积分</span></div></div>
-        </div>
+        <!-- ⛔ 2026-09-15 商店合并·第1批：原两张余额卡（星星币 / 积分）显示同一个数，
+             在萌宠小镇的钱包条里已完整呈现 → 此批删除，避免「同一笔钱说两遍」。
+             读数改由顶栏徽章（.ah-star-n）承载，见 renderBank()。 -->
         <div class="bank-section" data-page-node-id="LVDH3SjAiCmMZBcssWhnia">
           <div class="bank-h" data-page-node-id="P9tNtBY11KOm3waU1iCR3c">🎯 玩法说明</div>
           <div class="bank-howto" data-page-node-id="glMkeHLGD5PLlPjP3bDxMF">
-            <div class="bh-step" data-page-node-id="eBEhFS9WbLOJdlrIC6uCLv"><span class="bh-ic" data-page-node-id="y3RPoo6uH4CFlZZEGCpgx4">📚🧹</span><div data-page-node-id="SDvEXKXYEmIOGTv9VXyfDc"><b data-page-node-id="hxWX14TF4VRxJ5G0XCBnI9">学习/家务</b><br data-page-node-id="JpFnVnrWzcYMLYVAPCYALV"><span data-page-node-id="2tI1l9LTpgfUwEGGi67LAR">完成任务赚积分</span></div></div>
+            <div class="bh-step" data-page-node-id="eBEhFS9WbLOJdlrIC6uCLv"><span class="bh-ic" data-page-node-id="y3RPoo6uH4CFlZZEGCpgx4">📚🧹</span><div data-page-node-id="SDvEXKXYEmIOGTv9VXyfDc"><b data-page-node-id="hxWX14TF4VRxJ5G0XCBnI9">学习/家务</b><br data-page-node-id="JpFnVnrWzcYMLYVAPCYALV"><span data-page-node-id="2tI1l9LTpgfUwEGGi67LAR">完成任务赚星星币</span></div></div>
             <div class="bh-arrow" data-page-node-id="PiFcFC0qgoQGWF5LZ8Jvm6">→</div>
-            <div class="bh-step" data-page-node-id="FHdPJm7ZKPjkZw9o8liHSH"><span class="bh-ic" data-page-node-id="sHAN0vPOEkdRKiUZLNMt5C">⭐</span><div data-page-node-id="JUmnSKZcg9jYkSCPFSGEpI"><b data-page-node-id="u5QihJeFcq1omKQnQebVM1">赚积分</b><br data-page-node-id="msOBXbyWBZXH73FxGwZFkl"><span data-page-node-id="rc9hHkCq6BdLRPOrAtxdAO">积分累积在银行</span></div></div>
+            <div class="bh-step" data-page-node-id="FHdPJm7ZKPjkZw9o8liHSH"><span class="bh-ic" data-page-node-id="sHAN0vPOEkdRKiUZLNMt5C">⭐</span><div data-page-node-id="JUmnSKZcg9jYkSCPFSGEpI"><b data-page-node-id="u5QihJeFcq1omKQnQebVM1">存进萌宠小镇</b><br data-page-node-id="msOBXbyWBZXH73FxGwZFkl"><span data-page-node-id="rc9hHkCq6BdLRPOrAtxdAO">星星币累积在这里</span></div></div>
             <div class="bh-arrow" data-page-node-id="2M8RZITxcZhvY0wYv3n5y6">→</div>
-            <div class="bh-step" data-page-node-id="H6eliPK4rOFWFEdltE8mfV"><span class="bh-ic" data-page-node-id="BQxTqajPpaec5QwPRPAUKX">🎁</span><div data-page-node-id="5EBtmEY7W2LxacWIL4UlNj"><b data-page-node-id="Du6NLX9ykSgOmlKL8tGO0i">兑换特权</b><br data-page-node-id="BLxcXGC22XDUa51PFUT3Ln"><span data-page-node-id="XR8xMHQqrv4mxz8mOolhTE">用积分换孩子的愿望</span></div></div>
+            <div class="bh-step" data-page-node-id="H6eliPK4rOFWFEdltE8mfV"><span class="bh-ic" data-page-node-id="BQxTqajPpaec5QwPRPAUKX">🎁</span><div data-page-node-id="5EBtmEY7W2LxacWIL4UlNj"><b data-page-node-id="Du6NLX9ykSgOmlKL8tGO0i">兑换特权</b><br data-page-node-id="BLxcXGC22XDUa51PFUT3Ln"><span data-page-node-id="XR8xMHQqrv4mxz8mOolhTE">用星星币换孩子的愿望</span></div></div>
           </div>
         </div>
         <div class="bank-section" data-page-node-id="tq7Udw2ufNhuDnG7oWw3M7">
@@ -6382,28 +6631,88 @@
       <div class="card mall-card" data-page-node-id="mallCard001">
         <div class="app-head skin-tomato" data-page-node-id="mallHead001">
           <div class="ah-back" onclick="goBack()" data-page-node-id="mallBack001">←</div>
-          <div class="ah-icon" data-page-node-id="mallIc001"><span class="bi" data-page-node-id="mallBi001">🛍️</span></div>
-          <div class="ah-txt" data-page-node-id="mallTxt001"><div class="ah-t" data-page-node-id="mallT001">兑换中心</div><div class="ah-s" data-page-node-id="mallS001">赚金币 · 换好礼 · 练财商</div></div>
+          <div class="ah-icon" data-page-node-id="mallIc001"><span class="bi" data-page-node-id="mallBi001">🐾</span></div>
+          <div class="ah-txt" data-page-node-id="mallTxt001"><div class="ah-t" data-page-node-id="mallT001">萌宠小镇</div><div class="ah-s" data-page-node-id="mallS001">小萌住的小镇 · 攒星星币 · 学做小管家</div></div>
           <div class="ah-sp" data-page-node-id="mallSp001"></div>
-          <div class="ah-act" data-page-node-id="mallAct001"><div class="ah-mini coin" data-page-node-id="mallCoin001"><span class="coin-ic">🪙</span><span id="mallTopCoin" class="ah-star-n">0</span></div></div>
+          <div class="ah-act" data-page-node-id="mallAct001"><div class="ah-mini star" data-page-node-id="mallCoin001"><span class="coin-ic">⭐</span><span id="mallTopCoin" class="ah-star-n">0</span></div><div class="ah-mini gear" onclick="go('parent')" title="家长模式" data-page-node-id="mallGear001">⚙️</div></div>
         </div>
+        <!-- ⛔ 2026-09-15 商店合并·第1批：钱包条 = 余额 + 近 7 天节奏（财商第 1 层：攒钱看得见） -->
         <div class="mall-coinbar" data-page-node-id="mallCb001">
-          <div class="mc-left"><div class="mc-num" id="mallCoinBig">0</div><div class="mc-lab">我的金币</div></div>
-          <div class="mc-right">完成专注 / 作业 / 阅读 / 照顾宠物都能赚金币，攒够就能换礼物啦！</div>
+          <div class="mc-left"><div class="mc-num" id="mallCoinBig">0</div><div class="mc-lab">我的星星币</div></div>
+          <div class="mc-right"><div class="mc-avg" id="mallAvgHint">最近 7 天赚了 <b>0</b> 枚</div><div class="mc-sub">做正事赚星星币（专注 / 作业 / 阅读 / 打卡），攒够就能换真宝贝啦！</div></div>
         </div>
-        <div class="mall-tabs" data-page-node-id="mallTabs001">
-          <div class="mall-tab on" onclick="switchMallTab('pet',this)" data-page-node-id="mallTabP">🐾 宠物专区</div>
-          <div class="mall-tab" onclick="switchMallTab('supply',this)" data-page-node-id="mallTabS">🛒 宠物补给</div>
-          <div class="mall-tab" onclick="switchMallTab('real',this)" data-page-node-id="mallTabR">🧒 我的奖励</div>
-        </div>
-        <div class="mall-gacha" onclick="spinMallGacha()" data-page-node-id="mallGacha001">
-          <div class="mg-em">🎰</div>
-          <div class="mg-body"><div class="mg-t">扭蛋机 · 花 <b>50</b> 金币抽一次</div><div class="mg-s">可能抽到：宠物装扮 / 真实奖励 / 金币</div></div>
-          <div class="mg-btn">抽一次</div>
+        <!-- ⛔ 2026-09-15 商店合并·第2批：4 张平铺摊位卡（禁 .card>.card 套壳），点卡头进子屏 -->
+        <div class="mall-stalls" data-page-node-id="mallStalls001">
+          <div class="mall-stall" onclick="go('mall-supply')" data-page-node-id="ms_supply"><div class="ms-ic">🛒</div><div class="ms-body"><div class="ms-t">小镇超市</div><div class="ms-d">熊大叔看店 · 口粮 / 洗澡 / 医疗 / 日用</div></div><div class="ms-go">去逛逛 ›</div></div>
+          <div class="mall-stall" onclick="go('mall-dress')" data-page-node-id="ms_dress"><div class="ms-ic">👗</div><div class="ms-body"><div class="ms-t">小镇衣橱</div><div class="ms-d">兔小姐看店 · 帽子 / 眼镜 / 蝴蝶结</div></div><div class="ms-go">去逛逛 ›</div></div>
+          <div class="mall-stall" onclick="go('gacha')" data-page-node-id="ms_gacha"><div class="ms-ic">🎰</div><div class="ms-body"><div class="ms-t">扭蛋屋</div><div class="ms-d">松鼠的扭蛋机 · 答题赚蛋 · 开宝箱</div></div><div class="ms-go">去玩玩 ›</div></div>
+          <div class="mall-stall" onclick="go('mall-wish')" data-page-node-id="ms_wish"><div class="ms-ic">🎟️</div><div class="ms-body"><div class="ms-t">星星邮局</div><div class="ms-d">把心愿寄出去 · 换真宝贝</div></div><div class="ms-go">去许愿 ›</div></div>
         </div>
         <div class="mall-wishbox" id="mallWish" data-page-node-id="mallWish001"></div>
-        <div class="mall-grid" id="mallGrid" data-page-node-id="mallGrid001"></div>
-        <div class="mall-coupons" id="mallCoupons" data-page-node-id="mallCp001" style="display:none"></div>
+        <!-- ⛔ 2026-09-15 商店合并·第1批：财商第 1 层「钱从哪来」。
+             钱包条只给了一个总数，这块把它拆成来源，让孩子看见「做哪些事能赚钱」。
+             数据源 = STATS.ledger（type==='star'，近 7 天），不新增任何存储。 -->
+        <div class="mall-ledger" id="mallLedger" data-page-node-id="mallLedger001"></div>
+      </div>
+    </div>
+
+    <!-- ==================== 萌宠小镇 · 小镇超市 ==================== -->
+    <div class="screen" id="sc-mall-supply" data-page-node-id="mSupScr001">
+      <div class="card mall-sub tight" data-page-node-id="mSupCard001">
+        <div class="app-head skin-tomato" data-page-node-id="mSupHead001">
+          <div class="ah-back" onclick="goBack()" data-page-node-id="mSupBack001">←</div>
+          <div class="ah-icon" data-page-node-id="mSupIc001"><span class="bi" data-page-node-id="mSupBi001">🛒</span></div>
+          <div class="ah-txt" data-page-node-id="mSupTxt001"><div class="ah-t" data-page-node-id="mSupT001">小镇超市</div><div class="ah-s" data-page-node-id="mSupS001">熊大叔看店 · 口粮 / 洗澡 / 医疗 / 日用</div></div>
+          <div class="ah-sp" data-page-node-id="mSupSp001"></div>
+          <div class="ah-act" data-page-node-id="mSupAct001"><div class="ah-mini star" data-page-node-id="mSupCoin001"><span class="coin-ic">⭐</span><span id="mSupCoinN" class="ah-star-n">0</span></div><div class="ah-mini restock" onclick="mallRestock()" title="家长补货 / 改价 / 下架" data-page-node-id="mSupRestock001">🛒 补货</div><div class="ah-mini gear" onclick="go('parent')" title="家长模式" data-page-node-id="mSupGear001">⚙️</div></div>
+        </div>
+        <div class="msub-coinbar" data-page-node-id="mSupCb001"><span class="msc-num" id="mSupCoinBig">0</span><span class="msc-lab">星星币</span></div>
+        <!-- ⛔ 2026-09-15 尺寸统一：背包压成钱包条下一行小胶囊（不再单起一区），把高度让给 240 卡片网格 -->
+        <div class="msub-bagline" data-page-node-id="mSupBagLine001"><span class="mbl-ic" data-page-node-id="mSupBagIc001">🎒</span><div class="msub-bag" id="supplyBag" data-page-node-id="mSupBag001"></div></div>
+        <div class="msub-section" data-page-node-id="mSupSec1">
+          <div class="msub-h" data-page-node-id="mSupH1">🛒 熊大叔的货架 · 口粮 / 洗澡 / 医疗 / 日用</div>
+          <div class="msub-grid fixed" id="supplyGrid" data-page-node-id="mSupGrid001"></div>
+        </div>
+        <div class="bk-pager" id="supplyPager" data-page-node-id="mSupPager001"></div>
+      </div>
+    </div>
+
+    <!-- ==================== 萌宠小镇 · 小镇衣橱 ==================== -->
+    <div class="screen" id="sc-mall-dress" data-page-node-id="mDressScr001">
+      <div class="card mall-sub" data-page-node-id="mDressCard001">
+        <div class="app-head skin-tomato" data-page-node-id="mDressHead001">
+          <div class="ah-back" onclick="goBack()" data-page-node-id="mDressBack001">←</div>
+          <div class="ah-icon" data-page-node-id="mDressIc001"><span class="bi" data-page-node-id="mDressBi001">👗</span></div>
+          <div class="ah-txt" data-page-node-id="mDressTxt001"><div class="ah-t" data-page-node-id="mDressT001">小镇衣橱</div><div class="ah-s" data-page-node-id="mDressS001">兔小姐看店 · 帽子 / 眼镜 / 蝴蝶结</div></div>
+          <div class="ah-sp" data-page-node-id="mDressSp001"></div>
+          <div class="ah-act" data-page-node-id="mDressAct001"><div class="ah-mini star" data-page-node-id="mDressCoin001"><span class="coin-ic">⭐</span><span id="mDressCoinN" class="ah-star-n">0</span></div><div class="ah-mini gear" onclick="go('parent')" title="家长模式" data-page-node-id="mDressGear001">⚙️</div></div>
+        </div>
+        <div class="msub-coinbar" data-page-node-id="mDressCb001"><span class="msc-num" id="mDressCoinBig">0</span><span class="msc-lab">星星币</span></div>
+        <div class="msub-section" data-page-node-id="mDressSec1">
+          <div class="msub-h" data-page-node-id="mDressH1">👗 兔小姐的衣架 · 帽子 / 眼镜 / 蝴蝶结</div>
+          <div class="msub-grid dress" id="dressGrid" data-page-node-id="mDressGrid001"></div>
+          <div class="bk-pager" id="dressPager" data-page-node-id="mDressPager001"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 萌宠小镇 · 星星邮局 ==================== -->
+    <div class="screen" id="sc-mall-wish" data-page-node-id="mWishScr001">
+      <div class="card mall-sub" data-page-node-id="mWishCard001">
+        <div class="app-head skin-tomato" data-page-node-id="mWishHead001">
+          <div class="ah-back" onclick="goBack()" data-page-node-id="mWishBack001">←</div>
+          <div class="ah-icon" data-page-node-id="mWishIc001"><span class="bi" data-page-node-id="mWishBi001">🎟️</span></div>
+          <div class="ah-txt" data-page-node-id="mWishTxt001"><div class="ah-t" data-page-node-id="mWishT001">星星邮局</div><div class="ah-s" data-page-node-id="mWishS001">把心愿寄出去 · 换真宝贝</div></div>
+          <div class="ah-sp" data-page-node-id="mWishSp001"></div>
+          <div class="ah-act" data-page-node-id="mWishAct001"><div class="ah-mini star" data-page-node-id="mWishCoin001"><span class="coin-ic">⭐</span><span id="mWishCoinN" class="ah-star-n">0</span></div><div class="ah-mini gear" onclick="go('parent')" title="家长模式" data-page-node-id="mWishGear001">⚙️</div></div>
+        </div>
+        <div class="msub-coinbar" data-page-node-id="mWishCb001"><span class="msc-num" id="mWishCoinBig">0</span><span class="msc-lab">星星币</span></div>
+        <div class="msub-section" data-page-node-id="mWishSec1">
+          <div class="msub-h" data-page-node-id="mWishH1">🎟️ 我的心愿 · 三档</div>
+          <div class="msub-wish" id="wishGrid" data-page-node-id="mWishGrid001"></div>
+        </div>
+        <div class="bk-pager" id="wishPager" data-page-node-id="mWishPager001"></div>
+        <div class="msub-tip" data-page-node-id="mWishTip001">把心愿写进信里寄出去 · 攒够星星币就能换成真宝贝，攒的过程中萌宠小镇首页的心愿罐会一天天涨满～</div>
       </div>
     </div>
 
@@ -6427,7 +6736,7 @@
         <div class="stat-grid" data-page-node-id="QwnFnh6mjkA8BIiIoFzMw7">
           <div class="stat-card" data-page-node-id="oQsavkV49lPRoBt4Ol0bpw"><div class="k" data-page-node-id="uBssRggJy5Wq1AMCA3xcOc">学习总时长</div><div class="v" id="rpTotalTime" data-page-node-id="JRVpwOYUA5FHwYHBe2SKfV">0 分钟</div><div class="sub" data-page-node-id="VgCoMS1a5VqY3B321qcG73">日均 <span id="rpAvgTime" data-page-node-id="95XGQrzcE0FJ56I2Q9A5VF">0</span> 分钟</div></div>
           <div class="stat-card" data-page-node-id="kzEQ0EFmnwPHEnO7Tj6664"><div class="k" data-page-node-id="5C7xYy0vJdZ9Bvsk8hUUAM">任务完成率</div><div class="v gr" id="rpDoneRate" data-page-node-id="2CEwVEjIz0YwKv1SCcg47Q">0%</div><div class="sub" data-page-node-id="gqx0LIUCkXhhhaWaqpJrOB"><span id="rpDoneCount" data-page-node-id="NbJq4pCC1QVJrSkd8yE19c">0</span> / <span id="rpTotalCount" data-page-node-id="MvVehidxcxDSXTZpWcQkqO">0</span> 完成</div></div>
-          <div class="stat-card" data-page-node-id="tTHNFllJq8nmbHomi7s1Kd"><div class="k" data-page-node-id="f11d8is7FnZ8mEeu4s1oLS">获得积分</div><div class="v bl" id="rpPoints" data-page-node-id="NoIKduAzcblx4pLPilbiQh">0</div><div class="sub" data-page-node-id="rtfcwvP1PzjptrzFo2Ojxc">🪙 硬币 <span id="rpCoins" data-page-node-id="vanbfmlNO2MBU8cH5y1x1B">0</span></div></div>
+          <div class="stat-card" data-page-node-id="tTHNFllJq8nmbHomi7s1Kd"><div class="k" data-page-node-id="f11d8is7FnZ8mEeu4s1oLS">星星币余额</div><div class="v bl" id="rpPoints" data-page-node-id="NoIKduAzcblx4pLPilbiQh">0</div><div class="sub" data-page-node-id="rtfcwvP1PzjptrzFo2Ojxc">⭐ 全站唯一货币</div></div>
           <div class="stat-card" data-page-node-id="037oWdEZjukBof3JQ8mM5j"><div class="k" data-page-node-id="JHH5SYILST6pxbkcnZf4nq">心情指数</div><div class="v" id="rpMood" data-page-node-id="4RZXJrNbmIo2pA1pcBAQNS">😊</div><div class="sub" data-page-node-id="QsPqmcjOliQoDtSCVEqCaj">平均 <span id="rpMoodVal" data-page-node-id="GFFkMpPQ12xmoiTbwuCEAn">85</span> 分</div></div>
         </div>
         <div class="chart-card" id="starStatsCard" data-page-node-id="SL2RTPiBLAGGUHA9k6WKDN">
@@ -6488,7 +6797,7 @@
     <div class="nav" id="nav" data-page-node-id="FTeAqfDr6TKtieT2ydiOB3">
       <div class="nav-item active" id="nav-home" onclick="go('home')" data-page-node-id="ifv9gcf9iMj0KCLgy9E5Xx"><span class="ic" data-page-node-id="KNU5OBaGWURTVXHwHT9p5c">🏠</span>首页</div>
       <div class="nav-item" id="nav-checkin" onclick="go('checkin')" data-page-node-id="XeVMRLAf06GpOzKxgbJQ1g"><span class="ic" data-page-node-id="xkpWVQOV2gAgCUXP7Ky2sD">✅</span>打卡</div>
-      <div class="nav-mid" id="nav-store" onclick="go('store')" data-page-node-id="jkM8VpnTOS6GPgwE0Qe6wA"><div class="m" data-page-node-id="LcZ11cQr8MqfzBOe6HiTgg">🛒</div><span data-page-node-id="CQ1oJoqdDpdgeA6gb4Grst">商城</span></div>
+      <div class="nav-mid" id="nav-store" onclick="go('mall')" data-page-node-id="jkM8VpnTOS6GPgwE0Qe6wA"><div class="m" data-page-node-id="LcZ11cQr8MqfzBOe6HiTgg">🛒</div><span data-page-node-id="CQ1oJoqdPdgeA6gb4Grst">商城</span></div>
       <div class="nav-item" id="nav-pets" onclick="go('pets')" data-page-node-id="SQWoudR62eh6cFNKPJCCAi"><span class="ic" data-page-node-id="zpXA2FD4l825KKk72vuNv5">🎁</span>盲盒</div>
       <div class="nav-item" id="nav-me" onclick="go('me')" data-page-node-id="wYuIBHOE6Gl7Lo9yepsgBw"><span class="ic" data-page-node-id="QldxccpHfDMw3IDZJOWI1L">👤</span>我的</div>
     </div>
@@ -6774,38 +7083,60 @@
     if(p>=100)return 2;
     return 1;
   }
-  function renderGrowthProgress(){
-    const fill=document.getElementById('growthBarFill');
-    const tx=document.getElementById('growthNeed');
-    if(!fill&&!tx)return;
-    try{ renderCareTag(); }catch(e){}
-    const p=petTotalPoints();
-    const th=[0,100,250,450,700,1000];
+  /* 2026-09-15 升级进度：一处算、两处用（轨道进度条 + 成长胶囊） */
+  function petGrowInfo(){
+    const p=petTotalPoints(), th=[0,100,250,450,700,1000];
     /* 与等级徽章保持一致：等级只升不降，进度按当前成长值算 */
     const base=petLevelFromPoints(p);
     const shown=currentPartner==='snake'?snakeLv:(currentPartner==='cat'?catLv:dogLv);
-    const lv=Math.max(base,(shown||1));
-    if(lv>=6){ if(fill)fill.style.width='100%'; if(tx)tx.textContent='🎓 已毕业 · 满级啦'; return; }
-    const lo=th[lv-1], hi=th[lv];
-    const pct=Math.max(0,Math.min(100,((p-lo)/(hi-lo))*100));
-    if(fill)fill.style.width=pct.toFixed(1)+'%';
-    if(tx)tx.textContent='Lv.'+lv+' · 还需 '+(hi-p)+' 分升级';
+    const lv=Math.max(base,(shown||1)), max=lv>=6;
+    const lo=max?th[5]:th[lv-1], hi=max?th[5]:th[lv];
+    const pct=max?100:Math.max(0,Math.min(100,((p-lo)/(hi-lo))*100));
+    /* 2026-09-15：小字要报「下一级叫什么」，这里一并算出来，跟进度条同一个数据源 */
+    const gd=currentPartner==='snake'?SNAKE_GROWTH:currentPartner==='cat'?CAT_GROWTH:DOG_GROWTH;
+    const nx=max?null:gd[Math.min(gd.length-1,lv)];
+    return {p:p,lv:lv,lo:lo,hi:hi,pct:pct,max:max,overall:max?100:(((lv-1)+pct/100)/5*100),nextName:nx?nx.name:''};
   }
-  function renderGrowthTrack(){
-    const t=document.getElementById('growthTrack');if(!t)return;t.innerHTML='';
-    t.style.cssText='white-space:nowrap;overflow-x:auto;overflow-y:hidden;max-width:100%;padding-bottom:4px';
-    const data=currentPartner==='snake'?SNAKE_GROWTH:currentPartner==='cat'?CAT_GROWTH:DOG_GROWTH;
-    const lv=currentPartner==='snake'?snakeLv:currentPartner==='cat'?catLv:dogLv;
-    data.forEach(s=>{
-      const d=document.createElement('span');
-      const locked=s.lv>lv;
-      d.className='growth-dot'+(s.lv===lv?' on':'')+(locked?' locked':'');
-      d.title=locked?`${s.name}（还需成长值解锁）`:s.name;
-      d.innerHTML=`<img src="${s.img}" alt="${s.name}">`+(locked?'<span class="lock">🔒</span>':(s.lv===lv?'<span class="cur">●</span>':''));
-      if(!locked){ d.onclick=()=>{if(currentPartner==='snake'){snakeLv=s.lv;}else if(currentPartner==='cat'){catLv=s.lv;}else{dogLv=s.lv;}renderPet();}; }
-      t.appendChild(d);
-    });
+  function renderGrowthProgress(){
+    try{ renderCareTag(); }catch(e){}
+    const g=petGrowInfo();
+    /* ⛔ 2026-09-15 定稿：唯一呈现 = 独立一整行进度条
+       Lv 徽章 + 条（整体进度 =（已走完的段数 + 本段百分比）/ 共 5 段）+ 320/450 + 小字报下一级 */
+    const line=document.getElementById('growLine');
+    const fill=document.getElementById('growthBarFill');
+    if(fill)fill.style.width=g.overall.toFixed(1)+'%';
+    if(line)line.classList.toggle('done',!!g.max);
+    const lvN=document.getElementById('growLvN'); if(lvN)lvN.textContent=g.lv;
+    const num=document.getElementById('growNum');
+    if(num)num.textContent=g.max?('满级 '+g.p):(g.p+' / '+g.hi);
+    const tip=document.getElementById('growTip');
+    if(tip){
+      if(g.max) tip.textContent='🎓 已经满级啦，谢谢你陪我长大～';
+      else tip.textContent='再攒 '+Math.max(0,g.hi-g.p)+' 分 → 升级成「'+g.nextName+'」';
+    }
   }
+  /* 积分就位 / 变动后只同步「Lv 徽章 + 阶段名」，不重绘头像（避免打断表情动画） */
+  function syncPetLevelBadge(){
+    try{
+      const _lv=petLevelFromPoints(petTotalPoints());
+      if(currentPartner==='snake'){ if(_lv>snakeLv)snakeLv=_lv; }
+      else if(currentPartner==='cat'){ if(_lv>catLv)catLv=_lv; }
+      else { if(_lv>dogLv)dogLv=_lv; }
+      const lv=currentPartner==='snake'?snakeLv:currentPartner==='cat'?catLv:dogLv;
+      const data=currentPartner==='snake'?SNAKE_GROWTH:currentPartner==='cat'?CAT_GROWTH:DOG_GROWTH;
+      const s=data[Math.max(0,Math.min(data.length-1,(lv||1)-1))];
+      const a=document.getElementById('snakeLv'), b=document.getElementById('snakeStage');
+      if(a)a.textContent=s.lv; if(b)b.textContent=s.name;
+      /* 真的「刚升上去」才庆祝：存档里本来就是高等级时（首屏补刷）不弹 */
+      if(window.__petLvShown!==undefined && lv>window.__petLvShown){
+        try{ if(window.celebrate)window.celebrate({type:'big',emoji:'🎉',text:'宠物升级 Lv.'+lv+'！'}); }catch(e){}
+      }
+      window.__petLvShown=lv;
+    }catch(e){}
+  }
+  /* ⛔ 2026-09-15：6 个阶段头像的成长轨道已删（#growthTrack 元素不存在了）。
+     保留函数名，setPartner / renderPet 等调用点不用改 —— 转发到独立进度条即可。 */
+  function renderGrowthTrack(){ try{ renderGrowthProgress(); }catch(e){} }
   function setPartner(p,el){
     currentPartner=p;
     document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('sel'));
@@ -6867,18 +7198,18 @@
   var AH_HEAD_PAGES=['sc-timer','sc-mathbook','sc-books','sc-chars','sc-pets','sc-pset','sc-library','sc-recycle',
     'sc-learned','sc-pinyin','sc-math','sc-english-hub','sc-phonics','sc-words','sc-dialogue','sc-read','sc-write',
     'sc-science','sc-poem','sc-logic','sc-morning','sc-outdoor','sc-pack','sc-games','sc-playbook','sc-hanzi',
-    'sc-gacha','sc-checkin','sc-store','sc-bank','sc-qbank','sc-level','sc-passport','sc-challenge','sc-role',
+    'sc-gacha','sc-checkin','sc-bank','sc-qbank','sc-level','sc-passport','sc-challenge','sc-role',
     'sc-quiz','sc-script','sc-me','sc-game-block','sc-game-memory','sc-game-seq','sc-game-diff','sc-game-phonics',
     'sc-report','sc-achievements','sc-flash','sc-netdisk'];
   function go(screen, opts){
     try{ if(window.beep)window.beep(600,60); }catch(e){}
     if(quizTimer){clearInterval(quizTimer);quizTimer=null;}
-    const map={home:'sc-home',parent:'sc-parent',pset:'sc-pset',pets:'sc-pets',checkin:'sc-checkin',store:'sc-store',me:'sc-me',
+    const map={home:'sc-home',parent:'sc-parent',pset:'sc-pset',pets:'sc-pets',checkin:'sc-checkin',me:'sc-me',
       english:'sc-english-hub',phonics:'sc-phonics',read:'sc-read',write:'sc-write',math:'sc-math',mathbook:'sc-mathbook',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
       science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',chinesebook:'sc-chinesebook',
       timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',qbank:'sc-qbank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',challenge:'sc-challenge',role:'sc-role',quiz:'sc-quiz',script:'sc-script',playbook:'sc-playbook',recycle:'sc-recycle',plan:'sc-plan',hwcal:'sc-hwcal',
-      'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff','game-phonics':'sc-game-phonics',mall:'sc-mall'};
+      'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff','game-phonics':'sc-game-phonics',mall:'sc-mall','mall-supply':'sc-mall-supply','mall-dress':'sc-mall-dress','mall-wish':'sc-mall-wish'};
     let target=map[screen];
     if(!target){ target = document.getElementById(screen)? screen : 'sc-home'; }
     const cur=document.querySelector('.screen.on');
@@ -6892,7 +7223,9 @@
     if(target==='sc-parent'){pinInput='';renderPinDots();renderGameDiffUI();}
     if(target==='sc-pset'){try{renderVersionInfo();}catch(e){}}
     if(target==='sc-checkin')initCheckin();
-    else if(target==='sc-store')initStore();
+    else if(target==='sc-mall-supply'){supplyPage=0;renderMallSupply();}
+    else if(target==='sc-mall-dress'){dressPage=0;renderMallDress();}
+    else if(target==='sc-mall-wish'){wishPage=0;renderMallWish();}
     else if(target==='sc-me')initMe();
     else if(target==='sc-games'){ try{refreshPointUI();}catch(e){} renderGames(); }
     else if(target==='sc-chinesebook'){ renderChineseBook(); }
@@ -6920,7 +7253,7 @@
     else if(target==='sc-qbank'){ renderQBank(); }
     else if(target==='sc-mathbook'){ try{mbHistory.length=0;}catch(e){} renderMathbook(); }
     else if(target==='sc-home'){renderGrowthTrack();updateHomePartnerIcon();renderHomeTasks();renderHomework();renderLearnGrid();renderMiniClass();renderHomeCourse();renderTomorrowCourses();renderWeekDots();refreshMallCoinUI();}
-    else if(target==='sc-pset'){renderCheckins();renderStudies();renderPerm();renderBankTabs();renderBankList();renderMonoBank();renderMallRealEditor();}
+    else if(target==='sc-pset'){renderCheckins();renderStudies();renderPerm();renderBankTabs();renderBankList();renderMonoBank();renderMallRealEditor();renderMallGoodsEditor();}
     else if(target==='sc-recycle'){renderRecycle();}
     else if(target==='sc-plan'){renderPlan('tt');}
     else if(target==='sc-hwcal'){try{renderCal();}catch(e){}}
@@ -10636,20 +10969,20 @@ let phonicsTopicIdx=-1;
     if(taskGachaResult&&taskGachaResult.act===act&&!taskGachaResult.done){
       taskGachaResult.done=true;
       const rw=REWARD_BY_DIFF[taskGachaResult.diff]||{p:15,c:1};
-      gachaPoints+=rw.p;gachaSet(GACHA_KEYS.p,gachaPoints);
-      gachaCoins+=rw.c;gachaSet(GACHA_KEYS.c,gachaCoins);
+      /* ⛔ 2026-09-15 金币归一：原把 rw.c 发成"硬币"，合并后硬币=星星币 → 直接并入星星币 */
+      gachaPoints+=rw.p+(rw.c||0);gachaSet(GACHA_KEYS.p,gachaPoints);
       refreshPointUI();
-      showRewardClaim(rw.p,rw.c,(taskGachaResult.name||'任务')+' 完成！');
+      showRewardClaim(rw.p+(rw.c||0),0,(taskGachaResult.name||'任务')+' 完成！');
     }
   }
   function refreshPointUI(){
     try{ if(typeof renderGachaTop==='function')renderGachaTop(); }catch(e){}
     try{ const bp=document.getElementById('bankPoints'); if(bp)bp.textContent=gachaPoints;
-         const bc=document.getElementById('bankCoins'); if(bc)bc.textContent=gachaCoins; }catch(e){}
+         const bc=document.getElementById('bankCoins'); if(bc)bc.textContent=gachaPoints; }catch(e){}
     try{ const gp=document.getElementById('gbPoints'); if(gp)gp.textContent=gachaPoints;
-         const gc=document.getElementById('gbCoins'); if(gc)gc.textContent=gachaCoins; }catch(e){}
+         const gc=document.getElementById('gbCoins'); if(gc)gc.textContent=gachaPoints; }catch(e){}
     try{ const sp=document.getElementById('storePoints'); if(sp)sp.textContent=gachaPoints;
-         const sc=document.getElementById('storeCoins'); if(sc)sc.textContent=gachaCoins; }catch(e){}
+         const sc=document.getElementById('storeCoins'); if(sc)sc.textContent=gachaPoints; }catch(e){}
     try{ if(typeof initMe==='function')initMe(); }catch(e){}
   }
   function showRewardClaim(points,coins,title){
@@ -13097,6 +13430,8 @@ LOGIC_LEVELS.forEach(function(L){
 /* ===== 逻辑思维 v1 状态 & 持久化 ===== */
   const LOGIC_PROGRESS_KEY='logic_progress_v1';
   const LOGIC_COIN_KEY='logic_coin_v1';
+  /* ⛔ 2026-09-15 金币归一：logicCoin 已废（原为纯攒无出口的死币）。
+     定义保留（=0 恒不写盘）以避免散落引用报错；产出改走 rewardLogicCorrect() 发星星币。 */
   let logicDiff='grow', logicCoin=0, logicProgress={};
   let logicCurLevel='L1', logicTierKey=null, logicTierObj=null, logicModalCard=null;
   let logicCurBig=null, logicCurSub=null, logicCurIdx=0, logicCurQ=null, logicRound=null;
@@ -13104,7 +13439,16 @@ LOGIC_LEVELS.forEach(function(L){
   function _lpLoad(){ try{return JSON.parse(LS.getItem(LOGIC_PROGRESS_KEY)||'{}');}catch(e){return{};} }
   function _lpSave(){ try{LS.setItem(LOGIC_PROGRESS_KEY,JSON.stringify(logicProgress));}catch(e){} }
   function _lpCoinLoad(){ try{return parseInt(LS.getItem(LOGIC_COIN_KEY)||'0',10)||0;}catch(e){return 0;} }
-  function _lpCoinSave(){ try{LS.setItem(LOGIC_COIN_KEY,String(logicCoin));}catch(e){} }
+  function _lpCoinSave(){ /* 已废：逻辑币不再独立存储 */ }
+  /* 逻辑/临摹答对 → 发 1 星星币（并库后它是唯一货币，原来那枚"只攒不能花"的币已并入余额） */
+  function rewardLogicCorrect(){
+    try{
+      gachaPoints+=1; gachaSet(GACHA_KEYS.p,gachaPoints);
+      addEarn('star',1,'logic','逻辑练习答对');
+      if(window.floatStar)floatStar(1);
+      refreshPointsUI();
+    }catch(e){}
+  }
   function _addLogicStat(subKey,ok){ if(!logicProgress[subKey])logicProgress[subKey]={correct:0,total:0}; logicProgress[subKey].correct+=(ok?1:0); logicProgress[subKey].total+=1; _lpSave(); }
   function _logicStat(subKey){ return logicProgress[subKey]||{correct:0,total:0}; }
   function _stars(correct){ return correct>=60?3:correct>=30?2:correct>=10?1:0; }
@@ -13123,7 +13467,11 @@ LOGIC_LEVELS.forEach(function(L){
   function _startSub(bigKey,subId){ logicRound=genRound(bigKey,subId); renderLogicQ(bigKey,subId,0); }
 
   function openLogic(){
-    logicProgress=_lpLoad(); logicCoin=_lpCoinLoad();
+    logicProgress=_lpLoad();
+    /* ⛔ 2026-09-15 金币归一：旧逻辑币余额先并入星星币（mergeLegacyCoins 会删旧 key），
+       故此处不再读旧值；逻辑币变量恒 0，界面显示的是星星币。 */
+    try{ mergeLegacyCoins(); }catch(e){}
+    logicCoin=0;
     renderLogicHome(); go('logic');
   }
 
@@ -13135,7 +13483,7 @@ LOGIC_LEVELS.forEach(function(L){
     document.getElementById('logicHeadTitle').textContent='数感思维乐园';
     document.getElementById('logicHeadSub').textContent='7 大等级 · 42 张游戏卡 · 闯关学数学';
     document.getElementById('logicHeadBi').textContent='🧠';
-    document.getElementById('logicCoin').textContent=logicCoin;
+    document.getElementById('logicCoin').textContent=gachaPoints;
     /* 7 等级横向切换 */
     var lvWrap=document.getElementById('logicLevels'); lvWrap.innerHTML='';
     LOGIC_LEVELS.forEach(function(L){
@@ -13319,7 +13667,7 @@ LOGIC_LEVELS.forEach(function(L){
       '<header class="lw-head">'+
         '<button class="lw-close" onclick="logicWriteExit()">✕</button>'+
         '<div class="lw-pills">'+pills+'</div>'+
-        '<div class="lw-coin">🪙 <span id="lwCoin">'+logicCoin+'</span></div>'+
+        '<div class="lw-coin">⭐ <span id="lwCoin">'+gachaPoints+'</span></div>'+
       '</header>'+
       '<div class="lw-cap">🔊 临摹数字 '+q.n+'</div>'+
       '<div class="lw-board">'+
@@ -13472,9 +13820,9 @@ LOGIC_LEVELS.forEach(function(L){
 
   function finishWriteQuestion(){
     _addLogicStat(logicCurSub, true);
-    logicCoin++; _lpCoinSave();
-    var coinEl = document.getElementById('lwCoin');
-    if(coinEl) coinEl.textContent = logicCoin;
+    /* ⛔ 2026-09-15 金币归一：逻辑币已并入星星币，此处改为答对真发 1 星星币（原为纯攒无出口的死币） */
+    rewardLogicCorrect();
+    _lpCoinSave();
     setTimeout(function(){
       if(logicCurIdx < logicRound.length - 1){
         renderLogicQ(logicCurBig, logicCurSub, logicCurIdx+1);
@@ -13580,8 +13928,8 @@ LOGIC_LEVELS.forEach(function(L){
       '<div class="logic-q-fb-tip">'+logicCurQ.hint+'</div>';
     if(ok){
       _addLogicStat(logicCurSub, true);
-      logicCoin++; _lpCoinSave();
-      var coinEl=document.getElementById('logicCoin'); if(coinEl)coinEl.textContent=logicCoin;
+      /* ⛔ 2026-09-15 金币归一：逻辑币已并入星星币，此处改为答对真发 1 星星币 */
+      rewardLogicCorrect();
     } else {
       _addLogicStat(logicCurSub, false);
     }
@@ -13810,7 +14158,15 @@ LOGIC_LEVELS.forEach(function(L){
     if(pinInput.length===4){
       if(pinInput===getParentPin()){
         pinInput='';
-        setTimeout(()=>{renderPinDots();go('pset',{noHistory:true});},120);
+        /* ⛔ 2026-09-15：从小镇超市顶栏「🛒 补货」进来的，密码对了原路返回超市屏并就地开货架面板；
+           其余情况照旧进家长设置屏。 */
+        setTimeout(()=>{renderPinDots();
+          if(window.__pinNext==='mallGoods'){
+            window.__pinNext=null;
+            try{ goBack(); }catch(e){}
+            setTimeout(()=>{ try{ showMallStock(); }catch(e){} },90);
+          } else { go('pset',{noHistory:true}); }
+        },120);
       } else {
         const card=document.querySelector('#sc-parent .lock-card');
         if(card){card.classList.add('shake');setTimeout(()=>card.classList.remove('shake'),400);}
@@ -14396,9 +14752,43 @@ LOGIC_LEVELS.forEach(function(L){
 
   /* ============ 学习扭蛋机 ============ */
   const GACHA_KEYS={q:'gacha_questions',w:'gacha_wrong',r:'gacha_rewards',c:'gacha_coins',p:'gacha_points',cap:'gacha_capacity',stock:'gacha_stock',deco:'gacha_deco'};
-  let gachaQuestions=[],gachaWrong=[],gachaRewards=[],gachaCoins=0,gachaPoints=0,gachaCapacity=100,gachaStock=0,gachaDeco={};
+  /* ⛔ 2026-09-15 堵刷星漏洞：答题换「扭蛋库存」必须每日封顶。
+     原逻辑：答对 +1 库存（无上限）→ 抽蛋消耗 1 库存、期望返 3 星 → 可无限循环刷星，
+     等于「答一题白拿 3 星星币」，会把小镇超市 / 星星邮局的价格体系整个击穿。 */
+  const GACHA_QUIZ_DAILY_MAX=5, GACHA_QUIZ_DAY_KEY='gacha_quiz_day';
+  function gachaDayStr(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
+  function gachaQuizDay(){
+    var o={day:gachaDayStr(),n:0};
+    try{var r=LS.getItem(GACHA_QUIZ_DAY_KEY);if(r){var x=JSON.parse(r);if(x&&x.day===o.day)o=x;}}catch(e){}
+    return o;
+  }
+  function gachaQuizLeft(){return Math.max(0,GACHA_QUIZ_DAILY_MAX-(gachaQuizDay().n||0));}
+  function gachaQuizTick(){
+    var o=gachaQuizDay();
+    if((o.n||0)>=GACHA_QUIZ_DAILY_MAX)return false;
+    o.n=(o.n||0)+1;
+    try{LS.setItem(GACHA_QUIZ_DAY_KEY,JSON.stringify(o));}catch(e){}
+    return true;
+  }
+  let gachaQuestions=[],gachaWrong=[],gachaRewards=[],gachaPoints=0,gachaCapacity=100,gachaStock=0,gachaDeco={};
+  /* ⛔ 2026-09-15 金币归一：原 gachaCoins 变量已废（它是扭蛋库存的影子，与星星币重复）。
+     所有旧引用点已逐个改为 gachaPoints；此别名仅为兜底防漏，恒返回星星币余额。 */
+  function _legacyCoins(){return gachaPoints;}
   let gachaCur=null,gachaCurWrongRef=null,gachaRecent=[];
-  const BANK_REWARDS=[{id:'cartoon',ic:'📺',name:'多看一集动画',cost:60,cur:'point',note:'周末奖励'},{id:'story',ic:'📖',name:'选睡前故事',cost:30,cur:'point',note:'妈妈讲'},{id:'sticker',ic:'⭐',name:'星星贴纸',cost:20,cur:'point',note:'即时满足'},{id:'game',ic:'🎮',name:'多玩一局游戏',cost:40,cur:'point',note:'挑战通过后'},{id:'toy',ic:'🧸',name:'周末小礼物',cost:100,cur:'point',note:'限定奖励'},{id:'trip',ic:'🚗',name:'周末出行特权',cost:120,cur:'point',note:'大目标'}];
+  /* ⛔ 2026-09-15 商店合并·第1批：**现实奖励的唯一权威清单**。
+     原有两份（此处 6 条 20~120 + loadMallReal 5 条 120~500），同一件事差 3~5 倍。
+     现按「三档」重定价（铜 50 / 银 250 / 金 500，比例 1:5:10，对应孩子 2.6 / 13 / 26 天收入）。
+     loadMallReal() 改为**读写本表**（其旧 key mp_mall_real_v1 仅作覆盖层，见下方迁移）。 */
+  const BANK_REWARDS=[
+    {id:'sticker',ic:'⭐',name:'星星贴纸',cost:50,cur:'point',tier:'bronze',note:'马上就拿到'},
+    {id:'story',ic:'📖',name:'选一个睡前故事',cost:50,cur:'point',tier:'bronze',note:'妈妈讲给你听'},
+    {id:'cartoon',ic:'📺',name:'多看一集动画',cost:50,cur:'point',tier:'bronze',note:'放松一下'},
+    {id:'park',ic:'🌳',name:'去公园玩一趟',cost:250,cur:'point',tier:'silver',note:'亲子时光'},
+    {id:'book',ic:'📚',name:'选一本喜欢的绘本',cost:250,cur:'point',tier:'silver',note:'自己挑'},
+    {id:'game',ic:'🎮',name:'多玩一局游戏',cost:250,cur:'point',tier:'silver',note:'先完成正事'},
+    {id:'toy',ic:'🧸',name:'买心仪的小礼物',cost:500,cur:'point',tier:'gold',note:'大目标'},
+    {id:'trip',ic:'🚗',name:'周末出行特权',cost:500,cur:'point',tier:'gold',note:'全家出动'}
+  ];
   // #4 闯关升级制 —— 一周 5 关 + 周末 BOSS
   const LEVEL_QUESTS=[
     {day:'周一',lv:1,ic:'📖',name:'识字关',tip:'认读 10 个字'},
@@ -14550,20 +14940,49 @@ LOGIC_LEVELS.forEach(function(L){
     gachaWrong=gachaGet(GACHA_KEYS.w,[]);
     gachaRewards=gachaGet(GACHA_KEYS.r,null);
     if(!gachaRewards||!gachaRewards.length){gachaRewards=seedGachaRewards();gachaSet(GACHA_KEYS.r,gachaRewards);}
-    gachaCoins=gachaGet(GACHA_KEYS.c,0);
+    /* ⛔ 2026-09-15 一次性迁移（老设备也要堵住刷星）：
+       ① 已废的 type:'coins' → 'points'；② 把「出厂默认」的权重重算（只认默认值，家长改过的不动）。 */
+    (function(){
+      var changed=false;
+      gachaRewards.forEach(function(r){ if(r&&r.type==='coins'){r.type='points';changed=true;} });
+      if(gachaGet('gacha_rewards_ver',0)<1){
+        var rules=[
+          {type:'item',mw:25,w:32},
+          {type:'item',mw:10,w:16},
+          {type:'points',mv:10,mw:20,w:14,v:5},
+          {type:'points',mv:5,mw:20,w:6,v:2}
+        ];
+        gachaRewards.forEach(function(r){
+          rules.forEach(function(m){
+            if(r.type!==m.type||r.weight!==m.mw)return;
+            if(m.mv!==undefined&&r.value!==m.mv)return;
+            r.weight=m.w; if(m.v!==undefined)r.value=m.v; changed=true;
+          });
+        });
+        gachaSet('gacha_rewards_ver',1);
+      }
+      if(changed)gachaSet(GACHA_KEYS.r,gachaRewards);
+    })();
     gachaPoints=gachaGet(GACHA_KEYS.p,0);
     gachaCapacity=gachaGet(GACHA_KEYS.cap,100);
     gachaStock=gachaGet(GACHA_KEYS.stock,0);
     gachaDeco=gachaGet(GACHA_KEYS.deco,{});
-    // 首次使用：注入起始硬币与扭蛋库存，让机器开箱即可抽
+    /* ⛔ 2026-09-15 金币归一：**必须在本行之后**合并旧币 —— 迁移会往 gachaPoints 累加，
+       若在此之前调用，随后这行 gachaGet 会把刚加上的值覆盖掉（曾丢过 100 主币）。 */
+    mergeLegacyCoins();
+    gachaPoints=gachaGet(GACHA_KEYS.p,gachaPoints);
+    /* 首次使用：注入起始扭蛋库存，让机器开箱即可抽（硬币已废，不再注入） */
     if(gachaGet('gacha_seeded',0)!==1){
-      gachaCoins=Math.max(gachaCoins,5);
       gachaStock=Math.max(gachaStock,5);
-      gachaSet(GACHA_KEYS.c,gachaCoins);
       gachaSet(GACHA_KEYS.stock,gachaStock);
       gachaSet('gacha_seeded',1);
     }
     renderGachaTop();renderGachaMachine();renderGachaRecent();
+    /* 2026-09-15：积分在此刻才从 localStorage 就位，补刷一次首页的成长进度（否则首屏停在 Lv.1 / 0 分）。
+       ⛔ 先把 __petLvShown 标到存档等级，避免首屏补刷被当成「刚升级」弹出庆祝层。 */
+    try{ window.__petLvShown=petLevelFromPoints(petTotalPoints()); }catch(e){}
+    try{ renderPet(); renderBondRow(); renderGrowthProgress(); updatePetBubble(); }catch(e){}
+    try{renderChestState();}catch(e){}  /* ⛔ 2026-09-15 商店合并·第2批：宝箱从已删的 sc-store 搬入扭蛋机屏 */
   }
 
   function seedGachaQuestions(){
@@ -14590,29 +15009,28 @@ LOGIC_LEVELS.forEach(function(L){
   }
   function seedGachaRewards(){
     const mk=(name,icon,type,value,weight)=>({id:'sr'+Math.random().toString(36).slice(2,7),name,icon,type,value,weight,enabled:true,rare:(type==='item')});
+    /* ⛔ 2026-09-15 堵刷星：原 星星币权重 20+20 → 每抽期望返 3.0 星。
+       扭蛋的主价值是「实物奖励」，星星币只是彩头，故降到 14+6（期望 0.82 星/抽）。 */
     return [
-      mk('看半小时电视','📺','item',30,25),
-      mk('游戏时间30分钟','🎮','item',30,25),
-      mk('奖励一个新玩具','🧸','item',1,10),
-      mk('+10 积分','⭐','points',10,20),
-      mk('+5 硬币','🪙','coins',5,20)
+      mk('看半小时电视','📺','item',30,32),
+      mk('游戏时间30分钟','🎮','item',30,32),
+      mk('奖励一个新玩具','🧸','item',1,16),
+      mk('+5 星星币','⭐','points',5,14),
+      mk('+2 星星币','⭐','points',2,6)
     ];
   }
 
   function renderGachaTop(){
-    const a=document.getElementById('gachaCoins'),b=document.getElementById('gachaPoints'),c=document.getElementById('gachaStock'),d=document.getElementById('gachaCap');
-    if(a)a.textContent=gachaCoins; if(b)b.textContent=gachaPoints; if(c)c.textContent=gachaStock; if(d)d.textContent=gachaCapacity;
+    const b=document.getElementById('gachaPoints'),c=document.getElementById('gachaStock'),d=document.getElementById('gachaCap');
+    if(b)b.textContent=gachaPoints; if(c)c.textContent=gachaStock; if(d)d.textContent=gachaCapacity;
     const db=document.getElementById('gachaDrawBtn');
     const hint=document.getElementById('gachaHint');
-    // 不禁用按钮：库存/硬币不足时仍可点，点击后引导去答题补库存
-    if(gachaCoins<1){
+    /* ⛔ 2026-09-15 金币归一：抽扭蛋只看库存（免费），不再判硬币 */
+    if(gachaStock<1){
       if(db)db.textContent='🎰 抽扭蛋（先答题）';
-      if(hint)hint.textContent='🪙 硬币不够啦，点「答题赚硬币」答对一题得 1 硬币 + 1 库存，再来抽！';
-    } else if(gachaStock<1){
-      if(db)db.textContent='🎰 抽扭蛋（补库存）';
-      if(hint)hint.textContent='🎯 扭蛋库存空了，点「答题赚硬币」答对一题补 1 颗库存～';
+      if(hint)hint.textContent='🎯 扭蛋用完啦～点「答题赚扭蛋」答对一题得 1 颗（今天还能攒 '+gachaQuizLeft()+' 颗），再来抽！';
     } else {
-      if(db)db.textContent='🎰 抽扭蛋 (1🪙)';
+      if(db)db.textContent='🎰 抽扭蛋（免费）';
       if(hint)hint.textContent='';
     }
   }
@@ -14657,7 +15075,7 @@ LOGIC_LEVELS.forEach(function(L){
       h+='<button class="'+cls+'" '+(fb?'disabled':'onclick="answerGacha('+i+')"')+'>'+escHTML(o)+'</button>';
     });
     if(fb){
-      h+='<div class="gq-feed">'+(fb.correct?'🎉 答对啦！+1 🪙':'😯 答错了，已记到错题本')+'</div>';
+      h+='<div class="gq-feed">'+(fb.correct?(fb.cap?('🎉 答对啦！今天的扭蛋已经攒够啦（每天 '+GACHA_QUIZ_DAILY_MAX+' 颗），明天再来～'):'🎉 答对啦！+1 🎯 扭蛋'):'😯 答错了，已记到错题本')+'</div>';
       h+='<div class="gacha-actions" style="margin-top:12px"><button class="btn" onclick="startGachaQuiz()">下一题 →</button><button class="btn ghost" onclick="gachaShow(\'home\')">返回</button></div>';
     }
     document.getElementById('gqCard').innerHTML=h;
@@ -14665,13 +15083,16 @@ LOGIC_LEVELS.forEach(function(L){
   function answerGacha(i){
     const q=gachaCur; if(!q)return;
     const correct=(i===q.ans);
+    let hitCap=false;
     if(correct){
-      gachaCoins+=1; gachaSet(GACHA_KEYS.c,gachaCoins);
-      if(gachaStock<gachaCapacity){gachaStock+=1; gachaSet(GACHA_KEYS.stock,gachaStock);}
+      /* ⛔ 2026-09-15 金币归一 + 堵刷星：答对只补「扭蛋库存」（抽奖机会，免费），
+         且每日封顶 GACHA_QUIZ_DAILY_MAX 颗。超上限仍可继续答题（记错题 / 练手），只是不再产库存。 */
+      if(gachaQuizTick()){ if(gachaStock<gachaCapacity){gachaStock+=1; gachaSet(GACHA_KEYS.stock,gachaStock);} }
+      else hitCap=true;
       if(gachaCurWrongRef){gachaCurWrongRef.timesRight=(gachaCurWrongRef.timesRight||0)+1; gachaSet(GACHA_KEYS.w,gachaWrong);}
     }else{recordGachaWrong(q);}
     renderGachaTop();
-    renderGachaQuiz(q,{correct:correct,picked:i});
+    renderGachaQuiz(q,{correct:correct,picked:i,cap:hitCap});
   }
   function recordGachaWrong(q){
     let w=gachaWrong.find(x=>x.qid===q.id);
@@ -14679,10 +15100,11 @@ LOGIC_LEVELS.forEach(function(L){
     gachaSet(GACHA_KEYS.w,gachaWrong);
   }
 
+  /* ⛔ 2026-09-15 金币归一：抽扭蛋不再花任何钱，只消耗「扭蛋库存」（答对一题 +1 颗）。
+     原实现 gachaCoins -= 1 —— 硬币既是库存的影子又要单独花，是重复计数。
+     现：库存 = 学习换来的抽奖机会（免费）；硬币 = 星星币，不再参与抽奖。 */
   function drawGacha(){
-    if(gachaCoins<1){toastGacha('先去答题赚硬币吧~');startGachaQuiz();return;}
-    if(gachaStock<1){toastGacha('扭蛋库存空了，答一题补一颗~');startGachaQuiz();return;}
-    gachaCoins-=1; gachaSet(GACHA_KEYS.c,gachaCoins);
+    if(gachaStock<1){toastGacha('扭蛋库存空了，先去答题赚库存吧~');startGachaQuiz();return;}
     gachaStock-=1; gachaSet(GACHA_KEYS.stock,gachaStock);
     const rw=weightedGachaReward();
     applyGachaReward(rw);
@@ -14707,21 +15129,34 @@ LOGIC_LEVELS.forEach(function(L){
     for(const r of en){x-=(r.weight||1); if(x<=0)return r;}
     return en[en.length-1];
   }
+  /* ⛔ 2026-09-15 打通「扭蛋屋 ↔ 星星邮局」：抽到实物奖励也要落一张礼物券，
+     写进与星星邮局**同一本账**（key mp_mall_coupon_v1），孩子才能在「🎫 我的兑换券」里
+     拿给爸爸妈妈兑现。原实现只往「最近抽到」记一行，实物奖励根本兑现不了。 */
+  const GACHA_COUPON_KEY='mp_mall_coupon_v1';
+  function gachaIssueCoupon(rw){
+    try{
+      var a=[];var r=LS.getItem(GACHA_COUPON_KEY);if(r){var x=JSON.parse(r);if(Array.isArray(x))a=x;}
+      var d=new Date();
+      a.push({id:Date.now(),name:rw.name,emoji:rw.icon||'🎁',from:'扭蛋屋',
+        date:d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)});
+      LS.setItem(GACHA_COUPON_KEY,JSON.stringify(a));
+    }catch(e){}
+  }
+  /* ⛔ 2026-09-15 金币归一：原 rw.type==='coins'（发硬币）已并入 points（发星星币） */
   function applyGachaReward(rw){
-    if(rw.type==='points'){gachaPoints+=rw.value;gachaSet(GACHA_KEYS.p,gachaPoints);addEarn('star',rw.value,'gacha','扭蛋奖励');floatStar(rw.value);}
-    else if(rw.type==='coins'){gachaCoins+=rw.value;gachaSet(GACHA_KEYS.c,gachaCoins);addEarn('coin',rw.value,'gacha','扭蛋奖励');}
-    gachaRecent.unshift({ic:rw.icon,name:rw.name,type:rw.type,t:Date.now()});
+    if(rw.type==='points'||rw.type==='coins'){gachaPoints+=rw.value;gachaSet(GACHA_KEYS.p,gachaPoints);addEarn('star',rw.value,'gacha','扭蛋奖励');floatStar(rw.value);}
+    else if(rw.type==='item'){gachaIssueCoupon(rw);}
+    gachaRecent.unshift({ic:rw.icon,name:rw.name,type:rw.type||'points',t:Date.now()});
     if(gachaRecent.length>12)gachaRecent.pop();
   }
   function showGachaPrize(rw){
     if(!rw){toastGacha('暂无可抽奖励，去管理中心添加');return;}
     let sub='';
-    if(rw.type==='item')sub='记得和爸爸妈妈兑换哦~';
-    else if(rw.type==='points')sub='+'+rw.value+' 积分已到账';
-    else sub='+'+rw.value+' 硬币已到账';
+    if(rw.type==='item')sub='礼物券已放进星星邮局的「我的兑换券」';
+    else sub='+'+rw.value+' 星星币已到账';
     const pop=document.getElementById('gachaPrizePop');
     GAMESCORE.gacha=Math.max(GAMESCORE.gacha||0,1);saveGameScore();renderGames();
-    sub+=' · 去学习赚更多🪙';
+    sub+=' · 去学习赚更多⭐';
     document.getElementById('gpIc').textContent=rw.icon;
     document.getElementById('gpName').textContent=rw.name;
     document.getElementById('gpSub').textContent=sub;
@@ -14839,19 +15274,33 @@ LOGIC_LEVELS.forEach(function(L){
     let h='<div class="qb-form"><div style="font-weight:800;margin-bottom:4px">➕ 新增奖励</div>'
       +'<label>名称</label><input id="rwName" placeholder="如：冰激凌一支">'
       +'<label>图标 emoji</label><input id="rwIc" placeholder="🍦" style="width:80px">'
-      +'<label>类型</label><select id="rwType"><option value="item">实物奖励</option><option value="points">积分</option><option value="coins">硬币</option></select>'
-      +'<label>数值（实物填1，积分/硬币填数量）</label><input id="rwVal" type="number" value="1">'
+      +'<label>类型</label><select id="rwType"><option value="item">实物奖励（给孩子落一张礼物券）</option><option value="points">星星币</option></select>'
+      +'<label>数值（实物填 1，星星币填数量）</label><input id="rwVal" type="number" value="1">'
       +'<label>概率权重</label><input id="rwW" type="number" value="10">'
       +'<div class="gacha-actions" style="margin-top:8px"><button class="btn" onclick="addGachaReward()">添加奖励</button></div></div>';
+    h+='<div style="font-size:13px;color:var(--ink-soft);margin:11px 0 2px">下面每条都能<b>直接改</b>：图标 / 名称 / 数值 / 权重（总权重决定概率）。实物奖励会自动给孩子落一张礼物券，去「星星邮局 · 我的兑换券」给爸妈看。</div>';
     gachaRewards.forEach(r=>{
-      const typ=r.type==='item'?'实物奖励':r.type==='points'?('+'+r.value+' 积分'):('+'+r.value+' 硬币');
-      h+='<div class="reward-row"><span class="rw-ic">'+r.icon+'</span>'
-        +'<div style="flex:1"><div class="rw-name">'+escHTML(r.name)+'</div><div class="rw-meta">'+typ+'</div></div>'
+      const typ=r.type==='item'?'实物奖励':'星星币';
+      h+='<div class="reward-row"'+(r.enabled===false?' style="opacity:.55"':'')+'>'
+        +'<input class="rw-ic-in" value="'+escHTML(r.icon||'')+'" onchange="editReward(\''+r.id+'\',\'icon\',this.value)">'
+        +'<input class="rw-name-in" value="'+escHTML(r.name)+'" onchange="editReward(\''+r.id+'\',\'name\',this.value)">'
+        +'<span class="rw-tag">'+typ+'</span>'
+        +(r.type==='item'?'':'<input class="rw-val" type="number" min="1" value="'+(r.value||1)+'" onchange="editReward(\''+r.id+'\',\'value\',this.value)">')
         +'<label style="font-size:13px;color:var(--ink-soft)">权重<input class="rw-w" type="number" value="'+r.weight+'" onchange="setRewardWeight(\''+r.id+'\',this.value)"></label>'
         +'<span onclick="toggleReward(\''+r.id+'\')" style="cursor:pointer;font-size:14px;font-weight:700;color:'+(r.enabled===false?'var(--ink-faint)':'var(--sage)')+'">'+(r.enabled===false?'已关闭':'已开启')+'</span>'
         +'<span class="bq-del" onclick="deleteGachaReward(\''+r.id+'\')">删除</span></div>';
     });
     body.innerHTML=h;
+  }
+  /* ⛔ 2026-09-15 自定义奖励：支持改名 / 改图标 / 改数值（原来只能改权重、开关、删） */
+  function editReward(id,field,v){
+    const r=gachaRewards.find(x=>x.id===id); if(!r)return;
+    if(field==='name')r.name=String(v||'').slice(0,16)||'奖励';
+    else if(field==='icon')r.icon=String(v||'').slice(0,4)||'🎁';
+    else if(field==='value')r.value=Math.max(1,parseInt(v,10)||1);
+    else if(field==='type')r.type=(v==='points')?'points':'item';
+    gachaSet(GACHA_KEYS.r,gachaRewards);
+    toastGacha('已更新 ✓');
   }
   function addGachaReward(){
     const name=document.getElementById('rwName').value.trim();
@@ -14882,9 +15331,10 @@ LOGIC_LEVELS.forEach(function(L){
   }
 
   /* ---- 积分商店 ---- */
+  /* ⛔ 2026-09-15 金币归一：原第 2 项「🪙 硬币兑换（40 积分 → 10 硬币）」已删除 ——
+     硬币与积分合并成同一种钱后，它等于"花 40 买回 10"，是自换自的悖论 + 变相亏损。 */
   const GACHA_STORE=[
     {id:'cap',ic:'📦',name:'扩容扭蛋仓',desc:'容量 +50',cost:40,repeat:true,apply:function(){gachaCapacity+=50;gachaSet(GACHA_KEYS.cap,gachaCapacity);return '容量已提升至 '+gachaCapacity;}},
-    {id:'coin',ic:'🪙',name:'硬币兑换',desc:'40 积分 → 10 硬币',cost:40,repeat:true,apply:function(){gachaCoins+=10;gachaSet(GACHA_KEYS.c,gachaCoins);return '到账 10 硬币';}},
     {id:'deco_gold',ic:'🌟',name:'金色机身',desc:'扭蛋机换金色皮肤',cost:60,repeat:false,apply:function(){gachaDeco.gold=true;gachaSet(GACHA_KEYS.deco,gachaDeco);renderGachaMachine();return '已装备金色机身';}},
     {id:'deco_star',ic:'🌌',name:'星空背景',desc:'扭蛋机换星空皮肤',cost:80,repeat:false,apply:function(){gachaDeco.star=true;gachaSet(GACHA_KEYS.deco,gachaDeco);renderGachaMachine();return '已装备星空背景';}}
   ];
@@ -15451,20 +15901,163 @@ LOGIC_LEVELS.forEach(function(L){
   }
   function getTotalCheckinDays(){return Object.keys(STATS.checkinDates).length;}
   // 星星/积分流水（type: 'star' | 'coin'）
-  function addEarn(type,amount,source,note){amount=amount|0;if(!amount)return;STATS.ledger.push({date:getTodayKey(),type:type,amount:amount,source:source||'',note:note||''});if(STATS.ledger.length>800)STATS.ledger=STATS.ledger.slice(-800);saveStats();try{addMallCoins(amount);}catch(e){}}
+  /* ⛔ 2026-09-15 金币归一：原实现每记一笔流水就 try{addMallCoins(amount)}，
+     与 gachaPoints 形成 1:1 双子记账（同一份钱记两处，数字开始打架）。
+     现只记流水，不再重复加币 —— 钱的唯一去处是 gachaPoints。 */
+  function addEarn(type,amount,source,note){amount=amount|0;if(!amount)return;STATS.ledger.push({date:getTodayKey(),type:type,amount:amount,source:source||'',note:note||''});if(STATS.ledger.length>800)STATS.ledger=STATS.ledger.slice(-800);saveStats();}
 
   /* ================= 兑换中心（独立金币 + 宠物/我的奖励 + 扭蛋） ================= */
   const MALL_COINS_KEY='mp_mall_coins_v1', MALL_REAL_KEY='mp_mall_real_v1', MALL_COUPON_KEY='mp_mall_coupon_v1', MALL_WISH_KEY='mp_mall_wish_v1', MALL_GACHA_COST=50;
-  function getCoins(){try{return parseInt(LS.getItem(MALL_COINS_KEY)||'0',10)||0;}catch(e){return 0;}}
-  function addMallCoins(n){n=n|0;if(!n)return;try{LS.setItem(MALL_COINS_KEY,String(getCoins()+n));}catch(e){}refreshMallCoinUI();}
-  function spendMallCoins(n){n=n|0;if(getCoins()<n)return false;try{LS.setItem(MALL_COINS_KEY,String(getCoins()-n));}catch(e){}refreshMallCoinUI();return true;}
-  function loadMallReal(){try{var r=LS.getItem(MALL_REAL_KEY);if(r)return JSON.parse(r);}catch(e){}return [{id:'r_tv',name:'看电视 30 分钟',cost:200,emoji:'📺'},{id:'r_gift',name:'买心仪小礼物',cost:500,emoji:'🎁'},{id:'r_park',name:'去公园玩',cost:150,emoji:'🌳'},{id:'r_game',name:'多玩 10 分钟游戏',cost:120,emoji:'🎮'},{id:'r_book',name:'选一本喜欢的绘本',cost:300,emoji:'📚'}];}
+  /* ⛔ 2026-09-15 金币归一：把三套并行货币的存量一次性并入星星币。
+     - mp_mall_coins_v1  兑换金币（原与星星 1:1 重复记账）
+     - gacha_coins       硬币（原为扭蛋库存的影子，重复）
+     - logic_coin_v1     逻辑币（纯攒无出口的死币）
+     原则：**三个余额直接相加、只加不减、搬完删旧 key**；标记位保证只跑一次，避免重复累加。
+     注：这三个 key 在"清空学习数据"。#clearKeys 里都有登记（替换成新 key 名即可一起清）。 */
+  const COIN_MERGE_FLAG='mp_coin_merged_v1';
+  function mergeLegacyCoins(){
+    try{
+      if(LS.getItem(COIN_MERGE_FLAG)==='1')return;
+      var add=0, got=[];
+      [[MALL_COINS_KEY,'兑换金币'],[GACHA_KEYS.c,'硬币'],['logic_coin_v1','逻辑币']].forEach(function(p){
+        var v=parseInt(LS.getItem(p[0])||'0',10)||0;
+        if(v>0){add+=v;got.push(p[1]+' '+v);}
+        try{LS.removeItem(p[0]);}catch(e){}
+      });
+      if(add>0){ gachaPoints+=add; gachaSet(GACHA_KEYS.p,gachaPoints); }
+      LS.setItem(COIN_MERGE_FLAG,'1');
+      if(add>0){
+        try{ LS.removeItem(GACHA_KEYS.c); }catch(e){}
+        try{ _lpCoinSave(); }catch(e){}
+        try{ console.log('[金币归一] 并入星星币 +'+add+'（'+got.join('、')+'）'); }catch(e){}
+      }
+    }catch(e){}
+  }
+  /* ⛔ 2026-09-15 金币归一：兑换中心的"金币"不再独立存储，改为星星币的透传视图。
+     旧余额在首次读取时**一次性并入星星币（只加不减）并删旧 key**，故原 getCoins/addMallCoins/
+     spendMallCoins 三个函数体全部指向 gachaPoints —— 兑换中心/心愿罐/扭蛋的花费入口无需逐个改。 */
+  function getCoins(){ mergeLegacyCoins(); return gachaPoints; }
+  function addMallCoins(n){n=n|0;if(!n)return;gachaPoints+=n;gachaSet(GACHA_KEYS.p,gachaPoints);try{refreshPointsUI();}catch(e){}}
+  function spendMallCoins(n){n=n|0;if(n<=0)return true;if(gachaPoints<n)return false;gachaPoints-=n;gachaSet(GACHA_KEYS.p,gachaPoints);try{refreshPointsUI();}catch(e){}return true;}
+  /* ⛔ 2026-09-15 商店合并·第1批：现实奖励**已并为一份清单**（权威 = BANK_REWARDS）。
+     本函数不再是"第二份清单"，而是 BANK_REWARDS 的视图：
+       · 若家长在 mp_mall_real_v1 里改过（改名/改价/增删），以覆盖层为准 —— 不丢家长数据
+       · 未改过的条目一律走 BANK_REWARDS 的三档定价（铜50 / 银250 / 金500）
+     旧 key 的 5 条默认值（电视200/礼物500/公园150/游戏120/绘本300）不再作为默认值使用。 */
+  function loadMallReal(){
+    var ov={};
+    try{var r=LS.getItem(MALL_REAL_KEY);if(r){var a=JSON.parse(r);if(Array.isArray(a))a.forEach(function(x){if(x&&x.id)ov[x.id]=x;});}}catch(e){}
+    var out=[];
+    BANK_REWARDS.forEach(function(b){
+      var o=ov[b.id];
+      if(o&&o.del)return;                     /* 家长删掉的条目 → 墓碑，不再出现 */
+      out.push({id:b.id,ic:b.ic,emoji:b.ic,name:(o&&o.name)||b.name,cost:(o&&typeof o.cost==='number')?o.cost:b.cost,tier:(o&&o.tier)||b.tier,note:b.note});
+    });
+    /* 家长自己新增的条目（id 不在 BANK_REWARDS 里）追加在后面 */
+    Object.keys(ov).forEach(function(k){
+      var o=ov[k];if(!o||o.del)return;
+      if(BANK_REWARDS.filter(function(b){return b.id===k;}).length)return;
+      out.push({id:o.id,ic:o.emoji||'🎁',emoji:o.emoji||'🎁',name:o.name||'自定义奖励',cost:(typeof o.cost==='number')?o.cost:250,tier:o.tier||'silver',note:'自定义'});
+    });
+    return out;
+  }
   function saveMallReal(a){try{LS.setItem(MALL_REAL_KEY,JSON.stringify(a));}catch(e){}}
   function loadCoupons(){try{var r=LS.getItem(MALL_COUPON_KEY);if(r)return JSON.parse(r);}catch(e){}return [];}
   function saveCoupons(a){try{LS.setItem(MALL_COUPON_KEY,JSON.stringify(a));}catch(e){}}
-  function loadWish(){try{var r=LS.getItem(MALL_WISH_KEY);if(r)return JSON.parse(r);}catch(e){}return [];}
-  function saveWish(a){try{LS.setItem(MALL_WISH_KEY,JSON.stringify(a));}catch(e){}}
+  function loadWish(){try{var r=LS.getItem(MALL_WISH_KEY);if(r)return JSON.parse(r);}catch(e){}return [];}  function saveWish(a){try{LS.setItem(MALL_WISH_KEY,JSON.stringify(a));}catch(e){}}
   function mallPetItems(){return DRESS_ITEMS.map(function(it){var cost=it.slot==='head'?80:it.slot==='face'?70:60;return {id:it.id,name:it.name,emoji:it.emoji,slot:it.slot,cost:cost};});}
+  /* ⛔ 2026-09-15 商店合并·第1批：**心愿查找的全集**。
+     原 bug：renderMall 里 all = 装扮 + 现实奖励，查不到 WISH_SHOP / MONSTER_SHOP 的商品
+     → 在魔法商店给「彩虹糖」加了心愿，回兑换中心永远显示「还差 15」换不了（成本算 0）。
+     现把四处商品源都并入，心愿罐里任何东西都能正确算出进度。 */
+  function mallAllItems(){
+    var out=mallPetItems().concat(loadMallReal());
+    try{ WISH_SHOP.forEach(function(it){out.push({id:it.id,name:it.name,emoji:it.emoji,cost:it.cost,src:'wish'});}); }catch(e){}
+    try{ MONSTER_SHOP.forEach(function(it){out.push({id:it.id,name:it.name,emoji:it.emoji,cost:it.cost,src:'monster'});}); }catch(e){}
+    try{ PET_SUPPLY.forEach(function(it){out.push({id:it.id,name:it.name,emoji:it.emoji,cost:it.cost,src:'supply'});}); }catch(e){}
+    /* ⛔ 2026-09-15 小镇货架：叠加家长补丁（改价 / 改名 / 下架）+ 自定义新增项，
+       否则心愿罐进度会按旧价算，出现「明明够钱却显示还差 N」。 */
+    try{
+      var patch={};loadGoodsPatch().forEach(function(x){if(x&&x.id)patch[x.id]=x;});
+      var out2=[];
+      out.forEach(function(it){var p=patch[it.id];if(p&&p.del)return;if(p){if(p.name!==undefined)it.name=p.name;if(p.emoji!==undefined)it.emoji=p.emoji;if(p.cost!==undefined)it.cost=p.cost;}out2.push(it);});
+      loadGoodsPatch().forEach(function(x){if(x.add&&!x.del)out2.push({id:x.id,name:x.name,emoji:x.emoji,cost:x.cost,src:x.src||'supply'});});
+      return out2;
+    }catch(e){return out;}
+  }
+  /* 近 7 天日均收入（用于心愿罐「约 N 天」）。取 ledger 里 type==='star' 的最近 7 天总额 / 7。 */
+  function mallAvgStarPerDay(){
+    try{
+      var led=(STATS&&STATS.ledger)||[],cut=new Date();cut.setDate(cut.getDate()-6);
+      var sum=0;
+      led.forEach(function(x){
+        if(x.type!=='star')return;
+        var p=String(x.date||'').split('-');if(p.length<3)return;
+        var dt=new Date(+p[0],+p[1]-1,+p[2]);
+        if(dt>=new Date(cut.getFullYear(),cut.getMonth(),cut.getDate()))sum+=(x.amount||0);
+      });
+      var avg=sum/7;
+      return avg>0?avg:0;   /* 0 = 数据不足，调用处回落到标准值 */
+    }catch(e){return 0;}
+  }
+  var MALL_AVG_FALLBACK=19;   /* 设计定稿的日均标准值，近 7 天无数据时用 */
+  /* ⛔ 2026-09-15 商店合并·第1批：财商第 1 层「看得见钱的来路」。
+     把近 7 天赚到的星星币按来源归成 4 类（学习 / 打卡 / 阅读 / 玩乐），
+     让孩子知道「做哪些事能赚钱」，而不是只看到一个总数。
+     source 取值来自全站 14 个 addEarn 调用点（见 mallEarnKind 映射）。 */
+  function mallEarnKind(x){
+    var s=String((x&&x.source)||''),n=String((x&&x.note)||'');
+    /* homework 同时承载「阅读打卡」和「完成作业」，靠 note 前缀拆分 */
+    if(/阅读/.test(n))return 'read';
+    if(s==='homework'||s==='logic'||s==='timer'||s.indexOf('题库闯关')===0)return 'study';
+    if(s==='checkin'||s==='routine'||s==='plan')return 'checkin';
+    if(s==='play'||s==='gacha'||s==='chest'||s.indexOf('game:')===0)return 'play';
+    return 'study';
+  }
+  var MALL_KIND_META={
+    study:{ic:'📚',name:'学习',cls:'k-study'},
+    checkin:{ic:'🏃',name:'打卡',cls:'k-checkin'},
+    read:{ic:'📖',name:'阅读',cls:'k-read'},
+    play:{ic:'🎮',name:'玩乐',cls:'k-play'}
+  };
+  function mallWeekBreakdown(){
+    var acc={study:0,checkin:0,read:0,play:0},total=0;
+    try{
+      var led=(STATS&&STATS.ledger)||[],cut=new Date();cut.setDate(cut.getDate()-6);
+      var from=new Date(cut.getFullYear(),cut.getMonth(),cut.getDate());
+      led.forEach(function(x){
+        if(x.type!=='star')return;
+        var p=String(x.date||'').split('-');if(p.length<3)return;
+        var dt=new Date(+p[0],+p[1]-1,+p[2]);
+        if(dt<from)return;
+        var k=mallEarnKind(x),a=x.amount||0;
+        acc[k]=(acc[k]||0)+a;total+=a;
+      });
+    }catch(e){}
+    return {acc:acc,total:total};
+  }
+  function renderMallLedger(){
+    var box=document.getElementById('mallLedger');if(!box)return;
+    var r=mallWeekBreakdown(),total=r.total;
+    var head='<div class="ml-h"><span class="ml-t">📖 这周赚了多少</span>'
+      +'<span class="ml-s">做这些事能赚星星币</span></div>';
+    if(!total){
+      box.innerHTML=head+'<div class="ml-empty">这周还没有记录～去完成打卡 / 作业 / 阅读，赚到的星星币会记在这里</div>';
+      return;
+    }
+    var order=['study','checkin','read','play'];
+    var rows=order.filter(function(k){return r.acc[k]>0;}).map(function(k){
+      var m=MALL_KIND_META[k],v=r.acc[k],pct=Math.round(v/total*100);
+      return '<div class="ml-row '+m.cls+'">'
+        +'<span class="ml-ic">'+m.ic+'</span>'
+        +'<span class="ml-n">'+m.name+'</span>'
+        +'<span class="ml-v">+'+v+'</span>'
+        +'<span class="ml-bar"><i style="width:'+pct+'%"></i></span></div>';
+    }).join('');
+    var tip=total>=100?'攒得真稳，再坚持几天就能换大愿望啦！':(total>=40?'不错哦，已经攒下一小笔了～':'刚开始，每天做一点点就好～');
+    box.innerHTML=head+'<div class="ml-rows">'+rows+'</div>'
+      +'<div class="ml-foot"><span class="ml-sum">合计 <b>'+total+'</b> 枚</span><span class="ml-tip">'+tip+'</span></div>';
+  }
   function mallOwned(id){var b=loadBag();return !!(b.dress&&b.dress[id]);}
   function mallWishHas(id){return loadWish().indexOf(id)>=0;}
   function mallDelWish(id){var w=loadWish(),i=w.indexOf(id);if(i>=0){w.splice(i,1);saveWish(w);}}
@@ -15473,26 +16066,313 @@ LOGIC_LEVELS.forEach(function(L){
     var coins=getCoins();
     var tc=document.getElementById('mallTopCoin'); if(tc)tc.textContent=coins;
     var cb=document.getElementById('mallCoinBig'); if(cb)cb.textContent=coins;
+    /* ⛔ 2026-09-15 商店合并·第1批：钱包条升级 —— 除了余额，再告诉孩子
+       「最近 7 天赚了多少 / 平均每天多少」，让攒钱有节奏感（财商第 1 层）。 */
+    var avg=mallAvgStarPerDay(),useAvg=avg>0?avg:MALL_AVG_FALLBACK;
+    var wkSum=Math.round(useAvg*7);
+    var mr=document.getElementById('mallAvgHint');
+    if(mr){ mr.innerHTML='最近 7 天赚了 <b>'+wkSum+'</b> 枚 · 平均每天 <b>'+Math.round(useAvg)+'</b> 枚'; }
     var wbox=document.getElementById('mallWish');
     if(wbox){
       var wish=loadWish();
       if(!wish.length){ wbox.innerHTML='<span class="mall-wish-t" style="font-size:13px;color:#9a7b3a;font-weight:700">还没选心愿～点商品上的「♡ 心愿」攒钱换它吧</span>'; }
       else {
-        var all=mallPetItems().concat(loadMallReal());
-        wbox.innerHTML=wish.map(function(id){var it=all.filter(function(x){return x.id===id;})[0];if(!it)return '';var need=it.cost,pct=Math.min(100,Math.round(coins/need*100)),left=Math.max(0,need-coins);
-          return '<div class="mall-wish"><span class="mw-em">'+(it.emoji||'🎁')+'</span><span class="mw-n">'+esc(it.name)+'</span><span class="mw-bar"><i style="width:'+pct+'%"></i></span><span class="mw-left">'+(left>0?('还差 '+left):'可兑换!')+'</span><span class="mw-x" onclick="mallCancelWish(\''+id+'\')">✕</span></div>';
+        var all=mallAllItems();
+        wbox.innerHTML=wish.map(function(id){var it=all.filter(function(x){return x.id===id;})[0];if(!it)return '';
+          var need=it.cost||1,pct=Math.min(100,Math.round(coins/need*100)),left=Math.max(0,need-coins);
+          /* 「约 N 天」用近 7 天滚动平均推算；已攒够则不显示天数 */
+          var days=left>0?Math.max(1,Math.ceil(left/useAvg)):0;
+          var tail=left>0?('还差 '+left+' 枚 · 约 '+days+' 天'):'可以换啦!';
+          return '<div class="mall-wish"><span class="mw-em">'+(it.emoji||'🎁')+'</span><span class="mw-n">'+esc(it.name)+'</span><span class="mw-bar"><i style="width:'+pct+'%"></i></span><span class="mw-left">'+tail+'</span><span class="mw-x" onclick="mallCancelWish(\''+id+'\')">✕</span></div>';
         }).join('');
       }
     }
-    renderMallTab();
+    renderMallLedger();
   }
+  /* ⛔ 2026-09-15 萌宠小镇：3 个子屏（小镇超市 / 小镇衣橱 / 星星邮局）的渲染与购买 + 家长「小镇货架」补丁层 */
+  function refreshSubCoin(){
+    var c=getCoins();
+    ['mSupCoinN','mSupCoinBig','mDressCoinN','mDressCoinBig','mWishCoinN','mWishCoinBig'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=c;});
+  }
+  /* ⛔ 2026-09-15 小镇货架：家长「商品补丁层」——与「真实奖励」同一套做法，
+     **绝不改写写死的数组**，只在读的时候叠加。一条记录 =
+     {id,name?,emoji?,cost?,desc?,del?,add?,src?,kind?,gain?}（del:true = 墓碑） */
+  var MALL_GOODS_KEY='mp_mall_goods_v1';
+  function loadGoodsPatch(){try{var r=LS.getItem(MALL_GOODS_KEY);if(r){var x=JSON.parse(r);if(Array.isArray(x))return x;}}catch(e){}return [];}
+  function saveGoodsPatch(a){try{LS.setItem(MALL_GOODS_KEY,JSON.stringify(a));}catch(e){}}
+  function mallGoodsPatch(id,patch){
+    var a=loadGoodsPatch(),hit=null;
+    a.forEach(function(x){if(x&&x.id===id)hit=x;});
+    if(!hit){hit={id:id};a.push(hit);}
+    Object.keys(patch).forEach(function(k){hit[k]=patch[k];});
+    saveGoodsPatch(a);
+  }
+  function mallGoodsEntry(id){var e=null;loadGoodsPatch().forEach(function(x){if(x&&x.id===id)e=x;});return e;}
+  /* 把补丁叠到基准清单：改写命中项 → 墓碑过滤 → 追加自定义新增项（按 src 分组） */
+  function mallApplyGoods(list,srcs){
+    var patch={};loadGoodsPatch().forEach(function(x){if(x&&x.id)patch[x.id]=x;});
+    var out=[];
+    list.forEach(function(it){
+      var p=patch[it.id]; if(p&&p.del)return;
+      if(p){['name','emoji','cost','desc'].forEach(function(k){if(p[k]!==undefined)it[k]=p[k];});}
+      out.push(it);
+    });
+    loadGoodsPatch().forEach(function(x){ if(x.add&&!x.del&&srcs.indexOf(x.src)>=0)out.push(x); });
+    return out;
+  }
+  function mallKindLab(kind,gain){
+    if(kind==='kibble')return '口粮 +'+(gain||0);
+    if(kind==='bath')return '清洁 +'+(gain||0);
+    if(kind==='medical')return '唤醒晕倒的小萌';
+    return '日用 / 兑换';
+  }
+  /* 超市基准清单 = PET_SUPPLY 12 + WISH_SHOP(带 kind) 2 + STORE_ITEMS 4 = 18 条 */
+  function mallSupplyBase(){
+    var sup=PET_SUPPLY.concat(WISH_SHOP.filter(function(x){return x.kind;})).map(function(it){
+      return {id:it.id,name:it.name,emoji:it.emoji,cost:it.cost,desc:it.desc||mallKindLab(it.kind,it.gain),kind:it.kind,gain:it.gain||0,src:'supply'};
+    });
+    var base=STORE_ITEMS.map(function(it){
+      return {id:it.id,name:it.name,emoji:it.emoji,cost:it.cost,desc:(it.desc||''),kind:'daily',gain:0,src:'base'};
+    });
+    return sup.concat(base);
+  }
+  function mallSupplyItems(){return mallApplyGoods(mallSupplyBase(),['supply','base']);}
+  /* ⛔ 2026-09-15 小镇货架：家长端编辑器 —— 只写补丁层，绝不改写死数组；
+     超市可增删改（含自定义新增），衣橱只能改名 / 改价 / 下架（新增装扮需配套形象素材）。 */
+  var mallGoodsTabCur='supply', GOODS_KIND_LAB={kibble:'口粮',bath:'洗护',medical:'医疗',daily:'日用'};
+  function mallGoodsTab(t,btn){
+    mallGoodsTabCur=t;
+    /* 补货面板打开时优先写面板里的容器（两个容器可能同时存在，活跃的是面板） */
+    var box=document.getElementById('mallGoodsTabsPop')||document.getElementById('mallGoodsTabs');
+    if(box)box.querySelectorAll('button').forEach(function(b){b.classList.toggle('sel',b.getAttribute('data-t')===t);});
+    renderMallGoodsEditor();
+  }
+  function mallGoodsKindLabel(it){
+    if(it.src==='pet'||it.src==='mon')return '装扮';
+    if(it.src==='base')return '兑换';
+    return GOODS_KIND_LAB[it.kind]||'日用';
+  }
+  function mallGoodsRow(it){
+    var off=!!it.__del;
+    var kindCell;
+    if(it.add){
+      kindCell='<select class="gd-kind" onchange="mallGoodsSetKind(\''+it.id+'\',this.value)">'+
+        ['kibble','bath','medical','daily'].map(function(k){return '<option value="'+k+'"'+(it.kind===k?' selected':'')+'>'+GOODS_KIND_LAB[k]+'</option>';}).join('')+'</select>';
+    }else{
+      kindCell='<span class="gd-kind">'+mallGoodsKindLabel(it)+'</span>';
+    }
+    var gainCell=(it.add&&(it.kind==='kibble'||it.kind==='bath'))
+      ? '<input class="gd-gain" type="number" min="1" title="效果数值（口粮 / 清洁 +N）" value="'+(it.gain||20)+'" onchange="mallGoodsSetGain(\''+it.id+'\',this.value)">'
+      : '';
+    return '<div class="gds-row'+(off?' gd-off':'')+'">'+
+      '<input class="gd-em" value="'+esc(it.emoji||'')+'" onchange="mallGoodsEmoji(\''+it.id+'\',this.value)">'+
+      '<input class="gd-name" value="'+esc(it.name||'')+'" onchange="mallGoodsRename(\''+it.id+'\',this.value)">'+
+      kindCell+gainCell+
+      '<input class="gd-cost" type="number" min="0" title="价格（星星币）" value="'+(it.cost|0)+'" onchange="mallGoodsCost(\''+it.id+'\',this.value)">'+
+      '<span class="gd-unit">星币</span>'+
+      (off?'<span class="gd-back" onclick="mallGoodsRestore(\''+it.id+'\')">↺ 恢复</span>'
+          :'<span class="gd-x" title="下架" onclick="mallGoodsDel(\''+it.id+'\')">✕</span>')+
+      '</div>';
+  }
+  function renderMallGoodsEditor(){
+    var box=document.getElementById('mallGoodsListPop')||document.getElementById('mallGoodsList'); if(!box)return;
+    var isDress=(mallGoodsTabCur==='dress');
+    var base=isDress?mallDressBase():mallSupplyBase();
+    var patch={};loadGoodsPatch().forEach(function(x){if(x&&x.id)patch[x.id]=x;});
+    var rows=[];
+    base.forEach(function(it){
+      var p=patch[it.id], o={};
+      Object.keys(it).forEach(function(k){o[k]=it[k];});
+      if(p){['name','emoji','cost'].forEach(function(k){if(p[k]!==undefined)o[k]=p[k];});o.__del=!!p.del;}
+      rows.push(mallGoodsRow(o));
+    });
+    if(!isDress){
+      loadGoodsPatch().forEach(function(x){ if(x.add&&!x.del){var o={};Object.keys(x).forEach(function(k){o[k]=x[k];});o.__del=false;rows.push(mallGoodsRow(o));} });
+    }
+    box.innerHTML='<div class="pc-hint" style="margin:0 0 6px">共 <b>'+rows.length+'</b> 条'+(isDress?'（装扮只能改名 / 改价 / 下架）':'（含你新增的商品）')+'，改完立刻生效。点「✕」= 从货架下架，不删数据。</div>'
+      +'<div class="gds-grid">'+rows.join('')+'</div>'
+      +(isDress?'':'<div class="gds-add" onclick="mallGoodsAdd()">＋ 新增一件超市商品</div>');
+  }
+  function mallGoodsRename(id,v){mallGoodsPatch(id,{name:String(v||'').slice(0,12)});}
+  function mallGoodsEmoji(id,v){mallGoodsPatch(id,{emoji:String(v||'').slice(0,4)});}
+  function mallGoodsCost(id,v){mallGoodsPatch(id,{cost:Math.max(0,parseInt(v,10)||0)});}
+  function mallGoodsSetKind(id,k){
+    var gain=(k==='kibble'||k==='bath')?((mallGoodsEntry(id)||{}).gain||20):0;
+    mallGoodsPatch(id,{kind:k,gain:gain,desc:mallKindLab(k,gain)});
+    renderMallGoodsEditor();
+  }
+  function mallGoodsSetGain(id,v){
+    var g=Math.max(1,parseInt(v,10)||1);
+    var k=(mallGoodsEntry(id)||{}).kind;
+    mallGoodsPatch(id,{gain:g,desc:mallKindLab(k,g)});
+  }
+  function mallGoodsDel(id){mallGoodsPatch(id,{del:true});renderMallGoodsEditor();}
+  function mallGoodsRestore(id){mallGoodsPatch(id,{del:false});renderMallGoodsEditor();}
+  function mallGoodsAdd(){
+    var id='g_'+Date.now();
+    mallGoodsPatch(id,{add:true,src:'supply',kind:'daily',gain:0,name:'新商品',emoji:'🧺',cost:10,desc:mallKindLab('daily',0)});
+    renderMallGoodsEditor();
+  }
+  function mallGoodsReset(){
+    try{ if(!confirm('恢复默认货架？你改过的名称 / 价格 / 新增 / 下架都会清掉。'))return; }catch(e){}
+    try{LS.removeItem(MALL_GOODS_KEY);}catch(e){}
+    renderMallGoodsEditor();
+    try{toast('已恢复默认货架');}catch(e){}
+  }
+  /* ⛔ 2026-09-15 小镇超市顶栏「🛒 补货」：家长不用绕去家长端，就地开货架面板。
+     仍走同一套 4 位密码（pressPin 里读 __pinNext 判断开面板还是进家长端）。 */
+  function mallRestock(){ window.__pinNext='mallGoods'; try{ go('parent'); }catch(e){} }
+  function showMallStock(){
+    var host=document.querySelector('.device')||document.body;
+    var m=document.getElementById('mallStockMask');
+    if(!m){
+      m=document.createElement('div'); m.id='mallStockMask'; m.className='stock-mask';
+      m.innerHTML='<div class="stock-box">'
+        +'<div class="stock-head"><span class="st-t">🛒 小镇超市 · 补货上架</span>'
+        +'<span class="st-sub">改名 / 改价 / 下架 / 新增，改完孩子端立刻生效</span>'
+        +'<span class="st-x" onclick="closeMallStock()">✕</span></div>'
+        +'<div class="gds-tabs" id="mallGoodsTabsPop">'
+        +'<button class="sel" data-t="supply" onclick="mallGoodsTab(\'supply\',this)">🛒 超市货架</button>'
+        +'<button data-t="dress" onclick="mallGoodsTab(\'dress\',this)">👗 衣橱</button></div>'
+        +'<div class="stock-body"><div id="mallGoodsListPop"></div></div>'
+        +'<div class="stock-foot"><span class="st-reset" onclick="mallGoodsReset()">↺ 恢复默认</span>'
+        +'<button class="st-done" onclick="closeMallStock()">完成</button></div></div>';
+      host.appendChild(m);
+    }
+    m.classList.add('on');
+    renderMallGoodsEditor();
+  }
+  function closeMallStock(){
+    var m=document.getElementById('mallStockMask'); if(m)m.classList.remove('on');
+    try{ renderMallSupply(); }catch(e){}
+    try{ renderMallDress(); }catch(e){}
+  }
+  try{ window.mallRestock=mallRestock; window.showMallStock=showMallStock; window.closeMallStock=closeMallStock; }catch(e){}
+  /* ⛔ 2026-09-15 尺寸统一：小镇超市 3×3 固定 240 卡片 + 超出翻页、无滚动 */
+  var supplyPage=0, SUPPLY_PER=9, SUPPLY_BAG_CAP=5;
+  function renderMallSupply(){
+    refreshSubCoin();
+    var grid=document.getElementById('supplyGrid'); if(grid){
+      var items=mallSupplyItems();
+      var total=Math.max(1,Math.ceil(items.length/SUPPLY_PER));
+      if(supplyPage<0)supplyPage=0; if(supplyPage>=total)supplyPage=total-1;
+      grid.innerHTML=items.slice(supplyPage*SUPPLY_PER,(supplyPage+1)*SUPPLY_PER).map(function(it){
+        var can=getCoins()>=it.cost, act=(it.src==='base')?'兑换':'购买';
+        return '<div class="msub-item"><div class="mi-em">'+(it.emoji||'🍖')+'</div><div class="mi-n">'+esc(it.name)+'</div><div class="mi-d">'+esc(it.desc||'')+'</div><div class="mi-c">'+it.cost+' 星星币</div><div class="mi-btn'+(can?'':' dis')+'" onclick="buyMallSupply(\''+it.id+'\')">'+act+'</div></div>';
+      }).join('');
+      var pg=document.getElementById('supplyPager');
+      if(pg){
+        if(total<=1){pg.innerHTML='';pg.style.display='none';}
+        else{
+          pg.style.display='';
+          pg.innerHTML='<button class="bk-pg-btn" '+(supplyPage<=0?'disabled':'onclick="supplyPageGo(-1)"')+'>‹ 上一页</button>'+
+            '<span class="bk-pg-info">第 '+(supplyPage+1)+' / '+total+' 页</span>'+
+            '<button class="bk-pg-btn" '+(supplyPage>=total-1?'disabled':'onclick="supplyPageGo(1)"')+'>下一页 ›</button>';
+        }
+      }
+    }
+    var bag=document.getElementById('supplyBag'); if(bag){
+      var b=loadBag(); var rows=[];
+      ['food','bath','dress'].forEach(function(kind){var o=b[kind]||{};Object.keys(o).forEach(function(id){var raw=findShopItem(id)||mallGoodsEntry(id);if(!raw)return;var p=mallGoodsEntry(id)||{};var em=(p.emoji!==undefined?p.emoji:raw.emoji)||'🎁';var nm=(p.name!==undefined?p.name:raw.name)||'商品';var qty=(kind==='dress')?'':' ×'+o[id];rows.push('<span class="bag-row"><span class="bi">'+em+'</span><span class="bn">'+esc(nm)+qty+'</span></span>');});});
+      if(b.medical>0)rows.push('<span class="bag-row"><span class="bi">💊</span><span class="bn">医疗包 ×'+b.medical+'</span></span>');
+      var more=Math.max(0,rows.length-SUPPLY_BAG_CAP), shown=rows.slice(0,SUPPLY_BAG_CAP).join('');
+      if(more>0)shown+='<span class="bag-row"><span class="bn">＋'+more+'</span></span>';
+      bag.innerHTML=rows.length?('<div class="bag-grid">'+shown+'</div>'):'<span class="bag-empty">背包还空着～</span>';
+    }
+  }
+  function supplyPageGo(d){supplyPage+=d;renderMallSupply();}
+  function buyMallSupply(id){
+    var it=null; mallSupplyItems().forEach(function(x){if(x.id===id)it=x;});
+    if(!it)return;
+    if(!spendMallCoins(it.cost)){try{toast('星星币不够，再攒攒～');}catch(e){}return;}
+    var g=it.gain||0;
+    if(it.kind==='kibble'){addKibble(g);try{toast('已购买：'+it.name+'（口粮 +'+g+'）');}catch(e){}}
+    else if(it.kind==='bath'){var b=loadBag();b.bath=b.bath||{};b.bath[it.id]=(b.bath[it.id]||0)+1;saveBag(b);try{toast('已购买：'+it.name+'（背包 +1）');}catch(e){}}
+    else if(it.kind==='medical'){var b2=loadBag();b2.medical=(b2.medical||0)+1;saveBag(b2);try{toast('已购买：'+it.name+'（背包 +1）');}catch(e){}}
+    else {try{toast('已兑换：'+it.name);}catch(e){}}
+    refreshSubCoin();refreshMallCoinUI();renderMallSupply();renderPetVitals();
+  }
+  var dressPage=0, DRESS_PER=9;
+  /* ⛔ 2026-09-15 尺寸统一 + 小镇货架：衣橱清单同样叠补丁层（家长可改名 / 改价 / 下架） */
+  function mallDressBase(){
+    var pet=mallPetItems().map(function(it){return {id:it.id,name:it.name,emoji:it.emoji,cost:it.cost,src:'pet'};});
+    var mon=MONSTER_SHOP.map(function(it){return {id:it.id,name:it.name,emoji:it.emoji,cost:it.cost,src:'mon'};});
+    return pet.concat(mon);
+  }
+  function mallDressItems(){
+    var list=mallApplyGoods(mallDressBase(),[]);
+    list.forEach(function(it){it.owned=mallOwned(it.id);});
+    return list;
+  }
+  function renderMallDress(){
+    refreshSubCoin();
+    var grid=document.getElementById('dressGrid'); if(grid){
+      var items=mallDressItems(), PER=DRESS_PER;
+      var total=Math.max(1,Math.ceil(items.length/PER));
+      if(dressPage<0)dressPage=0; if(dressPage>=total)dressPage=total-1;
+      grid.innerHTML=items.slice(dressPage*PER,(dressPage+1)*PER).map(function(it){
+        var can=getCoins()>=it.cost, wish=mallWishHas(it.id);
+        return '<div class="msub-item'+(it.owned?' owned':'')+'"><div class="mi-em">'+(it.emoji||'🎀')+'</div><div class="mi-n">'+esc(it.name)+'</div><div class="mi-c">'+it.cost+' 星星币</div>'+
+          (it.owned?'<div class="mi-btn done">已拥有</div>':'<div class="mi-btn'+(can?'':' dis')+'" onclick="buyMallDress(\''+it.id+'\',\''+it.src+'\')">兑换</div>')+
+          '<div class="mi-wish'+(wish?' on':'')+'" onclick="mallToggleWish(\''+it.id+'\')">'+(wish?'❤ 心愿':'♡ 心愿')+'</div></div>';
+      }).join('');
+      var pg=document.getElementById('dressPager');
+      if(pg){
+        if(total<=1){pg.innerHTML='';pg.style.display='none';}
+        else{
+          pg.style.display='';
+          pg.innerHTML='<button class="bk-pg-btn" '+(dressPage<=0?'disabled':'onclick="dressPageGo(-1)"')+'>‹ 上一页</button>'+
+            '<span class="bk-pg-info">第 '+(dressPage+1)+' / '+total+' 页</span>'+
+            '<button class="bk-pg-btn" '+(dressPage>=total-1?'disabled':'onclick="dressPageGo(1)"')+'>下一页 ›</button>';
+        }
+      }
+    }
+  }
+  function dressPageGo(d){dressPage+=d;renderMallDress();}
+  function buyMallDress(id,src){
+    var it=null; mallDressItems().forEach(function(x){if(x.id===id)it=x;});
+    if(!it)return;
+    if(mallOwned(id)){try{toast('已经拥有啦～去换装穿上');}catch(e){}return;}
+    if(!spendMallCoins(it.cost)){try{toast('星星币不够，再攒攒～');}catch(e){}return;}
+    var b=loadBag();b.dress=b.dress||{};b.dress[id]=true;saveBag(b);mallDelWish(id);refreshSubCoin();refreshMallCoinUI();renderMallDress();try{toast('🎉 兑换成功：'+it.name+'！');}catch(e){}
+  }
+  /* ⛔ 2026-09-15 星星邮局翻页（每页 9 条固定，超出进下一页，整卡不滚动） */
+  var wishPage=0;
+  function renderMallWish(){
+    refreshSubCoin();
+    var grid=document.getElementById('wishGrid'); if(!grid)return;
+    var items=loadMallReal(), PER=9;
+    var total=Math.max(1,Math.ceil(items.length/PER));
+    if(wishPage<0)wishPage=0; if(wishPage>=total)wishPage=total-1;
+    var TIER_LAB={bronze:'🥉 小小心意',silver:'🥈 陪伴时光',gold:'🥇 大承诺'};
+    var slice=items.slice(wishPage*PER,(wishPage+1)*PER);
+    grid.innerHTML=slice.map(function(it){
+      var can=getCoins()>=it.cost, wish=mallWishHas(it.id);
+      return '<div class="msub-item"><div class="mi-em">'+(it.emoji||'🎁')+'</div><div class="mi-n">'+esc(it.name)+'</div>'+
+        '<div class="mi-tier t-'+(it.tier||'silver')+'">'+(TIER_LAB[it.tier]||'🥈 陪伴时光')+'</div>'+
+        '<div class="mi-c">'+it.cost+' 星星币</div>'+
+        '<div class="mi-btn'+(can?'':' dis')+'" onclick="redeemRealItem(\''+it.id+'\')">兑换券</div>'+
+        '<div class="mi-wish'+(wish?' on':'')+'" onclick="mallToggleWish(\''+it.id+'\')">'+(wish?'❤ 心愿':'♡ 心愿')+'</div></div>';
+    }).join('');
+    var pg=document.getElementById('wishPager');
+    if(pg){
+      if(total<=1){pg.innerHTML='';pg.style.display='none';}   /* 不满一页：不显示翻页（超出才翻页） */
+      else{
+        pg.style.display='';
+        pg.innerHTML='<button class="bk-pg-btn" '+(wishPage<=0?'disabled':'onclick="wishPageGo(-1)"')+'>‹ 上一页</button>'+
+          '<span class="bk-pg-info">第 '+(wishPage+1)+' / '+total+' 页</span>'+
+          '<button class="bk-pg-btn" '+(wishPage>=total-1?'disabled':'onclick="wishPageGo(1)"')+'>下一页 ›</button>';
+      }
+    }
+  }
+  function wishPageGo(d){wishPage+=d;renderMallWish();}
   function renderMallTab(){
     var tab=mallTab, grid=document.getElementById('mallGrid'); if(!grid)return;
     if(tab==='supply'){
       grid.innerHTML=PET_SUPPLY.map(function(it){
         var can=getCoins()>=it.cost;
         var lab=it.kind==='kibble'?('口粮 +'+it.gain):(it.kind==='bath'?('清洁 +'+it.gain):'唤醒晕倒');
-        return '<div class="mall-item"><div class="mi-em">'+(it.emoji||'🍖')+'</div><div class="mi-n">'+esc(it.name)+'</div><div class="mi-c">'+it.cost+' 金币 · '+lab+'</div>'+
+        return '<div class="mall-item"><div class="mi-em">'+(it.emoji||'🍖')+'</div><div class="mi-n">'+esc(it.name)+'</div><div class="mi-c">'+it.cost+' 星星币 · '+lab+'</div>'+
           '<div class="mi-btn'+(can?'':' dis')+'" onclick="buyPetSupply(\''+it.id+'\')">购买</div></div>';
       }).join('');
       var cp=document.getElementById('mallCoupons');if(cp)cp.style.display='none';
@@ -15501,14 +16381,18 @@ LOGIC_LEVELS.forEach(function(L){
     if(tab==='pet'){
       grid.innerHTML=mallPetItems().map(function(it){
         var owned=mallOwned(it.id), wish=mallWishHas(it.id), can=getCoins()>=it.cost;
-        return '<div class="mall-item'+(owned?' owned':'')+'"><div class="mi-em">'+(it.emoji||'🎀')+'</div><div class="mi-n">'+esc(it.name)+'</div><div class="mi-c">'+it.cost+' 金币</div>'+
+        return '<div class="mall-item'+(owned?' owned':'')+'"><div class="mi-em">'+(it.emoji||'🎀')+'</div><div class="mi-n">'+esc(it.name)+'</div><div class="mi-c">'+it.cost+' 星星币</div>'+
           (owned?'<div class="mi-btn done">已拥有</div>':'<div class="mi-btn'+(can?'':' dis')+'" onclick="redeemPetItem(\''+it.id+'\')">兑换</div>')+
           '<div class="mi-wish'+(wish?' on':'')+'" onclick="mallToggleWish(\''+it.id+'\')">'+(wish?'❤ 心愿':'♡ 心愿')+'</div></div>';
       }).join('');
     } else {
+      /* ⛔ 2026-09-15 商店合并·第1批：现实奖励按「三档」展示，让孩子一眼看出层级 */
+      var TIER_LAB={bronze:'🥉 小小心意',silver:'🥈 陪伴时光',gold:'🥇 大承诺'};
       grid.innerHTML=loadMallReal().map(function(it){
         var can=getCoins()>=it.cost, wish=mallWishHas(it.id);
-        return '<div class="mall-item"><div class="mi-em">'+(it.emoji||'🎁')+'</div><div class="mi-n">'+esc(it.name)+'</div><div class="mi-c">'+it.cost+' 金币</div>'+
+        return '<div class="mall-item"><div class="mi-em">'+(it.emoji||'🎁')+'</div><div class="mi-n">'+esc(it.name)+'</div>'+
+          '<div class="mi-tier t-'+(it.tier||'silver')+'">'+(TIER_LAB[it.tier]||'🥈 陪伴时光')+'</div>'+
+          '<div class="mi-c">'+it.cost+' 星星币</div>'+
           '<div class="mi-btn'+(can?'':' dis')+'" onclick="redeemRealItem(\''+it.id+'\')">兑换券</div>'+
           '<div class="mi-wish'+(wish?' on':'')+'" onclick="mallToggleWish(\''+it.id+'\')">'+(wish?'❤ 心愿':'♡ 心愿')+'</div></div>';
       }).join('');
@@ -15522,57 +16406,66 @@ LOGIC_LEVELS.forEach(function(L){
   function redeemPetItem(id){
     var it=mallPetItems().filter(function(x){return x.id===id;})[0];if(!it)return;
     if(mallOwned(id)){toast('已经拥有啦～去「陪小萌玩」穿上');return;}
-    if(!spendMallCoins(it.cost)){toast('金币不够，再攒攒～');return;}
+    if(!spendMallCoins(it.cost)){toast('星星币不够，再攒攒～');return;}
     var b=loadBag();b.dress=b.dress||{};b.dress[id]=true;saveBag(b);mallDelWish(id);refreshMallCoinUI();renderMall();toast('🎉 兑换成功：'+it.name+'！去换装穿上吧');
   }
   function redeemRealItem(id){
     var it=null;loadMallReal().forEach(function(x){if(x.id===id)it=x;});if(!it)return;
-    if(!spendMallCoins(it.cost)){toast('金币不够，再攒攒～');return;}
+    if(!spendMallCoins(it.cost)){toast('星星币不够，再攒攒～');return;}
     var cp=loadCoupons();cp.push({id:Date.now(),name:it.name,emoji:it.emoji,date:getTodayKey()});saveCoupons(cp);mallDelWish(id);refreshMallCoinUI();renderMall();toast('🎫 兑换券已生成：'+it.name);
   }
-  function mallToggleWish(id){var w=loadWish(),i=w.indexOf(id);if(i>=0)w.splice(i,1);else w.push(id);saveWish(w);renderMall();}
+  function mallToggleWish(id){var w=loadWish(),i=w.indexOf(id);if(i>=0)w.splice(i,1);else w.push(id);saveWish(w);renderMall();if(document.getElementById('wishGrid'))renderMallWish();}
   function mallCancelWish(id){mallDelWish(id);renderMall();}
   function mallUseCoupon(cid){var cp=loadCoupons().filter(function(c){return c.id!==cid;});saveCoupons(cp);renderMall();toast('已标记为兑现 ✅');}
   function buyPetSupply(id){
     var it=null;PET_SUPPLY.forEach(function(x){if(x.id===id)it=x;});if(!it)return;
-    if(!spendMallCoins(it.cost)){try{toast('金币不够，再攒攒～');}catch(e){}return;}
+    if(!spendMallCoins(it.cost)){try{toast('星星币不够，再攒攒～');}catch(e){}return;}
     if(it.kind==='kibble'){addKibble(it.gain);try{toast('已购买：'+it.name+'（口粮 +'+it.gain+'）');}catch(e){}}
     else if(it.kind==='bath'){var b=loadBag();b.bath=b.bath||{};b.bath[it.id]=(b.bath[it.id]||0)+1;saveBag(b);try{toast('已购买：'+it.name+'（背包 +1）');}catch(e){}}
     else if(it.kind==='medical'){var b2=loadBag();b2.medical=(b2.medical||0)+1;saveBag(b2);try{toast('已购买：'+it.name+'（背包 +1）');}catch(e){}}
     refreshMallCoinUI();renderMallTab();renderPetVitals();
   }
-  function spinMallGacha(){
-    if(!spendMallCoins(MALL_GACHA_COST)){toast('金币不够抽扭蛋（需 '+MALL_GACHA_COST+'）');return;}
-    var pool=[];mallPetItems().forEach(function(it){pool.push({type:'pet',id:it.id,label:it.name,emoji:it.emoji});});
-    loadMallReal().forEach(function(it){pool.push({type:'real',id:it.id,label:it.name,emoji:it.emoji});});
-    [20,30,50].forEach(function(c){pool.push({type:'coin',amt:c,label:c+' 金币',emoji:'🪙'});});
-    var p=pool[Math.floor(Math.random()*pool.length)];
-    if(p.type==='pet'){if(!mallOwned(p.id)){var b=loadBag();b.dress=b.dress||{};b.dress[p.id]=true;saveBag(b);}mallDelWish(p.id);toast('🎰 扭到：'+p.label+'！');}
-    else if(p.type==='real'){var cp=loadCoupons();cp.push({id:Date.now(),name:p.label,emoji:p.emoji,date:getTodayKey()});saveCoupons(cp);mallDelWish(p.id);toast('🎰 扭到兑换券：'+p.label);}
-    else{addMallCoins(p.amt);toast('🎰 扭到 '+p.amt+' 金币！');}
-    refreshMallCoinUI();renderMall();
-  }
   function refreshMallCoinUI(){var c=getCoins();['mallTopCoin','mallCoinBig','mallHomeCoin','mallBarCoin'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=c;});}
   function renderMallRealEditor(){
     var box=document.getElementById('mallRealList');if(!box)return;
-    box.innerHTML=loadMallReal().map(function(it){
+    box.innerHTML='<div class="pc-hint" style="margin:0 0 7px">这份清单 = 孩子的「🎫 兑换券」来源 = 积分银行的「可兑换特权」，<b>改一处两边同步</b>。🥉 铜档（约 50 星星币）· 🥈 银档（约 250 星星币）· 🥇 金档（约 500 星星币）。</div>'+
+      loadMallReal().map(function(it){
       return '<div class="mall-real"><span class="mr-em">'+(it.emoji||'🎁')+'</span>'+
         '<input class="mr-name" value="'+esc(it.name)+'" onchange="mallRealRename(\''+it.id+'\',this.value)">'+
+        '<select class="mr-tier" onchange="mallRealTier(\''+it.id+'\',this.value)">'+
+          '<option value="bronze"'+(it.tier==='bronze'?' selected':'')+'>🥉 铜</option>'+
+          '<option value="silver"'+(it.tier==='silver'?' selected':'')+'>🥈 银</option>'+
+          '<option value="gold"'+(it.tier==='gold'?' selected':'')+'>🥇 金</option>'+
+        '</select>'+
         '<input class="mr-cost" type="number" min="0" value="'+it.cost+'" onchange="mallRealCost(\''+it.id+'\',this.value)">'+
-        '<span class="mr-unit">币</span><span class="mr-x" onclick="mallRealDel(\''+it.id+'\')">✕</span></div>';
+        '<span class="mr-unit">星星币</span><span class="mr-x" onclick="mallRealDel(\''+it.id+'\')">✕</span></div>';
     }).join('')+'<div class="mall-real-add" onclick="mallRealAdd()">＋ 添加真实奖励</div>';
   }
-  function mallRealRename(id,v){var a=loadMallReal();a.forEach(function(x){if(x.id===id)x.name=v;});saveMallReal(a);}
-  function mallRealCost(id,v){var a=loadMallReal();a.forEach(function(x){if(x.id===id)x.cost=Math.max(0,parseInt(v,10)||0);});saveMallReal(a);}
-  function mallRealDel(id){saveMallReal(loadMallReal().filter(function(x){return x.id!==id;}));renderMallRealEditor();}
-  function mallRealAdd(){var a=loadMallReal();a.push({id:'r_'+Date.now(),name:'新奖励',cost:100,emoji:'🎁'});saveMallReal(a);renderMallRealEditor();}
+  /* ⛔ 2026-09-15 商店合并·第1批：家长编辑器改为**写覆盖层**（mp_mall_real_v1），
+     不再整体覆写整份清单 —— 否则会把 BANK_REWARDS 的三档结构一起写坏。
+     规则：改动只记 {id,name,cost,emoji} 到覆盖层；loadMallReal() 负责把覆盖层叠回权威清单。
+     删除 = 写一条 {id,del:true} 墓碑；新增 = 追加一条自定义 id。 */
+  function mallRealPatch(id,patch){
+    var a=[];try{var r=LS.getItem(MALL_REAL_KEY);if(r){var x=JSON.parse(r);if(Array.isArray(x))a=x;}}catch(e){}
+    var hit=null;a.forEach(function(x){if(x&&x.id===id)hit=x;});
+    if(!hit){hit={id:id};a.push(hit);}
+    Object.keys(patch).forEach(function(k){hit[k]=patch[k];});
+    saveMallReal(a);
+  }
+  function mallRealRename(id,v){mallRealPatch(id,{name:v});}
+  function mallRealTier(id,v){mallRealPatch(id,{tier:v});}
+  function mallRealCost(id,v){mallRealPatch(id,{cost:Math.max(0,parseInt(v,10)||0)});}
+  function mallRealDel(id){mallRealPatch(id,{del:true});renderMallRealEditor();}
+  function mallRealAdd(){var id='r_'+Date.now();mallRealPatch(id,{name:'新奖励',cost:250,emoji:'🎁',tier:'silver'});renderMallRealEditor();}
   function getEarnSum(fn){return STATS.ledger.filter(fn).reduce(function(s,x){return s+x.amount;},0);}
   // 统一刷新顶部积分/硬币展示
   function refreshPointsUI(){
     ['topStar','tmTopStar','gachaPoints','storePoints','bankPoints','gbPoints','rpPoints'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=gachaPoints;});
-    ['gachaCoins','storeCoins','bankCoins','gbCoins','rpCoins'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=gachaCoins;});
+    ['gachaCoins','storeCoins','bankCoins','gbCoins','rpCoins'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=gachaPoints;});
     /* 统一顶栏上的 mini 星星（外壳条隐藏后，星星住进各页顶栏右槽） */
     try{ document.querySelectorAll('.ah-star-n').forEach(function(e){ e.textContent=gachaPoints; }); }catch(e){}
+    /* 2026-09-15：星星币 = 成长值的一部分 → 每次变动同步「Lv 徽章 + 成长轨道进度条 + 成长胶囊」 */
+    try{ syncPetLevelBadge(); renderGrowthProgress(); }catch(e){}
     refreshTopBar();
     if(document.getElementById('sc-me').classList.contains('on'))initMe();
   }
@@ -15983,7 +16876,7 @@ LOGIC_LEVELS.forEach(function(L){
   function renderPetVitals(silent){
     try{decayPet();}catch(e){}
     var s=loadPetState();
-    var kv=document.getElementById('kibbleVal');if(kv)kv.textContent=getKibble();
+    try{ renderBagRow(); }catch(e){}   /* 口粮已并入背包行，不再有独立 chip */
     var pf=document.getElementById('petFaint');if(pf)pf.style.display=isFainted()?'flex':'none';
     var fv=document.getElementById('fullVal');if(fv)fv.textContent=Math.round(s.full);
     var cv=document.getElementById('cleanVal');if(cv)cv.textContent=Math.round(s.clean);
@@ -16034,6 +16927,14 @@ LOGIC_LEVELS.forEach(function(L){
     renderPetVitals();
   }
   function closePlayPet(){document.getElementById('playPetPop').classList.remove('on');}
+  /* 卡上「🧩 趣题挑战」入口：开弹窗并直接展开趣题目板（复用现有全部逻辑，答题不限次） */
+  function openQuizFromCard(){
+    if(typeof petSleepGuard==='function'&&petSleepGuard())return;
+    openPlayPet();
+    var pop=document.getElementById('playPetPop');
+    if(pop&&pop.classList.contains('on')){ try{ playPetQuiz(); }catch(e){} }
+  }
+  window.openQuizFromCard=openQuizFromCard;
   function floatEmoji(e){
     var face=document.getElementById('playPetFace');if(!face)return;
     var d=document.createElement('div');d.className='float-heart';d.textContent=e;
@@ -16064,13 +16965,16 @@ LOGIC_LEVELS.forEach(function(L){
   // 打开背包选择：用商店买的零食喂 / 洗浴用品洗（增益更高）
   function openBag(kind){
     if(typeof petSleepGuard==='function'&&petSleepGuard())return;
-    var bag=loadBag();var owned=bag[kind]||{};var ids=Object.keys(owned).filter(function(id){return owned[id]>0;});
+    /* 口粮（kibble）不是「挑一样用」的物品，是直接喂的底粮 → 从选择列表里排除；
+       于是背包里只有口粮时会直接走 feedWithKibble()，不会再出现空荡荡的选择框 */
+    var bag=loadBag();var owned=bag[kind]||{};
+    var ids=Object.keys(owned).filter(function(id){return owned[id]>0&&id!==KIBBLE_SLOT;});
     var box=document.getElementById('playBag');var chat=document.getElementById('playChat');var quiz=document.getElementById('playQuiz');
     if(chat)chat.className='play-sub';if(quiz)quiz.className='play-sub';
     box.className='play-sub on';
     if(!ids.length){
       if(kind==='food'){ feedWithKibble(); }
-      else { box.className='play-sub on'; box.innerHTML='<div class="bag-empty">背包里还没有洗浴用品🧴，去兑换中心「宠物补给」买吧～</div>'; try{toast('没有洗浴用品，去兑换中心买🧴');}catch(e){} go('mall'); }
+      else { box.className='play-sub on'; box.innerHTML='<div class="bag-empty">背包里还没有洗浴用品🧴，去小镇超市买吧～</div>'; try{toast('没有洗浴用品，去小镇超市买🧴');}catch(e){} go('mall'); }
       return;
     }
     var html='<div class="bag-tip">选一样'+(kind==='food'?'喂给它吃':'给它洗澡')+'（买得越贵，越饱 / 越香）：</div><div class="bag-grid">';
@@ -16105,7 +17009,7 @@ LOGIC_LEVELS.forEach(function(L){
   function feedWithKibble(){
     if(petFaintGuard())return;
     var k=getKibble();
-    if(k<FEED_KIBBLE_COST){ try{toast('口粮不够啦，去兑换中心买口粮包🍖（现有'+k+'）');}catch(e){} go('mall'); return; }
+    if(k<FEED_KIBBLE_COST){ try{toast('口粮不够啦，去小镇超市买口粮包🍖（现有'+k+'）');}catch(e){} go('mall'); return; }
     spendKibble(FEED_KIBBLE_COST);
     var s=loadPetState();s.full=Math.min(100,s.full+FEED_GAIN);savePetState(s);
     floatEmoji('🍖');
@@ -16513,23 +17417,24 @@ LOGIC_LEVELS.forEach(function(L){
   }
   window.mcEmpty=mcEmpty; window.mcLoading=mcLoading; window.mcError=mcError;
 
+  /* ⛔ 2026-09-15 金币归一：
+     ① 原「✨ 双倍硬币卡（30⭐）」删除 —— 抽扭蛋已改为只消耗库存不花硬币，此卡失去作用对象；
+     ② 全部条目 cur 统一为 'pts'（星星币），不再存在 'coin' 这一套。 */
   const STORE_ITEMS=[
-    {id:'s_toy',name:'新玩具',emoji:'🧸',cost:50,cur:'coin',desc:'奖励一个小玩具'},
-    {id:'s_snack',name:'宠物零食',emoji:'🦴',cost:20,cur:'coin',desc:'给小萌加餐'},
+    {id:'s_toy',name:'新玩具',emoji:'🧸',cost:50,cur:'pts',desc:'奖励一个小玩具'},
+    {id:'s_snack',name:'宠物零食',emoji:'🦴',cost:20,cur:'pts',desc:'给小萌加餐'},
     {id:'s_skin',name:'限定头像框',emoji:'🖼️',cost:80,cur:'pts',desc:'解锁专属头像框'},
-    {id:'s_double',name:'双倍硬币卡',emoji:'✨',cost:30,cur:'pts',desc:'下次抽扭蛋硬币×2'},
     {id:'s_game',name:'30分钟游戏时间',emoji:'🎮',cost:40,cur:'pts',desc:'兑换半小时游戏'}
   ];
-  function initStore(){var p=document.getElementById('storePoints');if(p)p.textContent=gachaPoints;var c=document.getElementById('storeCoins');if(c)c.textContent=gachaCoins;var list=document.getElementById('storeList');if(list)list.innerHTML=STORE_ITEMS.map(function(it,i){return '<div class="store-item"><span class="si-ic">'+it.emoji+'</span><div class="si-main"><div class="si-name">'+esc(it.name)+'</div><div class="si-desc">'+esc(it.desc)+'</div></div><div class="si-cost">'+it.cost+' '+(it.cur==='coin'?'🪙':'⭐')+'</div><button class="btn ghost" onclick="buyStoreItem('+i+')">兑换</button></div>';}).join('');renderBagList();renderShopGrid();renderPetBag();renderChestState();}
-  function renderChestState(){var cd=loadChestDay();[1,2,3].forEach(function(n){var chest=document.getElementById('chest'+n);var lock=document.getElementById('lock'+n);if(cd.opened.indexOf(n)>=0){if(chest)chest.classList.add('open');if(lock){lock.textContent='已开启';lock.style.background='#9CA3AF';lock.style.color='#fff';}}else{if(lock){var txt={1:'免费',2:'20🪙',3:'50⭐'};lock.textContent=txt[n];lock.style.background='#78350F';lock.style.color='#FCD34D';}}});}
-  function renderBagList(){var box=document.getElementById('bagList');if(!box)return;var bag=loadBag();var rows=[];['food','bath','dress'].forEach(function(kind){var o=bag[kind]||{};Object.keys(o).forEach(function(id){var it=findShopItem(id);if(!it)return;for(var n=0;n<o[id];n++)rows.push('<div class="bag-row"><span class="bi">'+it.emoji+'</span><span class="bn">'+esc(it.name)+'</span><span class="bt '+(kind==='food'?'t-food':(kind==='dress'?'t-dress':'t-bath'))+'">'+(kind==='food'?'🍖 +'+it.gain:(kind==='dress'?'👕 装扮':'🫧 +'+it.gain))+'</span></div>');});});box.innerHTML=rows.length?'<div class="bag-grid">'+rows.join('')+'</div>':'<div class="bag-empty">背包还是空的～去下方商店买点零食🍭或洗浴用品🫧，就能喂出更高饱腹 / 洗出更香清洁啦</div>';}
-  function buyStoreItem(i){var it=STORE_ITEMS[i];if(!it)return;if(it.cur==='coin'){if(gachaCoins<it.cost){toast('硬币不足');return;}gachaCoins-=it.cost;gachaSet(GACHA_KEYS.c,gachaCoins);}else{if(gachaPoints<it.cost){toast('积分不足');return;}gachaPoints-=it.cost;gachaSet(GACHA_KEYS.p,gachaPoints);}toast('已兑换：'+it.name);initStore();}
+  function renderChestState(){var cd=loadChestDay();[1,2,3].forEach(function(n){var chest=document.getElementById('chest'+n);var lock=document.getElementById('lock'+n);if(cd.opened.indexOf(n)>=0){if(chest)chest.classList.add('open');if(lock){lock.textContent='已开启';lock.style.background='#9CA3AF';lock.style.color='#fff';}}else{if(lock){var txt={1:'免费',2:'20⭐',3:'50⭐'};lock.textContent=txt[n];lock.style.background='#78350F';lock.style.color='#FCD34D';}}});}
+  /* ⛔ 2026-09-15 小镇货架：原 buyStoreItem(索引) 已删 —— 超市 18 条商品统一走 buyMallSupply(id)，
+     索引式调用会在家长增删商品后错位。基础兑换类商品的 kind='daily'，只扣星币 + 提示。 */
   function initMe(){
     var nm=document.getElementById('meName');if(nm)nm.textContent=document.getElementById('petName')?document.getElementById('petName').textContent:'小萌';
     var pet=document.getElementById('mePet');if(pet)pet.textContent=(currentPartner==='snake')?'🐍':(currentPartner==='cat')?'🐱':'🐶';
     var done=(loadCheckinDone()[getTodayKey()]||[]);
     var stats=document.getElementById('meStats');
-    if(stats)stats.innerHTML='<div class="me-stat"><b>'+done.length+'</b><span>今日打卡</span></div><div class="me-stat"><b>'+gachaPoints+'</b><span>⭐积分</span></div><div class="me-stat"><b>'+gachaCoins+'</b><span>🪙硬币</span></div><div class="me-stat"><b>'+(GAMESCORE.block+GAMESCORE.mem+GAMESCORE.seq+GAMESCORE.diff)+'</b><span>🎮游戏</span></div>';
+    if(stats)stats.innerHTML='<div class="me-stat"><b>'+done.length+'</b><span>今日打卡</span></div><div class="me-stat"><b>'+gachaPoints+'</b><span>⭐星星币</span></div><div class="me-stat"><b>'+(GAMESCORE.block+GAMESCORE.mem+GAMESCORE.seq+GAMESCORE.diff)+'</b><span>🎮游戏</span></div>';
   }
   function resetAllData(){if(!confirm('确定清除所有本地数据？此操作不可恢复。'))return;try{LS.clear();}catch(e){}location.reload();}
 
@@ -16937,7 +17842,7 @@ LOGIC_LEVELS.forEach(function(L){
     {id:'game_pro',name:'游戏高手',icon:'🎮',cat:'fun',desc:'游戏中心总分超过 100'},
     {id:'mood_7',name:'情绪观察员',icon:'💖',cat:'growth',desc:'记录 7 次情绪'},
     {id:'chest_3',name:'寻宝猎人',icon:'🎁',cat:'fun',desc:'开启 3 个宝箱'},
-    {id:'rich',name:'小富翁',icon:'🪙',cat:'fun',desc:'同时拥有 50 硬币和 100 积分'}
+    {id:'rich',name:'小富翁',icon:'⭐',cat:'fun',desc:'星星币攒到 100'}
   ];
   const ACH_KEY='mp_achievements_v1';const WORN_BADGE_KEY='mp_worn_badge_v1';
   function loadAchievementsData(){try{var r=LS.getItem(ACH_KEY);return r?JSON.parse(r):{};}catch(e){return {};}}
@@ -16949,7 +17854,7 @@ LOGIC_LEVELS.forEach(function(L){
   function unlockAchievement(id){var data=loadAchievementsData();if(data[id])return false;data[id]={t:Date.now()};saveAchievementsData(data);var a=ACHIEVEMENTS.find(function(x){return x.id===id;});if(a){document.getElementById('unlockBadgeIcon').textContent=a.icon;document.getElementById('unlockTitle').textContent='成就解锁！';document.getElementById('unlockDesc').textContent='你达成了「'+a.name+'」成就';document.getElementById('achievementUnlockPop').classList.add('on');}return true;}
   function closeAchievementUnlock(){document.getElementById('achievementUnlockPop').classList.remove('on');}
   function goAchievements(){closeAchievementUnlock();go('achievements');}
-  function checkAchievements(){var data=loadAchievementsData();var done=loadCheckinDone();var today=getTodayKey();var todayDone=done[today]||[];var mood=loadMoodLog();var time=loadStudyTime();var totalMin=0;for(var k in time)totalMin+=time[k];var gameTotal=GAMESCORE.block+GAMESCORE.mem+GAMESCORE.seq+GAMESCORE.diff;var achs=[];if(todayDone.length>=1)achs.push('first_task');if(Object.keys(done).length>=3)achs.push('streak3');if(Object.keys(done).length>=7)achs.push('streak7');if(totalMin>=30)achs.push('focus_min30');if(totalMin>=120)achs.push('focus_min120');if(LEARNED.length>=10)achs.push('learn_10chars');if((window.BOOK_SHELF||[]).length>=5)achs.push('read_5books');if(LEARNED.filter(function(x){return x.tag==='en'||x.py===''}).length>=10)achs.push('master_10words');if(gameTotal>=100)achs.push('game_pro');if(mood.length>=7)achs.push('mood_7');var chest=loadChestDay();if((chest.opened||[]).length>=3)achs.push('chest_3');if(gachaCoins>=50&&gachaPoints>=100)achs.push('rich');var any=false;achs.forEach(function(id){if(unlockAchievement(id))any=true;});if(any&&document.getElementById('sc-achievements').classList.contains('on'))initAchievements();}
+  function checkAchievements(){var data=loadAchievementsData();var done=loadCheckinDone();var today=getTodayKey();var todayDone=done[today]||[];var mood=loadMoodLog();var time=loadStudyTime();var totalMin=0;for(var k in time)totalMin+=time[k];var gameTotal=GAMESCORE.block+GAMESCORE.mem+GAMESCORE.seq+GAMESCORE.diff;var achs=[];if(todayDone.length>=1)achs.push('first_task');if(Object.keys(done).length>=3)achs.push('streak3');if(Object.keys(done).length>=7)achs.push('streak7');if(totalMin>=30)achs.push('focus_min30');if(totalMin>=120)achs.push('focus_min120');if(LEARNED.length>=10)achs.push('learn_10chars');if((window.BOOK_SHELF||[]).length>=5)achs.push('read_5books');if(LEARNED.filter(function(x){return x.tag==='en'||x.py===''}).length>=10)achs.push('master_10words');if(gameTotal>=100)achs.push('game_pro');if(mood.length>=7)achs.push('mood_7');var chest=loadChestDay();if((chest.opened||[]).length>=3)achs.push('chest_3');if(gachaPoints>=100)achs.push('rich');var any=false;achs.forEach(function(id){if(unlockAchievement(id))any=true;});if(any&&document.getElementById('sc-achievements').classList.contains('on'))initAchievements();}
 
   /* ---- 5. 学习报告 ---- */
   const MOOD_KEY='mp_mood_log_v1';const TIME_KEY='mp_time_log_v1';
@@ -16965,25 +17870,54 @@ LOGIC_LEVELS.forEach(function(L){
     if(s.full<=0){ s.full=0; s.fainted=true; }
     s.lastDecay=now;savePetState(s);return s;
   }
-  /* ===== 口粮（宠物粮）资源 + 宠物补给目录 + 晕倒/唤醒 ===== */
-  const KIBBLE_KEY='mp_pet_kibble_v1';
-  function getKibble(){try{return parseInt(LS.getItem(KIBBLE_KEY)||'0',10)||0;}catch(e){return 0;}}
-  function addKibble(n){n=n|0;if(!n)return;try{LS.setItem(KIBBLE_KEY,String(getKibble()+n));}catch(e){}}
-  function spendKibble(n){n=n|0;if(getKibble()<n)return false;try{LS.setItem(KIBBLE_KEY,String(getKibble()-n));}catch(e){}return true;}
+  /* ===== 口粮（宠物粮）资源 + 宠物补给目录 + 晕倒/唤醒 =====
+     ⛔ 2026-09-15 收口：口粮不再单独存 mp_pet_kibble_v1，而是并进背包唯一容器
+     mp_bag_v1 的 food.kibble —— 它是「我兜里的库存」，不是宠物身上的状态，
+     所以和洗护 / 医疗 / 装扮同一处存放、同一处显示（主页只出现一次）。
+     旧 key 首次读取时一次性搬进背包：余额只加不减、不清零，搬完删旧 key。 */
+  const KIBBLE_KEY='mp_pet_kibble_v1', KIBBLE_SLOT='kibble';
+  function getKibble(){
+    try{
+      var bag=loadBag(); if(!bag.food)bag.food={};
+      var v=bag.food[KIBBLE_SLOT]||0;
+      var legacy=parseInt(LS.getItem(KIBBLE_KEY)||'0',10)||0;
+      if(legacy>0){ v+=legacy; bag.food[KIBBLE_SLOT]=v; saveBag(bag); try{LS.removeItem(KIBBLE_KEY);}catch(e2){} }
+      return v;
+    }catch(e){return 0;}
+  }
+  function addKibble(n){
+    n=n|0;if(!n)return;
+    getKibble();                                   /* 先跑一次迁移，避免旧余额被覆盖 */
+    try{var bag=loadBag();bag.food=bag.food||{};bag.food[KIBBLE_SLOT]=(bag.food[KIBBLE_SLOT]||0)+n;saveBag(bag);}catch(e){}
+  }
+  function spendKibble(n){
+    n=n|0;var have=getKibble();if(have<n)return false;
+    try{var bag=loadBag();bag.food=bag.food||{};var left=have-n;
+      if(left>0)bag.food[KIBBLE_SLOT]=left;else delete bag.food[KIBBLE_SLOT];
+      saveBag(bag);}catch(e){return false;}
+    return true;
+  }
   const FEED_KIBBLE_COST=10, FEED_GAIN=15, REVIVE_FULL=50;
+  /* ⛔ 2026-09-15 商店合并·第2批：并入原 MONSTER_SHOP 的 food/bath（彩虹糖/小饼干/营养罐头/泡泡浴露/香香沐浴球），
+     统一 kind 命名（food→kibble）与 cur:'mall'，形成口粮铺唯一数据源。 */
   const PET_SUPPLY=[
     {id:'pk_s',name:'小口粮包',emoji:'🍖',cost:5,cur:'mall',kind:'kibble',gain:10},
     {id:'pk_m',name:'中口粮包',emoji:'🍖',cost:10,cur:'mall',kind:'kibble',gain:25},
     {id:'pk_l',name:'大口粮包',emoji:'🍖',cost:25,cur:'mall',kind:'kibble',gain:60},
+    {id:'m_food1',name:'彩虹糖',emoji:'🍭',cost:15,cur:'mall',kind:'kibble',gain:30},
+    {id:'m_food2',name:'小饼干',emoji:'🍪',cost:20,cur:'mall',kind:'kibble',gain:25},
+    {id:'m_food3',name:'营养罐头',emoji:'🥫',cost:35,cur:'mall',kind:'kibble',gain:45},
     {id:'sp_soap',name:'香皂',emoji:'🧼',cost:8,cur:'mall',kind:'bath',gain:20},
     {id:'sp_gel',name:'沐浴露',emoji:'🧴',cost:15,cur:'mall',kind:'bath',gain:40},
     {id:'sp_bub',name:'泡泡浴',emoji:'🛁',cost:30,cur:'mall',kind:'bath',gain:60},
+    {id:'m_bath1',name:'泡泡浴露',emoji:'🫧',cost:25,cur:'mall',kind:'bath',gain:50},
+    {id:'m_bath2',name:'香香沐浴球',emoji:'🛁',cost:30,cur:'mall',kind:'bath',gain:45},
     {id:'med_kit',name:'医疗包',emoji:'💊',cost:60,cur:'mall',kind:'medical',gain:0}
   ];
   function isFainted(){var s=loadPetState();return !!s.fainted;}
   function petFaintGuard(){ if(isFainted()){ try{toast('小萌饿晕了，先用医疗包唤醒它💊');}catch(e){} return true; } return false; }
   function revivePet(){
-    var bag=loadBag(); if(!(bag.medical>0)){ try{toast('没有医疗包，去兑换中心买💊');}catch(e){} go('mall'); return false; }
+    var bag=loadBag(); if(!(bag.medical>0)){ try{toast('没有医疗包，去小镇超市买💊');}catch(e){} go('mall'); return false; }
     bag.medical--; if(bag.medical<=0)delete bag.medical; saveBag(bag);
     var s=loadPetState(); s.fainted=false; s.full=REVIVE_FULL; savePetState(s);
     try{ renderPetVitals(); updatePetBubble(); renderPet(); }catch(e){}
@@ -16994,15 +17928,35 @@ LOGIC_LEVELS.forEach(function(L){
   const ROUTINE_CFG_KEY='mp_routine_cfg_v1', ROUTINE_KEY='mp_pet_routine_v1';
   const ROUTINE_DEF={wake:'7:00',brush:'7:20',school:'7:45',home:'16:30',dinner:'18:00',hw:'19:00',sleep:'21:00'};
   const ROUTINE_NODES=[
-    {k:'wake',  n:'起床', i:'🌅', win:120, say:'太阳晒屁股啦，起床啦～今天也要元气满满哦🌅'},
-    {k:'brush', n:'洗漱', i:'🪥', win:120, say:'该刷牙洗脸啦，牙齿要刷够三分钟才干净呀🪥'},
-    {k:'school',n:'上学', i:'🎒', win:120, say:'要出门啦，路上小心，我乖乖在家等你回来🎒'},
-    {k:'home',  n:'放学', i:'🏠', win:210, say:'你回来啦！我等你好久了，快抱抱我🏠'},
-    {k:'dinner',n:'晚饭', i:'🍚', win:150, say:'该吃晚饭啦，要好好吃饭才能长高高哦🍚'},
-    {k:'hw',    n:'作业', i:'📝', win:210, say:'作业时间到啦，我就在旁边陪着你，加油📝'},
-    {k:'sleep', n:'睡觉', i:'🌙', win:180, say:'很晚啦，该睡觉咯～今天谢谢你陪我，晚安🌙'}
+    {k:'wake',  n:'起床', i:'🌅', t:'7:00',  rw:'food', amt:30, win:120, say:'太阳晒屁股啦，起床啦～今天也要元气满满哦🌅'},
+    {k:'brush', n:'洗漱', i:'🪥', t:'7:20',  rw:'star', amt:1,  win:120, say:'该刷牙洗脸啦，牙齿要刷够三分钟才干净呀🪥'},
+    {k:'school',n:'上学', i:'🎒', t:'7:45',  rw:'star', amt:1,  win:120, say:'要出门啦，路上小心，我乖乖在家等你回来🎒'},
+    {k:'home',  n:'放学', i:'🏠', t:'16:30', rw:'star', amt:1,  win:210, say:'你回来啦！我等你好久了，快抱抱我🏠'},
+    {k:'dinner',n:'晚饭', i:'🍚', t:'18:00', rw:'star', amt:1,  win:150, say:'该吃晚饭啦，要好好吃饭才能长高高哦🍚'},
+    {k:'hw',    n:'作业', i:'📝', t:'19:00', rw:'star', amt:1,  win:210, say:'作业时间到啦，我就在旁边陪着你，加油📝'},
+    {k:'sleep', n:'睡觉', i:'🌙', t:'21:00', rw:'star', amt:1,  win:180, say:'很晚啦，该睡觉咯～今天谢谢你陪我，晚安🌙'}
   ];
-  function loadRoutineCfg(){try{var r=LS.getItem(ROUTINE_CFG_KEY);if(r)return Object.assign({},ROUTINE_DEF,JSON.parse(r));}catch(e){}return Object.assign({},ROUTINE_DEF);}
+  function routineNodeDef(k){var f=null;ROUTINE_NODES.forEach(function(x){if(x.k===k)f=x;});return f||{k:k,n:k,i:'⏰',t:'8:00',rw:'star',amt:1,say:''};}
+  function routineDefaults(){var d={};ROUTINE_NODES.forEach(function(x){d[x.k]={t:x.t||'8:00',n:x.n||x.k,i:x.i||'⏰',rw:x.rw||'star',amt:x.amt||1};});return d;}
+  // 新格式：{节点:{t:时间,n:名称,i:图标,rw:奖励类型,amt:数量}}；旧的「只存时间字符串」自动迁移，已设的时间不丢
+  function loadRoutineCfg(){
+    var def=routineDefaults();
+    try{var r=LS.getItem(ROUTINE_CFG_KEY);if(r){
+      var o=JSON.parse(r);
+      if(o&&typeof o==='object'){
+        Object.keys(def).forEach(function(k){
+          var v=o[k];
+          if(typeof v==='string'){ if(v)def[k].t=v; }
+          else if(v&&typeof v==='object'){
+            if(v.t)def[k].t=v.t; if(v.n)def[k].n=v.n; if(v.i)def[k].i=v.i;
+            if(v.rw)def[k].rw=v.rw; if(v.amt)def[k].amt=v.amt;
+          }
+        });
+        return def;
+      }
+    }}catch(e){}
+    return def;
+  }
   function saveRoutineCfg(o){try{LS.setItem(ROUTINE_CFG_KEY,JSON.stringify(o));}catch(e){}}
   function loadRoutine(){try{var r=LS.getItem(ROUTINE_KEY);if(r){var o=JSON.parse(r);if(o.date===getTodayKey())return o;}}catch(e){}return {date:getTodayKey(),done:{}};}
   function saveRoutine(o){try{LS.setItem(ROUTINE_KEY,JSON.stringify(o));}catch(e){}}
@@ -17013,7 +17967,7 @@ LOGIC_LEVELS.forEach(function(L){
     if(!x)return 'locked';
     var cfg=loadRoutineCfg(),o=loadRoutine(),d=new Date(),m=d.getHours()*60+d.getMinutes();
     if(o.done&&o.done[x.k])return 'done';
-    var t=hm2min(cfg[x.k]);
+    var t=hm2min((cfg[x.k]||{}).t);
     if(m<t-30)return 'locked';
     if(m>t+30)return 'expired';
     return 'cur';
@@ -17023,7 +17977,7 @@ LOGIC_LEVELS.forEach(function(L){
     var cfg=loadRoutineCfg(),d=new Date(),m=d.getHours()*60+d.getMinutes(),hit=null,best=1e9;
     ROUTINE_NODES.forEach(function(x){
       if(routineWindowState(x)!=='cur')return;
-      var t=hm2min(cfg[x.k]),df=Math.abs(m-t);if(df<best){best=df;hit=x;}
+      var t=hm2min((cfg[x.k]||{}).t),df=Math.abs(m-t);if(df<best){best=df;hit=x;}
     });
     return hit;
   }
@@ -17032,35 +17986,39 @@ LOGIC_LEVELS.forEach(function(L){
     if(o.done&&o.done[k]){try{toast('今天这项已经打过卡啦～');}catch(e){}return false;}
     var nd=null;ROUTINE_NODES.forEach(function(x){if(x.k===k)nd=x;});
     var wst=routineWindowState(nd);
-    if(wst==='locked'){try{toast((nd?nd.n:'')+' 要在 '+(loadRoutineCfg()[k]||'')+' 前后 30 分钟才能打卡，现在还没到时间哦⏰');}catch(e){}return false;}
-    if(wst==='expired'){try{toast((nd?nd.n:'')+' 的打卡时间已过（'+(loadRoutineCfg()[k]||'')+'±30分钟），明天准点来哦');}catch(e){}return false;}
+    var _c=(loadRoutineCfg()[k]||{});
+    if(wst==='locked'){try{toast((_c.n||(nd?nd.n:''))+' 要在 '+(_c.t||'')+' 前后 30 分钟才能打卡，现在还没到时间哦⏰');}catch(e){}return false;}
+    if(wst==='expired'){try{toast((_c.n||(nd?nd.n:''))+' 的打卡时间已过（'+(_c.t||'')+'±30分钟），明天准点来哦');}catch(e){}return false;}
     if(!o.done)o.done={};
     o.done[k]=1;
-    if(!o.dailyKibble){ o.dailyKibble=1; try{addKibble(30);}catch(e){} try{toast('今日打卡 +30🍖口粮');}catch(e){} }
     var d=new Date();o[k]=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
     saveRoutine(o);
     try{addBond(2);}catch(e){}
     try{addCareExp(1);}catch(e){}
-    try{gachaPoints+=1;gachaSet(GACHA_KEYS.p,gachaPoints);addEarn('star',1,'routine','作息打卡');}catch(e){}
-    try{floatStar(1);refreshPointsUI();}catch(e){}
-    var nd=null;ROUTINE_NODES.forEach(function(x){if(x.k===k)nd=x;});
-    try{toast((nd?nd.i+' ':'')+(nd?nd.n:'')+' 打卡成功 +1⭐');}catch(e){}
-    try{if(window.celebrate)window.celebrate({type:'small',emoji:nd?nd.i:'⭐',text:(nd?nd.n:'')+' +1⭐'});}catch(e){}
+    // 按该节点家长配置的奖励发放（🍖口粮 / ⭐星星 / 💗亲密度）：一天一次，错过 ±30 分钟窗口不可补
+    var rw=(_c.rw||'star'), amt=Math.max(1,Math.min(999,parseInt(_c.amt,10)||1)), rwTxt='', rwEm='';
+    if(rw==='food'){ try{addKibble(amt);renderPetVitals();}catch(e){} rwTxt='+'+amt+'🍖口粮'; rwEm='🍖'; }
+    else if(rw==='bond'){ try{addBond(amt);}catch(e){} rwTxt='+'+amt+'💗亲密度'; rwEm='💗'; }
+    else{ try{gachaPoints+=amt;gachaSet(GACHA_KEYS.p,gachaPoints);addEarn('star',amt,'routine','作息打卡');floatStar(amt);refreshPointsUI();}catch(e){} rwTxt='+'+amt+'⭐'; rwEm='⭐'; }
+    var nm=_c.n||(nd?nd.n:'')||'';
+    try{toast((nd?nd.i+' ':'')+nm+' 打卡成功 '+rwTxt);}catch(e){}
+    try{if(window.celebrate)window.celebrate({type:'small',emoji:rwEm||(nd?nd.i:'⭐'),text:nm+' '+rwTxt});}catch(e){}
     renderRoutineBar();updateMoodFromState();
-    if(k==='wake'){ try{setTimeout(function(){ try{openPlayPet();openBag('food');}catch(e){} },420);}catch(e){} }
+    if(rw==='food'){ try{setTimeout(function(){ try{openPlayPet();openBag('food');}catch(e){} },420);}catch(e){} }
     return true;
   }
   function renderRoutineBar(){
     var box=document.getElementById('routineBar');if(!box)return;
     var cfg=loadRoutineCfg();
     box.innerHTML=ROUTINE_NODES.map(function(x){
-      var st=routineWindowState(x);
+      var st=routineWindowState(x), c=(cfg&&cfg[x.k])||{};
       var clickable=(st==='cur');
       var cls='rt-d '+(st==='done'?'done':(st==='cur'?'cur':'todo'));
-      var icon=x.i;
-      var tip=x.n+' '+(cfg[x.k]||'')+(st==='locked'?' · 还没到时间':(st==='expired'?' · 已错过打卡时间':' · 现在可以打卡'));
+      var icon=c.i||x.i;
+      var rwTxt=(c.rw==='food')?('🍖'+(c.amt||1)):((c.rw==='bond')?('💗'+(c.amt||1)):('⭐'+(c.amt||1)));
+      var tip=(c.n||x.n)+' '+(c.t||'')+' · 可得 '+rwTxt+(st==='locked'?' · 还没到时间':(st==='expired'?' · 已错过打卡时间':' · 现在可以打卡'));
       var attr=clickable?(' onclick="markRoutine(\''+x.k+'\')"'):'';
-      return '<div class="'+cls+'"'+attr+' title="'+tip+'">'+icon+'</div>';
+      return '<div class="'+cls+'"'+attr+' title="'+esc(tip)+'">'+icon+'</div>';
     }).join('');
     var tx=document.getElementById('routineTx');if(tx)tx.textContent='今日作息 '+routineDoneN()+'/7';
   }
@@ -17087,34 +18045,70 @@ LOGIC_LEVELS.forEach(function(L){
     try{currentFace=moodFaceOf(m);renderPet();}catch(e){}
     updatePetBubble();
   }
+  // 气泡「有意义提醒」的唯一计算源：有内容就返回提醒文案，闲时返回 ''。
+  // 优先级：饿晕 > 想念/问候 > 睡觉 > 饿<30 > 脏<30 > 当前作息节点台词(±30分钟内) > 闲时
+  // ⛔ 2026-09-14：碎碎念（petChatIdle）只允许在「闲时」写入气泡，判定就用这个函数，
+  //    避免每 32 秒的随机碎碎念把「该起床/该吃晚饭啦」这类提醒盖掉。
+  function petBubbleNotice(){
+    try{if(isFainted())return '我饿晕了…快用医疗包救我💊';}catch(e){}
+    var s=loadPetState();
+    try{var _b=loadBond();if(_b.greet)return _b.greet;}catch(e){}
+    try{if(petIsSleeping())return '我睡着啦💤 嘘～让我做个好梦吧，醒来陪你玩～';}catch(e){}
+    if(s.full<30)return '我肚子好饿好饿…可以先喂我吃点东西吗🥺';
+    if(s.clean<30)return '我变得脏脏的啦，帮我洗个香香的澡澡嘛🫧';
+    var cur=curRoutineNode();
+    if(cur)return cur.say;
+    return '';
+  }
   function updatePetBubble(){
     var el=document.getElementById('bubble');if(!el)return;
-    if(isFainted()){el.textContent='我饿晕了…快用医疗包救我💊';return;}
-    var cur=curRoutineNode(),s=loadPetState();
-    try{var _b=loadBond();if(_b.greet){el.textContent=_b.greet;return;}}catch(e){}
-    try{if(petIsSleeping()){el.textContent='我睡着啦💤 嘘～让我做个好梦吧，醒来陪你玩～';return;}}catch(e){}
-    if(s.full<30){el.textContent='我肚子好饿好饿…可以先喂我吃点东西吗🥺';return;}
-    if(s.clean<30){el.textContent='我变得脏脏的啦，帮我洗个香香的澡澡嘛🫧';return;}
-    if(cur){el.textContent=cur.say;return;}
+    var msg=petBubbleNotice();
+    if(msg){el.textContent=msg;return;}
     // 没有更高优先级时保留 renderPet 设的等级台词（留住成长的味道）
   }
   function toHM(s){var a=String(s||'0:0').split(':');return ('0'+(+a[0]||0)).slice(-2)+':'+('0'+(+a[1]||0)).slice(-2);}
+  const ROUTINE_RW_OPT=[['food','🍖 口粮'],['star','⭐ 星星'],['bond','💗 亲密度']];
   function renderRoutineCfg(){
     var box=document.getElementById('routineCfg');if(!box)return;
     var cfg=loadRoutineCfg();
     box.innerHTML=ROUTINE_NODES.map(function(x){
-      return '<div class="rt-cfg-i"><span class="ri">'+x.i+'</span><span class="rn">'+x.n+'</span><input type="time" class="in rt-time" value="'+esc(toHM(cfg[x.k]))+'" onchange="setRoutineCfg(\''+x.k+'\',this.value)"></div>';
+      var c=cfg[x.k]||{};
+      var sel=ROUTINE_RW_OPT.map(function(o){return '<option value="'+o[0]+'"'+(((c.rw)||'star')===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('');
+      return '<div class="rt-cfg-i rt-row">'
+        +'<span class="ri">'+(c.i||x.i)+'</span>'
+        +'<input class="in rt-name" type="text" maxlength="6" value="'+esc(c.n||x.n)+'" placeholder="名称" onchange="setRoutineName(\''+x.k+'\',this.value)">'
+        +'<input type="time" class="in rt-time" value="'+esc(toHM(c.t))+'" onchange="setRoutineCfg(\''+x.k+'\',this.value)">'
+        +'<select class="in rt-rw" onchange="setRoutineRw(\''+x.k+'\',this.value)">'+sel+'</select>'
+        +'<input type="number" class="in rt-amt" min="1" max="999" value="'+esc(String(c.amt||1))+'" onchange="setRoutineAmt(\''+x.k+'\',this.value)">'
+        +'</div>';
     }).join('');
   }
   function setRoutineCfg(k,v){
-    var c=loadRoutineCfg();c[k]=v;saveRoutineCfg(c);
+    var c=loadRoutineCfg(); if(!c[k])c[k]={t:v}; else c[k].t=v; saveRoutineCfg(c);
     try{renderRoutineBar();updatePetBubble();updateMoodFromState();}catch(e){}
-    try{toast('已保存：'+v);}catch(e){}
+    try{toast('已保存时间：'+v);}catch(e){}
+  }
+  function setRoutineName(k,v){
+    var c=loadRoutineCfg(); var nm=String(v||'').trim().slice(0,6)||routineNodeDef(k).n;
+    if(!c[k])c[k]={}; c[k].n=nm; saveRoutineCfg(c);
+    try{renderRoutineCfg();renderRoutineBar();updatePetBubble();}catch(e){}
+    try{toast('已改名为：'+nm);}catch(e){}
+  }
+  function setRoutineRw(k,v){
+    var c=loadRoutineCfg(); if(!c[k])c[k]={}; c[k].rw=v; saveRoutineCfg(c);
+    try{renderRoutineCfg();renderRoutineBar();}catch(e){}
+    try{toast('该项奖励已设为：'+(v==='food'?'🍖口粮':(v==='bond'?'💗亲密度':'⭐星星')));}catch(e){}
+  }
+  function setRoutineAmt(k,v){
+    var c=loadRoutineCfg(); if(!c[k])c[k]={};
+    var n=Math.max(1,Math.min(999,parseInt(v,10)||1)); c[k].amt=n; saveRoutineCfg(c);
+    try{renderRoutineCfg();renderRoutineBar();}catch(e){}
+    try{toast('该项奖励数量：'+n);}catch(e){}
   }
   function resetRoutineCfg(){
-    saveRoutineCfg(Object.assign({},ROUTINE_DEF));renderRoutineCfg();
+    saveRoutineCfg(routineDefaults());renderRoutineCfg();
     try{renderRoutineBar();updatePetBubble();}catch(e){}
-    try{toast('已恢复默认作息时间');}catch(e){}
+    try{toast('已恢复默认作息（含名称与奖励）');}catch(e){}
   }
   // 每分钟巡检：跨过某个作息节点时，气泡和闪烁自动切换，不用刷新
   function scheduleRoutineTick(){
@@ -17160,6 +18154,7 @@ LOGIC_LEVELS.forEach(function(L){
   function renderBondRow(){
     var el=document.getElementById('bondRow');if(!el)return;
     var b=loadBond();
+    /* ⛔ 2026-09-15 定稿：成长值不再放胶囊（已由下方独立进度条呈现），恢复三胶囊一行 */
     el.innerHTML='<span class="bd b-bond">💗 亲密度 <b>'+(b.bond||0)+'</b></span>'
       +'<span class="bd b-streak">🔥 连续 <b>'+(b.streak||0)+'</b> 天</span>'
       +'<span class="bd b-days">📅 累计 <b>'+(b.days||0)+'</b> 天</span>';
@@ -17228,12 +18223,12 @@ LOGIC_LEVELS.forEach(function(L){
     var got=false;try{got=awardPlayStar('sleep',1,'哄睡觉');}catch(e){}
     addBond(2);
     try{ addCareExp(2); }catch(e){}
-    try{floatStar(1);refreshPointsUI();}catch(e){}
+    try{refreshPointsUI();}catch(e){}   /* ⛔ 原来这里无条件 floatStar(1)：不发星也飘 +1⭐，会骗孩子 */
     var txt='啊——睡饱饱啦！精神满满，我们继续玩吧☀️'+(got?'  +1⭐':'');
     var b=document.getElementById('playBubble');if(b)b.textContent=txt;
     var hb=document.getElementById('bubble');if(hb)hb.textContent='睡饱饱啦！精神满满，我们继续玩吧☀️';
-    try{toast('睡饱啦 +1⭐ 亲密度 +2');}catch(e){}
-    try{if(window.celebrate)window.celebrate({type:'small',emoji:'☀️',text:'睡饱啦 +1⭐'});}catch(e){}
+    try{toast('睡饱啦～亲密度 +2');}catch(e){}
+    try{if(window.celebrate)window.celebrate({type:'small',emoji:'☀️',text:'睡饱啦'});}catch(e){}
     petClearGreet();
   }
   /* ================= P2-2 · 换装（emoji 贴纸 · 三槽位） ================= */
@@ -17375,55 +18370,75 @@ LOGIC_LEVELS.forEach(function(L){
   const BAG_KEY='mp_bag_v1';
   function loadBag(){try{var r=LS.getItem(BAG_KEY);if(r){var o=JSON.parse(r);return {food:o.food||{},bath:o.bath||{},dress:o.dress||{},medical:o.medical||0};}}catch(e){}return {food:{},bath:{},dress:{},medical:0};}
   function saveBag(b){try{LS.setItem(BAG_KEY,JSON.stringify(b));}catch(e){}}
-  function findShopItem(id){return (WISH_SHOP||[]).concat(MONSTER_SHOP||[]).concat(PET_SUPPLY||[]).find(function(x){return x.id===id;});}
-  function bagCount(bag,kind){var o=bag[kind]||{};return Object.keys(o).reduce(function(s,k){return s+(o[k]||0);},0);}
-  // 首页宠物卡上的背包概览
-  function renderPetBag(){
-    var bag=loadBag();
-    var foodN=bagCount(bag,'food'), bathN=bagCount(bag,'bath');
-    var pf=document.getElementById('pbFood');if(pf)pf.textContent='🍖 零食 ×'+foodN;
-    var pb=document.getElementById('pbBath');if(pb)pb.textContent='🛁 洗浴 ×'+bathN;
-    var box=document.getElementById('pbItems');if(!box)return;
-    var items=[];
-    Object.keys(bag.food||{}).forEach(function(id){if(bag.food[id]>0)items.push({id:id,kind:'food',n:bag.food[id]});});
-    Object.keys(bag.bath||{}).forEach(function(id){if(bag.bath[id]>0)items.push({id:id,kind:'bath',n:bag.bath[id]});});
-    if(!items.length){box.innerHTML='<div class="pb-empty">还没有零食/洗护，去商城买吧～</div>';return;}
-    box.innerHTML=items.map(function(it){var d=findShopItem(it.id);if(!d)return '';return '<span class="pb-chip '+(it.kind==='food'?'t-food':'t-bath')+'">'+d.emoji+' '+esc(d.name)+' ×'+it.n+'</span>';}).join('');
+  /* ⛔ 2026-09-15 小镇货架：findShopItem 也叠补丁层（家长改名 / 改价 / 改数值 / 下架都要生效）。
+     这里直接读 localStorage，避免依赖别的闭包里的函数。 */
+  function findShopItem(id){
+    var it=(WISH_SHOP||[]).concat(MONSTER_SHOP||[]).concat(PET_SUPPLY||[]).find(function(x){return x.id===id;});
+    var p=null;
+    try{var r=LS.getItem('mp_mall_goods_v1');if(r){var a=JSON.parse(r);if(Array.isArray(a))a.forEach(function(x){if(x&&x.id===id)p=x;});}}catch(e){}
+    if(!p)return it;
+    if(p.del)return null;
+    if(!it)return p.add?{id:p.id,name:p.name,emoji:p.emoji,cost:p.cost,gain:p.gain||0,kind:p.kind}:null;
+    var o={};Object.keys(it).forEach(function(k){o[k]=it[k];});
+    ['name','emoji','cost'].forEach(function(k){if(p[k]!==undefined)o[k]=p[k];});
+    if(p.gain!==undefined)o.gain=p.gain;
+    return o;
   }
+  function bagCount(bag,kind){var o=bag[kind]||{};return Object.keys(o).reduce(function(s,k){return s+(o[k]||0);},0);}
+  // 首页宠物卡上的背包行：口粮 / 洗护 / 医疗 / 装扮 —— 宠物用品唯一容器
+  // 有几类显几类（没有的芯片隐藏），一件都没有时显示空态
+  function renderBagRow(){
+    var bag=loadBag();
+    var foodN=getKibble();                 /* 口粮 = 背包 food 类（旧 mp_pet_kibble_v1 已并入） */
+    var bathN=bagCount(bag,'bath'), medN=(bag.medical||0), dressN=bagCount(bag,'dress');
+    function put(chipId,valId,n){
+      var c=document.getElementById(chipId),v=document.getElementById(valId);
+      if(v)v.textContent=n;
+      if(c)c.classList.toggle('hide',!(n>0));
+    }
+    put('bgChipFood','bgFood',foodN);
+    put('bgChipBath','bgBath',bathN);
+    put('bgChipMed','bgMed',medN);
+    put('bgChipDress','bgDress',dressN);
+    var emp=document.getElementById('bgEmpty');
+    if(emp)emp.classList.toggle('hide',(foodN+bathN+medN+dressN)>0);
+  }
+  function renderPetBag(){renderBagRow();}   /* 旧名兼容（历史调用点仍在） */
   function loadStudyTime(){try{var r=LS.getItem(TIME_KEY);return r?JSON.parse(r):{};}catch(e){return {};}}
   function saveStudyTime(o){try{LS.setItem(TIME_KEY,JSON.stringify(o));}catch(e){}}
   function logStudyTime(subject,minutes){var t=loadStudyTime();var k=getTodayKey();if(!t[k])t[k]={};if(!t[k][subject])t[k][subject]=0;t[k][subject]+=minutes;saveStudyTime(t);}
   function initReport(){switchReportTab('today',document.querySelector('#reportTabs span'))}
   function switchReportTab(tab,el){document.querySelectorAll('#reportTabs span').forEach(function(s){s.classList.remove('sel');});el.classList.add('sel');renderReport(tab);}
   function renderBank(){
-    var bc=document.getElementById('bankCoins'),bp=document.getElementById('bankPoints');
-    if(bc)bc.textContent=gachaCoins;
-    if(bp)bp.textContent=gachaPoints;
+    /* ⛔ 2026-09-15 商店合并·第1批：原 bankCoins / bankPoints 两个余额元素
+       随「重复余额卡」一起删除 → 这里改为刷新**顶栏徽章**（唯一还在显示的读数位）。 */
+    var bn=document.querySelector('#sc-bank .ah-star-n');
+    if(bn)bn.textContent=gachaPoints;
     var list=document.getElementById('bankListShop');
     if(list){
+      /* ⛔ 2026-09-15 商店合并·第1批：本清单**已与「金币港 · 我的心愿」合并为同一份**（BANK_REWARDS）。
+         原先这里 6 条 20~120 与兑换中心 5 条 120~500 是两份清单、同一件事差 3~5 倍。
+         现统一按三档（铜50/银250/金500）展示并打档位标。 */
+      var TIER={bronze:'🥉 小小心意',silver:'🥈 陪伴时光',gold:'🥇 大承诺'};
       list.innerHTML=BANK_REWARDS.map(function(r,i){
-        var have=r.cur==='coin'?gachaCoins:gachaPoints;
-        var enough=have>=r.cost;
+        var enough=gachaPoints>=r.cost;
         return '<button class="bank-item'+(enough?'':' disabled')+'" onclick="redeemBank('+i+')">'+
           '<span class="bi-ic">'+r.ic+'</span>'+
-          '<span class="bi-name">'+escHTML(r.name)+'</span>'+
-          '<span class="bi-cost">'+r.cost+' '+(r.cur==='coin'?'🪙':'⭐')+' · '+escHTML(r.note||'')+'</span>'+
+          '<span class="bi-name">'+escHTML(r.name)+'<span class="bi-tier">'+(TIER[r.tier]||'')+'</span></span>'+
+          '<span class="bi-cost">'+r.cost+' ⭐ · '+escHTML(r.note||'')+'</span>'+
           '</button>';
       }).join('');
     }
   }
   function redeemBank(i){
     var r=BANK_REWARDS[i];if(!r)return;
-    if(r.cur==='coin'){
-      if(gachaCoins<r.cost){toast('硬币不足');return;}
-      gachaCoins-=r.cost;gachaSet(GACHA_KEYS.c,gachaCoins);
-    }else{
-      if(gachaPoints<r.cost){toast('积分不足');return;}
-      gachaPoints-=r.cost;gachaSet(GACHA_KEYS.p,gachaPoints);
-      if(typeof checkAchievements==='function')checkAchievements();
-    }
+    /* ⛔ 2026-09-15 金币归一：cur 不再区分 coin/point，统一花星星币 */
+    if(gachaPoints<r.cost){toast('星星币不足');return;}
+    gachaPoints-=r.cost;gachaSet(GACHA_KEYS.p,gachaPoints);
+    if(typeof checkAchievements==='function')checkAchievements();
     toast('已兑换：'+r.name);
     renderBank();
+    refreshPointsUI();
     if(typeof initMe==='function')initMe();
   }
   // #4 闯关升级制 · 渲染
@@ -17709,7 +18724,7 @@ LOGIC_LEVELS.forEach(function(L){
     document.getElementById('rpDoneCount').textContent=totalDone;
     document.getElementById('rpTotalCount').textContent=totalTasks;
     document.getElementById('rpPoints').textContent=gachaPoints;
-    document.getElementById('rpCoins').textContent=gachaCoins;
+    document.getElementById('rpCoins').textContent=gachaPoints;
     var avgMood=0,cnt=0;mood.forEach(function(m){if(days.indexOf(m.date)>=0){avgMood+=m.value;cnt++;}});avgMood=cnt?Math.round(avgMood/cnt):85;
     var moodEmoji=avgMood>=85?'😊':avgMood>=65?'🙂':avgMood>=45?'😐':avgMood>=25?'😣':'😭';
     document.getElementById('rpMood').textContent=moodEmoji;document.getElementById('rpMoodVal').textContent=avgMood;
@@ -17741,7 +18756,7 @@ LOGIC_LEVELS.forEach(function(L){
     }
     var guide=document.getElementById('starGuide');
     if(guide){
-      guide.innerHTML='<div class="ss-tip-list"><span><b>✅ 每日打卡</b> 每完成 1 项 +1⭐，全部完成再 +2⭐</span><span><b>🎰 学习扭蛋</b> 抽中奖励可 +10~30⭐</span><span><b>🎁 开启宝箱</b> 有机会获得 10~30 积分</span><span><b>⏰ 番茄钟</b> 专注完成 +10⭐，挑战模式 +20⭐</span><span><b>🐾 陪小萌玩</b> 摸头/聊天前 3 次 +1⭐，喂/洗前 2 次 +1⭐，趣题答对前 5 次 +1⭐</span></div>';
+      guide.innerHTML='<div class="ss-tip-list"><span><b>✅ 每日打卡</b> 每完成 1 项 +1⭐，全部完成再 +2⭐</span><span><b>🎰 学习扭蛋</b> 抽中奖励可 +10~30⭐</span><span><b>🎁 开启宝箱</b> 有机会获得 10~30 积分</span><span><b>⏰ 番茄钟</b> 专注完成 +10⭐，挑战模式 +20⭐</span><span><b>🧩 趣题挑战</b> 答对前 5 题 +1⭐</span><span><b>🐾 陪小萌玩</b> 不发星星，只涨亲密度和成长值</span></div>';
     }
     var src=document.getElementById('ssSource');
     if(src){
@@ -17790,37 +18805,28 @@ LOGIC_LEVELS.forEach(function(L){
   /* ---- 6. 魔法宝箱 + 商店 ---- */
   const CHEST_KEY='mp_chest_day_v1';
   let shopTab='wish';
+  /* ⛔ 2026-09-15 商店合并·第2批：原 4 个 cos 场景（萌兽森林/果果奇遇记/梦想职业城/糖果王国）
+     纯消耗星星币、不给任何实物，已删除。保留 food/bath 并入口粮铺（kind 统一为 kibble，与 PET_SUPPLY 一致）。 */
   const WISH_SHOP=[
-    {id:'w_snack',name:'萌兽森林',emoji:'🌲',cost:100,cur:'pts',desc:'cos可爱小动物，和森林伙伴一起卖萌玩耍！'},
-    {id:'w_fruit',name:'果果奇遇记',emoji:'🍓',cost:150,cur:'pts',desc:'变身水果小精灵，在果园里蹦蹦跳跳玩个够！'},
-    {id:'w_job',name:'梦想职业城',emoji:'🎨',cost:200,cur:'pts',desc:'体验各种有趣职业，今天要当什么小能手？'},
-    {id:'w_candy',name:'糖果王国',emoji:'🍬',cost:260,cur:'pts',desc:'来到糖果王国，连走路都带着甜甜的香气！'},
-    {id:'w_food1',name:'豪华大餐',emoji:'🍱',cost:120,cur:'pts',desc:'超满足的一餐，喂它最管用',kind:'food',gain:70},
+    {id:'w_food1',name:'豪华大餐',emoji:'🍱',cost:120,cur:'pts',desc:'超满足的一餐，喂它最管用',kind:'kibble',gain:70},
     {id:'w_bath1',name:'皇家SPA',emoji:'💆',cost:150,cur:'pts',desc:'顶级沐浴体验，洗得香喷喷',kind:'bath',gain:80}
   ];
+  /* ⛔ 2026-09-15 商店合并·第2批：原 food/bath/skin 商品并入口粮铺(PET_SUPPLY)，
+     本数组仅保留装扮(dress)，供「装扮铺」子屏使用。 */
   const MONSTER_SHOP=[
-    {id:'m_food1',name:'彩虹糖',emoji:'🍭',cost:15,cur:'coin',desc:'甜甜的小奖励',kind:'food',gain:30},
-    {id:'m_food2',name:'小饼干',emoji:'🍪',cost:20,cur:'coin',desc:'酥脆小点心',kind:'food',gain:25},
-    {id:'m_food3',name:'营养罐头',emoji:'🥫',cost:35,cur:'coin',desc:'吃得饱饱的',kind:'food',gain:45},
-    {id:'m_skin1',name:'星星贴纸',emoji:'⭐',cost:30,cur:'coin',desc:'贴贴画装饰'},
-    {id:'m_skin2',name:'怪兽徽章',emoji:'👾',cost:40,cur:'coin',desc:'酷炫小徽章'},
-    {id:'m_bath1',name:'泡泡浴露',emoji:'🫧',cost:25,cur:'coin',desc:'洗得香喷喷',kind:'bath',gain:50},
-    {id:'m_bath2',name:'香香沐浴球',emoji:'🛁',cost:30,cur:'coin',desc:'泡泡浴超开心',kind:'bath',gain:45},
-    {id:'d_cap',name:'棒球帽',emoji:'🧢',cost:25,cur:'coin',desc:'戴上它，我就是最酷的小狗',kind:'dress',gain:0},
-    {id:'d_crown',name:'小皇冠',emoji:'👑',cost:40,cur:'coin',desc:'今天我是你的小王子 / 小公主',kind:'dress',gain:0},
-    {id:'d_bow',name:'蝴蝶结',emoji:'🎀',cost:25,cur:'coin',desc:'粉粉的，超可爱',kind:'dress',gain:0},
-    {id:'d_flower',name:'小花朵',emoji:'🌸',cost:20,cur:'coin',desc:'别在头上香香的',kind:'dress',gain:0},
-    {id:'d_glass',name:'小眼镜',emoji:'👓',cost:30,cur:'coin',desc:'一下子变博学啦',kind:'dress',gain:0},
-    {id:'d_sung',name:'酷墨镜',emoji:'🕶️',cost:35,cur:'coin',desc:'出门耍帅必备',kind:'dress',gain:0},
-    {id:'d_scarf',name:'小围巾',emoji:'🧣',cost:30,cur:'coin',desc:'暖暖的，像你的拥抱',kind:'dress',gain:0},
-    {id:'d_bell',name:'小铃铛',emoji:'🔔',cost:20,cur:'coin',desc:'叮叮当，走到哪都找得到我',kind:'dress',gain:0}
+    {id:'d_cap',name:'棒球帽',emoji:'🧢',cost:25,cur:'pts',desc:'戴上它，我就是最酷的小狗',kind:'dress'},
+    {id:'d_crown',name:'小皇冠',emoji:'👑',cost:40,cur:'pts',desc:'今天我是你的小王子 / 小公主',kind:'dress'},
+    {id:'d_bow',name:'蝴蝶结',emoji:'🎀',cost:25,cur:'pts',desc:'粉粉的，超可爱',kind:'dress'},
+    {id:'d_flower',name:'小花朵',emoji:'🌸',cost:20,cur:'pts',desc:'别在头上香香的',kind:'dress'},
+    {id:'d_glass',name:'小眼镜',emoji:'👓',cost:30,cur:'pts',desc:'一下子变博学啦',kind:'dress'},
+    {id:'d_sung',name:'酷墨镜',emoji:'🕶️',cost:35,cur:'pts',desc:'出门耍帅必备',kind:'dress'},
+    {id:'d_scarf',name:'小围巾',emoji:'🧣',cost:30,cur:'pts',desc:'暖暖的，像你的拥抱',kind:'dress'},
+    {id:'d_bell',name:'小铃铛',emoji:'🔔',cost:20,cur:'pts',desc:'叮叮当，走到哪都找得到我',kind:'dress'}
   ];
   function loadChestDay(){var today=getTodayKey();try{var r=LS.getItem(CHEST_KEY);if(r){var o=JSON.parse(r);if(o.day===today)return o;}}catch(e){}return {day:today,opened:[]};}
   function saveChestDay(o){try{LS.setItem(CHEST_KEY,JSON.stringify(o));}catch(e){}}
-  function switchShopTab(tab,el){shopTab=tab;document.querySelectorAll('.store-tabs span').forEach(function(s){s.classList.remove('sel');});el.classList.add('sel');renderShopGrid();}
-  function renderShopGrid(){var grid=document.getElementById('shopGrid');if(!grid)return;var items=shopTab==='wish'?WISH_SHOP:MONSTER_SHOP;grid.innerHTML=items.map(function(it){var can=it.cur==='coin'?gachaCoins>=it.cost:gachaPoints>=it.cost;var tag=it.kind?('<div class="bag-tag '+(it.kind==='food'?'t-food':(it.kind==='dress'?'t-dress':'t-bath'))+'">'+(it.kind==='food'?'🍖 喂食 +'+it.gain:(it.kind==='dress'?'👕 装扮':'🫧 洗澡 +'+it.gain))+'</div>'):'';var owned=it.kind?(bagCount(loadBag(),it.kind)?' · 背包×'+bagCount(loadBag(),it.kind):''):'';return '<div class="shop-card"><div class="av">'+it.emoji+'</div><div class="n">'+esc(it.name)+'</div><div class="d">'+esc(it.desc)+'</div>'+tag+'<div class="cost">'+(it.cur==='coin'?'🪙':'⭐')+' '+it.cost+(owned?'<span class="owned">'+owned+'</span>':'')+'</div><button class="btn '+(can?'':'ghost')+'" '+(can?'':'disabled')+' onclick="buyShopItem(\''+it.id+'\')">'+(can?'兑换':'余额不足')+'</button></div>';}).join('');}
-  function buyShopItem(id){var it=(shopTab==='wish'?WISH_SHOP:MONSTER_SHOP).find(function(x){return x.id===id;});if(!it)return;if(it.cur==='coin'){if(gachaCoins<it.cost){toast('硬币不足');return;}gachaCoins-=it.cost;gachaSet(GACHA_KEYS.c,gachaCoins);}else{if(gachaPoints<it.cost){toast('积分不足');return;}gachaPoints-=it.cost;gachaSet(GACHA_KEYS.p,gachaPoints);}if(it.kind){var bag=loadBag();bag[it.kind][it.id]=(bag[it.kind][it.id]||0)+1;saveBag(bag);toast('已购买：'+it.name+'（背包 +1）');}else{toast('已兑换：'+it.name);}initStore();}
-  function openChest(n){var cd=loadChestDay();if(cd.opened.indexOf(n)>=0){toast('这个宝箱今天已经开过了');return;}var costs={1:{cur:'free',cost:0},2:{cur:'coin',cost:20},3:{cur:'pts',cost:50}};var c=costs[n];if(c.cur==='coin'&&gachaCoins<c.cost){toast('硬币不足 20');return;}if(c.cur==='pts'&&gachaPoints<c.cost){toast('积分不足 50');return;}if(c.cur==='coin'){gachaCoins-=c.cost;gachaSet(GACHA_KEYS.c,gachaCoins);}else if(c.cur==='pts'){gachaPoints-=c.cost;gachaSet(GACHA_KEYS.p,gachaPoints);}cd.opened.push(n);saveChestDay(cd);var chest=document.getElementById('chest'+n);if(chest)chest.classList.add('open');var lock=document.getElementById('lock'+n);if(lock){lock.textContent='已开启';lock.style.background='#9CA3AF';lock.style.color='#fff';}var rewards=[{t:'pts',v:10},{t:'pts',v:20},{t:'coin',v:5},{t:'coin',v:10},{t:'pts',v:30}];var rw=rewards[Math.floor(Math.random()*rewards.length)];if(rw.t==='pts'){gachaPoints+=rw.v;gachaSet(GACHA_KEYS.p,gachaPoints);addEarn('star',rw.v,'chest','开启宝箱');floatStar(rw.v);}else{gachaCoins+=rw.v;gachaSet(GACHA_KEYS.c,gachaCoins);addEarn('coin',rw.v,'chest','开启宝箱');}toast('宝箱开启！获得 '+rw.v+(rw.t==='pts'?' 积分':' 硬币'));refreshPointsUI();initStore();checkAchievements();}
+  /* ⛔ 2026-09-15 金币归一：宝箱 2/3 均扣星星币；奖励中 'coin' 项并入 'pts' */
+  function openChest(n){var cd=loadChestDay();if(cd.opened.indexOf(n)>=0){toast('这个宝箱今天已经开过了');return;}var costs={1:0,2:20,3:50};var cost=costs[n]||0;if(cost&&gachaPoints<cost){toast('星星币不足 '+cost);return;}if(cost){gachaPoints-=cost;gachaSet(GACHA_KEYS.p,gachaPoints);}cd.opened.push(n);saveChestDay(cd);var chest=document.getElementById('chest'+n);if(chest)chest.classList.add('open');var lock=document.getElementById('lock'+n);if(lock){lock.textContent='已开启';lock.style.background='#9CA3AF';lock.style.color='#fff';}var rewards=[10,20,5,10,30];var v=rewards[Math.floor(Math.random()*rewards.length)];gachaPoints+=v;gachaSet(GACHA_KEYS.p,gachaPoints);addEarn('star',v,'chest','开启宝箱');floatStar(v);toast('宝箱开启！获得 '+v+' 星星币');refreshPointsUI();renderChestState();checkAchievements();}
   function openAllChestsHint(){toast('点击任意宝箱即可开启');}
 
   /* ---- 6.5 陪玩得星：每日上限，防止刷星 ---- */
@@ -17828,8 +18834,27 @@ LOGIC_LEVELS.forEach(function(L){
   function loadPlayRewards(){var today=getTodayKey();try{var r=LS.getItem(PLAY_REWARD_KEY);if(r){var o=JSON.parse(r);if(o.day===today)return o.counts||{};}}catch(e){}return {};}
   function savePlayRewards(counts){try{LS.setItem(PLAY_REWARD_KEY,JSON.stringify({day:getTodayKey(),counts:counts}));}catch(e){}}
   function canPlayReward(action,limit){var counts=loadPlayRewards();var n=(counts[action]||0)+1;if(n>limit)return {ok:false,left:0};counts[action]=n;savePlayRewards(counts);return {ok:true,left:limit-n};}
-  function awardPlayStar(action,limit,note){var r=canPlayReward(action,limit);if(!r.ok)return false;gachaPoints+=1;gachaSet(GACHA_KEYS.p,gachaPoints);addEarn('star',1,'play',note);floatStar(1);refreshPointsUI();return true;}
-  function playRewardHint(action,limit){var counts=loadPlayRewards();var n=counts[action]||0;return n>=limit?'（今日星星已拿满）':'（今日还可拿 '+(limit-n)+' 次⭐）';}
+  /* ---- 6.5 陪玩奖励：宠物互动只产「关系」，只有学习行为（趣题）产「钱」 ----
+     ⛔ 2026-09-14 定稿三条线：钱靠努力（学习星）/ 关系靠陪伴（亲密度·心情·成长值）/ 荣誉靠坚持（礼物券）。
+     旧逻辑：摸头3 + 陪聊3 + 趣题5 + 哄睡1 + 换装2 + 拍照2 + 喂食2 + 洗澡2 = 每天白给 20⭐，
+     比做正事（一项作业 1⭐）还快 —— 主次颠倒，且「互动→星→买宠物用品」形成闭环套利。故：
+       ① 非 quiz 动作一律不发星 —— 关系分仍由各调用点原有的 bumpMood()/addBond() 负责
+          （摸头 bumpMood(4)、喂食·洗澡 bumpMood(5)、哄睡 addBond(2)、换装 addBond(1)、拍照 addBond(1)），
+          所以亲密度·心情·成长值一丝未减，只是不再产钱
+       ② 只有 PLAY_STAR_ACTIONS 里的动作（quiz = 学习行为）发星，沿用每日上限
+       ③ playRewardHint 对不发星的动作返回空串 —— 全部互动气泡里的星星提示自动消失，只留情感台词 */
+  const PLAY_STAR_ACTIONS={quiz:1};
+  function awardPlayStar(action,limit,note){
+    if(!PLAY_STAR_ACTIONS[action])return false;      /* 未发星：调用点不会拼 +1⭐ */
+    var r=canPlayReward(action,limit);if(!r.ok)return false;
+    gachaPoints+=1;gachaSet(GACHA_KEYS.p,gachaPoints);
+    addEarn('star',1,'play',note);floatStar(1);refreshPointsUI();return true;
+  }
+  function playRewardHint(action,limit){
+    if(!PLAY_STAR_ACTIONS[action])return '';          /* 互动不发星 → 不显示额度提示 */
+    var counts=loadPlayRewards();var n=counts[action]||0;
+    return n>=limit?'（今日星星已拿满）':'（今日还可拿 '+(limit-n)+' 次⭐）';
+  }
 
   /* ---- 7. 把情绪打卡接入任务完成 ---- */
   function onTaskCompleted(idx){
@@ -17880,7 +18905,7 @@ LOGIC_LEVELS.forEach(function(L){
     decayPet(); renderPetVitals(); renderPetBag(); refreshPointsUI();
     try{ renderRoutineBar(); updateMoodFromState(); }catch(e){}
     try{ scheduleRoutineTick(); }catch(e){}
-    try{ petCheckMiss(); renderBondRow(); applyDress(); renderPetSleep(); renderRoutineCfg();
+    try{ petCheckMiss(); renderBondRow(); applyDress(); renderPetSleep(); renderRoutineCfg(); renderChatCfg();
          var _sl=petIsSleeping(); if(_sl)setTimeout(petWakeUp, Math.max(500,(loadPetState().sleepUntil||0)-Date.now())); }catch(e){}
     initCalendar(); initKeypad(); refreshPinNow(); initPsetCtrls();
     loadMgmt(); renderCheckins(); renderStudies(); renderHomeTasks(); renderHomework();
@@ -20045,8 +21070,13 @@ window.__monoBack = function () {
     });
   }
 
-  /* C-1. 宠物闲时碎碎念（首页气泡轮换） */
-  var PET_CHAT=[
+  /* C-1. 宠物闲时碎碎念（首页气泡轮换）
+     ⛔ 2026-09-14 两项改动：
+     ① 只在「闲时」出现 —— petBubbleNotice() 有内容（饿晕/想念/睡觉/饿/脏/当前作息提醒）时，
+        碎碎念让位，并顺手把提醒刷新回气泡（原来是每 32s 无条件覆盖，会把提醒盖掉）。
+     ② 文案可自定义 —— 存 mp_pet_chat_v1（家长页「宠物碎碎念」卡编辑），空/非法则用默认 8 句。 */
+  function petChatKey(){return 'mp_pet_chat_v1';}
+  function petChatDefaults(){return [
     '今天也要一起加油呀，我陪着你💪',
     '刚刚我偷偷练习了新本领，想看看吗？✨',
     '你不在的时候，我会想你的～',
@@ -20055,13 +21085,34 @@ window.__monoBack = function () {
     '我数着星星，等你来陪我入睡🌟',
     '你笑起来的样子，是我最喜欢看的画🎨',
     '悄悄说，你是我最好的朋友🤫'
-  ];
+  ];}
+  function getPetChat(){
+    try{var r=LS.getItem(petChatKey());if(r){var a=JSON.parse(r);if(a&&a.length)return a;}}catch(e){}
+    return petChatDefaults();
+  }
+  function petChatLine(){var a=getPetChat();return a[Math.floor(Math.random()*a.length)]||petChatDefaults()[0];}
   function petChatIdle(){
     var b=document.getElementById('bubble');
     var home=document.getElementById('sc-home');
     if(b&&home&&home.classList.contains('on')){
-      b.textContent=PET_CHAT[Math.floor(Math.random()*PET_CHAT.length)];
+      try{if(petBubbleNotice()){updatePetBubble();return;}}catch(e){}
+      b.textContent=petChatLine();
     }
+  }
+  /* 家长页「宠物碎碎念」：读取 / 保存 / 恢复默认 */
+  function renderChatCfg(){var ta=document.getElementById('chatTa');if(!ta)return;ta.value=getPetChat().join('\n');}
+  function saveChatCfg(v){
+    var arr=String(v||'').split('\n').map(function(s){return String(s).trim().slice(0,40);}).filter(function(s){return !!s;}).slice(0,12);
+    if(!arr.length)arr=petChatDefaults();
+    try{LS.setItem(petChatKey(),JSON.stringify(arr));}catch(e){}
+    try{renderChatCfg();petChatIdle();}catch(e){}
+    try{toast('已保存 '+arr.length+' 句碎碎念');}catch(e){}
+  }
+  function resetChatCfg(){
+    try{LS.removeItem(petChatKey());}catch(e){}
+    try{renderChatCfg();}catch(e){}
+    try{petChatIdle();}catch(e){}
+    try{toast('已恢复默认碎碎念');}catch(e){}
   }
   function petChatStart(){
     if(window.__petChatStarted)return; window.__petChatStarted=true;
@@ -20077,6 +21128,12 @@ window.__monoBack = function () {
   window.petBoxReveal=petBoxReveal;
   window.closePetGacha=closePetGacha;
   window.petChatStart=petChatStart;
+  /* 2026-09-14：碎碎念可自定义 —— 家长页卡（内联 onchange/onclick）与全局初始化都要用，必须导出 */
+  window.renderChatCfg=renderChatCfg;
+  window.saveChatCfg=saveChatCfg;
+  window.resetChatCfg=resetChatCfg;
+  window.getPetChat=getPetChat;
+  window.petChatIdle=petChatIdle;
 
   ensureEgg();
   renderPetsScreen();
