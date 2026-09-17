@@ -4307,7 +4307,7 @@
             <div class="qk q1" onclick="go('pets')" data-page-node-id="vVrWQoFfQiJBzzqY998k5c"><span class="qk-ic" data-page-node-id="9rBCbJIYyEWTg3mAGPpBf4">🐾</span><span class="qk-t" data-page-node-id="5FKp1TGqaDCsPwZkgz9BQV">图鉴</span></div>
             <div class="qk q2" onclick="go('games')" data-page-node-id="lNc07kr9dbg5e7FVD0QrYE"><span class="qk-ic" data-page-node-id="ZKHMc7Bt7xG1szapn46qRq">🎮</span><span class="qk-t" data-page-node-id="xw10LFeLEHmMh8f7JZytF7">游戏</span></div>
             <div class="qk q3" onclick="go('gacha')" data-page-node-id="UetfGvpbg65O6VyDoM9M5t"><span class="qk-ic" data-page-node-id="GnyzwFG08IBGhq3r1RhjAn">🎰</span><span class="qk-t" data-page-node-id="r0SUpKMMiVWXUfuhDJRFlA">扭蛋</span></div>
-            <div class="qk q4" onclick="go('netdisk')" data-page-node-id="sfuHDnYQDKBI7ngkttGPo5"><span class="qk-ic" data-page-node-id="aVbbNxZj6lMB6afKWnT6Ok">📚</span><span class="qk-t" data-page-node-id="gZ0Cs9Pkcly7yieklyiIka">学习</span></div>
+            <div class="qk q4" onclick="go('anime')" data-page-node-id="sfuHDnYQDKBI7ngkttGPo5"><span class="qk-ic" data-page-node-id="aVbbNxZj6lMB6afKWnT6Ok">📺</span><span class="qk-t" data-page-node-id="gZ0Cs9Pkcly7yieklyiIka">动画</span></div>
           </div>
         </div>
           </div><!-- /grid3 -->
@@ -6685,7 +6685,7 @@
           <div class="ah-icon" data-page-node-id="mDressIc001"><span class="bi" data-page-node-id="mDressBi001">👗</span></div>
           <div class="ah-txt" data-page-node-id="mDressTxt001"><div class="ah-t" data-page-node-id="mDressT001">小镇衣橱</div><div class="ah-s" data-page-node-id="mDressS001">兔小姐看店 · 帽子 / 眼镜 / 蝴蝶结</div></div>
           <div class="ah-sp" data-page-node-id="mDressSp001"></div>
-          <div class="ah-act" data-page-node-id="mDressAct001"><div class="ah-mini star" data-page-node-id="mDressCoin001"><span class="coin-ic">⭐</span><span id="mDressCoinN" class="ah-star-n">0</span></div><div class="ah-mini gear" onclick="go('parent')" title="家长模式" data-page-node-id="mDressGear001">⚙️</div></div>
+          <div class="ah-act" data-page-node-id="mDressAct001"><div class="ah-mini star" data-page-node-id="mDressCoin001"><span class="coin-ic">⭐</span><span id="mDressCoinN" class="ah-star-n">0</span></div><div class="ah-mini restock" onclick="mallDressRestock()" title="家长改名 / 改价 / 下架 / 新增装扮" data-page-node-id="mDressRestock001">🛒 补货</div><div class="ah-mini gear" onclick="go('parent')" title="家长模式" data-page-node-id="mDressGear001">⚙️</div></div>
         </div>
         <div class="msub-coinbar" data-page-node-id="mDressCb001"><span class="msc-num" id="mDressCoinBig">0</span><span class="msc-lab">星星币</span></div>
         <div class="msub-section" data-page-node-id="mDressSec1">
@@ -6704,7 +6704,7 @@
           <div class="ah-icon" data-page-node-id="mWishIc001"><span class="bi" data-page-node-id="mWishBi001">🎟️</span></div>
           <div class="ah-txt" data-page-node-id="mWishTxt001"><div class="ah-t" data-page-node-id="mWishT001">星星邮局</div><div class="ah-s" data-page-node-id="mWishS001">把心愿寄出去 · 换真宝贝</div></div>
           <div class="ah-sp" data-page-node-id="mWishSp001"></div>
-          <div class="ah-act" data-page-node-id="mWishAct001"><div class="ah-mini star" data-page-node-id="mWishCoin001"><span class="coin-ic">⭐</span><span id="mWishCoinN" class="ah-star-n">0</span></div><div class="ah-mini gear" onclick="go('parent')" title="家长模式" data-page-node-id="mWishGear001">⚙️</div></div>
+          <div class="ah-act" data-page-node-id="mWishAct001"><div class="ah-mini star" data-page-node-id="mWishCoin001"><span class="coin-ic">⭐</span><span id="mWishCoinN" class="ah-star-n">0</span></div><div class="ah-mini restock" onclick="mallWishRestock()" title="家长编辑心愿清单（改名 / 改档 / 改价 / 新增）" data-page-node-id="mWishEdit001">✎ 编辑</div><div class="ah-mini gear" onclick="go('parent')" title="家长模式" data-page-node-id="mWishGear001">⚙️</div></div>
         </div>
         <div class="msub-coinbar" data-page-node-id="mWishCb001"><span class="msc-num" id="mWishCoinBig">0</span><span class="msc-lab">星星币</span></div>
         <div class="msub-section" data-page-node-id="mWishSec1">
@@ -7209,7 +7209,7 @@
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
       science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',chinesebook:'sc-chinesebook',
       timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',qbank:'sc-qbank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',challenge:'sc-challenge',role:'sc-role',quiz:'sc-quiz',script:'sc-script',playbook:'sc-playbook',recycle:'sc-recycle',plan:'sc-plan',hwcal:'sc-hwcal',
-      'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff','game-phonics':'sc-game-phonics',mall:'sc-mall','mall-supply':'sc-mall-supply','mall-dress':'sc-mall-dress','mall-wish':'sc-mall-wish'};
+      'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff','game-phonics':'sc-game-phonics',mall:'sc-mall','mall-supply':'sc-mall-supply','mall-dress':'sc-mall-dress','mall-wish':'sc-mall-wish',anime:'sc-anime'};
     let target=map[screen];
     if(!target){ target = document.getElementById(screen)? screen : 'sc-home'; }
     const cur=document.querySelector('.screen.on');
@@ -7242,6 +7242,7 @@
     else if(target==='sc-script')renderScript();
     else if(target==='sc-playbook')renderPlaybook();
     else if(target==='sc-netdisk')renderNetHub();
+    else if(target==='sc-anime'){ if(typeof renderAnime==='function') renderAnime(); }
     else if(target==='sc-pets')renderPetsScreen();
     else if(target==='sc-mall'){renderMall();refreshMallCoinUI();}
     else if(target==='sc-game-phonics'){ openPhonicsGame(); }
@@ -7541,16 +7542,18 @@
 
   // 源字库(HONGEN_GROUPS)未收录的一年级上会认字，兜底拼音（标准读音）
   const CB_PINYIN={'积':'jī','佛':'fó','服':'fú','语':'yǔ','树':'shù','片':'piàn','尖':'jiān','就':'jiù','无':'wú','声':'shēng','苹':'píng','尺':'chǐ','业':'yè','课':'kè','校':'xiào','从':'cóng','条':'tiáo','丽':'lì','最':'zuì','点':'diǎn','当':'dāng','串':'chuàn','到':'dào','没':'méi','更':'gèng'};
-  var cbState={view:'home', unit:0, lesson:0, selUnit:0, mediaTab:'image', lessonTab:'study', knowPage:0, mediaIdx:0, extPage:0};
+  var cbState={view:'home', unit:0, lesson:0, selUnit:0, mediaTab:'image', lessonTab:'study', knowPage:0, mediaIdx:0, extTab:'study', current:null, lastUnit:null, lastLesson:null};
+  var cbLoaded=false;
+  var CB_LS='mp_cbook_state_v1';
   var cbHistory=[];
   function cbSelUnit(ui){ cbState.selUnit=ui; renderChineseBook(); }
   function cbBack(){
-    if(cbState.view==='park'){ cbState.view='textbook'; renderChineseBook(); return; }
-    if(cbState.view==='lesson'){ cbState.view='textbook'; renderChineseBook(); return; }
-    if(cbState.view==='textbook'){ if(cbHistory.length){cbState=cbHistory.pop();} else {cbState.view='home';} renderChineseBook(); return; }
+    if(cbState.view==='park'){ cbState.view='textbook'; cbSave(); renderChineseBook(); return; }
+    if(cbState.view==='lesson'){ cbState.view='textbook'; cbSave(); renderChineseBook(); return; }
+    if(cbState.view==='textbook'){ if(cbHistory.length){cbState=cbHistory.pop();} else {cbState.view='home';} cbSave(); renderChineseBook(); return; }
     if(typeof goBack==='function')goBack();
   }
-  function cbGo(v,extra){ cbHistory.push({view:cbState.view,unit:cbState.unit,lesson:cbState.lesson}); cbState.view=v; if(extra)Object.assign(cbState,extra); renderChineseBook(); }
+  function cbGo(v,extra){ cbHistory.push({view:cbState.view,unit:cbState.unit,lesson:cbState.lesson}); cbState.view=v; if(extra)Object.assign(cbState,extra); if(extra&&extra.unit!=null&&extra.lesson!=null){cbState.lastUnit=extra.unit;cbState.lastLesson=extra.lesson;} cbSave(); renderChineseBook(); }
   function cbStrokeSVG(ch){
     var sd=(typeof STROKE_DATA!=='undefined'&&STROKE_DATA[ch])?STROKE_DATA[ch]:null;
     if(!sd) return '<div class="cb-nostroke">暂无力</div>';
@@ -7569,6 +7572,29 @@
     try{updateLearnedUI();}catch(e){}
     renderChineseBook();
   }
+  function cbSave(){try{localStorage.setItem(CB_LS,JSON.stringify({view:cbState.view,unit:cbState.unit,lesson:cbState.lesson,selUnit:cbState.selUnit,mediaTab:cbState.mediaTab,lessonTab:cbState.lessonTab,knowPage:cbState.knowPage,mediaIdx:cbState.mediaIdx,extTab:cbState.extTab,current:cbState.current,lastUnit:cbState.lastUnit,lastLesson:cbState.lastLesson}));}catch(e){}}
+  function cbLoad(){try{var s=JSON.parse(localStorage.getItem(CB_LS));if(s){cbState=Object.assign(cbState,s); if(cbState.view==='park')cbState.view='textbook'; if(cbState.unit==null)cbState.unit=0; if(cbState.lesson==null)cbState.lesson=0; if(cbState.extTab==null)cbState.extTab='study';}}catch(e){}}
+  function cbSetCurrent(u,l){ if(cbState.current&&cbState.current.unit===u&&cbState.current.lesson===l){cbState.current=null;} else {cbState.current={unit:u,lesson:l};} cbSave(); renderChineseBook(); }
+  function cbClearCurrent(){ cbState.current=null; cbSave(); renderChineseBook(); }
+  function cbContinueHTML(){
+    var c=cbState.current||(cbState.lastUnit!=null?{unit:cbState.lastUnit,lesson:cbState.lastLesson}:null);
+    if(!c)return '';
+    var u=CB_BOOK.units[c.unit]; if(!u)return '';
+    var les=u.lessons[c.lesson]; if(!les)return '';
+    var inCur=(cbState.current&&cbState.current.unit===c.unit&&cbState.current.lesson===c.lesson);
+    var label=inCur?'正在学':'上次学到';
+    return '<div class="cb-continue" onclick="cbGo(\'lesson\',{unit:'+c.unit+',lesson:'+c.lesson+'})">'
+      +'<div class="cic-ic">📌</div>'
+      +'<div class="cic-tx"><div class="cic-l">'+label+'：第 '+(u.no||(c.unit+1))+' 单元 · '+les.t+'</div><div class="cic-s">点这里接着学</div></div>'
+      +'<div class="cic-go">继续 ›</div></div>';
+  }
+  function cbProgressHTML(){
+    var tu=CB_BOOK.units.length;
+    var tl=CB_BOOK.units.reduce(function(a,u){return a+u.lessons.length;},0);
+    var cur=cbState.current?('📌 正在学：第 '+(CB_BOOK.units[cbState.current.unit].no||(cbState.current.unit+1))+' 单元 · '+CB_BOOK.units[cbState.current.unit].t):'还没标记正在学的课文';
+    return '<div class="cb-prog-line">'+cur+' · 全册 '+tu+' 单元 '+tl+' 课</div>';
+  }
+
   /* ===== 课文页媒体（图片/视频/PPT）· 独立存储，不动绘本数据 ===== */
   var CB_MEDIA_KEY='mp_cb_media_v1';
   /* 各课默认课本图（未手动加图时显示）；键=unit_lesson */
@@ -7615,27 +7641,71 @@
       quiz:[
         {q:'“天、地、人”说的是？',opts:['三种动物','我们生活的世界','三件玩具'],ans:1,hint:'天地人是我们生活的世界'},
         {q:'“你、我、他”指的是？',opts:['三个人称','三种颜色','三个数字'],ans:0,hint:'你我他是称呼人的'}
-      ]
+      ],
+      study:{goals:['认读 天、地、人、你、我、他 6 个生字','说出“天在上、地在下、人在中间”','用“你/我/他”指认身边的人'],
+        keywords:['天','地','人','你','我','他'],
+        points:['“天”是头顶上蓝蓝的空间，“地”是脚下的土地','“人”是爸爸妈妈和我们','“你、我、他”称呼三个人：说话的人叫“我”，听话的人叫“你”，不在场的第三个人叫“他”']},
+      review:{links:['回扣入学准备学的“我、是、中、国、人”——“人”字前面见过啦','“天、地”和“你我他”都在入学准备《我是中国人》里出现过'],
+        tips:['易混：“人”和“入”长得像，记住“人”字撇捺分开站','易混：“他”和“她”，本课先认“他”（称呼人）']},
+      preview:{next:['下一课《金木水火土》会学到“上、下、日、月”','预习时抬头看看天、低头看看地'],
+        ask:['今晚抬头看看天，天是什么颜色的？','找一找身边有哪些“人”？']},
+      prep:{focus:['区分“你、我、他”三个人称（一年级最常见混淆点）','读准字音：天tiān、地dì、人rén'],
+        hard:['孩子常把“你/我/他”说反，需要大量情境练习'],
+        guide:['玩“指一指”游戏：指自己说“我”，指孩子说“你”，指第三个人说“他”','用手势帮记忆：双手向上=天，双手向下=地','先认读、不急着写，多听多指'],
+        activity:['“人称接龙”：一人说“我是XX”，轮流指“你/他”','出门散步玩“找天人”：指天、指地、数数遇到的人']}
     },
     '1_1':{
       lines:['一二三四五，','金木水火土。','天地分上下，','日月照今古。'],
       quiz:[
         {q:'“金木水火土”是课文里的？',opts:['五种水果','五种自然事物','五种动物'],ans:1,hint:'金木水火土是自然事物'},
         {q:'“天地分上下”下一句是？',opts:['日月照今古','左右分东西','前后分南北'],ans:0,hint:'天地分上下，日月照今古'}
-      ]
+      ],
+      study:{goals:['认读 一~五、金、木、水、火、土、上、下 12 字','背诵“一二三四五，金木水火土”','知道“上、下”是反义词'],
+        keywords:['一','二','三','四','五','金','木','水','火','土','上','下'],
+        points:['“金木水火土”是古人说的五种基本物质，叫“五行”','“天地分上下，日月照今古”：天和地分出上和下，太阳月亮从古照到今']},
+      review:{links:['上一课《天地人》学了“天、地、人”，本课加“上、下”','“一、二、三”是最早认识的数字'],
+        tips:['易混：“上”和“下”方向不同，用手比划','“土”和“十”：土下面多一横']},
+      preview:{next:['下一课《口耳目手足》认识身体部位','预习：数数自己有几只手、几只脚'],
+        ask:['家里哪些东西是金/木/水/火/土做的？','什么东西在“上”、什么东西在“下”？']},
+      prep:{focus:['借助儿歌节奏背诵','区分“上/下”方位'],
+        hard:['“金、木、水、火、土”字较难写，先只要求认读'],
+        guide:['拍手打节拍读“一二三四五，金木水火土”','用积木摆“上、下”帮理解方位','生活中指认：灯在上、鞋在下'],
+        activity:['找一找家里“金木水火土”五行实物','玩“听指令放东西”：把玩具放“上/下”']}
     },
     '1_2':{
       lines:['口、耳、目、手、足，','我们的身体。'],
       sayit:'口耳手足都能帮我们做事情：口会说话，手会做事。',
       quiz:[
         {q:'“口、耳、目、手、足”是？',opts:['五种文具','我们的身体部位','五种颜色'],ans:1,hint:'它们是身体部位'}
-      ]
+      ],
+      study:{goals:['认读 口、耳、目、手、足、坐、立 7 字','指认自己的身体部位','知道“坐、立”是正确姿势'],
+        keywords:['口','耳','目','手','足','坐','立'],
+        points:['口=嘴，耳=耳朵，目=眼睛，手=手，足=脚','“站如松，坐如钟”：站要直、坐要正']},
+      review:{links:['回扣“人”字：手、足都是人的身体','前面学的“上/下”可以用手势表示'],
+        tips:['易混：“目”和“日”：目里面两横，日里面一横','易混：“足”和“走”']},
+      preview:{next:['下一课《日月山川》认识自然景物','预习：出去看看太阳、月亮、山、小河'],
+        ask:['用你的口、耳、目、手、足分别能做什么？','什么姿势坐得最舒服？']},
+      prep:{focus:['身体部位与字的对应','培养正确坐立姿势'],
+        hard:['“目”字形易和“日”混'],
+        guide:['边指边读：指嘴说“口”、指耳说“耳”','编动作：双手放膝=坐，挺胸=立','提醒“坐如钟、站如松”'],
+        activity:['“我说你指”：家长说字，孩子指身体','“姿势小警察”：互相检查坐立姿']}
     },
     '1_3':{
       lines:['日、月、山、川、','水、火、田、禾。'],
       quiz:[
         {q:'下面哪个是自然景物？',opts:['日、月、山、川','书、笔、桌','猫、狗、鸟'],ans:0,hint:'日月光山川都是自然景物'}
-      ]
+      ],
+      study:{goals:['认读 日、月、山、川、水、火、田、禾 8 字','说出这些自然景物','把字和实物对上号'],
+        keywords:['日','月','山','川','水','火','田','禾'],
+        points:['日=太阳，月=月亮，山=高山，川=河流，水=水，火=火，田=田地，禾=禾苗','这些字很多像画：日是圆太阳，月是弯月亮，山像山峰']},
+      review:{links:['上一课“目”是眼睛，本课“日”是太阳，别混','“水、火”在《金木水火土》里出现过'],
+        tips:['易混：“日”和“目”：日里面空，目里面两横','易混：“水”和“火”：一个灭火一个生火']},
+      preview:{next:['第一单元结束啦！下个单元开始学汉语拼音 a o e','预习：听听身边哪些声音像“a——”'],
+        ask:['天上的日和月，你更喜欢哪个？','田里种的是什么？']},
+      prep:{focus:['象形字启蒙：字像画','自然景物认读'],
+        hard:['多个象形字集中，孩子易混淆形状相近的'],
+        guide:['画一画：日画圆、月画弯、山画峰，帮记忆','生活中指认：看天上的日、月，路边的山','对比“日/目、水/火”'],
+        activity:['“象形字猜猜猜”：画字让孩子猜','户外“找自然”：找日、月、山、水']}
     },
     /* ===== 第二单元 汉语拼音（一） ===== */
     '2_0':{sayit:'a o e，张大嘴巴 a a a，跟着读一读！'},
@@ -7661,7 +7731,18 @@
       quiz:[
         {q:'秋天大雁往哪个方向飞？',opts:['往南飞','往北飞','不动'],ans:0,hint:'一群大雁往南飞'},
         {q:'“天气凉了，树叶黄了”写的是？',opts:['春天','秋天','夏天'],ans:1,hint:'树叶黄了是秋天'}
-      ]
+      ],
+      study:{goals:['朗读课文，感受秋天景象','认读重点词：凉、黄、落、大雁、南飞','知道秋天树叶黄、大雁往南飞'],
+        keywords:['秋天','凉','黄','落','大雁','南飞'],
+        points:['秋天天气变凉，树叶变黄落下','大雁排队往南飞过冬，一会儿“人”字一会儿“一”字']},
+      review:{links:['回扣识字课“人、一”：大雁排成“人”字和“一”字','“天、地”在第一单元学过'],
+        tips:['易混：“凉”和“冷”程度不同','“南”和“北”是相反方向']},
+      preview:{next:['下一课《江南》是首采莲的诗歌','预习：想想夏天池塘里有什么'],
+        ask:['秋天和夏天有什么不一样？','你见过大雁排队飞吗？']},
+      prep:{focus:['有感情朗读，读出秋天的美','理解“大雁南飞”的季节性'],
+        hard:['长句子停顿：一口气读不顺'],
+        guide:['先听范读再跟读，长句划停顿','用图画帮理解：画一片黄叶、一排大雁','问开放式问题：“秋天还有哪些变化？”'],
+        activity:['捡落叶做“秋天标本”','户外看天：“今天天那么蓝那么高吗？”']}
     },
     '5_1':{
       lines:['江南可采莲，莲叶何田田。','鱼戏莲叶间。','鱼戏莲叶东，鱼戏莲叶西，','鱼戏莲叶南，鱼戏莲叶北。'],
@@ -7669,7 +7750,18 @@
       quiz:[
         {q:'小鱼在莲叶间做什么？',opts:['睡觉','戏（玩耍）','写字'],ans:1,hint:'鱼戏莲叶间，戏就是玩耍'},
         {q:'这首诗歌写的是哪里的景色？',opts:['江南','塞北','高山'],ans:0,hint:'江南可采莲'}
-      ]
+      ],
+      study:{goals:['朗读诗歌，感受江南水乡','认读：江、南、莲、鱼、东、西、北','知道“鱼戏莲叶”的方位词'],
+        keywords:['江南','莲','鱼','东','西','北'],
+        points:['江南水乡，夏天莲叶田田，小鱼在莲叶间玩耍','方位词：东、西、南、北，诗里写了东、西、南、北']},
+      review:{links:['上一课“南”学过，本课补全东西北','“南”和“北”是反义词'],
+        tips:['易混：四个方位词东/西/南/北','“莲”和“连”音近']},
+      preview:{next:['下一课《雪地里的小画家》讲冬天','预习：冬天会下雪吗'],
+        ask:['小鱼在莲叶间会做什么？','东南西北，你分得清吗？']},
+      prep:{focus:['诗歌的节奏与画面感','方位词认读'],
+        hard:['四个方位词集中，易记混顺序'],
+        guide:['边读边用手比方位：左东右西、上前南后北（简化版）','画莲池图，标小鱼位置','配动作朗读更有趣'],
+        activity:['“方位蹲”游戏：喊东/西/南/北孩子往哪边蹲','画一池莲花和小鱼']}
     },
     '5_2':{
       lines:['下雪啦，下雪啦！','雪地里来了一群小画家。','小鸡画竹叶，小狗画梅花，小鸭画枫叶，小马画月牙。','不用颜料不用笔，几步就成一幅画。','青蛙为什么没参加？他在洞里睡着啦。'],
@@ -7677,7 +7769,18 @@
       quiz:[
         {q:'小鸡在雪地里画什么？',opts:['梅花','竹叶','月牙'],ans:1,hint:'小鸡画竹叶'},
         {q:'青蛙为什么没来画画？',opts:['去玩了','在洞里冬眠','不会画'],ans:1,hint:'他在洞里睡着啦（冬眠）'}
-      ]
+      ],
+      study:{goals:['朗读课文，喜欢雪景','认读：雪、画、竹、牙、步、参加、洞、睡','知道不同动物脚印像不同画'],
+        keywords:['雪','画','竹','牙','步','冬眠'],
+        points:['小鸡画竹叶，小狗画梅花，小鸭画枫叶，小马画月牙','青蛙在洞里冬眠，所以没来参加']},
+      review:{links:['回扣“人、一”：大雁排的字','“下”字在识字课学过'],
+        tips:['易混：“竹”和“足”音近形不同','“参加”是本课新词']},
+      preview:{next:['下一课《四季》讲春夏季秋','预习：你最喜欢哪个季节'],
+        ask:['你的小脚丫踩在雪上像什么？','还有谁会冬眠？']},
+      prep:{focus:['想象与联想：脚印变画','了解“冬眠”常识'],
+        hard:['把动物和脚印对应起来'],
+        guide:['先问“小鸡的脚什么形状”，再读“画竹叶”','讲冬眠：青蛙为啥睡觉不过冬','用手在桌面“走”模拟脚印'],
+        activity:['用颜料印脚印画','“动物冬眠知多少”小科普']}
     },
     '5_3':{
       lines:['草芽尖尖，他对小鸟说：“我是春天。”','荷叶圆圆，他对青蛙说：“我是夏天。”','谷穗弯弯，他鞠着躬说：“我是秋天。”','雪人大肚子一挺，他顽皮地说：“我就是冬天。”'],
@@ -7685,7 +7788,18 @@
       quiz:[
         {q:'“草芽尖尖”代表哪个季节？',opts:['春天','夏天','冬天'],ans:0,hint:'草芽尖尖，我是春天'},
         {q:'“雪人大肚子一挺”说的是？',opts:['春天','冬天','秋天'],ans:1,hint:'雪人是冬天'}
-      ]
+      ],
+      study:{goals:['朗读课文，知道四季特征','认读：春、夏、秋、冬、尖、说、青、蛙','能说每个季节的代表景物'],
+        keywords:['春','夏','秋','冬','草芽','荷叶','谷穗','雪人'],
+        points:['草芽尖尖是春天，荷叶圆圆是夏天，谷穗弯弯是秋天，雪人是冬天','课文用拟人让四季“说话”']},
+      review:{links:['回扣《秋天》学过的“秋”','“夏”和“冬”是新字'],
+        tips:['易混：四季顺序春→夏→秋→冬','“青”和“清”音近']},
+      preview:{next:['第一单元阅读结束！下个单元《识字二》继续认字','预习：你眼里的春天什么样'],
+        ask:['四个季节你最喜欢哪个？为什么？','每个季节你穿什么衣服？']},
+      prep:{focus:['四季特征与代表景物','仿说句式“___，他对___说：“我是___”'],
+        hard:['仿说创作对一年级有难度'],
+        guide:['用图卡帮孩子配对：草芽—春、荷叶—夏','鼓励孩子仿说：“桃花朵朵，他对蝴蝶说我是春天”','联系生活谈穿衣变化'],
+        activity:['画“四季树”：四格画不同季节','“四季时装秀”：拿衣服说季节']}
     },
     /* ===== 第六单元 识字（二） ===== */
     '6_0':{
@@ -7982,7 +8096,7 @@
   }
   function cbVidDel(i){ var md=getCbMedia()||{}; if(!md.videos)md.videos=[]; md.videos.splice(i,1); setCbMedia(md); renderCbVidMgr(); renderChineseBook(); toast('已删除该视频'); }
   function cbMediaPreview(i){ cbState.mediaIdx=i; var m=document.getElementById('cbMediaMask'); if(m)m.style.display='none'; cbMediaZoom(); }
-  function cbExtPageMove(d){ var np=(cbState.extPage||0)+d; if(np<0||np>1)return; cbState.extPage=np; renderChineseBook(); }
+  function cbExtTab(t){ cbState.extTab=t; renderChineseBook(); }
   function cbKnowPageHtml(){
     var pp=cbState.knowPage||0, per=5, total=CB_KNOWS.length;
     var start=pp*per;
@@ -8053,6 +8167,7 @@
   }
   window.removeCbInsertedMedia=removeCbInsertedMedia;
   function renderChineseBook(){
+    if(!cbLoaded){cbLoaded=true;cbLoad();}
     var root=document.getElementById('cbRoot'); if(!root)return;
     var hero='<div class="app-head skin-cbook"><div class="ah-back" onclick="cbBack()">←</div>'
       +'<div class="ah-icon">📖</div>'
@@ -8084,7 +8199,7 @@
       ];
       var subHtml=subs.map(function(s){var act=s[3];var onclick=act?('onclick="'+act+'"'):'onclick="toast(\'敬请期待\')"';var tag=act?'立即学习':'即将上线';return '<div class="cb-sub '+s[2]+'" '+onclick+'><div class="cb-sub-e">'+s[0]+'</div><div class="cb-sub-b"><div class="cb-sub-nm">'+s[1]+'</div><span class="cb-sub-tag">'+tag+'</span></div></div>';}).join('');
       subHtml+='<div class="cb-sub cb-more" onclick="toast(\'更多模块陆续解锁\')"><div class="cb-sub-e">🎁</div><div class="cb-sub-nm">更多模块<br>陆续解锁</div></div>';
-      root.innerHTML='<div class="cb-card cb-home">'+hero+'<div class="cb-home-body">'+big+'<div class="cb-subs">'+subHtml+'</div></div><div class="cb-foot"><span class="pill">💡 今天也要加油哦！已学会 <b>'+LEARNED.length+'</b> 个字</span></div></div>';
+      root.innerHTML='<div class="cb-card cb-home">'+hero+cbContinueHTML()+cbProgressHTML()+'<div class="cb-home-body">'+big+'<div class="cb-subs">'+subHtml+'</div></div><div class="cb-foot"><span class="pill">💡 今天也要加油哦！已学会 <b>'+LEARNED.length+'</b> 个字</span></div></div>';
     } else if(cbState.view==='textbook'){
       if(cbState.selUnit==null)cbState.selUnit=0;
       var KNAME={rx:'入学',sz:'识字',py:'拼音',yd:'阅读'};
@@ -8093,20 +8208,23 @@
       var urows=CB_BOOK.units.map(function(u,ui){
         var cn2=u.lessons.reduce(function(a,l){return a+l.chars.length;},0);
         var meta=u.lessons.length+' 课'+(u.kind==='py'?'':' · '+cn2+' 字');
-        return '<div class="cbu-row'+(ui===cbState.selUnit?' on':'')+'" onclick="cbSelUnit('+ui+')">'
+        var onU=(cbState.current&&cbState.current.unit===ui);
+        return '<div class="cbu-row'+(ui===cbState.selUnit?' on':'')+(onU?' cur':'')+'" onclick="cbSelUnit('+ui+')">'
           +'<div class="cbu-num">'+(u.kind==='rx'?'入':u.no)+'</div>'
-          +'<div class="cbu-info"><div><span class="cbu-nm">'+u.t+'</span><span class="cbu-type '+u.kind+'">'+KNAME[u.kind]+'</span></div>'
+          +'<div class="cbu-info"><div><span class="cbu-nm">'+u.t+'</span><span class="cbu-type '+u.kind+'">'+KNAME[u.kind]+'</span>'+(onU?'<span class="cbu-cur">📌 在学</span>':'')+'</div>'
           +'<div class="cbu-meta">'+meta+'</div></div></div>';
       }).join('');
       var su=CB_BOOK.units[cbState.selUnit];
       var rtitle=su.kind==='rx'?su.t:('第'+CCN[su.no]+'单元 · '+su.t);
       var lrows=su.lessons.map(function(les,li){
         var isBookFirst=(cbState.selUnit===0&&li===0);
+        var isCur=(cbState.current&&cbState.current.unit===cbState.selUnit&&cbState.current.lesson===li);
         var cnt=su.kind==='py'?(les.chars.length+' 音'):(les.chars.length+' 字');
-        return '<div class="cbl-row'+(li===0?' first':'')+'" onclick="cbGo(\'lesson\',{unit:'+cbState.selUnit+',lesson:'+li+'})">'
+        return '<div class="cbl-row'+(li===0?' first':'')+(isCur?' cur':'')+'" onclick="cbGo(\'lesson\',{unit:'+cbState.selUnit+',lesson:'+li+'})">'
           +'<div class="cbl-num">'+(li+1)+'</div>'
           +'<span class="cbl-nm">'+les.t+'</span>'
           +(isBookFirst?'<span class="cbl-badge">✨ 起点</span>':'')
+          +'<span class="cb-lmark'+(isCur?' on':'')+'" onclick="event.stopPropagation();cbSetCurrent('+cbState.selUnit+','+li+')">'+(isCur?'📌 正在学':'📌 标记')+'</span>'
           +'<span class="cbl-count">'+cnt+'</span></div>';
       }).join('');
       var parks=(CB_PARKS[cbState.selUnit]||[]);
@@ -8200,7 +8318,6 @@
           +'<div class="cb-opts">'+q.opts.map(function(o,oi){return '<div class="cb-opt" data-i="'+oi+'" onclick="cbQuiz('+qi+','+oi+','+q.ans+')">'+o+'</div>';}).join('')+'</div>'
           +'<div class="cb-qhint" onclick="toast(\'💡 '+q.hint+'\')">💡 点我看提示</div></div>';
       }).join(''):'<div class="cb-empty">问答陆续补充中</div>';
-      var ep=cbState.extPage||0;
       var extKnows=(ext.knows||CB_KNOWS).map(function(k,ki){return '<div class="cb-know"><span class="cb-kn">'+(ki+1)+'.</span><span><b>'+k[0]+'</b> <i>'+k[1]+'</i></span></div>';}).join('');
       var extPage1='<div class="cb-sec-h">🌏 56 个民族</div>'
         +(ext.natsTip?'<div class="cb-kbox">'+ext.natsTip+'</div>':'')
@@ -8209,13 +8326,39 @@
         +'<div class="cb-kbox">五星红旗是我国的国旗；红色象征革命；五颗星含义：一大星代表中国共产党，四小星代表各族人民大团结。首都北京，天安门是标志性建筑。</div>'
         +'<div class="cb-sec-h">📜 祖国 15 个小知识</div>'
         +'<div class="cb-knows">'+extKnows+'</div>';
-      var extPage2=(ext.sayit?'<div class="cb-sec-h">🗣 我会说</div><div class="cb-say" onclick="cbSpeak(\''+ext.sayit.replace(/'/g,"\\'")+'\')">'+ext.sayit+'</div>':'')
-        +'<div class="cb-sec-h">❓ 小问答（点选项，点💡看提示）</div>'
-        +quizHtml;
-      var extPager='<div class="cb-ext-pager"><button class="cb-pg" '+(ep<=0?'disabled':'')+' onclick="cbExtPageMove(-1)">‹ 上一页</button><span class="cb-pg-n">'+(ep+1)+' / 2</span><button class="cb-pg" '+(ep>=1?'disabled':'')+' onclick="cbExtPageMove(1)">下一页 ›</button></div>';
-      var extHtml='<div class="cb-lpane'+(tab==='ext'?' on':'')+'" id="cbPaneExt">'+(ep===0?extPage1:extPage2)+extPager+'</div>';
+      var et=cbState.extTab||'study';
+      var extTabs=[['study','📖 学习'],['review','🔁 复习'],['preview','🔍 预习'],['prep','👩 备课']];
+      if(cbState.unit===0)extTabs.push(['know','🌏 通识']);
+      var extTabBar='<div class="cb-ext-tabs">'+extTabs.map(function(t){return '<div class="cb-etab'+(et===t[0]?' on':'')+'" onclick="cbExtTab(\''+t[0]+'\')">'+t[1]+'</div>';}).join('')+'</div>';
+      function cbExtSec(h,body){return body?('<div class="cb-sec-h">'+h+'</div>'+body):'';}
+      function cbExtList(arr){return (Array.isArray(arr)&&arr.length)?('<div class="cb-elist">'+arr.map(function(x){return '<div class="cb-eli">· '+x+'</div>';}).join('')+'</div>'):'';}
+      function cbExtSay(s){return s?('<div class="cb-sec-h">🗣 我会说</div><div class="cb-say" onclick="cbSpeak(\''+s.replace(/'/g,"\\'")+'\')">'+s+'</div>'):'';}
+      var extBody='';
+      if(et==='study'){
+        extBody=cbExtSec('📖 本课知识点',cbExtList(ext.study&&ext.study.goals))
+          +cbExtSec('✨ 重点字词',cbExtList(ext.study&&ext.study.keywords))
+          +cbExtSec('💡 讲解要点',cbExtList(ext.study&&ext.study.points))
+          +cbExtSay(ext.sayit)
+          +cbExtSec('❓ 小问答（点选项，点💡看提示）',quizHtml);
+      } else if(et==='review'){
+        extBody=cbExtSec('🔗 回扣旧知',cbExtList(ext.review&&ext.review.links))
+          +cbExtSec('⚠️ 易混易错',cbExtList(ext.review&&ext.review.tips));
+      } else if(et==='preview'){
+        extBody=cbExtSec('🔍 下一课预告',cbExtList(ext.preview&&ext.preview.next))
+          +cbExtSec('🤔 先想一想',cbExtList(ext.preview&&ext.preview.ask));
+      } else if(et==='prep'){
+        extBody='<div class="cb-prep-flag">👩 这一栏是给爸爸妈妈看的</div>'
+          +cbExtSec('🎯 教学重点',cbExtList(ext.prep&&ext.prep.focus))
+          +cbExtSec('💪 教学难点',cbExtList(ext.prep&&ext.prep.hard))
+          +cbExtSec('🧭 怎么带孩子学',cbExtList(ext.prep&&ext.prep.guide))
+          +cbExtSec('🎲 亲子小活动',cbExtList(ext.prep&&ext.prep.activity));
+      } else if(et==='know'){
+        extBody=extPage1;
+      }
+      if(!extBody)extBody='<div class="cb-empty">这一栏内容陆续补充中</div>';
+      var extHtml='<div class="cb-lpane'+(tab==='ext'?' on':'')+'" id="cbPaneExt">'+extTabBar+extBody+'</div>';
       root.innerHTML='<div class="cb-card cb-flat cb-noscroll">'+hero
-        +'<div class="cb-lesson-h">'+(cbState.unit+1)+'·'+u.t+' / '+les.t+' <span class="cb-prog">'+learnedN+'/'+les.chars.length+' 已学</span></div>'
+        +'<div class="cb-lesson-h">'+(cbState.unit+1)+'·'+u.t+' / '+les.t+' <span class="cb-prog">'+learnedN+'/'+les.chars.length+' 已学</span>'+(cbState.current&&cbState.current.unit===cbState.unit&&cbState.current.lesson===cbState.lesson?'<span class="cb-lmark on" onclick="cbSetCurrent('+cbState.unit+','+cbState.lesson+')">📌 正在学</span>':'<span class="cb-lmark" onclick="cbSetCurrent('+cbState.unit+','+cbState.lesson+')">📌 标记</span>')+'</div>'
         +'<div class="cb-split">'
         +'<div class="cb-split-l">'+leftHtml+'</div>'
         +'<div class="cb-split-r">'
@@ -11694,7 +11837,7 @@ let phonicsTopicIdx=-1;
   }
   function videoEmbedUrl(u){
     var s=String(u||'');var m;
-    if((m=s.match(/bilibili\.com\/video\/(BV[\w]+)/))) return 'https://player.bilibili.com/player.html?bvid='+m[1]+'&autoplay=1&high_quality=1';
+    if((m=s.match(/bilibili\.com\/video\/(BV[\w]+)/))){var bv=m[1];var bpm=s.match(/[?&]p=(\d+)/i);var bp=bpm?bpm[1]:'1';return 'https://player.bilibili.com/player.html?bvid='+bv+'&page='+bp+'&autoplay=1&high_quality=1';}
     if((m=s.match(/youku\.com\/v_show\/id_([\w=]+)/))) return 'https://player.youku.com/embed/'+m[1];
     if((m=s.match(/v\.qq\.com\/(?:x\/cover\/[\w]+\/|x\/page\/)([\w]+)\.html/))) return 'https://v.qq.com/txp/iframe/player.html?vid='+m[1];
     return '';
@@ -14165,6 +14308,14 @@ LOGIC_LEVELS.forEach(function(L){
             window.__pinNext=null;
             try{ goBack(); }catch(e){}
             setTimeout(()=>{ try{ showMallStock(); }catch(e){} },90);
+          } else if(window.__pinNext==='mallGoods_dress'){
+            window.__pinNext=null;
+            try{ goBack(); }catch(e){}
+            setTimeout(()=>{ try{ showMallStock('dress'); }catch(e){} },90);
+          } else if(window.__pinNext==='mallReal'){
+            window.__pinNext=null;
+            try{ goBack(); }catch(e){}
+            setTimeout(()=>{ try{ showRealEditor(); }catch(e){} },90);
           } else { go('pset',{noHistory:true}); }
         },120);
       } else {
@@ -15526,10 +15677,11 @@ LOGIC_LEVELS.forEach(function(L){
     {id:'m_web_math',name:'数学·一下',emoji:'🔢',screen:'web_math',on:true},
     {id:'m_web_chinese',name:'语文·一下',emoji:'📝',screen:'web_chinese',on:true},
     {id:'m_web_engword',name:'英语·基础词汇',emoji:'🌐',screen:'web_engword',on:true},
-    {id:'m_web_engprac',name:'英语·词汇练习',emoji:'📘',screen:'web_engprac',on:true}
+    {id:'m_web_engprac',name:'英语·词汇练习',emoji:'📘',screen:'web_engprac',on:true},
+    {id:'m_anime',name:'动画课堂',emoji:'📺',screen:'anime',on:true}
   ];}
   // 规范基础模块（学习乐园九宫格固定 9 格，游戏中心必须存在）
-  const CANON_MODULE_IDS=['m_chars','m_pinyin','m_math','m_mathbook','m_words','m_poem','m_books','m_science','m_logic','m_games','m_web_math','m_web_chinese','m_web_engword','m_web_engprac','m_netdisk','m_chinesebook','m_timer'];
+  const CANON_MODULE_IDS=['m_chars','m_pinyin','m_math','m_mathbook','m_words','m_poem','m_books','m_science','m_logic','m_games','m_web_math','m_web_chinese','m_web_engword','m_web_engprac','m_netdisk','m_chinesebook','m_timer','m_anime'];
   var CANON_MODULE_BY_ID={}; defaultModules().forEach(function(m){CANON_MODULE_BY_ID[m.id]=m;});
   function loadModules(){var raw=LS.getItem(MODULES_KEY);if(raw){try{var arr=JSON.parse(raw);if(Array.isArray(arr)&&arr.length){var ids=arr.map(function(m){return m&&m.id;});arr.forEach(function(m){var c=CANON_MODULE_BY_ID[m.id];if(c){m.emoji=c.emoji;m.screen=c.screen;}});var added=false;CANON_MODULE_IDS.forEach(function(id){if(ids.indexOf(id)<0){var c=CANON_MODULE_BY_ID[id];if(c){arr.push(JSON.parse(JSON.stringify(c)));added=true;}}});if(added)saveModules();MODULES=arr;return;}}catch(e){}}MODULES=defaultModules();saveModules();}
   function saveModules(){try{LS.setItem(MODULES_KEY,JSON.stringify(MODULES));}catch(e){}}
@@ -15550,7 +15702,8 @@ LOGIC_LEVELS.forEach(function(L){
     m_web_chinese:{new:true,sub:'小教室·语文一下',ext:true},
     m_web_engword:{new:true,sub:'Ogden 850 词',ext:true},
     m_web_engprac:{new:true,sub:'850 词·5 类',ext:true},
-    m_netdisk:{new:true,sub:'动画·绘本·故事'}
+    m_netdisk:{new:true,sub:'动画·绘本·故事'},
+    m_anime:{new:true,sub:'视频课程·分集'}
   };
   var LEARN_EDIT=false;
   function renderLearnGrid(){
@@ -15560,7 +15713,7 @@ LOGIC_LEVELS.forEach(function(L){
       if(!m.on)return;
       var meta=MODULE_META[m.id]||{};
       if(meta.ext)return;
-      if(m.id==='m_games'||m.id==='m_netdisk'||m.id==='m_logic')return;
+      if(m.id==='m_games'||m.id==='m_logic')return;
       if(LEARN_EDIT){
         html+='<div class="learn">'
           +(meta.new?'<span class="badge bd-new">NEW</span>':'')
@@ -15582,7 +15735,7 @@ LOGIC_LEVELS.forEach(function(L){
       html+='<div class="learn learn-add" onclick="addStudy()"><span class="e">＋</span><span class="t">添加板块</span></div>';
     }
     g.innerHTML=html;
-    var cnt=MODULES.filter(function(m){return m.on&&!(MODULE_META[m.id]||{}).ext&&m.id!=='m_games'&&m.id!=='m_netdisk';}).length;
+    var cnt=MODULES.filter(function(m){return m.on&&!(MODULE_META[m.id]||{}).ext&&m.id!=='m_games';}).length;
     var lbl=document.getElementById('learnLabel');if(lbl)lbl.textContent='🎓 学习乐园 · '+cnt+' 个模块';
     var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';
     renderMiniClass();
@@ -15593,7 +15746,7 @@ LOGIC_LEVELS.forEach(function(L){
   function renderMiniClass(){var g=document.getElementById('miniClassGrid');if(!g)return;var html='';MODULES.forEach(function(m){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(!meta.ext)return;html+='<div class="mini-mod" onclick="openMini(\''+m.screen+'\')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">'+esc(m.sub)+'</span>':'')+'<span class="ext" title="站外学习网站">🔗</span></div>';});g.innerHTML=html||'<div class="empty">暂无在线学习模块</div>';}
   function toggleMiniClass(row){var g=document.getElementById('miniClassGrid');if(!g)return;g.style.display=g.style.display==='none'?'grid':'none';}
   function openMini(screen){var op=MODULE_OPENERS[screen];if(op)op();else if(screen)go(screen);else toast('该内容暂未开放');}
-  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,mathbook:function(){go('mathbook');},words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,chinesebook:function(){go('chinesebook');},timer:function(){go('timer');},web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');},bank:renderBank,level:renderLevel,rich:renderRich,passport:renderPassport,challenge:renderChallenge,role:renderRole,quiz:renderQuiz,script:renderScript,netdisk:function(){go('netdisk');}};
+  var MODULE_OPENERS={chars:openChars,pinyin:openPinyin,math:openMath,mathbook:function(){go('mathbook');},words:openEnglishHub,poem:openPoem,books:openBooks,science:openScience,logic:openLogic,games:openGames,chinesebook:function(){go('chinesebook');},timer:function(){go('timer');},web_math:function(){window.open('https://jeetchan.github.io/mini-classroom/math-grade1-2-workshop/index.html','_blank');},web_chinese:function(){window.open('https://jeetchan.github.io/mini-classroom/chinese-grade1-site/index.html','_blank');},web_engword:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-workshop/index.html','_blank');},web_engprac:function(){window.open('https://jeetchan.github.io/mini-classroom/basic-english-site/index.html','_blank');},bank:renderBank,level:renderLevel,rich:renderRich,passport:renderPassport,challenge:renderChallenge,role:renderRole,quiz:renderQuiz,script:renderScript,netdisk:function(){go('netdisk');},anime:function(){go('anime');}};
   function openModuleByIdx(idx){var m=MODULES[idx];if(!m)return;var op=MODULE_OPENERS[m.screen];if(op)op();else if(m.screen)go(m.screen);else toast('该内容暂未开放');}
   function renderStudies(){
     var box=document.getElementById('studyList');if(!box)return;
@@ -16155,7 +16308,11 @@ LOGIC_LEVELS.forEach(function(L){
   function mallGoodsRow(it){
     var off=!!it.__del;
     var kindCell;
-    if(it.add){
+    if(it.add && it.src==='dress'){
+      var SLOT_LAB={head:'帽子位',face:'脸部',neck:'脖子'};
+      kindCell='<select class="gd-kind" onchange="mallGoodsSetSlot(\''+it.id+'\',this.value)">'+
+        ['head','face','neck'].map(function(k){return '<option value="'+k+'"'+((it.slot||'head')===k?' selected':'')+'>'+SLOT_LAB[k]+'</option>';}).join('')+'</select>';
+    }else if(it.add){
       kindCell='<select class="gd-kind" onchange="mallGoodsSetKind(\''+it.id+'\',this.value)">'+
         ['kibble','bath','medical','daily'].map(function(k){return '<option value="'+k+'"'+(it.kind===k?' selected':'')+'>'+GOODS_KIND_LAB[k]+'</option>';}).join('')+'</select>';
     }else{
@@ -16186,12 +16343,11 @@ LOGIC_LEVELS.forEach(function(L){
       if(p){['name','emoji','cost'].forEach(function(k){if(p[k]!==undefined)o[k]=p[k];});o.__del=!!p.del;}
       rows.push(mallGoodsRow(o));
     });
-    if(!isDress){
-      loadGoodsPatch().forEach(function(x){ if(x.add&&!x.del){var o={};Object.keys(x).forEach(function(k){o[k]=x[k];});o.__del=false;rows.push(mallGoodsRow(o));} });
-    }
-    box.innerHTML='<div class="pc-hint" style="margin:0 0 6px">共 <b>'+rows.length+'</b> 条'+(isDress?'（装扮只能改名 / 改价 / 下架）':'（含你新增的商品）')+'，改完立刻生效。点「✕」= 从货架下架，不删数据。</div>'
+    var addSrc=isDress?'dress':'supply';
+    loadGoodsPatch().forEach(function(x){ if(x.add&&!x.del && x.src===addSrc){var o={};Object.keys(x).forEach(function(k){o[k]=x[k];});o.__del=false;rows.push(mallGoodsRow(o));} });
+    box.innerHTML='<div class="pc-hint" style="margin:0 0 6px">共 <b>'+rows.length+'</b> 条'+(isDress?'（装扮可改名 / 改价 / 下架 / 新增，新增的用 emoji 占位）':'（含你新增的商品）')+'，改完立刻生效。点「✕」= 从货架下架，不删数据。</div>'
       +'<div class="gds-grid">'+rows.join('')+'</div>'
-      +(isDress?'':'<div class="gds-add" onclick="mallGoodsAdd()">＋ 新增一件超市商品</div>');
+      +(isDress?'<div class="gds-add" onclick="mallGoodsAdd()">＋ 新增一件装扮（emoji 占位）</div>':'<div class="gds-add" onclick="mallGoodsAdd()">＋ 新增一件超市商品</div>');
   }
   function mallGoodsRename(id,v){mallGoodsPatch(id,{name:String(v||'').slice(0,12)});}
   function mallGoodsEmoji(id,v){mallGoodsPatch(id,{emoji:String(v||'').slice(0,4)});}
@@ -16201,6 +16357,7 @@ LOGIC_LEVELS.forEach(function(L){
     mallGoodsPatch(id,{kind:k,gain:gain,desc:mallKindLab(k,gain)});
     renderMallGoodsEditor();
   }
+  function mallGoodsSetSlot(id,k){ mallGoodsPatch(id,{slot:k}); renderMallGoodsEditor(); }
   function mallGoodsSetGain(id,v){
     var g=Math.max(1,parseInt(v,10)||1);
     var k=(mallGoodsEntry(id)||{}).kind;
@@ -16210,7 +16367,11 @@ LOGIC_LEVELS.forEach(function(L){
   function mallGoodsRestore(id){mallGoodsPatch(id,{del:false});renderMallGoodsEditor();}
   function mallGoodsAdd(){
     var id='g_'+Date.now();
-    mallGoodsPatch(id,{add:true,src:'supply',kind:'daily',gain:0,name:'新商品',emoji:'🧺',cost:10,desc:mallKindLab('daily',0)});
+    if(mallGoodsTabCur==='dress'){
+      mallGoodsPatch(id,{add:true,src:'dress',slot:'head',name:'新装扮',emoji:'🎀',cost:60});
+    }else{
+      mallGoodsPatch(id,{add:true,src:'supply',kind:'daily',gain:0,name:'新商品',emoji:'🧺',cost:10,desc:mallKindLab('daily',0)});
+    }
     renderMallGoodsEditor();
   }
   function mallGoodsReset(){
@@ -16222,7 +16383,10 @@ LOGIC_LEVELS.forEach(function(L){
   /* ⛔ 2026-09-15 小镇超市顶栏「🛒 补货」：家长不用绕去家长端，就地开货架面板。
      仍走同一套 4 位密码（pressPin 里读 __pinNext 判断开面板还是进家长端）。 */
   function mallRestock(){ window.__pinNext='mallGoods'; try{ go('parent'); }catch(e){} }
-  function showMallStock(){
+  /* 衣橱 / 邮局就地编辑：同一套 4 位密码，密码对后原路返回对应子屏并开面板 */
+  function mallDressRestock(){ window.__pinNext='mallGoods_dress'; try{ go('parent'); }catch(e){} }
+  function mallWishRestock(){ window.__pinNext='mallReal'; try{ go('parent'); }catch(e){} }
+  function showMallStock(target){
     var host=document.querySelector('.device')||document.body;
     var m=document.getElementById('mallStockMask');
     if(!m){
@@ -16240,6 +16404,9 @@ LOGIC_LEVELS.forEach(function(L){
       host.appendChild(m);
     }
     m.classList.add('on');
+    /* 衣橱顶栏进来时默认切到衣橱 tab */
+    if(target==='dress'){ try{ mallGoodsTab('dress'); }catch(e){} }
+    else { try{ mallGoodsTab('supply'); }catch(e){} }
     renderMallGoodsEditor();
   }
   function closeMallStock(){
@@ -16247,7 +16414,57 @@ LOGIC_LEVELS.forEach(function(L){
     try{ renderMallSupply(); }catch(e){}
     try{ renderMallDress(); }catch(e){}
   }
-  try{ window.mallRestock=mallRestock; window.showMallStock=showMallStock; window.closeMallStock=closeMallStock; }catch(e){}
+  /* ⛔ 2026-09-16 星星邮局顶栏「✎ 编辑」：家长就地开现实奖励编辑器。
+     复用家长模式 #9 卡的 renderMallRealEditor（写覆盖层 mp_mall_real_v1），
+     仅把容器挂到 .device 弹层，关闭时刷新星星邮局屏。 */
+  function showRealEditor(){
+    var host=document.querySelector('.device')||document.body;
+    var m=document.getElementById('mallRealMask');
+    if(!m){
+      m=document.createElement('div'); m.id='mallRealMask'; m.className='stock-mask';
+      m.innerHTML='<div class="stock-box">'
+        +'<div class="stock-head"><span class="st-t">🎟️ 星星邮局 · 编辑心愿</span>'
+        +'<span class="st-sub">改名 / 改铜银金档 / 改价 / 新增 / 删除，改完孩子端立刻生效</span>'
+        +'<span class="st-x" onclick="closeRealEditor()">✕</span></div>'
+        +'<div class="stock-body"><div id="mallRealListPop"></div></div>'
+        +'<div class="stock-foot"><span class="st-reset" onclick="mallRealReset()">↺ 恢复默认</span>'
+        +'<button class="st-done" onclick="closeRealEditor()">完成</button></div></div>';
+      host.appendChild(m);
+    }
+    m.classList.add('on');
+    renderMallRealEditorPop();
+  }
+  function closeRealEditor(){
+    var m=document.getElementById('mallRealMask'); if(m)m.classList.remove('on');
+    try{ renderMallWish(); }catch(e){}
+  }
+  /* 弹层版现实奖励编辑器：容器优先用 mallRealListPop，回退到家长模式 #mallRealList */
+  function renderMallRealEditorPop(){
+    var box=document.getElementById('mallRealListPop')||document.getElementById('mallRealList'); if(!box)return;
+    var save=box.id;
+    box.innerHTML='<div class="pc-hint" style="margin:0 0 7px">这份清单 = 孩子的「🎫 兑换券」来源 = 积分银行的「可兑换特权」，<b>改一处两边同步</b>。🥉 铜档（约 50 星星币）· 🥈 银档（约 250 星星币）· 🥇 金档（约 500 星星币）。</div>'
+      +loadMallReal().map(function(it){
+        return '<div class="mall-real"><span class="mr-em">'+(it.emoji||'🎁')+'</span>'
+          +'<input class="mr-name" value="'+esc(it.name)+'" onchange="mallRealRename(\''+it.id+'\',this.value)">'
+          +'<select class="mr-tier" onchange="mallRealTier(\''+it.id+'\',this.value)">'
+          +'<option value="bronze"'+(it.tier==='bronze'?' selected':'')+'>🥉 铜</option>'
+          +'<option value="silver"'+(it.tier==='silver'?' selected':'')+'>🥈 银</option>'
+          +'<option value="gold"'+(it.tier==='gold'?' selected':'')+'>🥇 金</option>'
+          +'</select>'
+          +'<input class="mr-cost" type="number" min="0" value="'+it.cost+'" onchange="mallRealCost(\''+it.id+'\',this.value)">'
+          +'<span class="mr-unit">星星币</span><span class="mr-x" onclick="mallRealDel(\''+it.id+'\')">✕</span></div>';
+      }).join('')
+      +'<div class="mall-real-add" onclick="mallRealAdd()">＋ 添加真实奖励</div>';
+    box.id=save;
+  }
+  function mallRealReset(){
+    try{ if(!confirm('恢复默认心愿清单？你改过的名称 / 价格 / 档位 / 新增 / 删除都会清掉。'))return; }catch(e){}
+    try{ LS.removeItem(MALL_REAL_KEY); }catch(e){}
+    renderMallRealEditorPop();
+    try{ renderMallRealEditor(); }catch(e){}
+    try{ toast('已恢复默认心愿清单'); }catch(e){}
+  }
+  try{ window.mallRestock=mallRestock; window.mallDressRestock=mallDressRestock; window.mallWishRestock=mallWishRestock; window.showMallStock=showMallStock; window.closeMallStock=closeMallStock; window.showRealEditor=showRealEditor; window.closeRealEditor=closeRealEditor; }catch(e){}
   /* ⛔ 2026-09-15 尺寸统一：小镇超市 3×3 固定 240 卡片 + 超出翻页、无滚动 */
   var supplyPage=0, SUPPLY_PER=9, SUPPLY_BAG_CAP=5;
   function renderMallSupply(){
@@ -16300,7 +16517,9 @@ LOGIC_LEVELS.forEach(function(L){
     return pet.concat(mon);
   }
   function mallDressItems(){
-    var list=mallApplyGoods(mallDressBase(),[]);
+    /* ⛔ 2026-09-16 衣橱开放 emoji 新增：srcs 传 ['dress']，让补丁层里 src==='dress' 的新增装扮并回货架
+       （mallApplyGoods 对 base 既有条目按 id 叠补丁，不受 srcs 影响；srcs 只决定"新增"是否并入） */
+    var list=mallApplyGoods(mallDressBase(),['dress']);
     list.forEach(function(it){it.owned=mallOwned(it.id);});
     return list;
   }
@@ -16455,8 +16674,8 @@ LOGIC_LEVELS.forEach(function(L){
   function mallRealRename(id,v){mallRealPatch(id,{name:v});}
   function mallRealTier(id,v){mallRealPatch(id,{tier:v});}
   function mallRealCost(id,v){mallRealPatch(id,{cost:Math.max(0,parseInt(v,10)||0)});}
-  function mallRealDel(id){mallRealPatch(id,{del:true});renderMallRealEditor();}
-  function mallRealAdd(){var id='r_'+Date.now();mallRealPatch(id,{name:'新奖励',cost:250,emoji:'🎁',tier:'silver'});renderMallRealEditor();}
+  function mallRealDel(id){mallRealPatch(id,{del:true});renderMallRealEditorPop();}
+  function mallRealAdd(){var id='r_'+Date.now();mallRealPatch(id,{name:'新奖励',cost:250,emoji:'🎁',tier:'silver'});renderMallRealEditorPop();}
   function getEarnSum(fn){return STATS.ledger.filter(fn).reduce(function(s,x){return s+x.amount;},0);}
   // 统一刷新顶部积分/硬币展示
   function refreshPointsUI(){
@@ -18246,7 +18465,13 @@ LOGIC_LEVELS.forEach(function(L){
   ];
   function loadDress(){try{var r=LS.getItem(DRESS_KEY);if(r)return Object.assign({head:'',face:'',neck:''},JSON.parse(r));}catch(e){}return {head:'',face:'',neck:''};}
   function saveDress(o){try{LS.setItem(DRESS_KEY,JSON.stringify(o));}catch(e){}}
-  function dressItemOf(id){var r=null;DRESS_ITEMS.forEach(function(x){if(x.id===id)r=x;});return r;}
+  function dressItemOf(id){
+    var r=null;DRESS_ITEMS.forEach(function(x){if(x.id===id)r=x;});
+    if(r)return r;
+    /* ⛔ 2026-09-16 回退：家长在衣橱面板 emoji 新增的装扮（存于补丁层 mp_mall_goods_v1，src==='dress'） */
+    try{ loadGoodsPatch().forEach(function(x){ if(x&&x.id===id&&x.add&&!x.del&&x.src==='dress'){r={id:x.id,slot:x.slot||'head',emoji:x.emoji||'🎀',name:x.name||'装扮'};} }); }catch(e){}
+    return r;
+  }
   function applyDress(){
     ['petFace','playPetFace'].forEach(function(id){
       var el=document.getElementById(id);if(!el)return;
@@ -18267,12 +18492,15 @@ LOGIC_LEVELS.forEach(function(L){
     DRESS_SLOTS.forEach(function(s){
       h+='<div class="dr-slot"><span class="dr-n">'+s.n+'</span><div class="bag-grid">';
       var any=false;
-      DRESS_ITEMS.forEach(function(it){
+      /* ⛔ 2026-09-16 遍历扩展：基础 DRESS_ITEMS + 补丁层 emoji 新增装扮（src==='dress'） */
+      var all=DRESS_ITEMS.slice();
+      try{ loadGoodsPatch().forEach(function(x){ if(x&&x.add&&!x.del&&x.src==='dress')all.push({id:x.id,slot:x.slot||'head',emoji:x.emoji||'🎀',name:x.name||'装扮'}); }); }catch(e){}
+      all.forEach(function(it){
         if(it.slot!==s.k||!own[it.id])return;any=true;
         var on=(w[s.k]===it.id);
         h+='<div class="bag-item'+(on?' wear':'')+'" onclick="toggleDress(\''+s.k+'\',\''+it.id+'\')"><span class="bi">'+it.emoji+'</span><span class="bn">'+esc(it.name)+'</span><span class="bt t-dress">'+(on?'✔ 戴着':'戴上')+'</span></div>';
       });
-      if(!any)h+='<div class="bag-empty" style="grid-column:1/-1">这个位置还没有饰品，去「怪兽商城」买一个吧～</div>';
+      if(!any)h+='<div class="bag-empty" style="grid-column:1/-1">这个位置还没有饰品，去「小镇衣橱」买一个吧～</div>';
       h+='</div></div>';
     });
     box.innerHTML=h;
@@ -19191,6 +19419,379 @@ LOGIC_LEVELS.forEach(function(L){
         </div>
       </div>
     </div>
+
+<style>
+#sc-anime .anime-body{flex:1 1 auto;min-height:0;overflow:auto;padding:16px}
+#sc-anime .anime-detail{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:14px;overflow:auto;padding:16px}
+#sc-anime .anime-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+#sc-anime .anime-tcard{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .15s,box-shadow .15s;display:flex;flex-direction:column}
+#sc-anime .anime-tcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+#sc-anime .anime-cover{height:120px;background:linear-gradient(135deg,#ffe1bb,#ffd0e0);position:relative;display:flex;align-items:center;justify-content:center;font-size:46px;overflow:hidden}
+#sc-anime .anime-cover img{width:100%;height:100%;object-fit:cover}
+#sc-anime .anime-cat{position:absolute;top:8px;left:8px;font-size:11px;font-weight:800;padding:3px 10px;border-radius:13px;color:#fff;box-shadow:0 2px 7px rgba(0,0,0,.18);letter-spacing:.5px}
+#sc-anime .anime-ep{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.45);color:#fff;font-size:11px;padding:3px 8px;border-radius:10px}
+#sc-anime .anime-info{padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+#sc-anime .anime-name{font-size:15px;font-weight:800}
+#sc-anime .anime-meta{font-size:12px;color:var(--brand-d);font-weight:700}
+#sc-anime .anime-intro{font-size:12px;color:var(--ink-soft);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#sc-anime .anime-player{background:#1c1a1f;border-radius:16px;overflow:hidden;aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+#sc-anime .anime-player iframe,#sc-anime .anime-player video{width:100%;height:100%;border:0;display:block}
+#sc-anime .anime-jump{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.9);color:var(--brand-d);border:none;border-radius:18px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;display:none}
+#sc-anime .anime-now{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+#sc-anime .anime-now-t{font-size:16px;font-weight:800}
+#sc-anime .anime-now-s{font-size:12px;color:var(--ink-faint)}
+#sc-anime .anime-auto{display:flex;align-items:center;gap:8px;background:var(--surface-2);padding:9px 14px;border-radius:14px;font-size:13px;font-weight:700;color:var(--ink-soft)}
+#sc-anime .anime-switch{width:46px;height:26px;border-radius:14px;background:#d9ccc6;position:relative;cursor:pointer;transition:background .2s;flex:none}
+#sc-anime .anime-switch.on{background:var(--sage)}
+#sc-anime .anime-switch::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s}
+#sc-anime .anime-switch.on::after{left:23px}
+#sc-anime .anime-eps{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px}
+#sc-anime .anime-epbtn{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 4px;text-align:center;cursor:pointer;font-weight:800;font-size:14px;color:var(--ink)}
+#sc-anime .anime-epbtn:hover{border-color:var(--brand)}
+#sc-anime .anime-epbtn.cur{background:var(--brand);color:#fff;border-color:var(--brand)}
+#sc-anime .anime-epbtn .et{display:block;font-size:10px;font-weight:600;color:var(--ink-faint);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#sc-anime .anime-epbtn.cur .et{color:rgba(255,255,255,.85)}
+#sc-anime .anime-intro-box{background:var(--surface-2);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.6;color:var(--ink-soft)}
+#sc-anime .anime-edit-row{display:flex;gap:8px}
+#sc-anime .anime-btn{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink)}
+#sc-anime .anime-btn.pri{background:var(--brand);color:#fff;border-color:var(--brand)}
+#sc-anime .anime-btn.danger{color:var(--brand-d);border-color:#f3c9d5}
+#sc-anime .anime-mask{position:fixed;inset:0;background:rgba(60,40,40,.4);display:none;align-items:center;justify-content:center;z-index:60;padding:18px}
+#sc-anime .anime-mask.on{display:flex}
+#sc-anime .anime-modal{background:#fff;border-radius:20px;width:100%;max-width:480px;max-height:88vh;overflow:auto;padding:20px}
+#sc-anime .anime-m-h{font-size:17px;font-weight:800;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+#sc-anime .anime-m-x{cursor:pointer;color:var(--ink-faint);font-size:22px}
+#sc-anime .anime-fld{margin-bottom:12px}
+#sc-anime .anime-fld label{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);margin-bottom:5px}
+#sc-anime .anime-fld input,#sc-anime .anime-fld textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13px;font-family:inherit;color:var(--ink);resize:vertical;background:#fff}
+#sc-anime .anime-fld textarea{min-height:90px}
+#sc-anime .anime-fld .hint{font-size:11px;color:var(--ink-faint);margin-top:4px}
+#sc-anime .anime-parse-toggle{display:inline-block;float:right;font-size:11px;font-weight:700;color:var(--brand-d);cursor:pointer}
+#sc-anime .anime-parse-box{display:none;margin-top:8px;background:var(--surface-2);border-radius:12px;padding:10px}
+#sc-anime .anime-parse-box.on{display:block}
+#sc-anime .anime-parse-box textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 11px;font-size:12px;font-family:inherit;min-height:80px;resize:vertical;background:#fff}
+#sc-anime .anime-parse-actions{display:flex;gap:8px;align-items:center;margin-top:8px}
+#sc-anime .anime-parse-msg{font-size:11px;color:var(--ink-faint)}
+#sc-anime .anime-m-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+#sc-anime .anime-m-edit{float:right;font-size:11px;font-weight:700;color:var(--brand-d);cursor:pointer;margin-left:6px}
+#sc-anime .anime-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+#sc-anime .anime-chips.manage .cchip .x{display:block}
+#sc-anime .cchip{position:relative;font-size:12px;font-weight:800;padding:6px 13px;border-radius:16px;cursor:pointer;border:1.5px solid transparent;user-select:none}
+#sc-anime .cchip .x{display:none;position:absolute;top:-7px;right:-7px;width:17px;height:17px;border-radius:50%;background:#fff;border:1px solid #ddd;color:#b06;font-size:11px;line-height:15px;text-align:center}
+#sc-anime .cchip.add{background:var(--surface-2);color:var(--ink-soft);border:1.5px dashed #d8c4bb}
+#sc-anime .anime-cat-new{display:none;gap:8px;align-items:center;background:var(--surface-2);padding:10px 12px;border-radius:12px;margin-top:8px}
+#sc-anime .anime-cat-new.on{display:flex}
+#sc-anime .anime-cat-new input[type=text]{flex:1;min-width:120px;border:1.5px solid var(--line);border-radius:8px;padding:7px 9px;font-size:13px;font-family:inherit}
+#sc-anime .anime-cat-new input[type=color]{width:40px;height:34px;border:1.5px solid var(--line);border-radius:8px;padding:2px;background:#fff;cursor:pointer}
+#sc-anime .anime-mini-btn{border:none;background:var(--brand);color:#fff;border-radius:9px;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer}
+#sc-anime .anime-mini-btn.ghost{background:#fff;color:var(--ink-soft);border:1.5px solid var(--line)}
+#sc-anime .ah-add{background:var(--brand);color:#fff;border:none;font-size:14px;font-weight:700;padding:9px 16px;border-radius:22px;cursor:pointer}
+</style>
+<div class="screen" id="sc-anime" data-page-node-id="animeScr001">
+  <div class="card">
+    <div class="app-head skin-plain" data-page-node-id="animeAh001">
+      <div class="ah-back" onclick="animeBack()" data-page-node-id="animeBack001">←</div>
+      <div class="ah-icon" data-page-node-id="animeIc001"><span class="bi" data-page-node-id="animeBi001">📺</span></div>
+      <div class="ah-txt" data-page-node-id="animeTxt001"><div class="ah-t" id="animeHeadT" data-page-node-id="animeHt001">动画课堂</div><div class="ah-s" id="animeHeadS" data-page-node-id="animeHs001">点开一个动画，看视频学一学</div></div>
+      <div class="ah-sp" data-page-node-id="animeSp001"></div>
+      <div class="ah-act" data-page-node-id="animeAct001"><button class="ah-add" id="animeAddBtn" onclick="animeOpenEdit()" data-page-node-id="animeAdd001">＋ 添加动画</button></div>
+    </div>
+    <div class="anime-body" id="animeLibView">
+      <div class="anime-grid" id="animeGrid"></div>
+    </div>
+    <div class="anime-body anime-detail" id="animeDetailView" style="display:none">
+      <div class="anime-player" id="animePlayer"><div class="ph">视频加载中…</div><button class="anime-jump" id="animeJumpBtn" onclick="animeJumpWeb()">↗ 跳转网页观看</button></div>
+      <div class="anime-now">
+        <div><div class="anime-now-t" id="animeNowTitle">—</div><div class="anime-now-s" id="animeNowSub"></div></div>
+      </div>
+      <div class="anime-auto">
+        <div class="anime-switch" id="animeAutoSw" onclick="animeToggleAuto()"></div>
+        <span>每天自动播放一集（今天首次打开自动跳下一集）</span>
+      </div>
+      <div>
+        <div style="margin-bottom:8px;font-size:15px;font-weight:800;color:var(--ink-soft)">🎞 选集</div>
+        <div class="anime-eps" id="animeEps"></div>
+      </div>
+      <div class="anime-intro-box" id="animeIntroBox"></div>
+      <div class="anime-edit-row">
+        <button class="anime-btn" onclick="animeOpenEditCur()">✎ 编辑</button>
+        <button class="anime-btn danger" onclick="animeDelThemeCur()">🗑 删除</button>
+      </div>
+    </div>
+  </div>
+  <div class="anime-mask" id="animeEditMask">
+    <div class="anime-modal">
+      <div class="anime-m-h"><span id="animeEditTitle">添加动画</span><span class="anime-m-x" onclick="animeCloseEdit()">×</span></div>
+      <div class="anime-fld"><label>动画名称</label><input id="animeFName" placeholder="如：布鲁伊"></div>
+      <div class="anime-fld"><label>分类标签（彩色气泡 · 可自己自定义）<span class="anime-m-edit" id="animeCatManageBtn" onclick="animeToggleCatManage()">管理</span></label>
+        <div class="anime-chips" id="animeCatChips"></div>
+        <div class="anime-cat-new" id="animeCatNew">
+          <input type="text" id="animeNewCatName" placeholder="新分类名，如：拼音类">
+          <input type="color" id="animeNewCatColor" value="#F26D92" title="选颜色">
+          <button class="anime-mini-btn" onclick="animeAddCat()">添加</button>
+          <button class="anime-mini-btn ghost" onclick="animeHideCatNew()">取消</button>
+        </div>
+      </div>
+      <div class="anime-fld"><label>封面图链接（可留空，用 emoji 占位）</label><input id="animeFCover" placeholder="https://…jpg"></div>
+      <div class="anime-fld"><label>简介</label><textarea id="animeFIntro" placeholder="这部长啥样、讲什么"></textarea></div>
+      <div class="anime-fld"><label>分集视频链接（每行一集）<span class="anime-parse-toggle" onclick="animeToggleParse()">📋 智能识别分集</span></label>
+        <textarea id="animeFEps" placeholder="第1集 好朋友 | https://xxx.mp4&#10;第2集 去海边 | https://b23.tv/xxx"></textarea>
+        <div class="hint">格式：<b>标题 | 链接</b>，或只贴链接（自动编号）。支持直链 .mp4/.webm，或 B站/腾讯/优酷 链接。</div>
+        <div class="anime-parse-box" id="animeParseBox">
+          <textarea id="animeFParse" placeholder="把网页的 HTML 源码，或一段「标题 + 链接」文本粘到这里，点识别自动拆成每集（建议贴真实视频页链接，如 bilibili.com/video/BV…）"></textarea>
+          <div class="anime-parse-actions">
+            <button class="anime-mini-btn" onclick="animeRunParse()">识别分集</button>
+            <span class="anime-parse-msg" id="animeParseMsg"></span>
+          </div>
+        </div>
+      </div>
+      <div class="anime-m-foot">
+        <button class="anime-btn" onclick="animeCloseEdit()">取消</button>
+        <button class="anime-btn pri" onclick="animeSaveEdit()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var DEFAULT_CATS=[
+    {name:'语文类',bg:'#F26D92'},{name:'数学类',bg:'#8CB4DC'},{name:'通识类',bg:'#F7D67B'},
+    {name:'英文类',bg:'#8FBC8D'},{name:'绘本类',bg:'#C9A0DC'},{name:'习惯类',bg:'#F2A65A'},{name:'其他',bg:'#9aa6b2'}
+  ];
+  var LS_K='mp_anime_v1';
+  function animeAttrEsc(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function animeLoad(){try{return JSON.parse(localStorage.getItem(LS_K))||null;}catch(e){return null;}}
+  function animeSave(d){try{localStorage.setItem(LS_K,JSON.stringify(d));}catch(e){}}
+  var animeData=animeLoad();
+  if(!animeData){
+    animeData={cats:DEFAULT_CATS.slice(),themes:[
+      {id:'a_cambridge_math',name:'剑桥数学启蒙课-从0到无穷',emoji:'🔢',cat:'数学类',
+       cover:'https://i0.hdslb.com/bfs/archive/d32859135322e901221b8550a3e0274974497d63.jpg',
+       intro:'英汉双版的数学启蒙动画，从最早的数字讲到负数，每节都有中文版 + 英文版。',
+       autoDaily:false,lastEp:0,lastDate:'',
+       episodes:[
+         {n:1,title:'第1节：最早的数字',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=1'},
+         {n:2,title:'第2节：最早的数字（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=2'},
+         {n:3,title:'第3节：数学的开端',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=3'},
+         {n:4,title:'第4节：数学的开端（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=4'},
+         {n:5,title:'第5节：阿拉伯数字',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=5'},
+         {n:6,title:'第6节：阿拉伯数字（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=6'},
+         {n:7,title:'第7节：0的诞生',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=7'},
+         {n:8,title:'第8节：0的诞生（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=8'},
+         {n:9,title:'第9节：负数',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=9'},
+         {n:10,title:'第10节：负数（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=10'}
+       ]}
+    ]};
+    animeSave(animeData);
+  }else if(!animeData.cats||!animeData.cats.length){animeData.cats=DEFAULT_CATS.slice();animeSave(animeData);}
+
+  var animeCurId=null,animeCurEp=0,animeEditSelCat=null,animeEditId=null;
+  function animeTodayStr(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+  function animeCatInfo(cat){var c=animeData.cats&&animeData.cats.filter(function(x){return x.name===cat;})[0];return c||{name:'其他',bg:'#9aa6b2'};}
+  function animeCatBub(cat){var c=animeCatInfo(cat);return '<span class="anime-cat" style="background:'+c.bg+'">'+animeAttrEsc(cat||'其他')+'</span>';}
+
+  function animeRenderLib(){
+    document.getElementById('animeLibView').style.display='block';
+    document.getElementById('animeDetailView').style.display='none';
+    document.getElementById('animeHeadT').textContent='动画课堂';
+    document.getElementById('animeHeadS').textContent='点开一个动画，看视频学一学';
+    var g=document.getElementById('animeGrid');if(!g)return;g.innerHTML='';
+    animeData.themes.forEach(function(t){
+      var cover=t.cover?('<img src="'+animeAttrEsc(t.cover)+'" onerror="this.style.display=\'none\'">'):
+        ('<span style="font-size:46px">'+(t.emoji||'📺')+'</span>');
+      var c=document.createElement('div');c.className='anime-tcard';c.onclick=function(){animeOpenDetail(t.id);};
+      c.innerHTML='<div class="anime-cover">'+cover+animeCatBub(t.cat)+
+        '<span class="anime-ep">'+(t.episodes?t.episodes.length:0)+' 集</span></div>'+
+        '<div class="anime-info"><div class="anime-name">'+animeAttrEsc(t.name)+'</div>'+
+        '<div class="anime-meta">'+(t.episodes?t.episodes.length:0)+' 集 · 动画课堂</div>'+
+        '<div class="anime-intro">'+(t.intro||'')+'</div></div>';
+      g.appendChild(c);
+    });
+  }
+  window.renderAnime=function(){animeRenderLib();};
+  window.animeBack=function(){var dv=document.getElementById('animeDetailView');if(dv&&dv.style.display!=='none'){animeRenderLib();}else{if(typeof goBack==='function')goBack();}};
+  window.animeOpenEditCur=function(){animeOpenEdit(animeCurId);};
+  window.animeDelThemeCur=function(){animeDelTheme(animeCurId);};
+
+  function animeOpenDetail(id){
+    var t=animeData.themes.find(function(x){return x.id===id;});if(!t)return;
+    animeCurId=id;
+    if(t.autoDaily && t.lastDate!==animeTodayStr()){
+      t.lastEp=((t.lastEp||0)+1)%Math.max(t.episodes.length,1);
+      t.lastDate=animeTodayStr();animeSave(animeData);
+    }
+    animeCurEp=Math.min(t.lastEp||0,t.episodes.length-1);
+    document.getElementById('animeLibView').style.display='none';
+    document.getElementById('animeDetailView').style.display='flex';
+    document.getElementById('animeHeadT').innerHTML=t.name+' <span class="anime-cat" style="position:static;display:inline-block;margin-left:8px;background:'+animeCatInfo(t.cat).bg+'">'+animeAttrEsc(t.cat||'其他')+'</span>';
+    document.getElementById('animeHeadS').textContent=t.episodes.length+' 集 · 动画课堂';
+    document.getElementById('animeAutoSw').classList.toggle('on',!!t.autoDaily);
+    animePlayEp(animeCurEp);
+  }
+  function animeEmbed(u){
+    var s=String(u||''),low=s.toLowerCase(),m;
+    if(/\.(mp4|webm|ogg|mov|m4v)(\?|#|$)/.test(low)) return '<video src="'+animeAttrEsc(u)+'" controls autoplay playsinline style="width:100%;height:100%"></video>';
+    if((m=s.match(/bilibili\.com\/video\/(BV[\w]+)/i))){var bv=m[1];var bpm=s.match(/[?&]p=(\d+)/i);var bp=bpm?bpm[1]:'1';return '<iframe src="https://player.bilibili.com/player.html?bvid='+bv+'&page='+bp+'&autoplay=1&high_quality=1" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer" style="width:100%;height:100%;border:0"></iframe>';}
+    if((m=s.match(/youku\.com\/v_show\/id_([\w=]+)/i))) return '<iframe src="https://player.youku.com/embed/'+m[1]+'" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer" style="width:100%;height:100%;border:0"></iframe>';
+    if((m=s.match(/v\.qq\.com\/(?:x\/cover\/[\w]+\/|x\/page\/)([\w]+)\.html/i))) return '<iframe src="https://v.qq.com/txp/iframe/player.html?vid='+m[1]+'" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer" style="width:100%;height:100%;border:0"></iframe>';
+    return '<iframe src="'+animeAttrEsc(u)+'" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer" style="width:100%;height:100%;border:0"></iframe>';
+  }
+  function animePlayEp(i){
+    var t=animeData.themes.find(function(x){return x.id===animeCurId;});if(!t)return;
+    animeCurEp=i;t.lastEp=i;t.lastDate=animeTodayStr();animeSave(animeData);
+    var ep=t.episodes[i];if(!ep)return;
+    document.getElementById('animeNowTitle').textContent=ep.title||('第'+(i+1)+'集');
+    document.getElementById('animeNowSub').textContent='第 '+(i+1)+' / '+t.episodes.length+' 集';
+    document.getElementById('animeIntroBox').textContent=t.intro||'';
+    var p=document.getElementById('animePlayer');
+    p.innerHTML=animeEmbed(ep.url)+'<button class="anime-jump" id="animeJumpBtn" style="display:block" onclick="animeJumpWeb()">↗ 跳转网页观看</button>';
+    var eps=document.getElementById('animeEps');if(!eps)return;eps.innerHTML='';
+    t.episodes.forEach(function(e,idx){
+      var b=document.createElement('div');b.className='anime-epbtn'+(idx===i?' cur':'');
+      b.innerHTML=(idx+1)+'<span class="et">'+(e.title||'')+'</span>';
+      b.onclick=function(){animePlayEp(idx);};
+      eps.appendChild(b);
+    });
+  }
+  window.animeJumpWeb=function(){
+    var t=animeData.themes.find(function(x){return x.id===animeCurId;});if(!t)return;
+    var ep=t.episodes[animeCurEp];if(ep&&ep.url)window.open(ep.url,'_blank');
+  };
+  window.animeToggleAuto=function(){
+    var t=animeData.themes.find(function(x){return x.id===animeCurId;});if(!t)return;
+    t.autoDaily=!t.autoDaily;animeSave(animeData);
+    document.getElementById('animeAutoSw').classList.toggle('on',t.autoDaily);
+  };
+
+  window.animeToggleCatManage=function(){var el=document.getElementById('animeCatChips');if(el)el.classList.toggle('manage');};
+  window.animeHideCatNew=function(){var el=document.getElementById('animeCatNew');if(el)el.classList.remove('on');var n=document.getElementById('animeNewCatName');if(n)n.value='';};
+  function animeRenderCatChips(){
+    var box=document.getElementById('animeCatChips');if(!box)return;box.innerHTML='';
+    (animeData.cats||[]).forEach(function(c){
+      var b=document.createElement('div');
+      b.className='cchip'+(animeEditSelCat===c.name?' on':'');
+      if(animeEditSelCat===c.name){b.style.background=c.bg;b.style.color='#fff';b.style.borderColor=c.bg;}
+      else{b.style.background='#fff';b.style.color=c.bg;b.style.borderColor=c.bg;}
+      b.appendChild(document.createTextNode(c.name));
+      var x=document.createElement('span');x.className='x';x.textContent='×';
+      x.onclick=function(e){e.stopPropagation();animeDelCat(c.name);};
+      b.appendChild(x);
+      b.onclick=function(){animeEditSelCat=c.name;animeRenderCatChips();};
+      box.appendChild(b);
+    });
+    var add=document.createElement('div');
+    add.className='cchip add';add.textContent='＋ 新建分类';
+    add.onclick=function(){var el=document.getElementById('animeCatNew');if(el)el.classList.add('on');var n=document.getElementById('animeNewCatName');if(n)n.focus();};
+    box.appendChild(add);
+  }
+  window.animeAddCat=function(){
+    var n=document.getElementById('animeNewCatName');if(!n)return;var name=n.value.trim();
+    var col=document.getElementById('animeNewCatColor');if(!col)return;var color=col.value||'#F26D92';
+    if(!name){alert('请填写分类名');return;}
+    if((animeData.cats||[]).some(function(c){return c.name===name;})){alert('已有同名分类');return;}
+    animeData.cats=animeData.cats||[];animeData.cats.push({name:name,bg:color});
+    animeEditSelCat=name;animeSave(animeData);
+    if(n)n.value='';var el=document.getElementById('animeCatNew');if(el)el.classList.remove('on');
+    animeRenderCatChips();
+  };
+  window.animeDelCat=function(name){
+    if(!confirm('删除分类「'+name+'」？\n已用此分类的动画会显示成「其他」色'))return;
+    animeData.cats=animeData.cats.filter(function(c){return c.name!==name;});
+    if(animeEditSelCat===name)animeEditSelCat=(animeData.cats[0]&&animeData.cats[0].name)||'其他';
+    animeSave(animeData);animeRenderCatChips();
+  };
+
+  window.animeOpenEdit=function(id){
+    animeEditId=id||null;
+    var t=id?animeData.themes.find(function(x){return x.id===id;}):null;
+    animeEditSelCat=(t&&t.cat)||(animeData.cats&&animeData.cats[0]&&animeData.cats[0].name)||'其他';
+    animeRenderCatChips();
+    var fN=document.getElementById('animeFName');if(fN)fN.value=t?t.name:'';
+    var fC=document.getElementById('animeFCover');if(fC)fC.value=t?t.cover:'';
+    var fI=document.getElementById('animeFIntro');if(fI)fI.value=t?t.intro:'';
+    var fE=document.getElementById('animeFEps');if(fE)fE.value=t?(t.episodes.map(function(e){return (e.title?e.title+' | ':'')+e.url;}).join('\n')):'';
+    var tt=document.getElementById('animeEditTitle');if(tt)tt.textContent=id?'编辑动画':'添加动画';
+    var mk=document.getElementById('animeEditMask');if(mk)mk.classList.add('on');
+  };
+  window.animeCloseEdit=function(){var mk=document.getElementById('animeEditMask');if(mk)mk.classList.remove('on');};
+  window.animeSaveEdit=function(){
+    var fN=document.getElementById('animeFName');if(!fN)return;var name=fN.value.trim();
+    var cat=animeEditSelCat;
+    var fC=document.getElementById('animeFCover');var cover=fC?fC.value.trim():'';
+    var fI=document.getElementById('animeFIntro');var intro=fI?fI.value.trim():'';
+    var fE=document.getElementById('animeFEps');if(!fE)return;
+    var lines=fE.value.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+    var eps=lines.map(function(ln,idx){
+      var i=ln.indexOf('|');var title,url;
+      if(i>=0){title=ln.slice(0,i).trim();url=ln.slice(i+1).trim();}
+      else{url=ln.trim();title='第'+(idx+1)+'集';}
+      return {n:idx+1,title:title,url:url};
+    });
+    if(!name){alert('请填动画名称');return;}
+    if(!eps.length){alert('至少填一集视频链接');return;}
+    if(animeEditId){
+      var t=animeData.themes.find(function(x){return x.id===animeEditId;});
+      if(t){t.name=name;t.cat=cat;t.cover=cover;t.intro=intro;t.episodes=eps;if(t.lastEp>=eps.length)t.lastEp=0;}
+    }else{
+      animeData.themes.push({id:'a_'+Date.now(),name:name,emoji:'📺',cat:cat,cover:cover,intro:intro,autoDaily:false,lastEp:0,lastDate:'',episodes:eps});
+    }
+    animeSave(animeData);window.animeCloseEdit();animeRenderLib();
+  };
+  window.animeDelTheme=function(id){
+    if(!confirm('确定删除这个动画？'))return;
+    animeData.themes=animeData.themes.filter(function(x){return x.id!==id;});animeSave(animeData);animeCurId=null;animeRenderLib();
+  };
+
+  window.animeToggleParse=function(){var el=document.getElementById('animeParseBox');if(el)el.classList.toggle('on');};
+  function animeIsVideoUrl(u){
+    var s=u.toLowerCase();
+    if(/\.(mp4|webm|ogg|mov|m4v)(\?|#|$)/.test(s))return true;
+    if(/bilibili\.com\/video\/(BV[\w]+)/i.test(u))return true;
+    if(/youku\.com\/v_show\/id_([\w=]+)/i.test(u))return true;
+    if(/v\.qq\.com\//i.test(u)&&/[\w]{6,}/.test(u))return true;
+    return false;
+  }
+  function animeNormVideoUrl(u){
+    var m;
+    if((m=u.match(/bilibili\.com\/video\/(BV[\w]+)/i)))return 'https://www.bilibili.com/video/'+m[1];
+    if((m=u.match(/youku\.com\/v_show\/id_([\w=]+)/i)))return 'https://v.youku.com/v_show/id_'+m[1];
+    if((m=u.match(/v\.qq\.com\/(?:x\/cover\/[\w]+\/|x\/page\/)([\w]+)\.html/i)))return 'https://v.qq.com/txp/iframe/player.html?vid='+m[1];
+    if((m=u.match(/v\.qq\.com\/[^\s]*[?&]vid=([\w]+)/i)))return 'https://v.qq.com/txp/iframe/player.html?vid='+m[1];
+    return u;
+  }
+  function animeGuessTitle(text,pos){
+    var lineStart=text.lastIndexOf('\n',pos)+1;
+    var lineEnd=text.indexOf('\n',pos);if(lineEnd<0)lineEnd=text.length;
+    var line=text.slice(lineStart,lineEnd).replace(/(https?:\/\/[^\s"'<>]+)/gi,'').replace(/^\s*[\d.\-、)]\s*/,'').replace(/[|｜]\s*$/,'').trim();
+    if(line&&line.length<=60)return line;
+    var before=text.slice(Math.max(0,pos-300),pos);
+    var am=before.match(/<a[^>]*>([^<]{1,60})<\/a>\s*$/i);if(am)return am[1].trim();
+    var tm=before.match(/title="([^"]{1,60})"\s*[^>]*>\s*$/i);if(tm)return tm[1].trim();
+    return '';
+  }
+  function animeParseEpsFromPaste(raw){
+    var text=String(raw||'');
+    var urlRe=/(https?:\/\/[^\s"'<>]+)/gi,m,urls=[];
+    while((m=urlRe.exec(text))){if(animeIsVideoUrl(m[0]))urls.push({url:animeNormVideoUrl(m[0]),pos:m.index});}
+    if(!urls.length)return [];
+    return urls.map(function(it,idx){
+      var t=animeGuessTitle(text,it.pos);
+      return {n:idx+1,title:t||('第'+(idx+1)+'集'),url:it.url};
+    });
+  }
+  window.animeRunParse=function(){
+    var fP=document.getElementById('animeFParse');if(!fP)return;
+    var eps=animeParseEpsFromPaste(fP.value);
+    var msg=document.getElementById('animeParseMsg');if(!msg)return;
+    if(!eps.length){msg.textContent='没找到视频链接，换个网页源码或链接文本试试';return;}
+    var fE=document.getElementById('animeFEps');if(!fE)return;
+    var cur=fE.value.trim();
+    var lines=eps.map(function(e){return (e.title?e.title+' | ':'')+e.url;});
+    fE.value=(cur?cur+'\n':'')+lines.join('\n');
+    msg.textContent='已识别 '+eps.length+' 集，已填入下方分集框（可继续手动调整）';
+  };
+})();
+</script>
 
 <script>
   // 从外部（拼读大闯关地图游戏等）返回时，依据 location.hash 跳到指定屏（#phonics / #games / #english …）。
@@ -20519,6 +21120,30 @@ window.__monoBack = function () {
   .mb-topic{border-color:var(--line);color:#4B4B4B;background:#fff}
   .mb-topic:hover{background:#EAF4FB;border-color:#B3DCF0}
   .mb-chip{background:#EAF4FB;border-color:#B3DCF0;color:#2E7FA8}
+  /* 继续学习 / 当前在学（适配当下在学内容） */
+  .mb-continue{display:flex;align-items:center;gap:12px;margin:14px 18px 0;padding:14px 16px;border-radius:18px;cursor:pointer;background:linear-gradient(135deg,#FFF6DC,#FFE9B0);border:2px solid #F4D27A;box-shadow:0 6px 16px rgba(244,210,122,.25);transition:transform .12s}
+  .mb-continue:hover{transform:translateY(-2px)}
+  .mb-continue.last{background:linear-gradient(135deg,#EAF4FB,#D9EEF8);border-color:#B3DCF0}
+  .mb-continue.none{background:#F4F9FD;border:2px dashed #B3DCF0}
+  .mb-continue .mc-ic{font-size:30px;flex:0 0 auto}
+  .mb-continue .mc-txt{flex:1;min-width:0;display:flex;flex-direction:column}
+  .mb-continue .mc-txt b{font-size:16px;color:#5A4636;font-weight:900}
+  .mb-continue .mc-txt span{font-size:13px;color:#8A7A5C;margin-top:2px}
+  .mb-continue .mc-go{flex:0 0 auto;font-size:14px;font-weight:800;color:#C8902A;background:#fff;border-radius:999px;padding:6px 12px;white-space:nowrap}
+  .mb-continue.last .mc-go{color:#3E9BC9}
+  .mb-prog{margin:10px 18px 0;font-size:14px;color:#5C6473}
+  .mb-prog b{color:#2E7FA8;font-weight:900}
+  .mb-topic.lst{display:flex;align-items:center;gap:8px}
+  .mb-topic.lst.cur{background:#FFF6DC;border-color:#F4D27A}
+  .mb-mark{margin-left:auto;font-size:13px;font-weight:800;color:#C8902A;background:#FFF3D6;border:1px solid #F4D27A;border-radius:999px;padding:3px 10px;cursor:pointer;white-space:nowrap}
+  .mb-mark.on{background:#F4D27A;color:#fff}
+  .mb-continue .mic-ic{font-size:22px;line-height:1}
+  .mb-continue .mic-tx{margin-left:6px;flex:1}
+  .mb-continue .mic-l{font-weight:800;color:#8A5A12;font-size:15px}
+  .mb-continue .mic-s{font-size:12px;color:#A9762E;margin-top:2px}
+  .mb-continue .mic-go{font-weight:800;color:#C8902A;white-space:nowrap}
+  .mb-continue:active{transform:scale(.98)}
+  .mb-prog-line{margin:8px 18px 0;font-size:13px;color:#A9762E}
 
   /* ===== 语文宝典（Phase 1）· 珊瑚红+竹青+米金 马卡龙 ===== */
   #sc-chinesebook .cb-root{flex:1;min-height:0;display:flex;flex-direction:column}
@@ -20581,6 +21206,34 @@ window.__monoBack = function () {
   .cb-lesson-c{margin-left:auto;font-size:13px;color:#A98;font-weight:700}
   .cb-lesson-h{font-size:16px;font-weight:900;color:#C24E74;padding:14px 20px 4px}
   .cb-lesson-h .cb-prog{margin-left:8px;font-size:14px;color:#8FBC8D;font-weight:800}
+  /* 继续学习 / 当前在学（适配当下在学内容） */
+  .cb-continue{display:flex;align-items:center;gap:12px;margin:14px 26px 0;padding:14px 16px;border-radius:18px;cursor:pointer;background:linear-gradient(135deg,#FFF1F5,#FBD3DF);border:2px solid #F4B8CB;box-shadow:0 6px 16px rgba(242,109,146,.18);transition:transform .12s}
+  .cb-continue:hover{transform:translateY(-2px)}
+  .cb-continue.last{background:linear-gradient(135deg,#FCEFF3,#F6D9E2);border-color:#F0C0CF}
+  .cb-continue.none{background:#FFF9F2;border:2px dashed #E8C9D4;cursor:pointer}
+  .cb-continue .cb-ic{font-size:30px;flex:0 0 auto}
+  .cb-continue .cb-txt{flex:1;min-width:0;display:flex;flex-direction:column}
+  .cb-continue .cb-txt b{font-size:16px;color:#C24E74;font-weight:900}
+  .cb-continue .cb-txt span{font-size:13px;color:#A88692;margin-top:2px}
+  .cb-continue .cb-go{flex:0 0 auto;font-size:14px;font-weight:800;color:#C24E74;background:#fff;border-radius:999px;padding:6px 12px;white-space:nowrap}
+  .cb-prog-line{margin:8px 26px 0;font-size:14px;color:#8A6E55}
+  .cb-prog-line b{color:#F26D92;font-weight:900}
+  .cb-lmark{margin-left:10px;font-size:13px;font-weight:800;color:#C24E74;background:#FCEFF3;border:1px solid #F0C0CF;border-radius:999px;padding:4px 12px;cursor:pointer;white-space:nowrap}
+  .cb-lmark.on{background:#F26D92;color:#fff}
+  .cb-continue .cic-ic{font-size:22px;line-height:1}
+  .cb-continue .cic-tx{margin-left:6px;flex:1}
+  .cb-continue .cic-l{font-weight:800;color:#C24E74;font-size:15px}
+  .cb-continue .cic-s{font-size:12px;color:#D06A8C;margin-top:2px}
+  .cb-continue .cic-go{font-weight:800;color:#F26D92;white-space:nowrap}
+  .cb-continue:active{transform:scale(.98)}
+  .cb-ldone{margin-left:8px;font-size:13px;font-weight:800;color:#5FAE8E;background:#E6F6EF;border:1px solid #BFE3D2;border-radius:999px;padding:4px 12px;cursor:pointer;white-space:nowrap}
+  .cbl-row.cur{background:#FFF1F5;border-color:#F4B8CB}
+  .cbl-row .cbl-mark{margin-left:auto;font-size:12px;font-weight:800;color:#C24E74;background:#FCEFF3;border:1px solid #F0C0CF;border-radius:999px;padding:3px 9px;cursor:pointer;white-space:nowrap}
+  .cbl-row .cbl-mark.on{background:#F26D92;color:#fff}
+  .cbl-row .cbl-cur{margin-left:8px;font-size:12px;font-weight:800;color:#C24E74;background:#FCEFF3;border-radius:999px;padding:2px 8px}
+  .cbu-row.cur{background:#FCEFF3}
+  .cbu-row.cur .cbu-num{background:#F26D92;color:#fff}
+  .cbu-cur{margin-left:8px;font-size:12px;font-weight:800;color:#C24E74;background:#FCEFF3;border-radius:999px;padding:2px 8px}
   /* 语文宝典 · 对开书页目录（2024新版部编 · 童趣互动版配色 · 无外框） */
   .cb-card.cb-flat{background:#FFF9F2;box-shadow:none}
   .cb-card.cb-noscroll{overflow:hidden}
@@ -20704,6 +21357,15 @@ window.__monoBack = function () {
   .cb-ltabs{display:flex;gap:10px;padding:6px 0 0;flex:0 0 auto}
   .cb-ltab{flex:1;max-width:300px;font-size:17px;font-weight:900;color:#9B8A78;background:#FFF3E6;border-radius:14px 14px 0 0;padding:11px 0;text-align:center;cursor:pointer;transition:.12s}
   .cb-ltab.on{background:#8FCFB6;color:#fff;box-shadow:0 4px 10px rgba(143,207,182,.3)}
+  /* 课外延伸 · 4 子标签（学习/复习/预习/备课/通识） */
+  .cb-ext-tabs{display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px 4px;flex:0 0 auto}
+  .cb-etab{font-size:15px;font-weight:800;color:#9B8A78;background:#FFF3E6;border-radius:999px;padding:6px 14px;cursor:pointer;transition:.12s;white-space:nowrap}
+  .cb-etab.on{background:#F26D92;color:#fff;box-shadow:0 3px 8px rgba(242,109,146,.28)}
+  .cb-elist{display:flex;flex-direction:column;gap:6px;padding:2px 16px 4px}
+  .cb-eli{font-size:15px;line-height:1.6;color:#5A4636;background:#FFFDF8;border-radius:10px;padding:8px 12px}
+  .cb-prep-flag{font-size:13px;font-weight:800;color:#C24E74;background:#FDEAF0;border:1px dashed #F26D92;border-radius:10px;padding:6px 12px;margin:8px 16px 2px}
+  #cbPaneExt{display:none}
+  #cbPaneExt.on{display:flex;flex-direction:column;min-height:0;flex:1;overflow-y:auto;padding-bottom:14px}
   .cb-lpane{display:none}
   .cb-lpane.on{display:flex;flex-direction:column;min-height:0;flex:1;overflow:hidden;padding-bottom:10px}
   .cb-sec-h{font-size:16px;font-weight:900;color:#5A4636;padding:7px 0 3px}
@@ -21456,13 +22118,13 @@ window.__monoBack = function () {
   var MB_LS='mc_mathbook_state_v1';
 var MATHBOOK = {"grades":[{"g":1,"terms":[{"t":"上","units":[{"id":"1a-u0","num":"准备课","title":"准备课","topics":[{"id":"1a-count","title":"数一数","difficulty":1,"oneLiner":"数物体个数时，一个一个点数，数到几就是几个。","steps":["手指点着数，不重不漏。"],"flashcards":[{"concept":"数数","plain":"一个一个地点数，最后数到几就是总数。","example":"3 个苹果 → 3"}],"practice":{"basic":[{"q":"数一数：🍎🍎🍎 有几个？","opts":["2","3","4"],"ans":1,"explain":"一共 3 个。"},{"q":"数一数：🐟🐟🐟🐟🐟 有几条？","opts":["4","5","6"],"ans":1,"explain":"一个一个点数：1、2、3、4、5，一共 5 条。"},{"q":"数一数：⭐⭐⭐⭐⭐⭐⭐⭐ 有几颗？","opts":["7","8","9"],"ans":1,"explain":"一共 8 颗星星。"},{"q":"教室里有 6 把椅子，又搬来 1 把，现在有几把？","opts":["6","7","8"],"ans":1,"explain":"6 再往后数 1 个是 7 把。"},{"type":"interactive","q":"数一数，点亮几颗珠子？","it":{"type":"abacus","target":6,"max":10}}],"improve":[{"q":"🍎🍎🍐🍎🍐🍎 —— 苹果有几个？","opts":["4","2","3"],"ans":0,"explain":"苹果有 4 个（第 1、2、4、6 个），梨是 2 个。要看清题目问的是哪一种。"},{"q":"一排小朋友，从左边数小红是第 3 个，从右边数她也是第 3 个。这一排一共几人？","opts":["5","6","7"],"ans":0,"explain":"3＋3＝6，小红被数了两次，6－1＝5 人。"}],"challenge":[{"q":"左边 3 只兔子，右边 4 只兔子，给左边添几只就和右边一样多？","opts":["1","2","3"],"ans":0,"explain":"4－3＝1，添 1 只就一样多。"}]},"interactive":{"type":"abacus","target":7,"max":10},"examples":[{"title":"数一数","content":"点亮 7 颗珠子，就写数字 7。"}],"connections":{"prerequisites":[],"unlocks":["比多少","认识 1~5"]},"lifeCases":[{"title":"摆碗筷","scene":"家里有 3 口人吃饭，要摆几双筷子？","use":"一人一双，数出 3 双就对了。","problem":"如果爷爷今天也来吃饭，一共要摆几双？"}],"pitfalls":[{"wrongStmt":"小马虎说：数得快就是数对了。","wrongDisplay":"手指乱跳着数","correct":"要一个一个按顺序数，手指点着数，数到几就是几个。","tip":"数完再数第二遍检查一遍。","mnemonic":"手指点着数，不跳不重复。"}]},{"id":"1a-compare","title":"比多少","difficulty":1,"oneLiner":"把两样东西一一对应，没有多余的就一样多。","steps":["一一对应，谁有剩谁就多。"],"flashcards":[{"concept":"一一对应","plain":"把两样东西一个对一个，多出来的那方更多。","example":"○○○ 比 ○○ 多 1 个"}],"practice":{"basic":[{"q":"哪边多？🍎🍎🍎 和 🍎🍎","opts":["左边多","一样多","右边多"],"ans":0,"explain":"左边 3 个，右边 2 个，左边多。"},{"q":"🐱🐱🐱 和 🐶🐶🐶，谁多？","opts":["猫多","狗多","一样多"],"ans":2,"explain":"都是 3 个，一一对应后谁也没剩，一样多。"},{"q":"🍓🍓🍓🍓 比 🍓🍓（ ）。","opts":["多","少","一样"],"ans":0,"explain":"4 个比 2 个多。"},{"q":"要让 🍬🍬 和 🍬🍬🍬 一样多，要给左边添几颗？","opts":["1","2","3"],"ans":0,"explain":"左边 2 颗，右边 3 颗，添 1 颗就一样多。"},{"type":"interactive","q":"哪边的水果更多？","it":{"type":"compare","left":4,"right":6,"emoji":"🍓"}}],"improve":[{"q":"红气球 5 个，黄气球 3 个，红气球比黄气球多几个？","opts":["1","2","3"],"ans":1,"explain":"5－3＝2，多 2 个。"},{"q":"哥哥有 7 张卡片，弟弟有 7 张，谁的多？","opts":["哥哥多","弟弟多","一样多"],"ans":2,"explain":"7 和 7 相等，一样多。"}],"challenge":[{"q":"小明比小红高，小红比小刚高。谁最矮？","opts":["小明","小红","小刚"],"ans":2,"explain":"从高到矮：小明、小红、小刚，小刚最矮。"}]},"interactive":{"type":"compare","left":5,"right":3,"emoji":"🍎"},"examples":[{"title":"一一对应","content":"3 只小兔对 3 根萝卜，正好一对一个，谁也不多。"}],"connections":{"prerequisites":["数一数"],"unlocks":["比大小","5以内的加减法"]},"lifeCases":[{"title":"分水果","scene":"盘里有 4 个苹果，家里有 3 个人。","use":"一人一个还多 1 个，说明苹果比人多。","problem":"想让每人分到一样多，还要再拿来几个才够 4 个人分？"}],"pitfalls":[{"wrongStmt":"小马虎说：摆得长的那排就一定多。","wrongDisplay":"摆得开=摆得多","correct":"多少看个数，不看摆得长短、稀密。","tip":"数一数再比，别被样子骗了。","mnemonic":"比多比少数个数，别看排得长不长。"}]}]},{"id":"1a-u1","num":"位置","title":"位置","topics":[{"id":"1a-updown","title":"上和下","difficulty":1,"oneLiner":"上下看高低，上面在高处，下面在低处。","steps":["头顶是上，脚下是下。"],"flashcards":[{"concept":"上下","plain":"以中间为界，往头顶方向是上，往脚方向是下。","example":"小鸟在树上（上），小狗在树下（下）"}],"practice":{"basic":[{"q":"太阳在山的（ ）方？","opts":["上","下"],"ans":0,"explain":"太阳在天空，是上方。"},{"q":"小鸟在树上，小狗在树的（ ）。","opts":["上面","下面"],"ans":1,"explain":"小鸟站在树枝上，小狗在树底下，是下面。"},{"q":"书放在桌子的（ ）面。","opts":["上","下"],"ans":0,"explain":"书放在桌面上，是上面。"},{"q":"鞋子穿在脚的（ ）面。","opts":["上","下"],"ans":1,"explain":"鞋子在脚底下，是下面。"},{"type":"interactive","q":"指一指：下 方","it":{"type":"compass","rel":"下"}}],"improve":[{"q":"小明站在楼梯上，他在小红的上面，那小红在小明的（ ）。","opts":["上面","下面"],"ans":1,"explain":"上下是相对的：小明在上，小红就在小明的下面。"},{"q":"飞机在云的上面，云在地的上面。谁在最下面？","opts":["飞机","云","地"],"ans":2,"explain":"从上往下：飞机、云、地，地最下面。"}],"challenge":[{"q":"三层书架：第一层放故事书，第二层放课本，第三层放字典。字典在课本的（ ）。","opts":["上面","下面"],"ans":1,"explain":"一层比一层低，第三层在第二层的下面。"}]},"interactive":{"type":"compass","rel":"上"},"examples":[{"title":"说一说","content":"电灯在天花板上，地毯铺在地板上。"}],"connections":{"prerequisites":[],"unlocks":["前和后","左和右"]},"lifeCases":[{"title":"收拾书包","scene":"铅笔盒放在最上面，课本压在下面。","use":"说清谁在上谁在下，找东西更快。","problem":"想先拿课本，要先拿出什么？"}],"pitfalls":[{"wrongStmt":"小马虎说：桌子在书的上面。","wrongDisplay":"桌在上，书在下","correct":"书放在桌面上，书在上、桌子在下。","tip":"说上下要先看清『谁在谁的哪一面』。","mnemonic":"谁在谁上面，反过来说就变。"}]},{"id":"1a-frontback","title":"前和后","difficulty":1,"oneLiner":"面对的方向是前，背对的方向是后。","steps":["你面朝哪，哪就是前；背后就是后。"],"flashcards":[{"concept":"前后","plain":"脸对着的是前，背对着的是后。","example":"小明站在队伍最前面"}],"practice":{"basic":[{"q":"排队时，小明站在队最（ ）面，老师能看见他的脸。","opts":["前","后"],"ans":0,"explain":"面朝老师的那一头是前面。"},{"q":"汽车向前开，车头在（ ）面。","opts":["前","后"],"ans":0,"explain":"车往哪边开，哪边就是前，车头在前。"},{"q":"你背对着的那个方向是（ ）。","opts":["前","后"],"ans":1,"explain":"脸对着的是前，背对着的是后。"},{"q":"小朋友排成一队，小红前面有 2 人，她是第（ ）个。","opts":["2","3","4"],"ans":1,"explain":"前面有 2 人，小红就是第 3 个。"},{"type":"interactive","q":"指一指：后 方","it":{"type":"compass","rel":"后"}}],"improve":[{"q":"一排 5 人，从前往后数小刚是第 2 个，他后面还有几人？","opts":["2","3","4"],"ans":1,"explain":"5－2＝3，他后面还有 3 人。"},{"q":"小狗在小猫前面，小猫在小兔前面。谁在最后面？","opts":["小狗","小猫","小兔"],"ans":2,"explain":"顺序是 小狗→小猫→小兔，小兔在最后。"}],"challenge":[{"q":"一排 6 人，从前往后数小明是第 3 个，从后往前数他是第几个？","opts":["3","4","5"],"ans":1,"explain":"他后面有 6－3＝3 人，所以从后数是第 4 个。"}]},"interactive":{"type":"compass","rel":"前"},"examples":[{"title":"排排队","content":"小华在最前面，小丽在最后面，小明在他们中间。"}],"connections":{"prerequisites":["上和下"],"unlocks":["左和右","第几"]},"lifeCases":[{"title":"坐校车","scene":"上车时你在第 3 个，前面已经坐了 2 个同学。","use":"前后关系能帮我们数清队伍。","problem":"如果一共有 8 个人排队，你后面还有几个？"}],"pitfalls":[{"wrongStmt":"小马虎说：前面有 3 人，我就是第 3 个。","wrongDisplay":"前3人=第3个","correct":"前面有 3 人，自己就是第 4 个。","tip":"第几 = 前面的人数 ＋ 1。","mnemonic":"数第几，别忘了加上我自己。"}]},{"id":"1a-leftright","title":"左和右","difficulty":1,"oneLiner":"写字的手是右手，另一只就是左手。","steps":["举右手那一侧是右边。"],"flashcards":[{"concept":"左右","plain":"拿笔的是右手，另一侧是左手。","example":"敬礼用右手"}],"practice":{"basic":[{"q":"我们写字一般用（ ）手。","opts":["左","右"],"ans":1,"explain":"拿笔写字的是右手。"},{"q":"和右手在同一边的是（ ）脚。","opts":["左","右"],"ans":1,"explain":"右手和右脚在身体的同一边。"},{"q":"升国旗敬礼用的是（ ）手。","opts":["左","右"],"ans":1,"explain":"敬礼统一用右手。"},{"q":"小红的左边是小明，那小明的右边是（ ）。","opts":["小红","小刚"],"ans":0,"explain":"左右是相对的：小明在小红左边，小红就在小明右边。"},{"type":"interactive","q":"指一指：右 方","it":{"type":"compass","rel":"右"}}],"improve":[{"q":"上下楼梯要靠（ ）边走。","opts":["左","右"],"ans":1,"explain":"上下楼梯靠右走，才不会和别人撞上。"},{"q":"一排小朋友，从左数第 3 个穿红衣服，这一排至少有几人？","opts":["2","3","4"],"ans":1,"explain":"能数到第 3 个，说明至少 3 人。"}],"challenge":[{"q":"你举起右手照镜子，镜子里那只手看起来在你的（ ）边。","opts":["左","右"],"ans":0,"explain":"镜子会把左右反过来，看着像左手。"}]},"interactive":{"type":"compass","rel":"左"},"examples":[{"title":"找左右","content":"举起拿笔的手，那边就是右边；另一边是左边。"}],"connections":{"prerequisites":["上和下","前和后"],"unlocks":["认识图形"]},"lifeCases":[{"title":"过马路","scene":"先向左看，再向右看，确认没车再走。","use":"分清左右才能安全过马路。","problem":"为什么过马路要先看左边？"}],"pitfalls":[{"wrongStmt":"小马虎说：我的左边就是你的左边。","wrongDisplay":"左右永远同边","correct":"面对面时，你的左边是我的右边。","tip":"说左右要先说清『以谁为准』。","mnemonic":"面对面，左右换；同一个方向才一样。"}]}]},{"id":"1a-u2","num":"三","title":"1~5 的认识和加减法","topics":[{"id":"1a-num15","title":"认识 1~5","difficulty":1,"oneLiner":"1~5 表示个数，按顺序越来越大。","steps":["数几写几，1 最小 5 最大。"],"flashcards":[{"concept":"1~5","plain":"按 1、2、3、4、5 的顺序，后一个比前一个大 1。","example":"3 表示 3 个"}],"practice":{"basic":[{"q":"3 后面的一个数是（ ）。","opts":["2","4","5"],"ans":1,"explain":"按 1、2、3、4、5 的顺序，3 后面是 4。"},{"q":"4 前面的一个数是（ ）。","opts":["2","3","5"],"ans":1,"explain":"排在 4 前面的是 3。"},{"q":"○○○○○ 一共有几个？","opts":["3","4","5"],"ans":2,"explain":"一共 5 个圆。"},{"q":"1~5 中最大的数是（ ）。","opts":["1","3","5"],"ans":2,"explain":"从小到大排 1、2、3、4、5，5 最大。"},{"type":"interactive","q":"拨出 3 个珠子","it":{"type":"abacus","target":3,"max":5}}],"improve":[{"q":"比 2 大、比 5 小的数有几个？","opts":["1","2","3"],"ans":1,"explain":"是 3 和 4，一共 2 个。"},{"q":"按规律填数：1、2、3、（ ）、5。","opts":["3","4","6"],"ans":1,"explain":"每次多 1，3 后面是 4。"}],"challenge":[{"q":"5 个苹果分给两个人，每人都要有。下面哪种分法不对？","opts":["1 和 4","2 和 3","5 和 0"],"ans":2,"explain":"每人都要有，不能有人分到 0 个。"}]},"interactive":{"type":"abacus","target":4,"max":5},"examples":[{"title":"数一数写数","content":"点亮 4 颗珠子，就写数字 4。"}],"connections":{"prerequisites":["数一数"],"unlocks":["比大小","分与合","加法"]},"lifeCases":[{"title":"手指帮忙","scene":"一只手有 5 根手指。","use":"数 1~5 时可以用手指当小工具。","problem":"两只手一共有几根手指？"}],"pitfalls":[{"wrongStmt":"小马虎说：5 比 4 小。","wrongDisplay":"5＜4","correct":"越往后数越大，5 比 4 大。","tip":"按顺序背一遍：1、2、3、4、5。","mnemonic":"顺着数，越数越大。"}]},{"id":"1a-cmp15","title":"比大小","difficulty":1,"oneLiner":"用 ＞、＜、＝ 比两个数的多少。","steps":["大嘴朝大数，尖尖朝小数。"],"flashcards":[{"concept":"大于小于","plain":"大数在前用 ＞，小数在前用 ＜。","example":"5 ＞ 3"}],"practice":{"basic":[{"q":"4 ○ 2，○ 里填（ ）。","opts":["＞","＜","＝"],"ans":0,"explain":"4 比 2 大，开口朝大数，填 ＞。"},{"q":"3 ○ 5，○ 里填（ ）。","opts":["＞","＜","＝"],"ans":1,"explain":"3 比 5 小，尖尖朝小数，填 ＜。"},{"q":"2 ○ 2，○ 里填（ ）。","opts":["＞","＜","＝"],"ans":2,"explain":"两个数一样大，用 ＝。"},{"q":"下面哪个式子是对的？","opts":["5＞4","3＞5","2＝3"],"ans":0,"explain":"5 比 4 大，5＞4 正确。"},{"type":"interactive","q":"在中间填符号","it":{"type":"compare-num","a":2,"b":4}}],"improve":[{"q":"把 1、3、5 从大到小排，正确的是（ ）。","opts":["1、3、5","5、3、1","3、5、1"],"ans":1,"explain":"从大到小就是 5、3、1。"},{"q":"□＜4，□ 里最大能填（ ）。","opts":["2","3","4"],"ans":1,"explain":"比 4 小的有 1、2、3，最大是 3。"}],"challenge":[{"q":"3＜□＜5，□ 里填（ ）。","opts":["2","4","5"],"ans":1,"explain":"比 3 大又比 5 小的数是 4。"}]},"interactive":{"type":"compare-num","a":3,"b":5},"examples":[{"title":"开口朝大数","content":"5 ＞ 3，大大的嘴巴朝着大的那个数 5。"}],"connections":{"prerequisites":["认识 1~5","比多少"],"unlocks":["认识 6~10","连加连减"]},"lifeCases":[{"title":"比糖果","scene":"你有 4 颗糖，妹妹有 2 颗。","use":"4＞2，你的糖更多。","problem":"你给妹妹几颗，两人就一样多了？"}],"pitfalls":[{"wrongStmt":"小马虎说：开口朝小数。","wrongDisplay":"5＜3","correct":"大嘴朝大数，尖尖朝小数，所以是 5＞3。","tip":"把符号想成一张嘴，它要吃大的那个。","mnemonic":"大嘴吃大数，尖尖指小数。"}]},{"id":"1a-ordinal","title":"第几","difficulty":1,"oneLiner":"第几表示排在第几个位置，和一共有几个不一样。","steps":["第 3 是位置，3 个是总数。"],"flashcards":[{"concept":"第几","plain":"第几说的是位置，从 1 开始数。","example":"从左数第 2 个是🍎"}],"practice":{"basic":[{"q":"🍎🍌🍇🍓，从左数第 3 个是（ ）。","opts":["🍎","🍌","🍇"],"ans":2,"explain":"从左数：第1🍎、第2🍌、第3🍇。"},{"q":"🍎🍌🍇🍓，一共有几个水果？","opts":["3","4","5"],"ans":1,"explain":"一共 4 个。"},{"q":"小明排第 2，说明他前面有（ ）人。","opts":["1","2","3"],"ans":0,"explain":"第 2 个前面只有 1 个人。"},{"q":"5 个小朋友排队，最后一个人是第（ ）个。","opts":["4","5","6"],"ans":1,"explain":"一共 5 人，最后的是第 5 个。"}],"improve":[{"q":"一排 8 人，从右数第 2 个，从左数是第（ ）个。","opts":["6","7","8"],"ans":1,"explain":"8－2＋1＝7，从左数是第 7 个。"},{"q":"▲●★■▼，★ 从左数是第几个？从右数呢？","opts":["第3、第3","第3、第2","第2、第3"],"ans":0,"explain":"★ 在正中间，从左第 3，从右也是第 3。"}],"challenge":[{"q":"10 个小朋友排队，小明从左数第 4，从右数他是第几个？","opts":["第6","第7","第8"],"ans":1,"explain":"他右边有 10－4＝6 人，所以从右数是第 7 个。"}]},"interactive":null,"examples":[{"title":"第几和几个","content":"一共有 5 辆车；红色的是从前面数第 3 辆。"}],"connections":{"prerequisites":["认识 1~5"],"unlocks":["认识 11~20","找规律"]},"lifeCases":[{"title":"排队打饭","scene":"你排在第 4 个。","use":"第 4 个说明前面有 3 个人，一共不一定只有 4 人。","problem":"如果后面还有 5 个人，这一队一共几人？"}],"pitfalls":[{"wrongStmt":"小马虎说：第 3 个就是有 3 个。","wrongDisplay":"第3个=3个","correct":"第几说的是位置，几个说的是总数，意思不一样。","tip":"问『第几』找位置，问『几个』数全部。","mnemonic":"第几排在位，几个数总数。"}]},{"id":"1a-split","title":"分与合","difficulty":1,"oneLiner":"一个数可以分成两个数，这两个数合起来又是它。","steps":["5 可以分成 2 和 3，2 和 3 合起来是 5。"],"flashcards":[{"concept":"分与合","plain":"一个数拆成两部分，合起来还是原数。","example":"5 分成 2 和 3"}],"practice":{"basic":[{"q":"5 可以分成 2 和（ ）。","opts":["2","3","4"],"ans":1,"explain":"2 和 3 合起来是 5。"},{"q":"4 可以分成 1 和（ ）。","opts":["2","3","4"],"ans":1,"explain":"1 和 3 合起来是 4。"},{"q":"3 和 2 合起来是（ ）。","opts":["4","5","6"],"ans":1,"explain":"3＋2＝5。"},{"q":"下面哪组分法是对的？","opts":["4 分成 2 和 2","4 分成 1 和 2","4 分成 3 和 2"],"ans":0,"explain":"只有 2 和 2 合起来是 4。"},{"type":"interactive","q":"把 5 分成两堆","it":{"type":"split","n":5}}],"improve":[{"q":"把 5 个●分成两堆，下面哪种不可能？","opts":["1 和 4","2 和 3","3 和 3"],"ans":2,"explain":"3＋3＝6，不是 5。"},{"q":"2 和（ ）合起来是 5。","opts":["2","3","4"],"ans":1,"explain":"2＋3＝5。"}],"challenge":[{"q":"5 颗糖分给两个人，且两人不一样多，有几种分法？","opts":["1","2","3"],"ans":1,"explain":"1和4、2和3，一共 2 种（不算交换）。"}]},"interactive":{"type":"split","n":5},"examples":[{"title":"分与合","content":"5 可以分成 1 和 4、2 和 3；反过来 1 和 4 合起来还是 5。"}],"connections":{"prerequisites":["认识 1~5"],"unlocks":["减法","5以内的加减法"]},"lifeCases":[{"title":"分筷子","scene":"5 双筷子分给哥哥和弟弟。","use":"可以分成 1 和 4、2 和 3。","problem":"怎样分两个人才一样多？"}],"pitfalls":[{"wrongStmt":"小马虎说：5 分成 2 和 2。","wrongDisplay":"5=2+2","correct":"2＋2＝4，不是 5；5 应该分成 2 和 3。","tip":"分完一定要合起来检查一遍。","mnemonic":"分完再合合，对上才算准。"}]},{"id":"1a-add","title":"加法","difficulty":1,"oneLiner":"把两部分合在一起求总数，用加法。","steps":["遇见『一共』『合起来』想加法。"],"flashcards":[{"concept":"加法","plain":"求总和使用 ＋。","example":"2＋3＝5"}],"practice":{"basic":[{"q":"停车场有 2 辆车，又来 1 辆，共几辆？","opts":["2","3","4"],"ans":1,"explain":"2＋1＝3。"},{"q":"1＋3＝（ ）。","opts":["3","4","5"],"ans":1,"explain":"1 和 3 合起来是 4。"},{"q":"2＋2＝（ ）。","opts":["3","4","5"],"ans":1,"explain":"2 和 2 合起来是 4。"},{"q":"树上有 3 只鸟，又飞来 2 只，一共几只？","opts":["4","5","6"],"ans":1,"explain":"3＋2＝5，一共 5 只。"},{"type":"interactive","q":"算一算，一共有几个？","it":{"type":"add-scene","a":3,"b":2,"emoji":"🐟"}}],"improve":[{"q":"□＋2＝5，□ 里填（ ）。","opts":["2","3","4"],"ans":1,"explain":"3＋2＝5。"},{"q":"小明上午看 2 本书，下午看 3 本，一共看几本？","opts":["4","5","6"],"ans":1,"explain":"2＋3＝5，一共 5 本。"}],"challenge":[{"q":"3＋（ ）＝3，括号里填（ ）。","opts":["0","1","3"],"ans":0,"explain":"加 0 什么都没加，还是 3。"}]},"interactive":{"type":"add-scene","a":2,"b":3,"emoji":"🍎"},"examples":[{"title":"合起来","content":"2 只小鸭加 1 只小鸭，合起来是 3 只：2＋1＝3。"}],"connections":{"prerequisites":["分与合","认识 1~5"],"unlocks":["减法","5以内的加减法"]},"lifeCases":[{"title":"攒贴纸","scene":"昨天得 2 张贴纸，今天得 3 张。","use":"求一共多少，用加法：2＋3＝5。","problem":"明天再得 1 张，一共几张？"}],"pitfalls":[{"wrongStmt":"小马虎说：看到『一共』就用减法。","wrongDisplay":"一共→减法","correct":"『一共』『合起来』『总共』都是加法的信号。","tip":"找关键词：一共、合起来 → 用 ＋。","mnemonic":"一共合起来，加号跑出来。"}]},{"id":"1a-sub","title":"减法","difficulty":1,"oneLiner":"从总数里去掉一部分，求剩下用减法。","steps":["遇见『还剩』『去掉』想减法。"],"flashcards":[{"concept":"减法","plain":"求剩下用 －。","example":"5－2＝3"}],"practice":{"basic":[{"q":"盘里有 4 块饼，吃掉 1 块，剩几块？","opts":["2","3","4"],"ans":1,"explain":"4－1＝3。"},{"q":"5－1＝（ ）。","opts":["3","4","5"],"ans":1,"explain":"5 去掉 1 还剩 4。"},{"q":"3－2＝（ ）。","opts":["0","1","2"],"ans":1,"explain":"3 去掉 2 还剩 1。"},{"q":"有 5 个气球，飞走 2 个，还剩几个？","opts":["2","3","4"],"ans":1,"explain":"5－2＝3，还剩 3 个。"},{"type":"interactive","q":"算一算，还剩几个？","it":{"type":"sub-scene","a":6,"b":3,"emoji":"🍪"}}],"improve":[{"q":"□－2＝3，□ 里填（ ）。","opts":["4","5","6"],"ans":1,"explain":"5－2＝3。"},{"q":"盘里原来 5 个饺子，吃掉一些后剩 2 个，吃掉了几个？","opts":["2","3","4"],"ans":1,"explain":"5－2＝3，吃掉 3 个。"}],"challenge":[{"q":"5－（ ）＝5，括号里填（ ）。","opts":["0","1","5"],"ans":0,"explain":"减 0 什么都没去掉，还是 5。"}]},"interactive":{"type":"sub-scene","a":5,"b":2,"emoji":"🍎"},"examples":[{"title":"去掉","content":"4 块饼干吃掉 1 块，还剩 3 块：4－1＝3。"}],"connections":{"prerequisites":["分与合","加法"],"unlocks":["5以内的加减法","0 的认识"]},"lifeCases":[{"title":"分糖果","scene":"你有 5 颗糖，送给朋友 2 颗。","use":"求还剩多少，用减法：5－2＝3。","problem":"如果朋友又还给你 1 颗，现在几颗？"}],"pitfalls":[{"wrongStmt":"小马虎说：看到『还剩』就用加法。","wrongDisplay":"还剩→加法","correct":"『还剩』『剩下』『飞走』『吃掉』都是减法的信号。","tip":"找关键词：还剩、去掉 → 用 －。","mnemonic":"还剩剩下减，减号站中间。"}]},{"id":"1a-zero","title":"0 的认识","difficulty":1,"oneLiner":"一个都没有就用 0 表示。","steps":["盘子里空了，就用 0。"],"flashcards":[{"concept":"0","plain":"什么都没有，记作 0。","example":"3－3＝0"}],"practice":{"basic":[{"q":"鸟窝里有 2 只鸟都飞走了，还剩几只？","opts":["0","1","2"],"ans":0,"explain":"2－2＝0。"},{"q":"3－3＝（ ）。","opts":["0","1","3"],"ans":0,"explain":"全部去掉，一个都不剩，就是 0。"},{"q":"0 表示（ ）。","opts":["一个都没有","有很多","一共有 1 个"],"ans":0,"explain":"0 表示一个也没有。"},{"q":"4＋0＝（ ）。","opts":["0","4","5"],"ans":1,"explain":"加 0 是什么都没加，还是 4。"}],"improve":[{"q":"下面哪个算式的结果最大？","opts":["5－5","5－0","0＋0"],"ans":1,"explain":"5－5＝0，5－0＝5，0＋0＝0，最大是 5。"},{"q":"尺子上的 0 表示（ ）。","opts":["起点","没有长度","终点"],"ans":0,"explain":"0 是尺子的起点，从 0 开始量起。"}],"challenge":[{"q":"5－0 ○ 5＋0，○ 里填（ ）。","opts":["＞","＜","＝"],"ans":2,"explain":"两边都等于 5，用 ＝。"}]},"interactive":null,"examples":[{"title":"0 的样子","content":"盘子里 3 个苹果全拿走，还剩 0 个，写 3－3＝0。"}],"connections":{"prerequisites":["减法"],"unlocks":["5以内的加减法","认识 6~10"]},"lifeCases":[{"title":"冰箱里的鸡蛋","scene":"冰箱里原来 3 个鸡蛋，全煮掉了。","use":"一个不剩，用 0 表示：3－3＝0。","problem":"妈妈又买了 5 个，现在有几个？"}],"pitfalls":[{"wrongStmt":"小马虎说：3－0＝0。","wrongDisplay":"3-0=0","correct":"3－0＝3，减 0 就是一个都没去掉。","tip":"减 0 和加 0 一样，原数不变。","mnemonic":"加减碰见 0，原数不动身。"}]},{"id":"1a-add-sub","title":"5以内的加减法","difficulty":1,"oneLiner":"合起来用＋，去掉一些用－。","steps":["合起来用＋，求一共多少。","去掉一些用－，求剩下多少。","画点点数，帮自己算。"],"flashcards":[{"concept":"加法 ＋","plain":"把两部分合起来，求一共是多少。","example":"2＋3＝5"},{"concept":"减法 －","plain":"从总数里去掉一些，求剩下多少。","example":"5－2＝3"},{"concept":"0","plain":"一个都没有，就用 0 表示。","example":"3－3＝0"}],"practice":{"basic":[{"q":"2＋1＝？","opts":["2","3","4"],"ans":1,"explain":"2 再往后数 1 个是 3。"},{"q":"4－2＝？","opts":["1","2","3"],"ans":1,"explain":"4 去掉 2 还剩 2。"},{"q":"3－0＝？","opts":["0","3","2"],"ans":1,"explain":"减 0 就是一个数都没去掉，还是 3。"},{"q":"1＋4＝（ ）。","opts":["4","5","6"],"ans":1,"explain":"1 和 4 合起来是 5。"},{"q":"5－4＝（ ）。","opts":["0","1","2"],"ans":1,"explain":"5 去掉 4 还剩 1。"}],"improve":[{"q":"树上有 3 只鸟，又飞来 2 只，一共几只？","opts":["4","5","6"],"ans":1,"explain":"3＋2＝5，一共 5 只。"},{"q":"小明有 5 颗糖，分给妹妹 3 颗，还剩几颗？","opts":["1","2","3"],"ans":1,"explain":"5－3＝2，还剩 2 颗。"},{"q":"算式 3＋1＝4 表示的意思是（ ）。","opts":["3 个去掉 1 个","3 个和 1 个合起来","把 3 个分成 1 份"],"ans":1,"explain":"加法就是把两部分合起来求总数。"}],"challenge":[{"q":"1＋2＋？＝5，？里填几？","opts":["1","2","3"],"ans":1,"explain":"1＋2＝3，3＋2＝5。"},{"q":"2＋（ ）＝5，括号里填（ ）。","opts":["2","3","4"],"ans":1,"explain":"2＋3＝5。"}]},"interactive":{"type":"add-sub","a":2,"b":3,"op":"+"},"examples":[{"title":"2＋3","content":"2 个 + 3 个 = 5 个"},{"title":"5－2","content":"5 块饼干吃掉 2 块，还剩 3 块"}],"connections":{"prerequisites":["认识 1~5","比多少"],"unlocks":["6~10 的加减法","看图列式"]},"lifeCases":[{"title":"分糖果","scene":"妈妈买来 4 颗糖，你吃了 1 颗，弟弟吃了 1 颗。","use":"算一算还剩几颗：4－1－1＝2。","problem":"如果再有 1 颗掉地上不能吃了，还剩几颗？"}],"pitfalls":[{"wrongStmt":"小马虎说：3－0＝0。","wrongDisplay":"3－0＝0","correct":"3－0＝3，一个数减 0 还是它自己。","tip":"减 0 就是『一个都没去掉』。","mnemonic":"减 0 不变身，原数留下来。"},{"wrongStmt":"小马虎说：2＋3 和 3＋2 不一样。","wrongDisplay":"2＋3 ≠ 3＋2","correct":"2＋3＝5，3＋2＝5，交换位置结果一样。","tip":"加法可以交换，和不变。","mnemonic":"加数换个位，答案不跑偏。"}]}]},{"id":"1a-u3","num":"四","title":"认识图形（一）","topics":[{"id":"1a-box","title":"长方体","difficulty":1,"oneLiner":"长方体有 6 个平平的面，像文具盒、书本。","steps":["长长的、方方的，能稳稳立住。"],"flashcards":[{"concept":"长方体","plain":"6 个长方形面，方方正正。","example":"书本是长方体"}],"practice":{"basic":[{"q":"下面哪个是长方体？","opts":["📦","⚽","🥧"],"ans":0,"explain":"📦 文具盒状是长方体。"},{"q":"下面哪个是长方体？","opts":["🏀","📚","🥫"],"ans":1,"explain":"书本长长的、方方的，是长方体。"},{"q":"长方体有（ ）个面。","opts":["4","6","8"],"ans":1,"explain":"长方体有 6 个面。"}],"improve":[{"q":"长方体能在桌上稳稳立住，是因为它的面是（ ）。","opts":["圆圆的","平平的","尖尖的"],"ans":1,"explain":"平平的面才能稳稳贴住桌面。"},{"q":"下面哪个最难滚动？","opts":["📦","🥫","🏀"],"ans":0,"explain":"长方体方方正正，最难滚动。"}],"challenge":[{"q":"把两个一样的长方体拼在一起，可能得到（ ）。","opts":["球","更大的长方体","圆柱"],"ans":1,"explain":"两个长方体可以拼成一个更大的长方体。"},{"q":"下面哪个不是长方体的特点？","opts":["有 6 个面","有尖尖的角","只有一个圆圆的面"],"ans":2,"explain":"长方体全是平平的面，没有圆面。"}]},"interactive":{"type":"shape","shape":"box"},"examples":[{"title":"找一找","content":"文具盒、冰箱、砖头，都是长方体。"}],"connections":{"prerequisites":["位置"],"unlocks":["认识图形（二）","长方形和正方形"]},"lifeCases":[{"title":"整理书柜","scene":"书本一本本立起来排在书柜里。","use":"长方体平平的面能稳稳立住，好排列。","problem":"为什么球不能像书一样立在书架上？"}],"pitfalls":[{"wrongStmt":"小马虎说：长方体和正方体完全一样。","wrongDisplay":"长方体=正方体","correct":"正方体 6 个面都一样大，长方体只有相对的面一样大。","tip":"看面是不是一样大。","mnemonic":"正方六面同，长方对边同。"}]},{"id":"1a-cube","title":"正方体","difficulty":1,"oneLiner":"正方体 6 个面都一样大，像骰子。","steps":["方方的、每个面一样大。"],"flashcards":[{"concept":"正方体","plain":"6 个完全相同的正方形面。","example":"骰子是正方体"}],"practice":{"basic":[{"q":"骰子是（ ）。","opts":["长方体","正方体","圆柱"],"ans":1,"explain":"骰子六面一样大，是正方体。"},{"q":"正方体的 6 个面（ ）。","opts":["都一样大","有大有小","都是圆的"],"ans":0,"explain":"正方体 6 个面是完全相同的正方形。"},{"q":"下面哪个是正方体？","opts":["🎲","🥫","📦"],"ans":0,"explain":"骰子方方正正、六面一样大，是正方体。"}],"improve":[{"q":"正方体和长方体最大的不同是（ ）。","opts":["正方体 6 个面都一样大","正方体不能滚动","正方体没有角"],"ans":0,"explain":"正方体 6 个面完全相同，长方体只有相对的面相同。"},{"q":"魔方的形状是（ ）。","opts":["正方体","圆柱","球"],"ans":0,"explain":"魔方方方正正，是正方体。"}],"challenge":[{"q":"一个正方体放在桌上，从一个方向最多能同时看到几个面？","opts":["2","3","6"],"ans":1,"explain":"从一个角度看最多能看到 3 个面。"},{"q":"正方体一共有（ ）个顶点。","opts":["6","8","12"],"ans":1,"explain":"正方体有 8 个尖尖的顶点。"}]},"interactive":{"type":"shape","shape":"cube"},"examples":[{"title":"数一数","content":"一个骰子：6 个面、8 个顶点、12 条边。"}],"connections":{"prerequisites":["长方体"],"unlocks":["认识图形（二）","长方形和正方形"]},"lifeCases":[{"title":"搭积木","scene":"用正方体积木搭一座小房子。","use":"每个面都一样大，怎么放都稳。","problem":"为什么正方体积木比球更适合搭高？"}],"pitfalls":[{"wrongStmt":"小马虎说：正方体的 6 个面可以有大有小。","wrongDisplay":"正方体面不等","correct":"正方体 6 个面必须完全一样大，不然就是长方体了。","tip":"拿尺子量一量每条边。","mnemonic":"正方六面齐，不一样就不算。"}]},{"id":"1a-cyl","title":"圆柱","difficulty":1,"oneLiner":"圆柱上下两个圆面一样大，能滚动也能立。","steps":["像罐头、杯子那样。"],"flashcards":[{"concept":"圆柱","plain":"上下两个圆一样大，能滚动。","example":"罐头是圆柱"}],"practice":{"basic":[{"q":"下面能滚动的是？","opts":["🧱","🥫","📦"],"ans":1,"explain":"🥫 罐头是圆柱能滚动。"},{"q":"圆柱上下两个面是（ ）。","opts":["一样大的圆","一个大一个小","方方的"],"ans":0,"explain":"圆柱上下两个底面是一样大的圆。"},{"q":"下面哪个是圆柱？","opts":["🧊","🕯️","🏀"],"ans":1,"explain":"蜡烛上下一样粗、两头是圆，是圆柱。"}],"improve":[{"q":"圆柱立在桌上（ ），躺下来（ ）。","opts":["能滚、能立","能立、能滚","都能立"],"ans":1,"explain":"圆柱立着能站稳，躺下能沿一个方向滚。"},{"q":"下面和圆柱最像的是（ ）。","opts":["🥫","⚽","📦"],"ans":0,"explain":"罐头上下两个圆面一样大，是圆柱。"}],"challenge":[{"q":"把圆柱的两个底面去掉，剩下的侧面展开是（ ）。","opts":["长方形","圆","三角形"],"ans":0,"explain":"圆柱的侧面展开后是一个长方形。"},{"q":"圆柱和球都能滚，不同的是（ ）。","opts":["圆柱只能朝一个方向滚","圆柱滚得更快","圆柱滚不了"],"ans":0,"explain":"圆柱只能沿一个方向滚，球可以往任意方向滚。"}]},"interactive":{"type":"shape","shape":"cyl"},"examples":[{"title":"滚一滚","content":"罐头立着能放稳，躺下就能咕噜噜滚。"}],"connections":{"prerequisites":["长方体"],"unlocks":["认识图形（二）"]},"lifeCases":[{"title":"水杯和罐头","scene":"妈妈买的罐头放在橱柜里。","use":"圆柱形立着放稳、省地方。","problem":"为什么杯子要做成圆柱形而不是球形？"}],"pitfalls":[{"wrongStmt":"小马虎说：圆柱立着也能随便滚。","wrongDisplay":"圆柱立着也能滚","correct":"圆柱有两个平平的圆面，立着能站住，躺下才能滚。","tip":"有没有平平的面，决定它能不能站稳。","mnemonic":"有平面能站稳，躺下来才打滚。"}]},{"id":"1a-ball","title":"球","difficulty":1,"oneLiner":"球圆滚滚的，到处都能滚。","steps":["像皮球、篮球。"],"flashcards":[{"concept":"球","plain":"圆圆的，能向任意方向滚动。","example":"皮球是球"}],"practice":{"basic":[{"q":"下面哪个是球？","opts":["🏀","📦","🧊"],"ans":0,"explain":"🏀 是球。"},{"q":"球可以（ ）。","opts":["向任意方向滚","只能立着","只能平放"],"ans":0,"explain":"球圆滚滚的，往哪个方向都能滚。"},{"q":"下面哪个是球？","opts":["⚽","🥫","🧊"],"ans":0,"explain":"足球是球体。"}],"improve":[{"q":"球和圆柱相比，球（ ）。","opts":["只能朝一个方向滚","能朝各个方向滚","不能滚"],"ans":1,"explain":"球没有平平的面，能朝任意方向滚。"},{"q":"下面滚得最快、最不容易停的是（ ）。","opts":["📦","🥫","🏀"],"ans":2,"explain":"球到处都能滚，滚得最快。"}],"challenge":[{"q":"篮球能不能稳稳地立在桌上一动不动？","opts":["能","不能","有时能"],"ans":1,"explain":"球没有平平的面，立不住，一碰就滚。"},{"q":"球有几个平平的面？","opts":["0","1","2"],"ans":0,"explain":"球的表面是弯弯的，一个平面也没有。"}]},"interactive":{"type":"shape","shape":"ball"},"examples":[{"title":"比一比","content":"乒乓球、篮球、地球仪，都是球。"}],"connections":{"prerequisites":["圆柱"],"unlocks":["认识图形（二）"]},"lifeCases":[{"title":"拍皮球","scene":"小朋友在操场上拍皮球。","use":"球能弹、能滚，所以球类运动才好玩。","problem":"为什么足球不能当积木搭房子？"}],"pitfalls":[{"wrongStmt":"小马虎说：球也有平平的面。","wrongDisplay":"球有平面","correct":"球面上全是弯的，一个平面也没有。","tip":"摸一摸，感觉是不是弯的。","mnemonic":"圆球没有平，到处都能滚。"}]}]},{"id":"1a-u4","num":"五","title":"6~10 的认识和加减法","topics":[{"id":"1a-num610","title":"认识 6~10","difficulty":1,"oneLiner":"6~10 比 5 大，是更大的数。","steps":["接着 5 往后数：6~10。"],"flashcards":[{"concept":"6~10","plain":"比 5 大的连续数。","example":"10 是两位数里最小的"}],"practice":{"basic":[{"q":"6 后面的一个数是（ ）。","opts":["5","7","8"],"ans":1,"explain":"按 6、7、8、9、10 的顺序，6 后面是 7。"},{"q":"10 里面有（ ）个一。","opts":["1","10","100"],"ans":1,"explain":"10 个一合起来是 10。"},{"q":"比 8 大、比 10 小的数是（ ）。","opts":["7","9","10"],"ans":1,"explain":"8 和 10 之间是 9。"},{"q":"7 表示 7 个（ ）。","opts":["十","一","百"],"ans":1,"explain":"7 就是 7 个一。"}],"improve":[{"q":"按规律填数：6、7、8、（ ）、10。","opts":["8","9","11"],"ans":1,"explain":"每次多 1，8 后面是 9。"},{"q":"10 根小棒捆成一捆，也就是（ ）个十。","opts":["1","10","2"],"ans":0,"explain":"10 个一就是 1 个十。"}],"challenge":[{"q":"从 6 数到 10，一共数了（ ）个数。","opts":["4","5","6"],"ans":1,"explain":"6、7、8、9、10，一共 5 个。"},{"q":"10 个一是 1 个十，那么 2 个十是（ ）。","opts":["2","12","20"],"ans":2,"explain":"2 个十合起来是 20。"}]},"interactive":null,"examples":[{"title":"捆小棒","content":"数到 10 根就捆成一捆，一捆就是 1 个十。"}],"connections":{"prerequisites":["认识 1~5","比大小"],"unlocks":["连加连减","认识 11~20"]},"lifeCases":[{"title":"数鸡蛋","scene":"一盒鸡蛋能装 10 个。","use":"装满一盒就是 1 个十。","problem":"买两盒一共有几个鸡蛋？"}],"pitfalls":[{"wrongStmt":"小马虎说：10 是最大的数。","wrongDisplay":"10 最大","correct":"10 后面还有 11、12…… 数永远数不完。","tip":"10 只是我们刚认识的朋友。","mnemonic":"十后面还有数，越数越有多。"}]},{"id":"1a-mix","title":"连加连减","difficulty":1,"oneLiner":"连加连减要从左到右一步一步算。","steps":["先算前面两个，再用结果算下一个。"],"flashcards":[{"concept":"连加连减","plain":"从左往右依次算。","example":"2＋3＋1＝6"}],"practice":{"basic":[{"q":"2＋3＋1＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"先算 2＋3＝5，再算 5＋1＝6。"},{"q":"8－2－3＝（ ）。","opts":["2","3","4"],"ans":1,"explain":"先算 8－2＝6，再算 6－3＝3。"},{"q":"1＋2＋3＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"1＋2＝3，3＋3＝6。"},{"q":"9－1－1＝（ ）。","opts":["6","7","8"],"ans":1,"explain":"9－1＝8，8－1＝7。"}],"improve":[{"q":"小明有 3 颗糖，妈妈给了 2 颗，爸爸给了 4 颗，现在有几颗？","opts":["8","9","10"],"ans":1,"explain":"3＋2＋4＝9。"},{"q":"树上有 10 只鸟，先飞走 2 只，又飞走 3 只，还剩几只？","opts":["4","5","6"],"ans":1,"explain":"10－2－3＝5。"}],"challenge":[{"q":"2＋2＋2＋2＝（ ）。","opts":["6","8","10"],"ans":1,"explain":"4 个 2 相加是 8。"},{"q":"10－2－3－4＝（ ）。","opts":["1","2","3"],"ans":0,"explain":"10－2＝8，8－3＝5，5－4＝1。"}]},"interactive":null,"examples":[{"title":"从左往右","content":"2＋3＋1：先算 2＋3＝5，再算 5＋1＝6。"}],"connections":{"prerequisites":["5以内的加减法","认识 6~10"],"unlocks":["加减混合","20 以内的进位加法"]},"lifeCases":[{"title":"三天攒钱","scene":"第一天攒 3 元，第二天 2 元，第三天 4 元。","use":"3＋2＋4＝9 元。","problem":"如果花掉 5 元，还剩几元？"}],"pitfalls":[{"wrongStmt":"小马虎说：连加可以先算后面两个数。","wrongDisplay":"2+3+1 先算 3+1","correct":"连加连减要按从左往右的顺序算。","tip":"用小手按顺序挡住还没算的部分。","mnemonic":"连加连减不跳步，从左往右一步步。"}]},{"id":"1a-mix2","title":"加减混合","difficulty":1,"oneLiner":"加减混在一起，也从左往右算。","steps":["先算左边，再算右边。"],"flashcards":[{"concept":"加减混合","plain":"顺序计算，不跳步。","example":"5－2＋3＝6"}],"practice":{"basic":[{"q":"5－2＋3＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"先算 5－2＝3，再算 3＋3＝6。"},{"q":"3＋4－2＝（ ）。","opts":["4","5","6"],"ans":1,"explain":"3＋4＝7，7－2＝5。"},{"q":"8－3＋1＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"8－3＝5，5＋1＝6。"},{"q":"2＋5－4＝（ ）。","opts":["2","3","4"],"ans":1,"explain":"2＋5＝7，7－4＝3。"}],"improve":[{"q":"车上原来 7 人，下车 2 人，又上车 3 人，现在几人？","opts":["7","8","9"],"ans":1,"explain":"7－2＋3＝8。"},{"q":"小明有 6 支笔，用了 2 支，又买了 5 支，现在几支？","opts":["8","9","10"],"ans":1,"explain":"6－2＋5＝9。"}],"challenge":[{"q":"10－4＋2－3＝（ ）。","opts":["3","4","5"],"ans":2,"explain":"10－4＝6，6＋2＝8，8－3＝5。"},{"q":"7＋（ ）－2＝8，括号里填（ ）。","opts":["2","3","4"],"ans":1,"explain":"7＋3＝10，10－2＝8。"}]},"interactive":null,"examples":[{"title":"上下车","content":"车上 7 人，下去 2 人上来 3 人：7－2＋3＝8 人。"}],"connections":{"prerequisites":["连加连减"],"unlocks":["20 以内的退位减法","100 以内的加减法"]},"lifeCases":[{"title":"公交车","scene":"到站了，先下后上。","use":"下去用减，上来用加，按顺序算。","problem":"如果下去 5 人、上来 1 人，现在几人？"}],"pitfalls":[{"wrongStmt":"小马虎说：加减混合可以先算加法。","wrongDisplay":"5-2+3 先算 2+3","correct":"加减混在一起，还是要从左往右按顺序算。","tip":"先算出来的结果写在下面，别跳。","mnemonic":"加减排排站，从左往右算。"}]}]},{"id":"1a-u5","num":"六","title":"11~20 各数的认识","topics":[{"id":"1a-num1120","title":"11~20 的认识","difficulty":1,"oneLiner":"十根小棒捆成一捆是 10，再加几就是十几。","steps":["1 个十和几个一，合起来是十几。"],"flashcards":[{"concept":"11~20","plain":"1 个十 + 几个一 = 十几。","example":"13 = 1 个十 3 个一"}],"practice":{"basic":[{"q":"13 里面有（ ）个十和（ ）个一。","opts":["1和3","3和1","1和13"],"ans":0,"explain":"十位上是 1，个位上是 3，就是 1 个十和 3 个一。"},{"q":"1 个十和 5 个一合起来是（ ）。","opts":["15","51","6"],"ans":0,"explain":"1 个十是 10，再加 5 个一就是 15。"},{"q":"20 里面有（ ）个十。","opts":["1","2","20"],"ans":1,"explain":"20 就是 2 个十。"},{"q":"和 19 相邻的两个数是（ ）。","opts":["17 和 18","18 和 20","19 和 20"],"ans":1,"explain":"19 前面是 18，后面是 20。"}],"improve":[{"q":"16 的个位上是（ ）。","opts":["1","6","16"],"ans":1,"explain":"16：十位是 1，个位是 6。"},{"q":"比 14 大、比 17 小的数有几个？","opts":["1","2","3"],"ans":1,"explain":"是 15 和 16，一共 2 个。"}],"challenge":[{"q":"1 个十和 9 个一，再添 1 个一是（ ）。","opts":["19","20","21"],"ans":1,"explain":"19 再添 1 就是 20，正好是 2 个十。"},{"q":"十位上是 1，个位上的数比十位大 7，这个数是（ ）。","opts":["17","18","8"],"ans":1,"explain":"十位 1，个位 1＋7＝8，这个数是 18。"}]},"interactive":null,"examples":[{"title":"十几","content":"1 个十和 3 个一合起来是 13，读作十三。"}],"connections":{"prerequisites":["认识 6~10"],"unlocks":["20 以内的进位加法","100 以内数的认识"]},"lifeCases":[{"title":"数铅笔","scene":"10 支装一盒，还有 4 支零散的。","use":"1 个十和 4 个一，一共 14 支。","problem":"再放进 6 支，能装满第二盒吗？"}],"pitfalls":[{"wrongStmt":"小马虎说：11 里有 1 个十和 1 个一，所以是 2。","wrongDisplay":"11=2","correct":"11 是 1 个十加 1 个一，10＋1＝11。","tip":"十位上的 1 代表 10，不是 1。","mnemonic":"十位上的 1，一个是十个。"}]}]},{"id":"1a-u6","num":"七","title":"认识钟表","topics":[{"id":"1a-clock","title":"认识整时","difficulty":1,"oneLiner":"分针指向 12，时针指向几就是几时。","steps":["分针指 12，时针指几是几时。","时针在两数间，读小的。","先看分针，再看时针。"],"flashcards":[{"concept":"整时","plain":"分针指 12，时针指几是几时。","example":"8:00 是 8 时"},{"concept":"时针","plain":"短粗的针，指『时』。","example":"时针指 3→3 时"},{"concept":"分针","plain":"细长的针，整时它指 12。","example":"分针指 12"}],"practice":{"basic":[{"q":"分针指 12，时针指 3，是几时？","opts":["3时","6时","12时"],"ans":0,"explain":"分针指 12 是整时，时针指 3 就是 3 时。"},{"q":"下面哪个是 8 时？","opts":["时针指 8、分针指 12","时针指 12、分针指 8","时针指 8、分针指 6"],"ans":0,"explain":"整时：分针指 12，时针指 8。"},{"q":"分针指 12，时针指 5，是（ ）。","opts":["5时","12时","5时半"],"ans":0,"explain":"整时：分针指 12，时针指几就是几时。"},{"q":"3 时的时候，分针一定指向（ ）。","opts":["3","12","6"],"ans":1,"explain":"只要是整时，分针就指 12。"},{"q":"下面哪个表示的是 12 时？","opts":["时针分针都指 12","时针指 12、分针指 6","时针指 6、分针指 12"],"ans":0,"explain":"12 时整，两根针都指在 12 上。"}],"improve":[{"type":"interactive","it":{"type":"clock","hour":9,"min":0},"q":"拖动时针和分针，摆出 9 时（分针要指 12）。"},{"q":"现在 7 时整，再过 1 小时是（ ）。","opts":["7时","8时","6时"],"ans":1,"explain":"7 时过 1 小时就是 8 时。"}],"challenge":[{"q":"钟面上，时针和分针相比（ ）。","opts":["时针短而粗","分针短而粗","一样长"],"ans":0,"explain":"时针又短又粗，分针又细又长。"},{"q":"一天里，8 时会出几次？","opts":["1次","2次","3次"],"ans":1,"explain":"早上 8 时和晚上 8 时，一天出现 2 次。"}]},"interactive":{"type":"clock","hour":3,"min":0},"examples":[{"title":"看表","content":"家里的挂钟、手表，整点时分针都指 12"}],"connections":{"prerequisites":["认识 1~12"],"unlocks":["认识几时几分","时间表"]},"lifeCases":[{"title":"起床","scene":"每天早上 7 时起床。","use":"7 时分针指 12、时针指 7。","problem":"如果时针指 7、分针指 6，是 7 时吗？"}],"pitfalls":[{"wrongStmt":"小马虎说：时针指 8、分针指 6 也是 8 时。","wrongDisplay":"8:30 当成 8 时","correct":"整时分针必须指 12；分针指 6 是半时（8 时半）。","tip":"整时先看分针是不是指 12。","mnemonic":"整时分针指 12，记牢别马虎。"}]},{"id":"1a-angle","title":"认识角","difficulty":1,"oneLiner":"尖尖的小角到处有：扇子打开有角，三角尺有角。角的大小看两边张开多少。","steps":["从一个点引出两条直直的线，就成了一个角。这个点叫顶点，两条线叫边。","角的两边张得越开，角越大；合得越拢，角越小。","方方正正的角是直角，正好等于 90°，书本的角就是直角。"],"flashcards":[{"concept":"角","plain":"一个顶点引出两条边，就成一个角。","example":"扇子打开是一个角"},{"concept":"直角","plain":"方方正正的角，等于 90°。","example":"书本的角是直角"},{"concept":"角的大小","plain":"看两边张开多少，和边长短没关系。","example":"大、小三角板的直角一样大"}],"practice":{"basic":[{"q":"一个角有（ ）个顶点。","opts":["1","2","3"],"ans":0,"explain":"角是从一个点引出来的，只有 1 个顶点。"},{"q":"一个角有（ ）条边。","opts":["1","2","3"],"ans":1,"explain":"从顶点引出两条直直的线，就是 2 条边。"},{"q":"下面哪个角最大？","opts":["两边张得很开的角","两边合得很拢的角","边画得最长的角"],"ans":0,"explain":"角的大小只看两边张开多少，和边画多长无关。"}],"improve":[{"type":"interactive","it":{"type":"angle","deg":30,"targetDeg":90},"q":"拖动指针，摆出一个直角（90°）。"},{"q":"直角是（ ）度。","opts":["60","90","180"],"ans":1,"explain":"方方正正的直角正好是 90°。"},{"q":"课本封面的四个角都是（ ）。","opts":["直角","比直角小的角","比直角大的角"],"ans":0,"explain":"课本方方正正，四个角都是直角。"}],"challenge":[{"type":"interactive","it":{"type":"angle","deg":10,"targetDeg":45},"q":"摆出一个 45° 的角。"},{"q":"把角的两条边画长一些，角的大小（ ）。","opts":["变大","变小","不变"],"ans":2,"explain":"角的大小只看张开多少，边画长画短不改变角。"}]},"interactive":{"type":"angle","deg":20,"targetDeg":90},"examples":[{"title":"找角","content":"书桌的角、门框的角，多数都是直角"}],"connections":{"prerequisites":["认识图形"],"unlocks":["角的度量","三角形"]},"lifeCases":[{"title":"折纸","scene":"把正方形纸对折再对折。","use":"折出的角是直角（90°）。","problem":"只对折一次，打开后纸上有几个角？"}],"pitfalls":[{"wrongStmt":"小马虎说：边越长，角越大。","wrongDisplay":"长边的角更大","correct":"角的大小只看两边张开多少，和边长短没关系。","tip":"比角比『开口』不比『边长』。","mnemonic":"角大不大，看它张嘴不张腿。"}]}]},{"id":"1a-u7","num":"八","title":"20 以内的进位加法","topics":[{"id":"1a-nineplus","title":"9 加几","difficulty":1,"oneLiner":"算 9 加几，把另一个数拆出 1 给 9 凑成 10。","steps":["9 加 1 得 10，剩下几就是十几。"],"flashcards":[{"concept":"凑十法","plain":"9 凑 1 成 10，好算。","example":"9＋5＝14"}],"practice":{"basic":[{"q":"9＋2＝（ ）。","opts":["10","11","12"],"ans":1,"explain":"把 2 分成 1 和 1，9＋1＝10，10＋1＝11。"},{"q":"9＋5＝（ ）。","opts":["13","14","15"],"ans":1,"explain":"9＋1＝10，5 还剩 4，10＋4＝14。"},{"q":"9＋8＝（ ）。","opts":["16","17","18"],"ans":1,"explain":"9＋1＝10，8 还剩 7，10＋7＝17。"},{"q":"用凑十法算 9＋4，要把 4 分成（ ）。","opts":["1 和 3","2 和 2","3 和 1"],"ans":0,"explain":"9 只差 1 就凑成 10，所以先分出 1。"}],"improve":[{"q":"9＋7＝9＋1＋□，□ 里填（ ）。","opts":["5","6","7"],"ans":1,"explain":"7 拿走 1 给 9，还剩 6。"},{"q":"树上有 9 只小鸟，又飞来 6 只，一共几只？","opts":["14","15","16"],"ans":1,"explain":"9＋6＝15，一共 15 只。"}],"challenge":[{"q":"9＋9＝（ ）。","opts":["17","18","19"],"ans":1,"explain":"9＋1＝10，还剩 8，10＋8＝18。"},{"q":"9＋□＝13，□ 里填（ ）。","opts":["3","4","5"],"ans":1,"explain":"9＋4＝13。"}]},"interactive":null,"examples":[{"title":"凑十法","content":"9＋5：把 5 分成 1 和 4，9＋1＝10，10＋4＝14。"}],"connections":{"prerequisites":["认识 11~20","连加连减"],"unlocks":["8、7、6 加几","20 以内的退位减法"]},"lifeCases":[{"title":"买气球","scene":"红色气球 9 个，蓝色 5 个。","use":"9＋5＝14，一共 14 个气球。","problem":"卖掉 4 个，还剩几个？"}],"pitfalls":[{"wrongStmt":"小马虎说：9＋5＝15。","wrongDisplay":"9+5=15","correct":"9＋5＝14，凑十后剩下的是 4 不是 5。","tip":"借走 1 之后，剩下的要减 1。","mnemonic":"借 1 凑成十，剩下减 1 记心里。"}]},{"id":"1a-876plus","title":"8、7、6 加几","difficulty":1,"oneLiner":"算 8 加几，拆出 2 给 8 凑十。","steps":["8 凑 2、7 凑 3、6 凑 4 成 10。"],"flashcards":[{"concept":"凑十法","plain":"把大数凑成 10 再算。","example":"8＋5＝13"}],"practice":{"basic":[{"q":"8＋3＝（ ）。","opts":["10","11","12"],"ans":1,"explain":"8 要凑 2，把 3 分成 2 和 1，10＋1＝11。"},{"q":"7＋5＝（ ）。","opts":["11","12","13"],"ans":1,"explain":"7 要凑 3，把 5 分成 3 和 2，10＋2＝12。"},{"q":"6＋5＝（ ）。","opts":["10","11","12"],"ans":1,"explain":"6 要凑 4，把 5 分成 4 和 1，10＋1＝11。"},{"q":"8＋5＝8＋□＋3，□ 里填（ ）。","opts":["1","2","3"],"ans":1,"explain":"8 需要 2 才能凑成 10。"}],"improve":[{"q":"7＋6＝（ ）。","opts":["12","13","14"],"ans":1,"explain":"7＋3＝10，6 还剩 3，10＋3＝13。"},{"q":"小明折了 8 只纸鹤，小红折了 7 只，一共几只？","opts":["14","15","16"],"ans":1,"explain":"8＋7＝15，一共 15 只。"}],"challenge":[{"q":"8＋□＝14，□ 里填（ ）。","opts":["5","6","7"],"ans":1,"explain":"8＋6＝14。"},{"q":"6＋7＝（ ）。","opts":["12","13","14"],"ans":1,"explain":"6＋4＝10，7 还剩 3，10＋3＝13。"}]},"interactive":null,"examples":[{"title":"凑十歌","content":"9 要 1，8 要 2，7 要 3，6 要 4，5、5 相凑刚好十。"}],"connections":{"prerequisites":["9 加几"],"unlocks":["20 以内的退位减法","100 以内的加法"]},"lifeCases":[{"title":"集卡片","scene":"你有 8 张卡，哥哥又给你 5 张。","use":"8＋5＝13，现在 13 张。","problem":"送给弟弟 3 张，还剩几张？"}],"pitfalls":[{"wrongStmt":"小马虎说：8＋5 和 9＋5 一样。","wrongDisplay":"8+5=14","correct":"8＋5＝13，9＋5＝14，大数不同凑十需要的数也不同。","tip":"看清大数需要几个才凑成 10。","mnemonic":"大数差几凑成十，拆小数来补上。"}]}]},{"id":"1a-u8","num":"总复习","title":"总复习","topics":[{"id":"1a-review","title":"总复习","difficulty":1,"oneLiner":"把全册知识点串起来，哪里不会补哪里。","steps":["翻开速查大表，逐个过一遍。"],"flashcards":[{"concept":"复习","plain":"查漏补缺，巩固薄弱点。","example":"回去看看每个单元"}],"practice":{"basic":[{"q":"8＋5＝（ ）。","opts":["12","13","14"],"ans":1,"explain":"8＋2＝10，5 还剩 3，10＋3＝13。"},{"q":"15－9＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"想加算减：9＋6＝15，所以 15－9＝6。"},{"q":"11 里面有（ ）个十和（ ）个一。","opts":["1和1","1和0","10和1"],"ans":0,"explain":"十位 1、个位 1，就是 1 个十和 1 个一。"},{"q":"分针指 12，时针指 6，是（ ）。","opts":["6时","12时","6时半"],"ans":0,"explain":"整时分针指 12，时针指 6 就是 6 时。"},{"q":"下面滚得最快的是（ ）。","opts":["📦","🥫","🏀"],"ans":2,"explain":"球往哪个方向都能滚，滚得最快。"}],"improve":[{"q":"7＋6－3＝（ ）。","opts":["9","10","11"],"ans":1,"explain":"7＋6＝13，13－3＝10。"},{"q":"比 12 大、比 15 小的数有几个？","opts":["1","2","3"],"ans":1,"explain":"是 13 和 14，一共 2 个。"}],"challenge":[{"q":"小明排队，从前面数第 5，从后面数第 4，这一队一共几人？","opts":["8","9","10"],"ans":0,"explain":"5＋4＝9，小明被数了两次，9－1＝8 人。"},{"q":"9＋6－5＝（ ）。","opts":["9","10","11"],"ans":1,"explain":"9＋6＝15，15－5＝10。"}]},"interactive":null,"examples":[{"title":"回头看","content":"一年级上册：数数、比多少、位置、1~20、加减法、图形、钟表、角。"}],"connections":{"prerequisites":["全册各单元"],"unlocks":["一年级下册"]},"lifeCases":[{"title":"查漏补缺","scene":"翻开每个单元，看哪一类题还会错。","use":"专挑不会的练，比全做一遍更省时间。","problem":"你觉得自己最需要再练的是哪一块？"}],"pitfalls":[{"wrongStmt":"小马虎说：复习就是把所有题重做一遍。","wrongDisplay":"全部重做","correct":"复习要先找出不会的，再重点练这些。","tip":"做错的题做个记号，第二天再做一次。","mnemonic":"复习先找弱，别把会的重复做。"}]}]}]},{"t":"下","units":[{"id":"1b-u0","num":"一","title":"认识图形（二）","topics":[{"id":"1b-rect","title":"长方形和正方形","difficulty":1,"oneLiner":"长方形对边相等，正方形四边都相等。","steps":["数学书封面是长方形，手帕是正方形。"],"flashcards":[{"concept":"长方形/正方形","plain":"长方对边等，正方四边等。","example":"课本面长方形"}],"practice":{"basic":[{"q":"长方形的对边（ ）。","opts":["相等","不相等","都是弯的"],"ans":0,"explain":"长方形相对的两条边一样长。"},{"q":"正方形有（ ）条边。","opts":["3","4","5"],"ans":1,"explain":"正方形是四边形，有 4 条边。"},{"q":"正方形的四条边（ ）。","opts":["都相等","只有对边相等","都不相等"],"ans":0,"explain":"正方形四条边完全一样长。"},{"q":"下面哪个通常做成正方形？","opts":["🧊","🚪","🧣"],"ans":0,"explain":"方糖、方块是正方形；门和围巾通常是长方形。"}],"improve":[{"q":"长方形和正方形的相同点是（ ）。","opts":["都有 4 条边、4 个直角","四条边都相等","都没有直角"],"ans":0,"explain":"它们都是四边形，四个角都是直角。"},{"q":"用 4 根一样长的小棒，可以摆成（ ）。","opts":["长方形","正方形","三角形"],"ans":1,"explain":"四条边一样长，就是正方形。"}],"challenge":[{"q":"把两个完全一样的正方形横着拼在一起，得到（ ）。","opts":["长方形","正方形","三角形"],"ans":0,"explain":"两个正方形拼起来，长边变长，得到长方形。"}]},"interactive":null,"examples":[{"title":"比一比","content":"数学书封面是长方形，方手帕是正方形。"}],"connections":{"prerequisites":["长方体","正方体"],"unlocks":["拼一拼","100 以内加减法"]},"lifeCases":[{"title":"看地砖","scene":"卫生间的地砖一块挨着一块。","use":"正方形的地砖四边一样长，怎么转都一样。","problem":"为什么地砖大多用正方形或长方形？"}],"pitfalls":[{"wrongStmt":"小马虎说：四条边相等的四边形就是长方形。","wrongDisplay":"四边相等=长方形","correct":"四条边都相等的是正方形；长方形只有对边相等。","tip":"正方形是特殊的长方形，但反过来不成立。","mnemonic":"四边都等是正方，只有对边等是长方。"}]},{"id":"1b-pintu","title":"拼一拼","difficulty":1,"oneLiner":"几个平面图形可以拼成一个新图形，一个图形也能分成几块。","steps":["两个完全一样的三角形，可以拼成一个大三角形，也可以拼成长方形。","七巧板一共 7 块，能拼出小猫、房子、小船。","动手拼一拼，比只看记得更牢。"],"flashcards":[{"concept":"拼组","plain":"几个图形合起来变成一个新的图形。","example":"两个直角三角形拼成长方形"},{"concept":"分割","plain":"一个图形可以分成几个小图形。","example":"长方形分成两个三角形"}],"practice":{"basic":[{"q":"两个一样的直角三角形，可以拼成（ ）。","opts":["长方形","圆","球"],"ans":0,"explain":"把斜边对着拼，可以拼成一个长方形。"},{"q":"用 4 个一样的小正方形，可以拼成（ ）。","opts":["大正方形","圆","三角形"],"ans":0,"explain":"摆成 2 行 2 列，就是一个大正方形。"},{"q":"七巧板一共有（ ）块。","opts":["5","7","9"],"ans":1,"explain":"七巧板由 7 块板组成。"},{"q":"把一个长方形沿中线对折剪开，可以得到两个（ ）。","opts":["长方形","圆","球"],"ans":0,"explain":"沿中线剪开，得到两个一样的长方形。"}],"improve":[{"q":"要拼成一个更大的正方形，至少需要几个一样的小正方形？","opts":["2","4","6"],"ans":1,"explain":"2×2＝4 个小正方形。"},{"q":"用两个一样的长方形，能拼成（ ）。","opts":["更大的长方形，也可能拼成正方形","只能拼成长方形","只能拼成三角形"],"ans":0,"explain":"一般拼成长方形；长正好是宽的 2 倍时，也能拼成正方形。"}],"challenge":[{"q":"一个正方形沿对角线剪开，得到两个（ ）。","opts":["直角三角形","长方形","圆"],"ans":0,"explain":"沿对角线剪开，得到两个一样的直角三角形。"}]},"interactive":null,"examples":[{"title":"拼一拼","content":"两个一样的三角形，可以拼成平行四边形，也可以拼成大三角形。"}],"connections":{"prerequisites":["长方形和正方形"],"unlocks":["角的初步认识","认识图形"]},"lifeCases":[{"title":"七巧板","scene":"用七巧板拼一只小猫。","use":"先想好小猫的头、身子、尾巴各用什么形状。","problem":"只用三角形，能不能拼出一个正方形？"}],"pitfalls":[{"wrongStmt":"小马虎说：两个三角形一定能拼成正方形。","wrongDisplay":"任意两三角=正方形","correct":"只有两个一样的直角三角形才可能拼成长方形或正方形。","tip":"先看形状是不是完全一样。","mnemonic":"要拼先看好，形状一样才拼得牢。"}]}]},{"id":"1b-u1","num":"二","title":"20 以内的退位减法","topics":[{"id":"1b-sub20","title":"十几减几","difficulty":1,"oneLiner":"算 15－9，想 9 加几得 15。","steps":["用想加算减最方便。"],"flashcards":[{"concept":"退位减法","plain":"想加算减。","example":"15－9＝6"}],"practice":{"basic":[{"q":"15－9＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"想加算减：9＋6＝15，所以 15－9＝6。"},{"q":"13－8＝（ ）。","opts":["4","5","6"],"ans":1,"explain":"8＋5＝13，所以 13－8＝5。"},{"q":"12－7＝（ ）。","opts":["4","5","6"],"ans":1,"explain":"7＋5＝12，所以 12－7＝5。"},{"q":"16－9＝（ ）。","opts":["6","7","8"],"ans":1,"explain":"9＋7＝16，所以 16－9＝7。"}],"improve":[{"q":"□－8＝5，□ 里填（ ）。","opts":["12","13","14"],"ans":1,"explain":"8＋5＝13，所以 13－8＝5。"},{"q":"有 14 个苹果，吃了 9 个，还剩几个？","opts":["4","5","6"],"ans":1,"explain":"14－9＝5，还剩 5 个。"}],"challenge":[{"q":"17－9＝（ ）。","opts":["7","8","9"],"ans":1,"explain":"17－10＝7，多减了 1 要加回来：7＋1＝8。"},{"q":"14－8＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"14－10＝4，多减 2 加回：4＋2＝6。"}]},"interactive":null,"examples":[{"title":"想加算减","content":"算 15－9，就想『9 加几等于 15』，9＋6＝15，所以得 6。"}],"connections":{"prerequisites":["9 加几","8、7、6 加几"],"unlocks":["解决问题","100 以内的加减法"]},"lifeCases":[{"title":"借出去的书","scene":"书架上有 15 本书，借给同学 9 本。","use":"15－9＝6，还剩 6 本。","problem":"同学还回来 4 本，现在有几本？"}],"pitfalls":[{"wrongStmt":"小马虎说：15－9＝4。","wrongDisplay":"15-9=4","correct":"15－9＝6，用想加算减检查：9＋6＝15。","tip":"算完一定用加法反过来验一遍。","mnemonic":"减法算完别着急，加回去验一验。"}]},{"id":"1b-sub98","title":"十几减 9、8、7、6","difficulty":1,"oneLiner":"十几减 9、8、7、6，用『想加算减』最快：想减数加几等于被减数。","steps":["15－9：先想 9 加几等于 15，9＋6＝15，所以得 6。","也可以用破十法：15 拆成 10 和 5，10－9＝1，1＋5＝6。","想加算减最不容易错，先把它练熟。"],"flashcards":[{"concept":"想加算减","plain":"算减法时，想『几加它等于原来的数』。","example":"15－9 → 9＋6＝15 → 得 6"},{"concept":"破十法","plain":"把十几拆成 10 和几，先用 10 去减。","example":"15－9＝10－9＋5＝6"}],"practice":{"basic":[{"q":"14－9＝（ ）。","opts":["4","5","6"],"ans":1,"explain":"想 9＋5＝14，所以 14－9＝5。"},{"q":"13－8＝（ ）。","opts":["4","5","6"],"ans":1,"explain":"想 8＋5＝13，所以 13－8＝5。"},{"q":"12－7＝（ ）。","opts":["4","5","6"],"ans":1,"explain":"想 7＋5＝12，所以 12－7＝5。"},{"q":"15－6＝（ ）。","opts":["8","9","10"],"ans":1,"explain":"想 6＋9＝15，所以 15－6＝9。"}],"improve":[{"q":"□－8＝6，□ 里填（ ）。","opts":["13","14","15"],"ans":1,"explain":"8＋6＝14，所以 14－8＝6。"},{"q":"用破十法算 16－9：10－9＝1，1＋□ 是结果，□ 填（ ）。","opts":["5","6","7"],"ans":1,"explain":"16 拆成 10 和 6，1＋6＝7。"}],"challenge":[{"q":"17－9＝（ ）。","opts":["7","8","9"],"ans":1,"explain":"先减 10 得 7，多减了 1 要加回来：7＋1＝8。"}]},"interactive":null,"examples":[{"title":"想加算减","content":"13－8：想 8＋5＝13，所以 13－8＝5。"}],"connections":{"prerequisites":["十几减几","9 加几"],"unlocks":["解决问题","100 以内的加减法"]},"lifeCases":[{"title":"还铅笔","scene":"借了 15 支铅笔，还回 9 支。","use":"15－9＝6，还差 6 支没还。","problem":"再还 3 支，还差几支？"}],"pitfalls":[{"wrongStmt":"小马虎说：破十法算 16－9，1＋6＝7，所以 16－9＝7 但 10 要加回去。","wrongDisplay":"16-9=17","correct":"16－9＝7，拆出来的 10 已经减掉了，不能再加 10。","tip":"拆出来的 10 只用来减，结果是剩下的 1 加个位。","mnemonic":"拆十减完别忘本，剩下的加上个位。"}]},{"id":"1b-solve","title":"解决问题","difficulty":1,"oneLiner":"做题先读两遍，找出和问题有关的信息，多余的条件要丢掉。","steps":["读题：先弄清楚题目到底在问什么。","找信息：圈出和这个问题有关的数字。","检查：算完想一想，答案合不合理。"],"flashcards":[{"concept":"有用信息","plain":"和问题有关的数字才是需要的。","example":"问还剩几个，『一共』和『拿走』才有用"},{"concept":"多余条件","plain":"和问题无关的数字是干扰项。","example":"问男生几人，『女生 8 人』就是多余的"}],"practice":{"basic":[{"q":"小明有 12 支铅笔，送给小红 5 支，还剩几支？题里『小红有 3 块橡皮』要用到吗？","opts":["要用到","用不到"],"ans":1,"explain":"问的是铅笔，橡皮的数量和它无关，是多余条件。"},{"q":"树上有 13 只鸟，飞走 6 只，还剩几只？正确算式是（ ）。","opts":["13－6","13＋6","13－6＋6"],"ans":0,"explain":"求剩下用减法：13－6＝7。"},{"q":"图书角有 15 本书，借出一些后剩 8 本，借出几本？算式是（ ）。","opts":["15－8","15＋8","8＋8"],"ans":0,"explain":"15－8＝7，借出 7 本。"},{"q":"做题第一步应该先（ ）。","opts":["马上列算式","读懂题目问什么","先猜一个答案"],"ans":1,"explain":"读懂题意再动手，才不会用错方法。"}],"improve":[{"q":"小红做了 9 朵花，小丽做了 7 朵，送给老师 10 朵，还剩几朵？","opts":["5","6","7"],"ans":1,"explain":"先求一共 9＋7＝16，再 16－10＝6 朵。"},{"q":"公交车上原有 14 人，到站下去 5 人，上来 3 人。现在有几人？","opts":["11","12","13"],"ans":1,"explain":"14－5＋3＝12 人。"}],"challenge":[{"q":"小明排队，前面有 4 人，后面有 6 人，这一队一共几人？","opts":["9","10","11"],"ans":2,"explain":"4＋6＝10，还要加上小明自己，10＋1＝11 人。"}]},"interactive":null,"examples":[{"title":"圈一圈","content":"读题时用笔圈出问题里要的数字，没圈到的多半是多余的。"}],"connections":{"prerequisites":["十几减几","加减混合"],"unlocks":["简单的统计","100 以内的加减法"]},"lifeCases":[{"title":"买文具","scene":"铅笔 2 元，橡皮 1 元，你带了 5 元。","use":"问找回多少，只要算花掉的 2＋1＝3 元。","problem":"如果题目还告诉你『尺子 4 元』，你会用到吗？"}],"pitfalls":[{"wrongStmt":"小马虎说：题目里给的数字都要用上。","wrongDisplay":"所有数字都算进去","correct":"有些数字是故意放进来干扰你的，用不上就别用。","tip":"算之前先问自己：这个数和问题有关吗？","mnemonic":"数字不是都要用，有关的才搬出来。"}]}]},{"id":"1b-u2","num":"三","title":"分类与整理","topics":[{"id":"1b-sort","title":"分类与整理","difficulty":1,"oneLiner":"按颜色、形状等标准把物品分成几堆。","steps":["同一类放一起，数一数每堆有几个。"],"flashcards":[{"concept":"分类","plain":"定好标准再分组。","example":"按颜色分"}],"practice":{"basic":[{"q":"把一堆水果按颜色分，这是按（ ）分类。","opts":["一个标准","两个标准","没有标准"],"ans":0,"explain":"每次分类只用一个标准，才不会乱。"},{"q":"🍎🍌🍎🍌🍌，按种类分，香蕉有几根？","opts":["2","3","4"],"ans":1,"explain":"香蕉有 3 根。"},{"q":"分类的第一步是（ ）。","opts":["先数一数","先定标准","先画表格"],"ans":1,"explain":"先想清楚按什么分，再动手。"},{"q":"同一堆铅笔，按颜色分和按长短分，结果（ ）。","opts":["一定相同","可能不同","没法分"],"ans":1,"explain":"标准不同，分出的结果就可能不同。"}],"improve":[{"q":"🔴🔵🔴🔵🔴，按颜色分，红色有几个？","opts":["2","3","4"],"ans":1,"explain":"红色有 3 个。"},{"q":"把全班同学按性别分，可以分成（ ）。","opts":["2 类","3 类","很多类"],"ans":0,"explain":"男生一类、女生一类，一共 2 类。"}],"challenge":[{"q":"统计出红色 5 个、蓝色 3 个、黄色 5 个，哪种最多？","opts":["蓝色","红色和黄色一样多","没法比"],"ans":1,"explain":"红色和黄色都是 5，并列最多。"}]},"interactive":null,"examples":[{"title":"先定标准","content":"按形状分：圆的一类、方的一类、三角的一类。"}],"connections":{"prerequisites":["比多少"],"unlocks":["简单的统计","找规律"]},"lifeCases":[{"title":"整理玩具","scene":"毛绒玩具放一箱，积木放一箱，小车放一箱。","use":"按种类分好，下次找起来特别快。","problem":"如果还想按颜色再分一次，该怎么分？"}],"pitfalls":[{"wrongStmt":"小马虎说：一次可以按很多个标准分。","wrongDisplay":"边按颜色边按大小","correct":"一次只用一个标准，分完再换一个标准。","tip":"先想好『这次按什么分』。","mnemonic":"一次一个标准，分类才清楚。"}]},{"id":"1b-stat","title":"简单的统计","difficulty":1,"oneLiner":"把分好的东西数一数、记下来，就是简单的统计。","steps":["先分类，再数出每一类各有几个。","把结果填进表格，一眼就看清楚。","看着表格回答：哪类最多、哪类最少、相差几个。"],"flashcards":[{"concept":"统计表","plain":"把数出来的结果填进表格里。","example":"苹果 5 个、梨 3 个"},{"concept":"比多少","plain":"看表格里的数，就能比出谁多谁少。","example":"5＞3，苹果比梨多 2 个"}],"practice":{"basic":[{"q":"统计表里苹果 5 个、梨 3 个，哪种多？","opts":["苹果","梨","一样多"],"ans":0,"explain":"5＞3，苹果多。"},{"q":"苹果 5 个、梨 3 个，苹果比梨多几个？","opts":["1","2","3"],"ans":1,"explain":"5－3＝2，多 2 个。"},{"q":"做统计的第一步是（ ）。","opts":["先数一数","先分类","先画表格"],"ans":1,"explain":"先分好类，才好数。"},{"q":"🍎🍎🍎🍐🍐，苹果比梨（ ）。","opts":["多 1 个","少 1 个","一样多"],"ans":0,"explain":"苹果 3 个，梨 2 个，多 1 个。"}],"improve":[{"q":"红色 6 个、黄色 4 个、蓝色 6 个，最多的颜色有几种？","opts":["1","2","3"],"ans":1,"explain":"红色和蓝色都是 6，并列最多，共 2 种。"},{"q":"一共 20 个球，红色 8 个，其余是蓝色，蓝色有几个？","opts":["11","12","13"],"ans":1,"explain":"20－8＝12 个。"}],"challenge":[{"q":"统计后发现最多的比最少的多 5 个，最少的有 3 个，最多的有（ ）个。","opts":["7","8","9"],"ans":1,"explain":"3＋5＝8 个。"}]},"interactive":null,"examples":[{"title":"填一填","content":"数一数每种图形各有几个，把数字填进表格里。"}],"connections":{"prerequisites":["分类与整理","解决问题"],"unlocks":["100 以内数的认识"]},"lifeCases":[{"title":"统计天气","scene":"记录一个月里晴天、阴天、雨天各有几天。","use":"看表格就知道这个月哪种天气最多。","problem":"晴天比雨天多几天？"}],"pitfalls":[{"wrongStmt":"小马虎说：统计就是随便数一数。","wrongDisplay":"边数边记，容易漏","correct":"数过的要划掉或做个记号，才不会漏数、重复数。","tip":"数一个划一个，数完再核一遍总数。","mnemonic":"数一个划一个，统计不出错。"}]}]},{"id":"1b-u3","num":"四","title":"100 以内数的认识","topics":[{"id":"1b-num100","title":"100 以内数的认识","difficulty":1,"oneLiner":"几十几由几个十和几个一组成。","steps":["十位是几就有几个十，个位是几就有几个一。"],"flashcards":[{"concept":"100 以内","plain":"十位+个位。","example":"34 = 3 个十 4 个一"}],"practice":{"basic":[{"q":"34 里面有（ ）个十和（ ）个一。","opts":["3和4","4和3","34和1"],"ans":0,"explain":"十位 3 是 3 个十，个位 4 是 4 个一。"},{"q":"5 个十和 7 个一组成的数是（ ）。","opts":["57","75","507"],"ans":0,"explain":"5 个十是 50，加 7 个一是 57。"},{"q":"100 里面有（ ）个十。","opts":["1","10","100"],"ans":1,"explain":"10 个十是 100。"},{"q":"和 60 相邻的两个整十数是（ ）。","opts":["59 和 61","50 和 70","59 和 70"],"ans":1,"explain":"60 前一个是 50，后一个是 70。"}],"improve":[{"q":"比 78 大、比 81 小的数有几个？","opts":["1","2","3"],"ans":1,"explain":"是 79 和 80，一共 2 个。"},{"q":"99 再添 1 是（ ）。","opts":["100","99","98"],"ans":0,"explain":"99 添 1 满十进一，就是 100。"}],"challenge":[{"q":"十位上是 4 的两位数中，最大的是（ ）。","opts":["40","49","94"],"ans":1,"explain":"十位 4 的数从 40 到 49，最大是 49。"},{"q":"个位和十位上都是 7 的数是（ ）。","opts":["7","70","77"],"ans":2,"explain":"十位 7、个位 7，是 77。"}]},"interactive":null,"examples":[{"title":"数位","content":"57：十位上的 5 表示 5 个十，个位上的 7 表示 7 个一。"}],"connections":{"prerequisites":["认识 11~20"],"unlocks":["数的顺序与比较大小","100 以内的加减法"]},"lifeCases":[{"title":"数小棒","scene":"10 根捆一捆，捆了 4 捆，还有 3 根零散的。","use":"4 个十和 3 个一，一共 43 根。","problem":"再拿来 7 根，又能捆成新的一捆吗？"}],"pitfalls":[{"wrongStmt":"小马虎说：57 里的 5 表示 5 个一。","wrongDisplay":"57 的 5 = 5个一","correct":"十位上的 5 表示 5 个十，也就是 50。","tip":"看清楚数字站在哪一位上。","mnemonic":"十位管几十，个位管几个。"}]},{"id":"1b-cmp100","title":"数的顺序与比较大小","difficulty":1,"oneLiner":"两位数比大小，先比十位，十位大的那个数就大。","steps":["先看十位：十位大的数更大。","十位一样再比个位：个位大的更大。","在数尺上，右边的数总比左边的大。"],"flashcards":[{"concept":"比大小","plain":"先比十位，十位相同再比个位。","example":"47＞39"},{"concept":"多一些/多得多","plain":"差得少说『多一些』，差得多说『多得多』。","example":"100 比 98 多一些，比 20 多得多"}],"practice":{"basic":[{"q":"47 和 39 比，（ ）大。","opts":["47","39","一样大"],"ans":0,"explain":"先比十位：4＞3，所以 47 大。"},{"q":"52 和 58 比，（ ）大。","opts":["52","58","一样大"],"ans":1,"explain":"十位都是 5，比个位 8＞2，58 大。"},{"q":"最大的两位数是（ ）。","opts":["90","99","100"],"ans":1,"explain":"两位数最大是 99；100 是三位数。"},{"q":"按从小到大的顺序，35 后面是（ ）。","opts":["34","36","45"],"ans":1,"explain":"往后数一个是 36。"}],"improve":[{"q":"用 3 和 5 两个数字组成的最大两位数是（ ）。","opts":["35","53","55"],"ans":1,"explain":"把大的数字放在十位上：53。"},{"q":"100 比 98（ ）。","opts":["多一些","多得多","少一些"],"ans":0,"explain":"只差 2，说『多一些』。"}],"challenge":[{"q":"100 比 20（ ）。","opts":["多一些","多得多","少一些"],"ans":1,"explain":"差了 80，说『多得多』。"}]},"interactive":null,"examples":[{"title":"比一比","content":"47 和 39：十位 4＞3，所以 47＞39，不用再看个位。"}],"connections":{"prerequisites":["100 以内数的认识","比大小"],"unlocks":["整十数加一位数","100 以内的加减法"]},"lifeCases":[{"title":"比身高","scene":"小明 98 厘米，小红 100 厘米。","use":"100＞98，小红高一些。","problem":"如果小刚 120 厘米，怎么比？"}],"pitfalls":[{"wrongStmt":"小马虎说：47 比 39 小，因为个位 7＜9。","wrongDisplay":"47＜39","correct":"两位数先比十位，十位 4＞3，47 更大。","tip":"从最高位开始比。","mnemonic":"比数先看十位，十位相同看个位。"}]},{"id":"1b-addten","title":"整十数加一位数","difficulty":1,"oneLiner":"几十加几就是几十几，几十几减几就是几十。","steps":["30＋5：3 个十加 5 个一，就是 35。","35－5：去掉 5 个一，剩 3 个十，是 30。","35－30：去掉 3 个十，剩下 5 个一，是 5。"],"flashcards":[{"concept":"整十数加一位数","plain":"几个十加几个一，就是几十几。","example":"30＋5＝35"},{"concept":"几十几减整十数","plain":"去掉几个十，就只剩个位上的数。","example":"35－30＝5"}],"practice":{"basic":[{"q":"30＋5＝（ ）。","opts":["35","53","8"],"ans":0,"explain":"3 个十加 5 个一就是 35。"},{"q":"35－5＝（ ）。","opts":["30","3","25"],"ans":0,"explain":"去掉 5 个一，剩 3 个十，是 30。"},{"q":"35－30＝（ ）。","opts":["5","32","33"],"ans":0,"explain":"去掉 3 个十，还剩 5 个一。"},{"q":"60＋8＝（ ）。","opts":["68","86","14"],"ans":0,"explain":"6 个十加 8 个一就是 68。"}],"improve":[{"q":"4 个十和 7 个一组成的数是（ ）。","opts":["47","74","11"],"ans":0,"explain":"4 个十是 40，加 7 个一，是 47。"},{"q":"90＋9＝（ ）。","opts":["99","909","19"],"ans":0,"explain":"9 个十加 9 个一，是 99。"}],"challenge":[{"q":"40＋□＝46，□ 里填（ ）。","opts":["4","6","40"],"ans":1,"explain":"40＋6＝46。"}]},"interactive":null,"examples":[{"title":"十和一","content":"30＋5＝35：3 捆小棒加 5 根散的，一共 35 根。"}],"connections":{"prerequisites":["100 以内数的认识","数的顺序与比较大小"],"unlocks":["100 以内的加减法","两位数加一位数（进位）"]},"lifeCases":[{"title":"装鸡蛋","scene":"3 盒鸡蛋（每盒 10 个）加 4 个散的。","use":"30＋4＝34 个。","problem":"再拿来 6 个散的，又能装满一盒吗？"}],"pitfalls":[{"wrongStmt":"小马虎说：30＋5＝80。","wrongDisplay":"30+5=80","correct":"30＋5＝35，5 是个位上的数，不能加到十位上。","tip":"相同数位才能相加。","mnemonic":"几个十加几个一，几十几才合理。"}]}]},{"id":"1b-u4","num":"五","title":"认识人民币","topics":[{"id":"1b-rmb","title":"认识人民币","difficulty":1,"oneLiner":"1 元＝10 角，1 角＝10 分。","steps":["钱要数清楚，换算是关键。"],"flashcards":[{"concept":"人民币","plain":"1元=10角，1角=10分。","example":"1 元 = 10 角"}],"practice":{"basic":[{"q":"1 元＝（ ）角。","opts":["1","10","100"],"ans":1,"explain":"1 元等于 10 角。"},{"q":"1 角＝（ ）分。","opts":["1","10","100"],"ans":1,"explain":"1 角等于 10 分。"},{"q":"2 元＝（ ）角。","opts":["2","20","200"],"ans":1,"explain":"1 元是 10 角，2 元就是 20 角。"},{"q":"买一支 8 角的铅笔，付 1 元，应找回（ ）。","opts":["2角","1角","8角"],"ans":0,"explain":"1 元＝10 角，10－8＝2 角。"}],"improve":[{"q":"1 张 5 元可以换（ ）张 1 元。","opts":["1","5","10"],"ans":1,"explain":"5 个 1 元合起来是 5 元。"},{"q":"一本本子 3 元 5 角，一支笔 1 元，一共（ ）。","opts":["4元","4元5角","5元5角"],"ans":1,"explain":"3元5角＋1元＝4元5角。"}],"challenge":[{"q":"小明有 1 张 10 元、1 张 5 元、3 枚 1 元，一共（ ）。","opts":["15元","18元","8元"],"ans":1,"explain":"10＋5＋3＝18 元。"}]},"interactive":null,"examples":[{"title":"换一换","content":"1 张 10 元可以换 2 张 5 元，也可以换 10 张 1 元。"}],"connections":{"prerequisites":["认识 11~20","100 以内数的认识"],"unlocks":["简单的计算（购物）"]},"lifeCases":[{"title":"去小卖部","scene":"买一瓶 3 元的水，付 5 元。","use":"5－3＝2，找回 2 元。","problem":"如果付 10 元，要找回多少？"}],"pitfalls":[{"wrongStmt":"小马虎说：1 元等于 100 角。","wrongDisplay":"1元=100角","correct":"1 元＝10 角，1 角＝10 分，所以 1 元＝100 分。","tip":"元角分都是满 10 进一。","mnemonic":"元角分，满十进，1 元等于 10 角整。"}]},{"id":"1b-buy","title":"简单的计算（购物）","difficulty":1,"oneLiner":"买东西先算一共花多少钱，再算应该找回多少钱。","steps":["求一共：把每件商品的价格加起来。","求找回：用付出的钱减掉花掉的钱。","元和元相加、角和角相加，满 10 角要换成 1 元。"],"flashcards":[{"concept":"一共多少","plain":"把价格合起来，用加法。","example":"3元＋5元＝8元"},{"concept":"找回多少","plain":"付出的减花掉的，用减法。","example":"付10元、花7元，找回3元"}],"practice":{"basic":[{"q":"买 3 元的本子和 5 元的笔，一共（ ）。","opts":["7元","8元","9元"],"ans":1,"explain":"3＋5＝8 元。"},{"q":"一支笔 7 元，付 10 元，应找回（ ）。","opts":["2元","3元","4元"],"ans":1,"explain":"10－7＝3 元。"},{"q":"1 元 5 角＝（ ）角。","opts":["15","105","6"],"ans":0,"explain":"1 元＝10 角，10＋5＝15 角。"},{"q":"橡皮 8 角，铅笔 5 角，一共（ ）。","opts":["1元3角","13元","3角"],"ans":0,"explain":"8角＋5角＝13角＝1元3角。"}],"improve":[{"q":"笔记本 4 元 5 角，付 5 元，应找回（ ）。","opts":["5角","1元","1元5角"],"ans":0,"explain":"5元－4元5角＝5角。"},{"q":"买一个 6 元的卷笔刀和一把 2 元的尺子，付 10 元，应找回（ ）。","opts":["1元","2元","3元"],"ans":1,"explain":"6＋2＝8 元，10－8＝2 元。"}],"challenge":[{"q":"小明有 20 元，买了一个 12 元的水壶和一包 3 元的纸巾，还剩（ ）。","opts":["4元","5元","6元"],"ans":1,"explain":"20－12－3＝5 元。"}]},"interactive":null,"examples":[{"title":"算一算","content":"付 10 元买 6 元的东西：10－6＝4，找回 4 元。"}],"connections":{"prerequisites":["认识人民币","100 以内的加减法"],"unlocks":["两位数减一位数（退位）"]},"lifeCases":[{"title":"超市购物","scene":"牛奶 5 元，面包 3 元，你付了 10 元。","use":"5＋3＝8 元，10－8＝2 元，找回 2 元。","problem":"如果再买 2 元的矿泉水，10 元还够吗？"}],"pitfalls":[{"wrongStmt":"小马虎说：8角＋5角＝13元。","wrongDisplay":"8角+5角=13元","correct":"8角＋5角＝13角＝1元3角，满 10 角要换成 1 元。","tip":"角和角相加，满 10 进到元。","mnemonic":"满十角换一元，单位别搞乱。"}]}]},{"id":"1b-u5","num":"六","title":"100 以内的加法和减法","topics":[{"id":"1b-add100","title":"100 以内加减","difficulty":1,"oneLiner":"个位加个位，十位加十位，满十进一。","steps":["竖式对齐个位再算。"],"flashcards":[{"concept":"100 以内加减","plain":"数位对齐。","example":"23＋15＝38"}],"practice":{"basic":[{"q":"23＋15＝（ ）。","opts":["37","38","39"],"ans":1,"explain":"个位 3＋5＝8，十位 2＋1＝3，得 38。"},{"q":"46－12＝（ ）。","opts":["32","33","34"],"ans":2,"explain":"个位 6－2＝4，十位 4－1＝3，得 34。"},{"q":"30＋20＝（ ）。","opts":["32","50","23"],"ans":1,"explain":"3 个十加 2 个十是 5 个十，就是 50。"},{"q":"57－7＝（ ）。","opts":["50","51","49"],"ans":0,"explain":"去掉 7 个一，还剩 5 个十，是 50。"}],"improve":[{"q":"28＋5＝（ ）。","opts":["32","33","34"],"ans":1,"explain":"个位 8＋5＝13，满十进一，十位 2＋1＝3，得 33。"},{"q":"42－6＝（ ）。","opts":["35","36","37"],"ans":1,"explain":"个位 2 不够减，借 1 当 10，12－6＝6，十位剩 3，得 36。"}],"challenge":[{"q":"一本书 35 元，付 50 元，应找回（ ）。","opts":["15元","25元","5元"],"ans":0,"explain":"50－35＝15 元。"},{"q":"小明有 40 元，买书包花了 28 元，还剩（ ）。","opts":["11元","12元","13元"],"ans":1,"explain":"40－28＝12 元。"}]},"interactive":null,"examples":[{"title":"数位对齐","content":"23＋15：个位 3＋5＝8，十位 2＋1＝3，合起来 38。"}],"connections":{"prerequisites":["100 以内数的认识","加减混合"],"unlocks":["两位数加一位数（进位）","两位数减一位数（退位）"]},"lifeCases":[{"title":"攒零花钱","scene":"这个月攒了 45 元，买文具花了 12 元。","use":"45－12＝33，还剩 33 元。","problem":"下个月再攒 20 元，一共有多少？"}],"pitfalls":[{"wrongStmt":"小马虎说：23＋15＝38，我直接把 2＋1 和 3＋5 随便加。","wrongDisplay":"个位加十位","correct":"要相同数位相加：个位加个位，十位加十位。","tip":"列竖式时把个位对齐。","mnemonic":"个位对个位，十位对十位。"}]},{"id":"1b-carry1","title":"两位数加一位数（进位）","difficulty":1,"oneLiner":"个位相加满十，就要向十位进 1。","steps":["先算个位：8＋5＝13，个位满十了。","向十位进 1：十位上的 2 变成 3。","个位写 3，结果是 33。"],"flashcards":[{"concept":"进位","plain":"个位相加满十，向十位进 1。","example":"28＋5＝33"},{"concept":"数位对齐","plain":"个位和个位相加，十位和十位相加。","example":"23＋5，5 加在个位上"}],"practice":{"basic":[{"q":"28＋5＝（ ）。","opts":["32","33","34"],"ans":1,"explain":"8＋5＝13，向十位进 1，十位 2＋1＝3，得 33。"},{"q":"36＋7＝（ ）。","opts":["42","43","44"],"ans":1,"explain":"6＋7＝13，进 1，十位 3＋1＝4，得 43。"},{"q":"49＋3＝（ ）。","opts":["51","52","53"],"ans":1,"explain":"9＋3＝12，进 1，十位 4＋1＝5，得 52。"},{"q":"57＋4＝（ ）。","opts":["60","61","62"],"ans":1,"explain":"7＋4＝11，进 1，十位 5＋1＝6，得 61。"}],"improve":[{"q":"一个数加上 8 得 45，这个数是（ ）。","opts":["36","37","38"],"ans":1,"explain":"45－8＝37，检验 37＋8＝45。"},{"q":"35＋8＝（ ）。","opts":["42","43","44"],"ans":1,"explain":"5＋8＝13，进 1，十位 3＋1＝4，得 43。"}],"challenge":[{"q":"学校买来 46 本书，又买来 9 本，一共（ ）本。","opts":["54","55","56"],"ans":1,"explain":"46＋9＝55 本。"}]},"interactive":null,"examples":[{"title":"进位","content":"28＋5：个位 8＋5＝13，写 3 进 1，十位 2＋1＝3，得 33。"}],"connections":{"prerequisites":["100 以内的加减法","整十数加一位数"],"unlocks":["两位数减一位数（退位）","二年级 100 以内加减"]},"lifeCases":[{"title":"攒卡片","scene":"你有 38 张卡，哥哥又给你 5 张。","use":"38＋5＝43 张。","problem":"再攒多少张就到 50 张了？"}],"pitfalls":[{"wrongStmt":"小马虎说：28＋5＝23。","wrongDisplay":"28+5=23","correct":"28＋5＝33，个位是 13，要往十位进 1，不能只写 3 不进位。","tip":"个位满十一定要进 1。","mnemonic":"个位满十别忘进，十位加上那一个。"}]},{"id":"1b-borrow1","title":"两位数减一位数（退位）","difficulty":1,"oneLiner":"个位不够减时，从十位借 1 当 10 再用。","steps":["42－6：个位 2 不够减 6。","从十位借 1 当 10，变成 12－6＝6。","十位被借走 1 还剩 3，结果是 36。"],"flashcards":[{"concept":"退位","plain":"个位不够减，就从十位借 1 当 10。","example":"42－6＝36"},{"concept":"借一当十","plain":"从十位借来的 1，放在个位上就是 10。","example":"借1→12－6＝6"}],"practice":{"basic":[{"q":"42－6＝（ ）。","opts":["35","36","37"],"ans":1,"explain":"借 1 当 10，12－6＝6，十位剩 3，得 36。"},{"q":"53－7＝（ ）。","opts":["45","46","47"],"ans":1,"explain":"13－7＝6，十位剩 4，得 46。"},{"q":"31－4＝（ ）。","opts":["26","27","28"],"ans":1,"explain":"11－4＝7，十位剩 2，得 27。"},{"q":"60－5＝（ ）。","opts":["54","55","56"],"ans":1,"explain":"10－5＝5，十位剩 5，得 55。"}],"improve":[{"q":"70－8＝（ ）。","opts":["61","62","63"],"ans":1,"explain":"10－8＝2，十位剩 6，得 62。"},{"q":"一个数减去 7 得 38，这个数是（ ）。","opts":["44","45","46"],"ans":1,"explain":"38＋7＝45，检验 45－7＝38。"}],"challenge":[{"q":"有 54 颗糖，分给小朋友 8 颗，还剩（ ）颗。","opts":["45","46","47"],"ans":1,"explain":"54－8＝46 颗。"}]},"interactive":null,"examples":[{"title":"退位","content":"42－6：2 不够减 6，借 1 当 10，12－6＝6，十位剩 3，得 36。"}],"connections":{"prerequisites":["100 以内的加减法","两位数加一位数（进位）"],"unlocks":["二年级 100 以内加减"]},"lifeCases":[{"title":"分橘子","scene":"有 43 个橘子，吃掉 5 个。","use":"43－5＝38 个。","problem":"再吃掉 8 个，还剩几个？"}],"pitfalls":[{"wrongStmt":"小马虎说：42－6＝44。","wrongDisplay":"42-6=44","correct":"42－6＝36，个位不够减要借位，不能用大数减小数。","tip":"先看个位够不够减。","mnemonic":"个位不够去借一，借来当十再相减。"}]}]},{"id":"1b-u6","num":"七","title":"找规律","topics":[{"id":"1b-pattern","title":"找规律","difficulty":1,"oneLiner":"观察颜色、形状、数字怎么重复变化。","steps":["找出一组重复的模式。"],"flashcards":[{"concept":"规律","plain":"看重复模式。","example":"🍎🍌🍎🍌…"}],"practice":{"basic":[{"q":"🍎🍌🍎🍌🍎（ ），下一个是（ ）。","opts":["🍎","🍌"],"ans":1,"explain":"按『苹果、香蕉』两个一组重复，苹果后面是香蕉。"},{"q":"2、4、6、8、（ ），下一个是（ ）。","opts":["9","10","12"],"ans":1,"explain":"每次加 2，8＋2＝10。"},{"q":"🔴🔵🔵🔴🔵🔵（ ），接下来是（ ）。","opts":["🔴","🔵"],"ans":0,"explain":"按『红、蓝、蓝』三个一组重复。"},{"q":"1、3、5、7、（ ），下一个是（ ）。","opts":["8","9","11"],"ans":1,"explain":"每次加 2，7＋2＝9。"}],"improve":[{"q":"10、9、8、7、（ ），下一个是（ ）。","opts":["6","5","8"],"ans":0,"explain":"每次减 1，7－1＝6。"},{"q":"△○△○○△○○○，第 7 个是（ ）。","opts":["△","○"],"ans":1,"explain":"第1个△，第2~3个○，第4个△，第5~7个○，第7个是○。"}],"challenge":[{"q":"1、2、4、7、11、（ ），下一个是（ ）。","opts":["15","16","17"],"ans":1,"explain":"相邻差是 1、2、3、4，下一个差 5，11＋5＝16。"}]},"interactive":null,"examples":[{"title":"找重复","content":"🍎🍌🍎🍌🍎：每两个一组，一直是『苹果、香蕉』。"}],"connections":{"prerequisites":["分类与整理","认识 1~5"],"unlocks":["数字的规律","100 以内数的认识"]},"lifeCases":[{"title":"串珠子","scene":"按『红、红、蓝』的顺序串手链。","use":"找出重复的一组，就知道下一颗穿什么。","problem":"第 10 颗应该是什么颜色？"}],"pitfalls":[{"wrongStmt":"小马虎说：只看前两个就能定规律。","wrongDisplay":"1、2 之后一定都是 3","correct":"至少要看三组，才能确定规律真的在重复。","tip":"多往后看几个再下结论。","mnemonic":"规律看三组，别急下结论。"}]},{"id":"1b-patnum","title":"数字的规律","difficulty":1,"oneLiner":"找数字规律，先看相邻两个数相差多少。","steps":["算一算相邻两个数相差几。","如果差都一样，就按这个差往下排。","有时是两组数交替出现，要分开来看。"],"flashcards":[{"concept":"等差","plain":"每相邻两个数相差一样多。","example":"2、4、6、8 每次加 2"},{"concept":"交替规律","plain":"两组数轮流出现，要跳着看。","example":"1、9、2、8、3、7"}],"practice":{"basic":[{"q":"3、6、9、12、（ ），下一个是（ ）。","opts":["13","15","18"],"ans":1,"explain":"每次加 3，12＋3＝15。"},{"q":"20、18、16、（ ），下一个是（ ）。","opts":["13","14","15"],"ans":1,"explain":"每次减 2，16－2＝14。"},{"q":"5、10、15、（ ），下一个是（ ）。","opts":["16","20","25"],"ans":1,"explain":"每次加 5，15＋5＝20。"},{"q":"1、2、1、2、1、（ ），下一个是（ ）。","opts":["1","2","3"],"ans":1,"explain":"按 1、2 交替出现，1 后面是 2。"}],"improve":[{"q":"1、3、6、10、（ ），下一个是（ ）。","opts":["13","15","16"],"ans":1,"explain":"相邻差是 2、3、4，下一个差 5，10＋5＝15。"},{"q":"1、9、2、8、3、（ ），下一个是（ ）。","opts":["7","4","6"],"ans":0,"explain":"单数位是 1、2、3，双数位是 9、8、7，所以填 7。"}],"challenge":[{"q":"2、3、5、8、12、（ ），下一个是（ ）。","opts":["15","16","17"],"ans":2,"explain":"相邻差是 1、2、3、4，下一个差 5，12＋5＝17。"}]},"interactive":null,"examples":[{"title":"看差","content":"2、4、6、8：每次都加 2，这就是规律。"}],"connections":{"prerequisites":["找规律","100 以内数的认识"],"unlocks":["二年级找规律"]},"lifeCases":[{"title":"数楼梯","scene":"台阶上的数字是 5、10、15、20……","use":"每次多 5，下一个就是 25。","problem":"第 6 个数字是多少？"}],"pitfalls":[{"wrongStmt":"小马虎说：1、2、4 后面一定是 6。","wrongDisplay":"1、2、4、6","correct":"差是 1、2，不一定每次都加 2；要看清差是怎么变的。","tip":"先把相邻两个数的差写出来看。","mnemonic":"先算差，再看差，规律自然现。"}]}]}]}]}]};
 var MATHBOOK_BS = {"grades":[{"g":1,"terms":[{"t":"上","units":[{"id":"bj-u0","num":"入学准备","title":"我上学啦","topics":[{"id":"bj-0-campus","title":"可爱的校园","difficulty":1,"oneLiner":"数物体个数时，一个一个点数，数到几就是几个。","steps":["手指点着数，不重不漏。"],"flashcards":[{"concept":"数数","plain":"一个一个地点数，最后数到几就是总数。","example":"3 个苹果 → 3"}],"practice":{"basic":[{"q":"数一数：🍎🍎🍎 有几个？","opts":["2","3","4"],"ans":1,"explain":"一共 3 个。"},{"q":"数一数：🐟🐟🐟🐟🐟 有几条？","opts":["4","5","6"],"ans":1,"explain":"一个一个点数：1、2、3、4、5，一共 5 条。"},{"q":"数一数：⭐⭐⭐⭐⭐⭐⭐⭐ 有几颗？","opts":["7","8","9"],"ans":1,"explain":"一共 8 颗星星。"},{"q":"教室里有 6 把椅子，又搬来 1 把，现在有几把？","opts":["6","7","8"],"ans":1,"explain":"6 再往后数 1 个是 7 把。"},{"type":"interactive","q":"数一数，点亮几颗珠子？","it":{"type":"abacus","target":6,"max":10}}],"improve":[{"q":"🍎🍎🍐🍎🍐🍎 —— 苹果有几个？","opts":["4","2","3"],"ans":0,"explain":"苹果有 4 个（第 1、2、4、6 个），梨是 2 个。要看清题目问的是哪一种。"},{"q":"一排小朋友，从左边数小红是第 3 个，从右边数她也是第 3 个。这一排一共几人？","opts":["5","6","7"],"ans":0,"explain":"3＋3＝6，小红被数了两次，6－1＝5 人。"}],"challenge":[{"q":"左边 3 只兔子，右边 4 只兔子，给左边添几只就和右边一样多？","opts":["1","2","3"],"ans":0,"explain":"4－3＝1，添 1 只就一样多。"}]},"interactive":{"type":"abacus","target":7,"max":10},"examples":[{"title":"数一数","content":"点亮 7 颗珠子，就写数字 7。"}],"connections":{"prerequisites":[],"unlocks":["比多少","认识 1~5"]},"lifeCases":[{"title":"摆碗筷","scene":"家里有 3 口人吃饭，要摆几双筷子？","use":"一人一双，数出 3 双就对了。","problem":"如果爷爷今天也来吃饭，一共要摆几双？"}],"pitfalls":[{"wrongStmt":"小马虎说：数得快就是数对了。","wrongDisplay":"手指乱跳着数","correct":"要一个一个按顺序数，手指点着数，数到几就是几个。","tip":"数完再数第二遍检查一遍。","mnemonic":"手指点着数，不跳不重复。"}]},{"id":"bj-0-cmp","title":"比一比","difficulty":1,"oneLiner":"把两样东西一一对应，没有多余的就一样多。","steps":["一一对应，谁有剩谁就多。"],"flashcards":[{"concept":"一一对应","plain":"把两样东西一个对一个，多出来的那方更多。","example":"○○○ 比 ○○ 多 1 个"}],"practice":{"basic":[{"q":"哪边多？🍎🍎🍎 和 🍎🍎","opts":["左边多","一样多","右边多"],"ans":0,"explain":"左边 3 个，右边 2 个，左边多。"},{"q":"🐱🐱🐱 和 🐶🐶🐶，谁多？","opts":["猫多","狗多","一样多"],"ans":2,"explain":"都是 3 个，一一对应后谁也没剩，一样多。"},{"q":"🍓🍓🍓🍓 比 🍓🍓（ ）。","opts":["多","少","一样"],"ans":0,"explain":"4 个比 2 个多。"},{"q":"要让 🍬🍬 和 🍬🍬🍬 一样多，要给左边添几颗？","opts":["1","2","3"],"ans":0,"explain":"左边 2 颗，右边 3 颗，添 1 颗就一样多。"},{"type":"interactive","q":"哪边的水果更多？","it":{"type":"compare","left":4,"right":6,"emoji":"🍓"}}],"improve":[{"q":"红气球 5 个，黄气球 3 个，红气球比黄气球多几个？","opts":["1","2","3"],"ans":1,"explain":"5－3＝2，多 2 个。"},{"q":"哥哥有 7 张卡片，弟弟有 7 张，谁的多？","opts":["哥哥多","弟弟多","一样多"],"ans":2,"explain":"7 和 7 相等，一样多。"}],"challenge":[{"q":"小明比小红高，小红比小刚高。谁最矮？","opts":["小明","小红","小刚"],"ans":2,"explain":"从高到矮：小明、小红、小刚，小刚最矮。"}]},"interactive":{"type":"compare","left":5,"right":3,"emoji":"🍎"},"examples":[{"title":"一一对应","content":"3 只小兔对 3 根萝卜，正好一对一个，谁也不多。"}],"connections":{"prerequisites":["数一数"],"unlocks":["比大小","5以内的加减法"]},"lifeCases":[{"title":"分水果","scene":"盘里有 4 个苹果，家里有 3 个人。","use":"一人一个还多 1 个，说明苹果比人多。","problem":"想让每人分到一样多，还要再拿来几个才够 4 个人分？"}],"pitfalls":[{"wrongStmt":"小马虎说：摆得长的那排就一定多。","wrongDisplay":"摆得开=摆得多","correct":"多少看个数，不看摆得长短、稀密。","tip":"数一数再比，别被样子骗了。","mnemonic":"比多比少数个数，别看排得长不长。"}]}]},{"id":"bj-u1","num":"第一单元","title":"生活中的数","topics":[{"id":"bj-1-count","title":"数一数","difficulty":1,"oneLiner":"数物体个数时，一个一个点数，数到几就是几个。","steps":["手指点着数，不重不漏。"],"flashcards":[{"concept":"数数","plain":"一个一个地点数，最后数到几就是总数。","example":"3 个苹果 → 3"}],"practice":{"basic":[{"q":"数一数：🍎🍎🍎 有几个？","opts":["2","3","4"],"ans":1,"explain":"一共 3 个。"},{"q":"数一数：🐟🐟🐟🐟🐟 有几条？","opts":["4","5","6"],"ans":1,"explain":"一个一个点数：1、2、3、4、5，一共 5 条。"},{"q":"数一数：⭐⭐⭐⭐⭐⭐⭐⭐ 有几颗？","opts":["7","8","9"],"ans":1,"explain":"一共 8 颗星星。"},{"q":"教室里有 6 把椅子，又搬来 1 把，现在有几把？","opts":["6","7","8"],"ans":1,"explain":"6 再往后数 1 个是 7 把。"},{"type":"interactive","q":"数一数，点亮几颗珠子？","it":{"type":"abacus","target":6,"max":10}}],"improve":[{"q":"🍎🍎🍐🍎🍐🍎 —— 苹果有几个？","opts":["4","2","3"],"ans":0,"explain":"苹果有 4 个（第 1、2、4、6 个），梨是 2 个。要看清题目问的是哪一种。"},{"q":"一排小朋友，从左边数小红是第 3 个，从右边数她也是第 3 个。这一排一共几人？","opts":["5","6","7"],"ans":0,"explain":"3＋3＝6，小红被数了两次，6－1＝5 人。"}],"challenge":[{"q":"左边 3 只兔子，右边 4 只兔子，给左边添几只就和右边一样多？","opts":["1","2","3"],"ans":0,"explain":"4－3＝1，添 1 只就一样多。"}]},"interactive":{"type":"abacus","target":7,"max":10},"examples":[{"title":"数一数","content":"点亮 7 颗珠子，就写数字 7。"}],"connections":{"prerequisites":[],"unlocks":["比多少","认识 1~5"]},"lifeCases":[{"title":"摆碗筷","scene":"家里有 3 口人吃饭，要摆几双筷子？","use":"一人一双，数出 3 双就对了。","problem":"如果爷爷今天也来吃饭，一共要摆几双？"}],"pitfalls":[{"wrongStmt":"小马虎说：数得快就是数对了。","wrongDisplay":"手指乱跳着数","correct":"要一个一个按顺序数，手指点着数，数到几就是几个。","tip":"数完再数第二遍检查一遍。","mnemonic":"手指点着数，不跳不重复。"}]},{"id":"bj-1-num15","title":"认识1~5","difficulty":1,"oneLiner":"1~5 表示个数，按顺序越来越大。","steps":["数几写几，1 最小 5 最大。"],"flashcards":[{"concept":"1~5","plain":"按 1、2、3、4、5 的顺序，后一个比前一个大 1。","example":"3 表示 3 个"}],"practice":{"basic":[{"q":"3 后面的一个数是（ ）。","opts":["2","4","5"],"ans":1,"explain":"按 1、2、3、4、5 的顺序，3 后面是 4。"},{"q":"4 前面的一个数是（ ）。","opts":["2","3","5"],"ans":1,"explain":"排在 4 前面的是 3。"},{"q":"○○○○○ 一共有几个？","opts":["3","4","5"],"ans":2,"explain":"一共 5 个圆。"},{"q":"1~5 中最大的数是（ ）。","opts":["1","3","5"],"ans":2,"explain":"从小到大排 1、2、3、4、5，5 最大。"},{"type":"interactive","q":"拨出 3 个珠子","it":{"type":"abacus","target":3,"max":5}}],"improve":[{"q":"比 2 大、比 5 小的数有几个？","opts":["1","2","3"],"ans":1,"explain":"是 3 和 4，一共 2 个。"},{"q":"按规律填数：1、2、3、（ ）、5。","opts":["3","4","6"],"ans":1,"explain":"每次多 1，3 后面是 4。"}],"challenge":[{"q":"5 个苹果分给两个人，每人都要有。下面哪种分法不对？","opts":["1 和 4","2 和 3","5 和 0"],"ans":2,"explain":"每人都要有，不能有人分到 0 个。"}]},"interactive":{"type":"abacus","target":4,"max":5},"examples":[{"title":"数一数写数","content":"点亮 4 颗珠子，就写数字 4。"}],"connections":{"prerequisites":["数一数"],"unlocks":["比大小","分与合","加法"]},"lifeCases":[{"title":"手指帮忙","scene":"一只手有 5 根手指。","use":"数 1~5 时可以用手指当小工具。","problem":"两只手一共有几根手指？"}],"pitfalls":[{"wrongStmt":"小马虎说：5 比 4 小。","wrongDisplay":"5＜4","correct":"越往后数越大，5 比 4 大。","tip":"按顺序背一遍：1、2、3、4、5。","mnemonic":"顺着数，越数越大。"}]},{"id":"bj-1-cmp","title":"比大小（＝ ＞ ＜）","difficulty":1,"oneLiner":"用 ＞、＜、＝ 比两个数的多少。","steps":["大嘴朝大数，尖尖朝小数。"],"flashcards":[{"concept":"大于小于","plain":"大数在前用 ＞，小数在前用 ＜。","example":"5 ＞ 3"}],"practice":{"basic":[{"q":"4 ○ 2，○ 里填（ ）。","opts":["＞","＜","＝"],"ans":0,"explain":"4 比 2 大，开口朝大数，填 ＞。"},{"q":"3 ○ 5，○ 里填（ ）。","opts":["＞","＜","＝"],"ans":1,"explain":"3 比 5 小，尖尖朝小数，填 ＜。"},{"q":"2 ○ 2，○ 里填（ ）。","opts":["＞","＜","＝"],"ans":2,"explain":"两个数一样大，用 ＝。"},{"q":"下面哪个式子是对的？","opts":["5＞4","3＞5","2＝3"],"ans":0,"explain":"5 比 4 大，5＞4 正确。"},{"type":"interactive","q":"在中间填符号","it":{"type":"compare-num","a":2,"b":4}}],"improve":[{"q":"把 1、3、5 从大到小排，正确的是（ ）。","opts":["1、3、5","5、3、1","3、5、1"],"ans":1,"explain":"从大到小就是 5、3、1。"},{"q":"□＜4，□ 里最大能填（ ）。","opts":["2","3","4"],"ans":1,"explain":"比 4 小的有 1、2、3，最大是 3。"}],"challenge":[{"q":"3＜□＜5，□ 里填（ ）。","opts":["2","4","5"],"ans":1,"explain":"比 3 大又比 5 小的数是 4。"}]},"interactive":{"type":"compare-num","a":3,"b":5},"examples":[{"title":"开口朝大数","content":"5 ＞ 3，大大的嘴巴朝着大的那个数 5。"}],"connections":{"prerequisites":["认识 1~5","比多少"],"unlocks":["认识 6~10","连加连减"]},"lifeCases":[{"title":"比糖果","scene":"你有 4 颗糖，妹妹有 2 颗。","use":"4＞2，你的糖更多。","problem":"你给妹妹几颗，两人就一样多了？"}],"pitfalls":[{"wrongStmt":"小马虎说：开口朝小数。","wrongDisplay":"5＜3","correct":"大嘴朝大数，尖尖朝小数，所以是 5＞3。","tip":"把符号想成一张嘴，它要吃大的那个。","mnemonic":"大嘴吃大数，尖尖指小数。"}]},{"id":"bj-1-ordinal","title":"第几","difficulty":1,"oneLiner":"第几表示排在第几个位置，和一共有几个不一样。","steps":["第 3 是位置，3 个是总数。"],"flashcards":[{"concept":"第几","plain":"第几说的是位置，从 1 开始数。","example":"从左数第 2 个是🍎"}],"practice":{"basic":[{"q":"🍎🍌🍇🍓，从左数第 3 个是（ ）。","opts":["🍎","🍌","🍇"],"ans":2,"explain":"从左数：第1🍎、第2🍌、第3🍇。"},{"q":"🍎🍌🍇🍓，一共有几个水果？","opts":["3","4","5"],"ans":1,"explain":"一共 4 个。"},{"q":"小明排第 2，说明他前面有（ ）人。","opts":["1","2","3"],"ans":0,"explain":"第 2 个前面只有 1 个人。"},{"q":"5 个小朋友排队，最后一个人是第（ ）个。","opts":["4","5","6"],"ans":1,"explain":"一共 5 人，最后的是第 5 个。"}],"improve":[{"q":"一排 8 人，从右数第 2 个，从左数是第（ ）个。","opts":["6","7","8"],"ans":1,"explain":"8－2＋1＝7，从左数是第 7 个。"},{"q":"▲●★■▼，★ 从左数是第几个？从右数呢？","opts":["第3、第3","第3、第2","第2、第3"],"ans":0,"explain":"★ 在正中间，从左第 3，从右也是第 3。"}],"challenge":[{"q":"10 个小朋友排队，小明从左数第 4，从右数他是第几个？","opts":["第6","第7","第8"],"ans":1,"explain":"他右边有 10－4＝6 人，所以从右数是第 7 个。"}]},"interactive":null,"examples":[{"title":"第几和几个","content":"一共有 5 辆车；红色的是从前面数第 3 辆。"}],"connections":{"prerequisites":["认识 1~5"],"unlocks":["认识 11~20","找规律"]},"lifeCases":[{"title":"排队打饭","scene":"你排在第 4 个。","use":"第 4 个说明前面有 3 个人，一共不一定只有 4 人。","problem":"如果后面还有 5 个人，这一队一共几人？"}],"pitfalls":[{"wrongStmt":"小马虎说：第 3 个就是有 3 个。","wrongDisplay":"第3个=3个","correct":"第几说的是位置，几个说的是总数，意思不一样。","tip":"问『第几』找位置，问『几个』数全部。","mnemonic":"第几排在位，几个数总数。"}]},{"id":"bj-1-zero","title":"0的认识","difficulty":1,"oneLiner":"一个都没有就用 0 表示。","steps":["盘子里空了，就用 0。"],"flashcards":[{"concept":"0","plain":"什么都没有，记作 0。","example":"3－3＝0"}],"practice":{"basic":[{"q":"鸟窝里有 2 只鸟都飞走了，还剩几只？","opts":["0","1","2"],"ans":0,"explain":"2－2＝0。"},{"q":"3－3＝（ ）。","opts":["0","1","3"],"ans":0,"explain":"全部去掉，一个都不剩，就是 0。"},{"q":"0 表示（ ）。","opts":["一个都没有","有很多","一共有 1 个"],"ans":0,"explain":"0 表示一个也没有。"},{"q":"4＋0＝（ ）。","opts":["0","4","5"],"ans":1,"explain":"加 0 是什么都没加，还是 4。"}],"improve":[{"q":"下面哪个算式的结果最大？","opts":["5－5","5－0","0＋0"],"ans":1,"explain":"5－5＝0，5－0＝5，0＋0＝0，最大是 5。"},{"q":"尺子上的 0 表示（ ）。","opts":["起点","没有长度","终点"],"ans":0,"explain":"0 是尺子的起点，从 0 开始量起。"}],"challenge":[{"q":"5－0 ○ 5＋0，○ 里填（ ）。","opts":["＞","＜","＝"],"ans":2,"explain":"两边都等于 5，用 ＝。"}]},"interactive":null,"examples":[{"title":"0 的样子","content":"盘子里 3 个苹果全拿走，还剩 0 个，写 3－3＝0。"}],"connections":{"prerequisites":["减法"],"unlocks":["5以内的加减法","认识 6~10"]},"lifeCases":[{"title":"冰箱里的鸡蛋","scene":"冰箱里原来 3 个鸡蛋，全煮掉了。","use":"一个不剩，用 0 表示：3－3＝0。","problem":"妈妈又买了 5 个，现在有几个？"}],"pitfalls":[{"wrongStmt":"小马虎说：3－0＝0。","wrongDisplay":"3-0=0","correct":"3－0＝3，减 0 就是一个都没去掉。","tip":"减 0 和加 0 一样，原数不变。","mnemonic":"加减碰见 0，原数不动身。"}]}]},{"id":"bj-u2","num":"第二单元","title":"5以内数加与减","topics":[{"id":"bj-2-add","title":"加法","difficulty":1,"oneLiner":"把两部分合在一起求总数，用加法。","steps":["遇见『一共』『合起来』想加法。"],"flashcards":[{"concept":"加法","plain":"求总和使用 ＋。","example":"2＋3＝5"}],"practice":{"basic":[{"q":"停车场有 2 辆车，又来 1 辆，共几辆？","opts":["2","3","4"],"ans":1,"explain":"2＋1＝3。"},{"q":"1＋3＝（ ）。","opts":["3","4","5"],"ans":1,"explain":"1 和 3 合起来是 4。"},{"q":"2＋2＝（ ）。","opts":["3","4","5"],"ans":1,"explain":"2 和 2 合起来是 4。"},{"q":"树上有 3 只鸟，又飞来 2 只，一共几只？","opts":["4","5","6"],"ans":1,"explain":"3＋2＝5，一共 5 只。"},{"type":"interactive","q":"算一算，一共有几个？","it":{"type":"add-scene","a":3,"b":2,"emoji":"🐟"}}],"improve":[{"q":"□＋2＝5，□ 里填（ ）。","opts":["2","3","4"],"ans":1,"explain":"3＋2＝5。"},{"q":"小明上午看 2 本书，下午看 3 本，一共看几本？","opts":["4","5","6"],"ans":1,"explain":"2＋3＝5，一共 5 本。"}],"challenge":[{"q":"3＋（ ）＝3，括号里填（ ）。","opts":["0","1","3"],"ans":0,"explain":"加 0 什么都没加，还是 3。"}]},"interactive":{"type":"add-scene","a":2,"b":3,"emoji":"🍎"},"examples":[{"title":"合起来","content":"2 只小鸭加 1 只小鸭，合起来是 3 只：2＋1＝3。"}],"connections":{"prerequisites":["分与合","认识 1~5"],"unlocks":["减法","5以内的加减法"]},"lifeCases":[{"title":"攒贴纸","scene":"昨天得 2 张贴纸，今天得 3 张。","use":"求一共多少，用加法：2＋3＝5。","problem":"明天再得 1 张，一共几张？"}],"pitfalls":[{"wrongStmt":"小马虎说：看到『一共』就用减法。","wrongDisplay":"一共→减法","correct":"『一共』『合起来』『总共』都是加法的信号。","tip":"找关键词：一共、合起来 → 用 ＋。","mnemonic":"一共合起来，加号跑出来。"}]},{"id":"bj-2-sub","title":"减法","difficulty":1,"oneLiner":"从总数里去掉一部分，求剩下用减法。","steps":["遇见『还剩』『去掉』想减法。"],"flashcards":[{"concept":"减法","plain":"求剩下用 －。","example":"5－2＝3"}],"practice":{"basic":[{"q":"盘里有 4 块饼，吃掉 1 块，剩几块？","opts":["2","3","4"],"ans":1,"explain":"4－1＝3。"},{"q":"5－1＝（ ）。","opts":["3","4","5"],"ans":1,"explain":"5 去掉 1 还剩 4。"},{"q":"3－2＝（ ）。","opts":["0","1","2"],"ans":1,"explain":"3 去掉 2 还剩 1。"},{"q":"有 5 个气球，飞走 2 个，还剩几个？","opts":["2","3","4"],"ans":1,"explain":"5－2＝3，还剩 3 个。"},{"type":"interactive","q":"算一算，还剩几个？","it":{"type":"sub-scene","a":6,"b":3,"emoji":"🍪"}}],"improve":[{"q":"□－2＝3，□ 里填（ ）。","opts":["4","5","6"],"ans":1,"explain":"5－2＝3。"},{"q":"盘里原来 5 个饺子，吃掉一些后剩 2 个，吃掉了几个？","opts":["2","3","4"],"ans":1,"explain":"5－2＝3，吃掉 3 个。"}],"challenge":[{"q":"5－（ ）＝5，括号里填（ ）。","opts":["0","1","5"],"ans":0,"explain":"减 0 什么都没去掉，还是 5。"}]},"interactive":{"type":"sub-scene","a":5,"b":2,"emoji":"🍎"},"examples":[{"title":"去掉","content":"4 块饼干吃掉 1 块，还剩 3 块：4－1＝3。"}],"connections":{"prerequisites":["分与合","加法"],"unlocks":["5以内的加减法","0 的认识"]},"lifeCases":[{"title":"分糖果","scene":"你有 5 颗糖，送给朋友 2 颗。","use":"求还剩多少，用减法：5－2＝3。","problem":"如果朋友又还给你 1 颗，现在几颗？"}],"pitfalls":[{"wrongStmt":"小马虎说：看到『还剩』就用加法。","wrongDisplay":"还剩→加法","correct":"『还剩』『剩下』『飞走』『吃掉』都是减法的信号。","tip":"找关键词：还剩、去掉 → 用 －。","mnemonic":"还剩剩下减，减号站中间。"}]},{"id":"bj-2-addsub","title":"5以内的加减法","difficulty":1,"oneLiner":"合起来用＋，去掉一些用－。","steps":["合起来用＋，求一共多少。","去掉一些用－，求剩下多少。","画点点数，帮自己算。"],"flashcards":[{"concept":"加法 ＋","plain":"把两部分合起来，求一共是多少。","example":"2＋3＝5"},{"concept":"减法 －","plain":"从总数里去掉一些，求剩下多少。","example":"5－2＝3"},{"concept":"0","plain":"一个都没有，就用 0 表示。","example":"3－3＝0"}],"practice":{"basic":[{"q":"2＋1＝？","opts":["2","3","4"],"ans":1,"explain":"2 再往后数 1 个是 3。"},{"q":"4－2＝？","opts":["1","2","3"],"ans":1,"explain":"4 去掉 2 还剩 2。"},{"q":"3－0＝？","opts":["0","3","2"],"ans":1,"explain":"减 0 就是一个数都没去掉，还是 3。"},{"q":"1＋4＝（ ）。","opts":["4","5","6"],"ans":1,"explain":"1 和 4 合起来是 5。"},{"q":"5－4＝（ ）。","opts":["0","1","2"],"ans":1,"explain":"5 去掉 4 还剩 1。"}],"improve":[{"q":"树上有 3 只鸟，又飞来 2 只，一共几只？","opts":["4","5","6"],"ans":1,"explain":"3＋2＝5，一共 5 只。"},{"q":"小明有 5 颗糖，分给妹妹 3 颗，还剩几颗？","opts":["1","2","3"],"ans":1,"explain":"5－3＝2，还剩 2 颗。"},{"q":"算式 3＋1＝4 表示的意思是（ ）。","opts":["3 个去掉 1 个","3 个和 1 个合起来","把 3 个分成 1 份"],"ans":1,"explain":"加法就是把两部分合起来求总数。"}],"challenge":[{"q":"1＋2＋？＝5，？里填几？","opts":["1","2","3"],"ans":1,"explain":"1＋2＝3，3＋2＝5。"},{"q":"2＋（ ）＝5，括号里填（ ）。","opts":["2","3","4"],"ans":1,"explain":"2＋3＝5。"}]},"interactive":{"type":"add-sub","a":2,"b":3,"op":"+"},"examples":[{"title":"2＋3","content":"2 个 + 3 个 = 5 个"},{"title":"5－2","content":"5 块饼干吃掉 2 块，还剩 3 块"}],"connections":{"prerequisites":["认识 1~5","比多少"],"unlocks":["6~10 的加减法","看图列式"]},"lifeCases":[{"title":"分糖果","scene":"妈妈买来 4 颗糖，你吃了 1 颗，弟弟吃了 1 颗。","use":"算一算还剩几颗：4－1－1＝2。","problem":"如果再有 1 颗掉地上不能吃了，还剩几颗？"}],"pitfalls":[{"wrongStmt":"小马虎说：3－0＝0。","wrongDisplay":"3－0＝0","correct":"3－0＝3，一个数减 0 还是它自己。","tip":"减 0 就是『一个都没去掉』。","mnemonic":"减 0 不变身，原数留下来。"},{"wrongStmt":"小马虎说：2＋3 和 3＋2 不一样。","wrongDisplay":"2＋3 ≠ 3＋2","correct":"2＋3＝5，3＋2＝5，交换位置结果一样。","tip":"加法可以交换，和不变。","mnemonic":"加数换个位，答案不跑偏。"}]},{"id":"bj-2-zero","title":"0的加减","difficulty":1,"oneLiner":"0 表示没有，加减 0 都不变。","steps":["加减 0，还是它自己。"],"flashcards":[{"concept":"0的加减","plain":"加 0 或减 0，数都不变。","example":"5+0=5，5-0=5"}],"practice":{"basic":[{"q":"0 + 3 = ?","opts":["2","3","4"],"ans":1,"explain":"0 加几就等于几，0+3=3。"},{"q":"3 + 0 = ?","opts":["2","3","4"],"ans":1,"explain":"几加 0 还是几，3+0=3。"},{"q":"5 - 0 = ?","opts":["4","5","0"],"ans":1,"explain":"几减 0 还是几，5-0=5。"},{"q":"0 + 0 = ?","opts":["0","1","2"],"ans":0,"explain":"0 加 0 还是 0。"}],"improve":[{"q":"4 - 0 和 0 + 4 比，谁大？","opts":["一样大","4-0大","0+4大"],"ans":0,"explain":"都等于 4，一样大。"},{"q":"树上有 0 只鸟，又飞来 2 只，现在几只？","opts":["0","2","3"],"ans":1,"explain":"0+2=2。"}],"challenge":[{"q":"一个三位数里有两个 0（如 101），这里的 0 表示什么？","opts":["一个都没有","占位","不知道"],"ans":1,"explain":"数字里的 0 用来占位，比如 101 的十位 0 表示十位上没有。"}]},"interactive":{"type":"add-scene","a":0,"b":3},"examples":[{"title":"算一算","content":"0+3=3，6-0=6，0+0=0。"}],"connections":{"prerequisites":["0的认识"],"unlocks":["5以内的加减法"]},"lifeCases":[{"title":"盘子里","scene":"盘子里一个苹果也没有，用 0 表示。","use":"拿走全部就是 0。","problem":"盘里原有 2 个，全吃光，剩几个？"}],"pitfalls":[{"wrongStmt":"小马虎：0 加任何数都得 0。","wrongDisplay":"0+5=0","correct":"0 加任何数等于那个数，0+5=5。","tip":"0 表示没有，加上去数量不变。","mnemonic":"加0减0，数不变。"}]}]},{"id":"bj-u3","num":"综合实践","title":"介绍我的教室","topics":[{"id":"bj-3-updown","title":"上和下","difficulty":1,"oneLiner":"上下看高低，上面在高处，下面在低处。","steps":["头顶是上，脚下是下。"],"flashcards":[{"concept":"上下","plain":"以中间为界，往头顶方向是上，往脚方向是下。","example":"小鸟在树上（上），小狗在树下（下）"}],"practice":{"basic":[{"q":"太阳在山的（ ）方？","opts":["上","下"],"ans":0,"explain":"太阳在天空，是上方。"},{"q":"小鸟在树上，小狗在树的（ ）。","opts":["上面","下面"],"ans":1,"explain":"小鸟站在树枝上，小狗在树底下，是下面。"},{"q":"书放在桌子的（ ）面。","opts":["上","下"],"ans":0,"explain":"书放在桌面上，是上面。"},{"q":"鞋子穿在脚的（ ）面。","opts":["上","下"],"ans":1,"explain":"鞋子在脚底下，是下面。"},{"type":"interactive","q":"指一指：下 方","it":{"type":"compass","rel":"下"}}],"improve":[{"q":"小明站在楼梯上，他在小红的上面，那小红在小明的（ ）。","opts":["上面","下面"],"ans":1,"explain":"上下是相对的：小明在上，小红就在小明的下面。"},{"q":"飞机在云的上面，云在地的上面。谁在最下面？","opts":["飞机","云","地"],"ans":2,"explain":"从上往下：飞机、云、地，地最下面。"}],"challenge":[{"q":"三层书架：第一层放故事书，第二层放课本，第三层放字典。字典在课本的（ ）。","opts":["上面","下面"],"ans":1,"explain":"一层比一层低，第三层在第二层的下面。"}]},"interactive":{"type":"compass","rel":"上"},"examples":[{"title":"说一说","content":"电灯在天花板上，地毯铺在地板上。"}],"connections":{"prerequisites":[],"unlocks":["前和后","左和右"]},"lifeCases":[{"title":"收拾书包","scene":"铅笔盒放在最上面，课本压在下面。","use":"说清谁在上谁在下，找东西更快。","problem":"想先拿课本，要先拿出什么？"}],"pitfalls":[{"wrongStmt":"小马虎说：桌子在书的上面。","wrongDisplay":"桌在上，书在下","correct":"书放在桌面上，书在上、桌子在下。","tip":"说上下要先看清『谁在谁的哪一面』。","mnemonic":"谁在谁上面，反过来说就变。"}]},{"id":"bj-3-frontback","title":"前和后","difficulty":1,"oneLiner":"面对的方向是前，背对的方向是后。","steps":["你面朝哪，哪就是前；背后就是后。"],"flashcards":[{"concept":"前后","plain":"脸对着的是前，背对着的是后。","example":"小明站在队伍最前面"}],"practice":{"basic":[{"q":"排队时，小明站在队最（ ）面，老师能看见他的脸。","opts":["前","后"],"ans":0,"explain":"面朝老师的那一头是前面。"},{"q":"汽车向前开，车头在（ ）面。","opts":["前","后"],"ans":0,"explain":"车往哪边开，哪边就是前，车头在前。"},{"q":"你背对着的那个方向是（ ）。","opts":["前","后"],"ans":1,"explain":"脸对着的是前，背对着的是后。"},{"q":"小朋友排成一队，小红前面有 2 人，她是第（ ）个。","opts":["2","3","4"],"ans":1,"explain":"前面有 2 人，小红就是第 3 个。"},{"type":"interactive","q":"指一指：后 方","it":{"type":"compass","rel":"后"}}],"improve":[{"q":"一排 5 人，从前往后数小刚是第 2 个，他后面还有几人？","opts":["2","3","4"],"ans":1,"explain":"5－2＝3，他后面还有 3 人。"},{"q":"小狗在小猫前面，小猫在小兔前面。谁在最后面？","opts":["小狗","小猫","小兔"],"ans":2,"explain":"顺序是 小狗→小猫→小兔，小兔在最后。"}],"challenge":[{"q":"一排 6 人，从前往后数小明是第 3 个，从后往前数他是第几个？","opts":["3","4","5"],"ans":1,"explain":"他后面有 6－3＝3 人，所以从后数是第 4 个。"}]},"interactive":{"type":"compass","rel":"前"},"examples":[{"title":"排排队","content":"小华在最前面，小丽在最后面，小明在他们中间。"}],"connections":{"prerequisites":["上和下"],"unlocks":["左和右","第几"]},"lifeCases":[{"title":"坐校车","scene":"上车时你在第 3 个，前面已经坐了 2 个同学。","use":"前后关系能帮我们数清队伍。","problem":"如果一共有 8 个人排队，你后面还有几个？"}],"pitfalls":[{"wrongStmt":"小马虎说：前面有 3 人，我就是第 3 个。","wrongDisplay":"前3人=第3个","correct":"前面有 3 人，自己就是第 4 个。","tip":"第几 = 前面的人数 ＋ 1。","mnemonic":"数第几，别忘了加上我自己。"}]},{"id":"bj-3-leftright","title":"左和右","difficulty":1,"oneLiner":"写字的手是右手，另一只就是左手。","steps":["举右手那一侧是右边。"],"flashcards":[{"concept":"左右","plain":"拿笔的是右手，另一侧是左手。","example":"敬礼用右手"}],"practice":{"basic":[{"q":"我们写字一般用（ ）手。","opts":["左","右"],"ans":1,"explain":"拿笔写字的是右手。"},{"q":"和右手在同一边的是（ ）脚。","opts":["左","右"],"ans":1,"explain":"右手和右脚在身体的同一边。"},{"q":"升国旗敬礼用的是（ ）手。","opts":["左","右"],"ans":1,"explain":"敬礼统一用右手。"},{"q":"小红的左边是小明，那小明的右边是（ ）。","opts":["小红","小刚"],"ans":0,"explain":"左右是相对的：小明在小红左边，小红就在小明右边。"},{"type":"interactive","q":"指一指：右 方","it":{"type":"compass","rel":"右"}}],"improve":[{"q":"上下楼梯要靠（ ）边走。","opts":["左","右"],"ans":1,"explain":"上下楼梯靠右走，才不会和别人撞上。"},{"q":"一排小朋友，从左数第 3 个穿红衣服，这一排至少有几人？","opts":["2","3","4"],"ans":1,"explain":"能数到第 3 个，说明至少 3 人。"}],"challenge":[{"q":"你举起右手照镜子，镜子里那只手看起来在你的（ ）边。","opts":["左","右"],"ans":0,"explain":"镜子会把左右反过来，看着像左手。"}]},"interactive":{"type":"compass","rel":"左"},"examples":[{"title":"找左右","content":"举起拿笔的手，那边就是右边；另一边是左边。"}],"connections":{"prerequisites":["上和下","前和后"],"unlocks":["认识图形"]},"lifeCases":[{"title":"过马路","scene":"先向左看，再向右看，确认没车再走。","use":"分清左右才能安全过马路。","problem":"为什么过马路要先看左边？"}],"pitfalls":[{"wrongStmt":"小马虎说：我的左边就是你的左边。","wrongDisplay":"左右永远同边","correct":"面对面时，你的左边是我的右边。","tip":"说左右要先说清『以谁为准』。","mnemonic":"面对面，左右换；同一个方向才一样。"}]}]},{"id":"bj-u4","num":"第三单元","title":"整理与分类","topics":[{"id":"bj-4-sort","title":"分类","difficulty":1,"oneLiner":"按颜色、形状等标准把物品分成几堆。","steps":["同一类放一起，数一数每堆有几个。"],"flashcards":[{"concept":"分类","plain":"定好标准再分组。","example":"按颜色分"}],"practice":{"basic":[{"q":"把一堆水果按颜色分，这是按（ ）分类。","opts":["一个标准","两个标准","没有标准"],"ans":0,"explain":"每次分类只用一个标准，才不会乱。"},{"q":"🍎🍌🍎🍌🍌，按种类分，香蕉有几根？","opts":["2","3","4"],"ans":1,"explain":"香蕉有 3 根。"},{"q":"分类的第一步是（ ）。","opts":["先数一数","先定标准","先画表格"],"ans":1,"explain":"先想清楚按什么分，再动手。"},{"q":"同一堆铅笔，按颜色分和按长短分，结果（ ）。","opts":["一定相同","可能不同","没法分"],"ans":1,"explain":"标准不同，分出的结果就可能不同。"}],"improve":[{"q":"🔴🔵🔴🔵🔴，按颜色分，红色有几个？","opts":["2","3","4"],"ans":1,"explain":"红色有 3 个。"},{"q":"把全班同学按性别分，可以分成（ ）。","opts":["2 类","3 类","很多类"],"ans":0,"explain":"男生一类、女生一类，一共 2 类。"}],"challenge":[{"q":"统计出红色 5 个、蓝色 3 个、黄色 5 个，哪种最多？","opts":["蓝色","红色和黄色一样多","没法比"],"ans":1,"explain":"红色和黄色都是 5，并列最多。"}]},"interactive":null,"examples":[{"title":"先定标准","content":"按形状分：圆的一类、方的一类、三角的一类。"}],"connections":{"prerequisites":["比多少"],"unlocks":["简单的统计","找规律"]},"lifeCases":[{"title":"整理玩具","scene":"毛绒玩具放一箱，积木放一箱，小车放一箱。","use":"按种类分好，下次找起来特别快。","problem":"如果还想按颜色再分一次，该怎么分？"}],"pitfalls":[{"wrongStmt":"小马虎说：一次可以按很多个标准分。","wrongDisplay":"边按颜色边按大小","correct":"一次只用一个标准，分完再换一个标准。","tip":"先想好『这次按什么分』。","mnemonic":"一次一个标准，分类才清楚。"}]}]},{"id":"bj-u5","num":"第四单元","title":"10以内数加与减","topics":[{"id":"bj-5-num610","title":"6~10的认识","difficulty":1,"oneLiner":"6~10 比 5 大，是更大的数。","steps":["接着 5 往后数：6~10。"],"flashcards":[{"concept":"6~10","plain":"比 5 大的连续数。","example":"10 是两位数里最小的"}],"practice":{"basic":[{"q":"6 后面的一个数是（ ）。","opts":["5","7","8"],"ans":1,"explain":"按 6、7、8、9、10 的顺序，6 后面是 7。"},{"q":"10 里面有（ ）个一。","opts":["1","10","100"],"ans":1,"explain":"10 个一合起来是 10。"},{"q":"比 8 大、比 10 小的数是（ ）。","opts":["7","9","10"],"ans":1,"explain":"8 和 10 之间是 9。"},{"q":"7 表示 7 个（ ）。","opts":["十","一","百"],"ans":1,"explain":"7 就是 7 个一。"}],"improve":[{"q":"按规律填数：6、7、8、（ ）、10。","opts":["8","9","11"],"ans":1,"explain":"每次多 1，8 后面是 9。"},{"q":"10 根小棒捆成一捆，也就是（ ）个十。","opts":["1","10","2"],"ans":0,"explain":"10 个一就是 1 个十。"}],"challenge":[{"q":"从 6 数到 10，一共数了（ ）个数。","opts":["4","5","6"],"ans":1,"explain":"6、7、8、9、10，一共 5 个。"},{"q":"10 个一是 1 个十，那么 2 个十是（ ）。","opts":["2","12","20"],"ans":2,"explain":"2 个十合起来是 20。"}]},"interactive":null,"examples":[{"title":"捆小棒","content":"数到 10 根就捆成一捆，一捆就是 1 个十。"}],"connections":{"prerequisites":["认识 1~5","比大小"],"unlocks":["连加连减","认识 11~20"]},"lifeCases":[{"title":"数鸡蛋","scene":"一盒鸡蛋能装 10 个。","use":"装满一盒就是 1 个十。","problem":"买两盒一共有几个鸡蛋？"}],"pitfalls":[{"wrongStmt":"小马虎说：10 是最大的数。","wrongDisplay":"10 最大","correct":"10 后面还有 11、12…… 数永远数不完。","tip":"10 只是我们刚认识的朋友。","mnemonic":"十后面还有数，越数越有多。"}]},{"id":"bj-5-mix","title":"连加连减","difficulty":1,"oneLiner":"连加连减要从左到右一步一步算。","steps":["先算前面两个，再用结果算下一个。"],"flashcards":[{"concept":"连加连减","plain":"从左往右依次算。","example":"2＋3＋1＝6"}],"practice":{"basic":[{"q":"2＋3＋1＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"先算 2＋3＝5，再算 5＋1＝6。"},{"q":"8－2－3＝（ ）。","opts":["2","3","4"],"ans":1,"explain":"先算 8－2＝6，再算 6－3＝3。"},{"q":"1＋2＋3＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"1＋2＝3，3＋3＝6。"},{"q":"9－1－1＝（ ）。","opts":["6","7","8"],"ans":1,"explain":"9－1＝8，8－1＝7。"}],"improve":[{"q":"小明有 3 颗糖，妈妈给了 2 颗，爸爸给了 4 颗，现在有几颗？","opts":["8","9","10"],"ans":1,"explain":"3＋2＋4＝9。"},{"q":"树上有 10 只鸟，先飞走 2 只，又飞走 3 只，还剩几只？","opts":["4","5","6"],"ans":1,"explain":"10－2－3＝5。"}],"challenge":[{"q":"2＋2＋2＋2＝（ ）。","opts":["6","8","10"],"ans":1,"explain":"4 个 2 相加是 8。"},{"q":"10－2－3－4＝（ ）。","opts":["1","2","3"],"ans":0,"explain":"10－2＝8，8－3＝5，5－4＝1。"}]},"interactive":null,"examples":[{"title":"从左往右","content":"2＋3＋1：先算 2＋3＝5，再算 5＋1＝6。"}],"connections":{"prerequisites":["5以内的加减法","认识 6~10"],"unlocks":["加减混合","20 以内的进位加法"]},"lifeCases":[{"title":"三天攒钱","scene":"第一天攒 3 元，第二天 2 元，第三天 4 元。","use":"3＋2＋4＝9 元。","problem":"如果花掉 5 元，还剩几元？"}],"pitfalls":[{"wrongStmt":"小马虎说：连加可以先算后面两个数。","wrongDisplay":"2+3+1 先算 3+1","correct":"连加连减要按从左往右的顺序算。","tip":"用小手按顺序挡住还没算的部分。","mnemonic":"连加连减不跳步，从左往右一步步。"}]},{"id":"bj-5-mix2","title":"加减混合","difficulty":1,"oneLiner":"加减混在一起，也从左往右算。","steps":["先算左边，再算右边。"],"flashcards":[{"concept":"加减混合","plain":"顺序计算，不跳步。","example":"5－2＋3＝6"}],"practice":{"basic":[{"q":"5－2＋3＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"先算 5－2＝3，再算 3＋3＝6。"},{"q":"3＋4－2＝（ ）。","opts":["4","5","6"],"ans":1,"explain":"3＋4＝7，7－2＝5。"},{"q":"8－3＋1＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"8－3＝5，5＋1＝6。"},{"q":"2＋5－4＝（ ）。","opts":["2","3","4"],"ans":1,"explain":"2＋5＝7，7－4＝3。"}],"improve":[{"q":"车上原来 7 人，下车 2 人，又上车 3 人，现在几人？","opts":["7","8","9"],"ans":1,"explain":"7－2＋3＝8。"},{"q":"小明有 6 支笔，用了 2 支，又买了 5 支，现在几支？","opts":["8","9","10"],"ans":1,"explain":"6－2＋5＝9。"}],"challenge":[{"q":"10－4＋2－3＝（ ）。","opts":["3","4","5"],"ans":2,"explain":"10－4＝6，6＋2＝8，8－3＝5。"},{"q":"7＋（ ）－2＝8，括号里填（ ）。","opts":["2","3","4"],"ans":1,"explain":"7＋3＝10，10－2＝8。"}]},"interactive":null,"examples":[{"title":"上下车","content":"车上 7 人，下去 2 人上来 3 人：7－2＋3＝8 人。"}],"connections":{"prerequisites":["连加连减"],"unlocks":["20 以内的退位减法","100 以内的加减法"]},"lifeCases":[{"title":"公交车","scene":"到站了，先下后上。","use":"下去用减，上来用加，按顺序算。","problem":"如果下去 5 人、上来 1 人，现在几人？"}],"pitfalls":[{"wrongStmt":"小马虎说：加减混合可以先算加法。","wrongDisplay":"5-2+3 先算 2+3","correct":"加减混在一起，还是要从左往右按顺序算。","tip":"先算出来的结果写在下面，别跳。","mnemonic":"加减排排站，从左往右算。"}]}]},{"id":"bj-u6","num":"数学好玩","title":"一起做游戏","topics":[{"id":"bj-6-game","title":"一起做游戏","difficulty":1,"oneLiner":"在游戏里体验数的顺序、比较和分类，越玩越会。","steps":["排排比比分分，找数学。"],"flashcards":[{"concept":"游戏中的数学","plain":"排队、比高矮、分类都是数学。","example":"按从矮到高排队"}],"practice":{"basic":[{"q":"按从高到矮排队，最高的人站第几个？","opts":["第1个","最后一个","中间"],"ans":0,"explain":"最高的站最前面，是第 1 个。"},{"q":"下面哪组是“一一对应”后一样多？","opts":["3个碗配3双筷","3个碗配2双筷","2个碗配3双筷"],"ans":0,"explain":"数量相等才一一对应后一样多。"},{"q":"把🔴🔴🔵🔴🔵按颜色分成两堆，红色有几颗？","opts":["2","3","5"],"ans":1,"explain":"红色有 3 颗（第1、2、4个）。"}],"improve":[{"q":"玩“石头剪刀布”，一共几种出法？","opts":["2种","3种","4种"],"ans":1,"explain":"石头、剪刀、布共 3 种。"},{"q":"掷一个骰子，可能掷出的最小的数是？","opts":["0","1","6"],"ans":1,"explain":"骰子最小是 1。"}],"challenge":[{"q":"两人轮流从 5 块糖里拿 1 块，谁拿到最后 1 块谁赢。先拿的人怎么赢？","opts":["随便拿","每次都拿1块","一次性拿完"],"ans":1,"explain":"每次拿 1 块，5 次后正好拿到最后 1 块。"}]},"examples":[{"title":"排排队","content":"按从矮到高：⭐⭐⭐，最高站后面。"}],"connections":{"prerequisites":["整理与分类"],"unlocks":[]},"lifeCases":[{"title":"课间游戏","scene":"和同学玩比高矮、分类卡片。","use":"在玩中练比较和分类。","problem":"你能按颜色把卡片分成两堆吗？"}],"pitfalls":[{"wrongStmt":"小马虎：游戏里没有数学。","wrongDisplay":"随便玩","correct":"排队、比较、分类都藏着数学。","tip":"玩的时候多想想顺序和数量。","mnemonic":"玩中也有数。"}]}]},{"id":"bj-u7","num":"第五单元","title":"有趣的立体图形","topics":[{"id":"bj-7-box","title":"长方体","difficulty":1,"oneLiner":"长方体有 6 个平平的面，像文具盒、书本。","steps":["长长的、方方的，能稳稳立住。"],"flashcards":[{"concept":"长方体","plain":"6 个长方形面，方方正正。","example":"书本是长方体"}],"practice":{"basic":[{"q":"下面哪个是长方体？","opts":["📦","⚽","🥧"],"ans":0,"explain":"📦 文具盒状是长方体。"},{"q":"下面哪个是长方体？","opts":["🏀","📚","🥫"],"ans":1,"explain":"书本长长的、方方的，是长方体。"},{"q":"长方体有（ ）个面。","opts":["4","6","8"],"ans":1,"explain":"长方体有 6 个面。"}],"improve":[{"q":"长方体能在桌上稳稳立住，是因为它的面是（ ）。","opts":["圆圆的","平平的","尖尖的"],"ans":1,"explain":"平平的面才能稳稳贴住桌面。"},{"q":"下面哪个最难滚动？","opts":["📦","🥫","🏀"],"ans":0,"explain":"长方体方方正正，最难滚动。"}],"challenge":[{"q":"把两个一样的长方体拼在一起，可能得到（ ）。","opts":["球","更大的长方体","圆柱"],"ans":1,"explain":"两个长方体可以拼成一个更大的长方体。"},{"q":"下面哪个不是长方体的特点？","opts":["有 6 个面","有尖尖的角","只有一个圆圆的面"],"ans":2,"explain":"长方体全是平平的面，没有圆面。"}]},"interactive":{"type":"shape","shape":"box"},"examples":[{"title":"找一找","content":"文具盒、冰箱、砖头，都是长方体。"}],"connections":{"prerequisites":["位置"],"unlocks":["认识图形（二）","长方形和正方形"]},"lifeCases":[{"title":"整理书柜","scene":"书本一本本立起来排在书柜里。","use":"长方体平平的面能稳稳立住，好排列。","problem":"为什么球不能像书一样立在书架上？"}],"pitfalls":[{"wrongStmt":"小马虎说：长方体和正方体完全一样。","wrongDisplay":"长方体=正方体","correct":"正方体 6 个面都一样大，长方体只有相对的面一样大。","tip":"看面是不是一样大。","mnemonic":"正方六面同，长方对边同。"}]},{"id":"bj-7-cube","title":"正方体","difficulty":1,"oneLiner":"正方体 6 个面都一样大，像骰子。","steps":["方方的、每个面一样大。"],"flashcards":[{"concept":"正方体","plain":"6 个完全相同的正方形面。","example":"骰子是正方体"}],"practice":{"basic":[{"q":"骰子是（ ）。","opts":["长方体","正方体","圆柱"],"ans":1,"explain":"骰子六面一样大，是正方体。"},{"q":"正方体的 6 个面（ ）。","opts":["都一样大","有大有小","都是圆的"],"ans":0,"explain":"正方体 6 个面是完全相同的正方形。"},{"q":"下面哪个是正方体？","opts":["🎲","🥫","📦"],"ans":0,"explain":"骰子方方正正、六面一样大，是正方体。"}],"improve":[{"q":"正方体和长方体最大的不同是（ ）。","opts":["正方体 6 个面都一样大","正方体不能滚动","正方体没有角"],"ans":0,"explain":"正方体 6 个面完全相同，长方体只有相对的面相同。"},{"q":"魔方的形状是（ ）。","opts":["正方体","圆柱","球"],"ans":0,"explain":"魔方方方正正，是正方体。"}],"challenge":[{"q":"一个正方体放在桌上，从一个方向最多能同时看到几个面？","opts":["2","3","6"],"ans":1,"explain":"从一个角度看最多能看到 3 个面。"},{"q":"正方体一共有（ ）个顶点。","opts":["6","8","12"],"ans":1,"explain":"正方体有 8 个尖尖的顶点。"}]},"interactive":{"type":"shape","shape":"cube"},"examples":[{"title":"数一数","content":"一个骰子：6 个面、8 个顶点、12 条边。"}],"connections":{"prerequisites":["长方体"],"unlocks":["认识图形（二）","长方形和正方形"]},"lifeCases":[{"title":"搭积木","scene":"用正方体积木搭一座小房子。","use":"每个面都一样大，怎么放都稳。","problem":"为什么正方体积木比球更适合搭高？"}],"pitfalls":[{"wrongStmt":"小马虎说：正方体的 6 个面可以有大有小。","wrongDisplay":"正方体面不等","correct":"正方体 6 个面必须完全一样大，不然就是长方体了。","tip":"拿尺子量一量每条边。","mnemonic":"正方六面齐，不一样就不算。"}]},{"id":"bj-7-cyl","title":"圆柱","difficulty":1,"oneLiner":"圆柱上下两个圆面一样大，能滚动也能立。","steps":["像罐头、杯子那样。"],"flashcards":[{"concept":"圆柱","plain":"上下两个圆一样大，能滚动。","example":"罐头是圆柱"}],"practice":{"basic":[{"q":"下面能滚动的是？","opts":["🧱","🥫","📦"],"ans":1,"explain":"🥫 罐头是圆柱能滚动。"},{"q":"圆柱上下两个面是（ ）。","opts":["一样大的圆","一个大一个小","方方的"],"ans":0,"explain":"圆柱上下两个底面是一样大的圆。"},{"q":"下面哪个是圆柱？","opts":["🧊","🕯️","🏀"],"ans":1,"explain":"蜡烛上下一样粗、两头是圆，是圆柱。"}],"improve":[{"q":"圆柱立在桌上（ ），躺下来（ ）。","opts":["能滚、能立","能立、能滚","都能立"],"ans":1,"explain":"圆柱立着能站稳，躺下能沿一个方向滚。"},{"q":"下面和圆柱最像的是（ ）。","opts":["🥫","⚽","📦"],"ans":0,"explain":"罐头上下两个圆面一样大，是圆柱。"}],"challenge":[{"q":"把圆柱的两个底面去掉，剩下的侧面展开是（ ）。","opts":["长方形","圆","三角形"],"ans":0,"explain":"圆柱的侧面展开后是一个长方形。"},{"q":"圆柱和球都能滚，不同的是（ ）。","opts":["圆柱只能朝一个方向滚","圆柱滚得更快","圆柱滚不了"],"ans":0,"explain":"圆柱只能沿一个方向滚，球可以往任意方向滚。"}]},"interactive":{"type":"shape","shape":"cyl"},"examples":[{"title":"滚一滚","content":"罐头立着能放稳，躺下就能咕噜噜滚。"}],"connections":{"prerequisites":["长方体"],"unlocks":["认识图形（二）"]},"lifeCases":[{"title":"水杯和罐头","scene":"妈妈买的罐头放在橱柜里。","use":"圆柱形立着放稳、省地方。","problem":"为什么杯子要做成圆柱形而不是球形？"}],"pitfalls":[{"wrongStmt":"小马虎说：圆柱立着也能随便滚。","wrongDisplay":"圆柱立着也能滚","correct":"圆柱有两个平平的圆面，立着能站住，躺下才能滚。","tip":"有没有平平的面，决定它能不能站稳。","mnemonic":"有平面能站稳，躺下来才打滚。"}]},{"id":"bj-7-ball","title":"球","difficulty":1,"oneLiner":"球圆滚滚的，到处都能滚。","steps":["像皮球、篮球。"],"flashcards":[{"concept":"球","plain":"圆圆的，能向任意方向滚动。","example":"皮球是球"}],"practice":{"basic":[{"q":"下面哪个是球？","opts":["🏀","📦","🧊"],"ans":0,"explain":"🏀 是球。"},{"q":"球可以（ ）。","opts":["向任意方向滚","只能立着","只能平放"],"ans":0,"explain":"球圆滚滚的，往哪个方向都能滚。"},{"q":"下面哪个是球？","opts":["⚽","🥫","🧊"],"ans":0,"explain":"足球是球体。"}],"improve":[{"q":"球和圆柱相比，球（ ）。","opts":["只能朝一个方向滚","能朝各个方向滚","不能滚"],"ans":1,"explain":"球没有平平的面，能朝任意方向滚。"},{"q":"下面滚得最快、最不容易停的是（ ）。","opts":["📦","🥫","🏀"],"ans":2,"explain":"球到处都能滚，滚得最快。"}],"challenge":[{"q":"篮球能不能稳稳地立在桌上一动不动？","opts":["能","不能","有时能"],"ans":1,"explain":"球没有平平的面，立不住，一碰就滚。"},{"q":"球有几个平平的面？","opts":["0","1","2"],"ans":0,"explain":"球的表面是弯弯的，一个平面也没有。"}]},"interactive":{"type":"shape","shape":"ball"},"examples":[{"title":"比一比","content":"乒乓球、篮球、地球仪，都是球。"}],"connections":{"prerequisites":["圆柱"],"unlocks":["认识图形（二）"]},"lifeCases":[{"title":"拍皮球","scene":"小朋友在操场上拍皮球。","use":"球能弹、能滚，所以球类运动才好玩。","problem":"为什么足球不能当积木搭房子？"}],"pitfalls":[{"wrongStmt":"小马虎说：球也有平平的面。","wrongDisplay":"球有平面","correct":"球面上全是弯的，一个平面也没有。","tip":"摸一摸，感觉是不是弯的。","mnemonic":"圆球没有平，到处都能滚。"}]}]},{"id":"bj-u8","num":"综合实践","title":"记录我的一天","topics":[{"id":"bj-8-clock1","title":"认识整时","difficulty":1,"oneLiner":"分针指向 12，时针指向几就是几时。","steps":["分针指 12，时针指几是几时。","时针在两数间，读小的。","先看分针，再看时针。"],"flashcards":[{"concept":"整时","plain":"分针指 12，时针指几是几时。","example":"8:00 是 8 时"},{"concept":"时针","plain":"短粗的针，指『时』。","example":"时针指 3→3 时"},{"concept":"分针","plain":"细长的针，整时它指 12。","example":"分针指 12"}],"practice":{"basic":[{"q":"分针指 12，时针指 3，是几时？","opts":["3时","6时","12时"],"ans":0,"explain":"分针指 12 是整时，时针指 3 就是 3 时。"},{"q":"下面哪个是 8 时？","opts":["时针指 8、分针指 12","时针指 12、分针指 8","时针指 8、分针指 6"],"ans":0,"explain":"整时：分针指 12，时针指 8。"},{"q":"分针指 12，时针指 5，是（ ）。","opts":["5时","12时","5时半"],"ans":0,"explain":"整时：分针指 12，时针指几就是几时。"},{"q":"3 时的时候，分针一定指向（ ）。","opts":["3","12","6"],"ans":1,"explain":"只要是整时，分针就指 12。"},{"q":"下面哪个表示的是 12 时？","opts":["时针分针都指 12","时针指 12、分针指 6","时针指 6、分针指 12"],"ans":0,"explain":"12 时整，两根针都指在 12 上。"}],"improve":[{"type":"interactive","it":{"type":"clock","hour":9,"min":0},"q":"拖动时针和分针，摆出 9 时（分针要指 12）。"},{"q":"现在 7 时整，再过 1 小时是（ ）。","opts":["7时","8时","6时"],"ans":1,"explain":"7 时过 1 小时就是 8 时。"}],"challenge":[{"q":"钟面上，时针和分针相比（ ）。","opts":["时针短而粗","分针短而粗","一样长"],"ans":0,"explain":"时针又短又粗，分针又细又长。"},{"q":"一天里，8 时会出几次？","opts":["1次","2次","3次"],"ans":1,"explain":"早上 8 时和晚上 8 时，一天出现 2 次。"}]},"interactive":{"type":"clock","hour":3,"min":0},"examples":[{"title":"看表","content":"家里的挂钟、手表，整点时分针都指 12"}],"connections":{"prerequisites":["认识 1~12"],"unlocks":["认识几时几分","时间表"]},"lifeCases":[{"title":"起床","scene":"每天早上 7 时起床。","use":"7 时分针指 12、时针指 7。","problem":"如果时针指 7、分针指 6，是 7 时吗？"}],"pitfalls":[{"wrongStmt":"小马虎说：时针指 8、分针指 6 也是 8 时。","wrongDisplay":"8:30 当成 8 时","correct":"整时分针必须指 12；分针指 6 是半时（8 时半）。","tip":"整时先看分针是不是指 12。","mnemonic":"整时分针指 12，记牢别马虎。"}]},{"id":"bj-8-clock2","title":"认识半时","difficulty":1,"oneLiner":"分针走到 6，时针走过几，就是几时半。","steps":["时针过几是几时，分针指 6 是半时。"],"flashcards":[{"concept":"半时","plain":"分针指向 6，时针在两个数字中间，是“几时半”。","example":"3:30 读作三时半"}],"practice":{"basic":[{"q":"时针在 3 和 4 之间，分针指向 6，是？","opts":["3:00","3:30","4:00"],"ans":1,"explain":"时针过 3、分针指 6，是 3 时半。"},{"q":"下面哪个是 9 时半？","opts":["时针指9分针指12","时针在9和10间分针指6","时针指10分针指6"],"ans":1,"explain":"9 时半：时针在 9、10 之间，分针指 6。"},{"q":"分针指向 6，时针走过 7，写作？","opts":["7:00","7:30","6:30"],"ans":1,"explain":"7 时半记作 7:30。"},{"q":"吃完午饭大约 12 时半，时针在？","opts":["12和1之间","指12","指1"],"ans":0,"explain":"12 时半时针在 12 和 1 之间。"}],"improve":[{"q":"“半时”和“整时”分针有什么不同？","opts":["都指12","半时指6整时指12","都指6"],"ans":1,"explain":"整时分针指 12，半时分针指 6。"},{"q":"从 3:30 再过 1 小时是？","opts":["4:00","4:30","3:00"],"ans":1,"explain":"3:30 过 1 小时是 4:30（半时加整时还是半时）。"}],"challenge":[{"q":"电影 2:30 开始，3 小时后结束，结束是？","opts":["5:00","5:30","6:30"],"ans":1,"explain":"2:30+3:00=5:30。"}]},"interactive":{"type":"clock","hour":3,"min":30},"examples":[{"title":"认一认","content":"3:30 时针在 3 和 4 中间，分针指 6。"}],"connections":{"prerequisites":["认识整时"],"unlocks":[]},"lifeCases":[{"title":"午睡后","scene":"午睡起床大约 2 时 30 分。","use":"半时记生活中段的时间。","problem":"你看自己的表，现在是几时半？"}],"pitfalls":[{"wrongStmt":"小马虎：半时时针还指在整数字上。","wrongDisplay":"3:30时针指3","correct":"半时时针走过整数字、在两个数中间。","tip":"分针指 6 就是半时，时针一定在中间。","mnemonic":"分针指6，时针在中间。"}]},{"id":"bj-8-record","title":"记录我的一天","difficulty":1,"oneLiner":"用整时和半时，把一天的重要事情记下来。","steps":["选每天的事，写时间。"],"flashcards":[{"concept":"时间计划","plain":"用“几时”“几时半”安排一天。","example":"7:30 起床，8:00 上课"}],"practice":{"basic":[{"q":"早上起床大约是？","opts":["7:30","12:30","7:00"],"ans":2,"explain":"一般早上 7:00 左右起床（也可填 7:30）。"},{"q":"“上午 10 时半做操”写作？","opts":["10:00","10:30","11:30"],"ans":1,"explain":"10 时半写作 10:30。"},{"q":"晚上 8 时睡觉，时针指在？","opts":["8和9之间","指8","指9"],"ans":1,"explain":"8:00 时针正指 8，分针指 12。"}],"improve":[{"q":"把一天按时间先后排：午饭12:00、起床7:00、午睡2:30，正确顺序是？","opts":["12:00,7:00,2:30","7:00,12:00,2:30","2:30,7:00,12:00"],"ans":1,"explain":"先起床，再午饭，最后午睡。"},{"q":"一节课间 10 分钟，从 9:30 开始，结束是？","opts":["9:40","10:30","9:20"],"ans":0,"explain":"9:30 过 10 分钟是 9:40。"}],"challenge":[{"q":"一天里“整时”和“半时”一共出现了好几次，下面哪个不是半时？","opts":["3:30","6:00","8:30"],"ans":1,"explain":"6:00 是整时，分针指 12。"}]},"examples":[{"title":"我的时间表","content":"7:00 起床 · 8:00 上课 · 12:00 午饭 · 2:30 午睡"}],"connections":{"prerequisites":["认识整时","认识半时"],"unlocks":[]},"lifeCases":[{"title":"一日计划","scene":"把每天固定做的事标上时间。","use":"养成守时好习惯。","problem":"你晚上几点睡觉？用整时或半时说出来。"}],"pitfalls":[{"wrongStmt":"小马虎：时间随便写。","wrongDisplay":"不按计划","correct":"重要的事要按时做，用整时/半时记下来。","tip":"先想这件事一般在几点。","mnemonic":"按时做事不慌张。"}]}]},{"id":"bj-u9","num":"","title":"总复习","topics":[{"id":"bj-9-review","title":"总复习","difficulty":1,"oneLiner":"把全册知识点串起来，哪里不会补哪里。","steps":["翻开速查大表，逐个过一遍。"],"flashcards":[{"concept":"复习","plain":"查漏补缺，巩固薄弱点。","example":"回去看看每个单元"}],"practice":{"basic":[{"q":"8＋5＝（ ）。","opts":["12","13","14"],"ans":1,"explain":"8＋2＝10，5 还剩 3，10＋3＝13。"},{"q":"15－9＝（ ）。","opts":["5","6","7"],"ans":1,"explain":"想加算减：9＋6＝15，所以 15－9＝6。"},{"q":"11 里面有（ ）个十和（ ）个一。","opts":["1和1","1和0","10和1"],"ans":0,"explain":"十位 1、个位 1，就是 1 个十和 1 个一。"},{"q":"分针指 12，时针指 6，是（ ）。","opts":["6时","12时","6时半"],"ans":0,"explain":"整时分针指 12，时针指 6 就是 6 时。"},{"q":"下面滚得最快的是（ ）。","opts":["📦","🥫","🏀"],"ans":2,"explain":"球往哪个方向都能滚，滚得最快。"}],"improve":[{"q":"7＋6－3＝（ ）。","opts":["9","10","11"],"ans":1,"explain":"7＋6＝13，13－3＝10。"},{"q":"比 12 大、比 15 小的数有几个？","opts":["1","2","3"],"ans":1,"explain":"是 13 和 14，一共 2 个。"}],"challenge":[{"q":"小明排队，从前面数第 5，从后面数第 4，这一队一共几人？","opts":["8","9","10"],"ans":0,"explain":"5＋4＝9，小明被数了两次，9－1＝8 人。"},{"q":"9＋6－5＝（ ）。","opts":["9","10","11"],"ans":1,"explain":"9＋6＝15，15－5＝10。"}]},"interactive":null,"examples":[{"title":"回头看","content":"一年级上册：数数、比多少、位置、1~20、加减法、图形、钟表、角。"}],"connections":{"prerequisites":["全册各单元"],"unlocks":["一年级下册"]},"lifeCases":[{"title":"查漏补缺","scene":"翻开每个单元，看哪一类题还会错。","use":"专挑不会的练，比全做一遍更省时间。","problem":"你觉得自己最需要再练的是哪一块？"}],"pitfalls":[{"wrongStmt":"小马虎说：复习就是把所有题重做一遍。","wrongDisplay":"全部重做","correct":"复习要先找出不会的，再重点练这些。","tip":"做错的题做个记号，第二天再做一次。","mnemonic":"复习先找弱，别把会的重复做。"}]}]}]}]}]};
-  var mbState={view:'home',version:'rj',name:'小萌',grade:1,term:'上',unitId:null,topicId:null,tab:'learn',
+  var mbState={view:'home',version:'rj',name:'小萌',grade:1,term:'上',unitId:null,topicId:null,current:null,lastTopicId:null,tab:'learn',
     practiceLevel:'basic',practiceIdx:0,practiceLog:[],practiceScore:0,flashMode:'list',flashIdx:0,searchQ:''};
   var mbLoaded=false;
   function mbLoad(){try{var s=JSON.parse(localStorage.getItem(MB_LS));if(s)mbState=Object.assign(mbState,s);}catch(e){}}
   function mbHasGrade(n){return mbData().grades.some(function(g){return g.g===n;});}
   function mbHasTerm(x){var g=mbCurGrade();return g.terms.some(function(t){return t.t===x;});}
-  function mbSave(){try{localStorage.setItem(MB_LS,JSON.stringify({name:mbState.name,grade:mbState.grade,term:mbState.term,version:mbState.version}));}catch(e){}}
+  function mbSave(){try{localStorage.setItem(MB_LS,JSON.stringify({name:mbState.name,grade:mbState.grade,term:mbState.term,version:mbState.version,current:mbState.current,lastTopicId:mbState.lastTopicId}));}catch(e){}}
   function mbData(){return mbState.version==='bs'?MATHBOOK_BS:MATHBOOK;}
   function mbGrades(){return mbData().grades;}
   function mbCurGrade(){return mbData().grades.find(function(g){return g.g===mbState.grade;})||mbData().grades[0];}
@@ -21540,9 +22202,9 @@ function mbGoBack(){
       +'</div>';
   }
   function bindEntry(){}
-  function mbChooseGrade(n){if(!mbHasGrade(n))return;mbState.grade=n;if(!mbHasTerm(mbState.term))mbState.term=mbCurGrade().terms[0].t;mbState.view='entry';renderMathbook();}
-  function mbChooseVersion(v){if(mbState.version===v)return;mbState.version=v;mbState.grade=1;mbState.term='上';mbState.unitId=null;mbState.topicId=null;mbState.view='entry';mbSave();renderMathbook();}
-  function mbChooseTerm(x){if(!mbHasTerm(x))return;mbState.term=x;mbState.view='entry';renderMathbook();}
+  function mbChooseGrade(n){if(!mbHasGrade(n))return;mbState.grade=n;if(!mbHasTerm(mbState.term))mbState.term=mbCurGrade().terms[0].t;mbState.current=null;mbState.lastTopicId=null;mbState.view='entry';renderMathbook();}
+  function mbChooseVersion(v){if(mbState.version===v)return;mbState.version=v;mbState.grade=1;mbState.term='上';mbState.unitId=null;mbState.topicId=null;mbState.current=null;mbState.lastTopicId=null;mbState.view='entry';mbSave();renderMathbook();}
+  function mbChooseTerm(x){if(!mbHasTerm(x))return;mbState.term=x;mbState.current=null;mbState.lastTopicId=null;mbState.view='entry';renderMathbook();}
   function mbOpenBook(){var n=document.getElementById('mbName');if(n&&n.value.trim())mbState.name=n.value.trim();mbSave();mbState.view='home';renderMathbook();}
 
   // ---- 首页 ----
@@ -21570,7 +22232,7 @@ function mbGoBack(){
     var recs=_all.filter(_hasQ).concat(_all.filter(function(t){return !_hasQ(t);})).slice(0,8);
     var chipCols=['#F7B88A','#F6A9B8','#A8E6BF','#C8BCE8','#FCE88A','#87D3F5'];
     var recHtml=recs.map(function(t,i){var col=chipCols[i%chipCols.length];return '<div class="mb-chip" style="--cc:'+col+'" onclick="mbOpenTopic(\''+t.id+'\')">'+t.title+'</div>';}).join('');
-    return '<div class="mb-card mb-home">'+hero
+    return '<div class="mb-card mb-home">'+hero+mbContinueHTML()+mbProgressHTML()
       +'<div class="mb-search"><span class="mb-sic"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="7" cy="7" r="5" fill="none" stroke="#9CA3AF" stroke-width="2"/><line x1="11" y1="11" x2="14.5" y2="14.5" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/></svg></span><input id="mbSearchInput" placeholder="想学什么？搜搜看：周长、分数、毫米…" onkeydown="if(event.key===\'Enter\')mbDoSearch()"></div>'
       +'<div class="mb-tiles">'+cards+'</div>'
       +'<div class="mb-tools-row">'+toolCards+'</div>'
@@ -21581,6 +22243,25 @@ function mbGoBack(){
   function mbGoto(v){mbPushState();mbState.view=v;renderMathbook();}
   function mbDoSearch(){var i=document.getElementById('mbSearchInput');if(i)mbState.searchQ=i.value.trim();mbPushState();mbState.view='search';renderMathbook();}
 
+  // ---- 当前在学 / 断点续学 ----
+  function mbSetCurrent(id){ if(mbState.current===id){mbState.current=null;} else {mbState.current=id;} mbSave(); renderMathbook(); }
+  function mbClearCurrent(){ mbState.current=null; mbSave(); renderMathbook(); }
+  function mbFindTopicTitle(id){var t=mbFindTopic(id);return t?t.title:id;}
+  function mbContinueHTML(){
+    var id=mbState.current||mbState.lastTopicId; if(!id)return '';
+    var t=mbFindTopic(id); if(!t)return '';
+    var label=(mbState.current===id)?'正在学':'上次学到';
+    return '<div class="mb-continue" onclick="mbOpenTopic(\''+id+'\')">'
+      +'<div class="mic-ic">📌</div>'
+      +'<div class="mic-tx"><div class="mic-l">'+label+'：'+t.title+'</div><div class="mic-s">点这里接着学 · '+mbState.grade+'年级'+mbState.term+'册</div></div>'
+      +'<div class="mic-go">继续 ›</div></div>';
+  }
+  function mbProgressHTML(){
+    var total=mbAllTopics().length;
+    var cur=mbState.current?('📌 正在学：'+mbFindTopicTitle(mbState.current)):'还没标记正在学的知识点';
+    return '<div class="mb-prog-line">'+cur+' · 全册共 '+total+' 个知识点</div>';
+  }
+
   // ---- 单元 / 板块 列表 ----
   function mbListHTML(){
     var title=mbState.view==='board'?('按板块攻 · '+mbState.grade+'年级'+mbState.term+'册分板块'):('按年级学 · '+mbState.grade+'年级'+mbState.term+'册');
@@ -21589,7 +22270,11 @@ function mbGoBack(){
     units.forEach(function(u){
       var board=mbBoardOf(u.title);
       var head= mbState.view==='board' ? u.title : mbUnitHead(u);
-      var topics=u.topics.map(function(tp){return '<div class="mb-topic" onclick="mbOpenTopic(\''+tp.id+'\')"><span class="dot"></span>'+tp.title+'</div>';}).join('');
+      var topics=u.topics.map(function(tp){
+        var cur=(mbState.current===tp.id);
+        return '<div class="mb-topic" onclick="mbOpenTopic(\''+tp.id+'\')"><span class="dot"></span>'+tp.title
+          +'<span class="mb-mark'+(cur?' on':'')+'" onclick="event.stopPropagation();mbSetCurrent(\''+tp.id+'\')">'+(cur?'📌 正在学':'📌 标记')+'</span></div>';
+      }).join('');
       html+='<div class="mb-unit" data-uid="'+u.id+'" style="--cu:'+mbBoardColor(board)+'"><div class="mb-unit-h" onclick="mbToggleUnit(this)"><span class="un">'+head+'</span><span class="mb-unit-tag">'+board+'</span></div><div class="mb-topics">'+topics+'</div></div>';
     });
     html+='</div></div>';
@@ -21815,7 +22500,7 @@ function mbGoBack(){
       var f=(t.flashcards||[]).map(function(f){return '<div class="mb-flash"><div class="c">'+f.concept+'</div><div class="p">'+f.plain+'</div><div class="e">例：'+f.example+'</div></div>';}).join('');
       right='<div class="mb-box"><div style="font-size:15px;font-weight:800;margin-bottom:8px">⚡ 本知识点速查</div>'+f+'</div>';
     }
-    return '<div class="mb-card"><div class="mb-h"><span class="s" onclick="mbBack()">←</span><span class="t">'+t.title+'</span></div>'
+    return '<div class="mb-card"><div class="mb-h"><span class="s" onclick="mbBack()">←</span><span class="t">'+t.title+'</span><span class="mb-mark'+(mbState.current===mbState.topicId?' on':'')+'" onclick="mbSetCurrent(\''+mbState.topicId+'\')">'+(mbState.current===mbState.topicId?'📌 正在学':'📌 标正在学')+'</span></div>'
       +'<div class="mb-tabs">'+tabs+'</div>'
       +'<div class="mb-detail">'+left+right+'</div></div>';
   }
@@ -22182,6 +22867,7 @@ function mbGoBack(){
   function mbOpenTopic(id){
     mbPushState();
     mbState.topicId=id;mbState.view='topic';mbState.tab='learn';mbState._fb='';mbState.practiceIdx=0;mbState.practiceScore=0;
+    mbState.lastTopicId=id;mbSave();
     renderMathbook();
   }
 
