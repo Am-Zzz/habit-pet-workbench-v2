@@ -4145,7 +4145,7 @@
       <div class="top-status" data-page-node-id="aNymOQI9I5lN3FfBIMuu0q">
         <div class="ts-pill star" onclick="go('bank')" title="星星积分" data-page-node-id="46cp7ByiP06f7Eq67Lq2Xi"><span class="ic" data-page-node-id="DS6iNYunqmYY2JPq0Aq10h">⭐</span><span id="topStar" data-page-node-id="7vqturXR3FnqQgXx64nA9r">0</span></div>
       </div>
-      <div class="dev-coin" onclick="go('mall')" title="萌宠小镇" data-page-node-id="mallBarCoin001">🪙 <span id="mallBarCoin">0</span></div>
+      <div class="gear" onclick="go('mall')" title="萌宠小镇" data-page-node-id="mallBarCoin001">🐾</div>
       <div class="gear" onclick="go('parent')" title="家长模式" data-page-node-id="LhOpz8D690O0uFfyRhl653">⚙️</div>
       <span class="version-badge" id="verBadge" data-page-node-id="AEqZLTxUiXG4yADWQITXOy">v0819</span>
     </div>
@@ -11837,7 +11837,7 @@ let phonicsTopicIdx=-1;
   }
   function videoEmbedUrl(u){
     var s=String(u||'');var m;
-    if((m=s.match(/bilibili\.com\/video\/(BV[\w]+)/))){var bv=m[1];var bpm=s.match(/[?&]p=(\d+)/i);var bp=bpm?bpm[1]:'1';return 'https://player.bilibili.com/player.html?bvid='+bv+'&page='+bp+'&autoplay=1&high_quality=1';}
+    if((m=s.match(/bilibili\.com\/video\/(BV[\w]+)/i))){var bv=m[1];var bpm=s.match(/[?&]p=(\d+)/i);var bp=bpm?bpm[1]:'1';var cpm=s.match(/[?&]cid=(\d+)/i);var cid=cpm?cpm[1]:'';return 'https://player.bilibili.com/player.html?bvid='+bv+'&page='+bp+(cid?('&cid='+cid):'')+'&autoplay=1&high_quality=1';}
     if((m=s.match(/youku\.com\/v_show\/id_([\w=]+)/))) return 'https://player.youku.com/embed/'+m[1];
     if((m=s.match(/v\.qq\.com\/(?:x\/cover\/[\w]+\/|x\/page\/)([\w]+)\.html/))) return 'https://v.qq.com/txp/iframe/player.html?vid='+m[1];
     return '';
@@ -16043,14 +16043,20 @@ LOGIC_LEVELS.forEach(function(L){
   let STATS={firstCheckinDate:null,checkinDates:{},streak:0,dailyBonus:null,ledger:[]};
   function loadStats(){try{var r=LS.getItem(STATS_KEY);if(r){var o=JSON.parse(r);STATS=Object.assign({firstCheckinDate:null,checkinDates:{},streak:0,dailyBonus:null,ledger:[]},o);if(!STATS.ledger)STATS.ledger=[];if(!STATS.checkinDates)STATS.checkinDates={};}}catch(e){}}
   function saveStats(){try{LS.setItem(STATS_KEY,JSON.stringify(STATS));}catch(e){}}
+  // 实时计算连续打卡天数：从今天起逆推；今天还没打卡则从昨天起算（今天未结束不算断档）
+  function calcStreak(){
+    var d=new Date();
+    if(!STATS.checkinDates[getTodayKey()]) d.setDate(d.getDate()-1);
+    var streak=0;
+    for(;;){var key=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();if(STATS.checkinDates[key]){streak++;d.setDate(d.getDate()-1);}else break;}
+    return streak;
+  }
   // 标记今天已打卡并重新计算连续天数
   function recordCheckinDay(){
     var k=getTodayKey();
     if(!STATS.firstCheckinDate)STATS.firstCheckinDate=k;
     STATS.checkinDates[k]=true;
-    var streak=0;var d=new Date();
-    for(;;){var key=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();if(STATS.checkinDates[key]){streak++;d.setDate(d.getDate()-1);}else break;}
-    STATS.streak=streak;saveStats();
+    STATS.streak=calcStreak();saveStats();
   }
   function getTotalCheckinDays(){return Object.keys(STATS.checkinDates).length;}
   // 星星/积分流水（type: 'star' | 'coin'）
@@ -16644,7 +16650,7 @@ LOGIC_LEVELS.forEach(function(L){
     else if(it.kind==='medical'){var b2=loadBag();b2.medical=(b2.medical||0)+1;saveBag(b2);try{toast('已购买：'+it.name+'（背包 +1）');}catch(e){}}
     refreshMallCoinUI();renderMallTab();renderPetVitals();
   }
-  function refreshMallCoinUI(){var c=getCoins();['mallTopCoin','mallCoinBig','mallHomeCoin','mallBarCoin'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=c;});}
+  function refreshMallCoinUI(){var c=getCoins();['mallTopCoin','mallCoinBig','mallHomeCoin'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=c;});}
   function renderMallRealEditor(){
     var box=document.getElementById('mallRealList');if(!box)return;
     box.innerHTML='<div class="pc-hint" style="margin:0 0 7px">这份清单 = 孩子的「🎫 兑换券」来源 = 积分银行的「可兑换特权」，<b>改一处两边同步</b>。🥉 铜档（约 50 星星币）· 🥈 银档（约 250 星星币）· 🥇 金档（约 500 星星币）。</div>'+
@@ -16763,7 +16769,7 @@ LOGIC_LEVELS.forEach(function(L){
     }});
   }
   function updateMilestone(){
-    var s=document.getElementById('msStreak');if(s)s.textContent='🔥 '+STATS.streak;
+    var s=document.getElementById('msStreak');if(s)s.textContent='🔥 '+calcStreak();
     var t=document.getElementById('msTotalDays');if(t)t.textContent='📅 '+getTotalCheckinDays();
   }
   function toggleHomeCheckin(i,ev){if(ev&&ev.stopPropagation)ev.stopPropagation();if(HOME_EDIT.ck)return;
@@ -17344,7 +17350,7 @@ LOGIC_LEVELS.forEach(function(L){
     var dates=STATS.checkinDates;var d=new Date();
     for(var i=59;i>=0;i--){var dd=new Date(d);dd.setDate(dd.getDate()-i);var key=dd.getFullYear()+'-'+(dd.getMonth()+1)+'-'+dd.getDate();var cell=document.createElement('div');cell.className='cal-day'+(dates[key]?' done':'');cell.textContent=dd.getDate();if(i===0)cell.classList.add('today');g.appendChild(cell);}
     var cd=document.getElementById('ckCalDone');if(cd)cd.textContent='已打卡 '+getTotalCheckinDays()+' 天';
-    var cs=document.getElementById('ckStreak');if(cs)cs.textContent='🔥 '+STATS.streak;
+    var cs=document.getElementById('ckStreak');if(cs)cs.textContent='🔥 '+calcStreak();
     var ct=document.getElementById('ckTotalDays');if(ct)ct.textContent='📅 '+getTotalCheckinDays();
     var cst=document.getElementById('ckStars');if(cst)cst.textContent='⭐ '+getEarnSum(function(x){return x.type==='star';});
   }
@@ -18974,7 +18980,7 @@ LOGIC_LEVELS.forEach(function(L){
       '<div class="ssc"><div class="ssc-v">🪙 '+totalCoin+'</div><div class="ssc-k">累计硬币</div></div>'+
       '<div class="ssc"><div class="ssc-v">⭐ '+todayStar+'</div><div class="ssc-k">今日获得</div></div>'+
       '<div class="ssc"><div class="ssc-v">⭐ '+weekStar+'</div><div class="ssc-k">本周获得</div></div>'+
-      '<div class="ssc"><div class="ssc-v">🔥 '+STATS.streak+'</div><div class="ssc-k">连续打卡</div></div>'+
+      '<div class="ssc"><div class="ssc-v">🔥 '+calcStreak()+'</div><div class="ssc-k">连续打卡</div></div>'+
       '<div class="ssc"><div class="ssc-v">📅 '+getTotalCheckinDays()+'</div><div class="ssc-k">累计天数</div></div>';
     var bars=document.getElementById('ssWeekBars');
     if(bars){
@@ -19570,20 +19576,41 @@ LOGIC_LEVELS.forEach(function(L){
        intro:'英汉双版的数学启蒙动画，从最早的数字讲到负数，每节都有中文版 + 英文版。',
        autoDaily:false,lastEp:0,lastDate:'',
        episodes:[
-         {n:1,title:'第1节：最早的数字',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=1'},
-         {n:2,title:'第2节：最早的数字（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=2'},
-         {n:3,title:'第3节：数学的开端',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=3'},
-         {n:4,title:'第4节：数学的开端（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=4'},
-         {n:5,title:'第5节：阿拉伯数字',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=5'},
-         {n:6,title:'第6节：阿拉伯数字（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=6'},
-         {n:7,title:'第7节：0的诞生',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=7'},
-         {n:8,title:'第8节：0的诞生（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=8'},
-         {n:9,title:'第9节：负数',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=9'},
-         {n:10,title:'第10节：负数（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=10'}
+         {n:1,title:'第1节：最早的数字',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=1&cid=1016886609'},
+         {n:2,title:'第2节：最早的数字（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=2&cid=1016880824'},
+         {n:3,title:'第3节：数学的开端',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=3&cid=1016880468'},
+         {n:4,title:'第4节：数学的开端（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=4&cid=1016880417'},
+         {n:5,title:'第5节：阿拉伯数字',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=5&cid=1016880478'},
+         {n:6,title:'第6节：阿拉伯数字（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=6&cid=1016881727'},
+         {n:7,title:'第7节：0的诞生',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=7&cid=1016881887'},
+         {n:8,title:'第8节：0的诞生（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=8&cid=1016882624'},
+         {n:9,title:'第9节：负数',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=9&cid=1016888614'},
+         {n:10,title:'第10节：负数（英文版）',url:'https://www.bilibili.com/video/BV1cY411Y7Ye?p=10&cid=1016883823'}
        ]}
     ]};
     animeSave(animeData);
   }else if(!animeData.cats||!animeData.cats.length){animeData.cats=DEFAULT_CATS.slice();animeSave(animeData);}
+
+  // 已知 B站 多P 视频的每集 cid 表（page→cid）。B站 iframe 播放器常忽略 ?p=N，必须用 cid 精准定位，
+  // 否则 10 集点哪个都播第 1 集。此表用于把已存数据里的 ?p=N 链接升级成带 cid 的地址。
+  var ANIME_CID_MAP={
+    'BV1cY411Y7Ye':{1:1016886609,2:1016880824,3:1016880468,4:1016880417,5:1016880478,6:1016881727,7:1016881887,8:1016882624,9:1016888614,10:1016883823}
+  };
+  function animeMigrateCids(){
+    if(animeData.cidMigrated)return;
+    var changed=false;
+    (animeData.themes||[]).forEach(function(t){
+      (t.episodes||[]).forEach(function(e){
+        var m=e.url&&e.url.match(/bilibili\.com\/video\/(BV[\w]+)/i);if(!m)return;
+        var bv=m[1],map=ANIME_CID_MAP[bv];if(!map)return;
+        var pm=e.url.match(/[?&]p=(\d+)/i);var pg=pm?parseInt(pm[1],10):1;var cid=map[pg];if(!cid)return;
+        if(e.url.indexOf('cid=')<0){e.url=(e.url+(e.url.indexOf('?')>=0?'&':'?')+'cid='+cid);changed=true;}
+      });
+    });
+    animeData.cidMigrated=true;
+    if(changed)animeSave(animeData);
+  }
+  animeMigrateCids();
 
   var animeCurId=null,animeCurEp=0,animeEditSelCat=null,animeEditId=null;
   function animeTodayStr(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
@@ -19631,7 +19658,7 @@ LOGIC_LEVELS.forEach(function(L){
   function animeEmbed(u){
     var s=String(u||''),low=s.toLowerCase(),m;
     if(/\.(mp4|webm|ogg|mov|m4v)(\?|#|$)/.test(low)) return '<video src="'+animeAttrEsc(u)+'" controls autoplay playsinline style="width:100%;height:100%"></video>';
-    if((m=s.match(/bilibili\.com\/video\/(BV[\w]+)/i))){var bv=m[1];var bpm=s.match(/[?&]p=(\d+)/i);var bp=bpm?bpm[1]:'1';return '<iframe src="https://player.bilibili.com/player.html?bvid='+bv+'&page='+bp+'&autoplay=1&high_quality=1" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer" style="width:100%;height:100%;border:0"></iframe>';}
+    if((m=s.match(/bilibili\.com\/video\/(BV[\w]+)/i))){var bv=m[1];var bpm=s.match(/[?&]p=(\d+)/i);var bp=bpm?bpm[1]:'1';var cpm=s.match(/[?&]cid=(\d+)/i);var cid=cpm?cpm[1]:'';return '<iframe src="https://player.bilibili.com/player.html?bvid='+bv+'&page='+bp+(cid?('&cid='+cid):'')+'&autoplay=1&high_quality=1" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer" style="width:100%;height:100%;border:0"></iframe>';}
     if((m=s.match(/youku\.com\/v_show\/id_([\w=]+)/i))) return '<iframe src="https://player.youku.com/embed/'+m[1]+'" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer" style="width:100%;height:100%;border:0"></iframe>';
     if((m=s.match(/v\.qq\.com\/(?:x\/cover\/[\w]+\/|x\/page\/)([\w]+)\.html/i))) return '<iframe src="https://v.qq.com/txp/iframe/player.html?vid='+m[1]+'" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer" style="width:100%;height:100%;border:0"></iframe>';
     return '<iframe src="'+animeAttrEsc(u)+'" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen" referrerpolicy="no-referrer" style="width:100%;height:100%;border:0"></iframe>';
