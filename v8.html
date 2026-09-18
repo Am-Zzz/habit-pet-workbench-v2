@@ -8226,7 +8226,7 @@
         ['🔤','识字','green','openChars()'],['🔡','拼音','blue','openPinyin()'],['📜','国学·古诗','teal','openPoem()']
       ];
       var subHtml=subs.map(function(s){var act=s[3];var onclick=act?('onclick="'+act+'"'):'onclick="toast(\'敬请期待\')"';var tag=act?'立即学习':'即将上线';return '<div class="cb-sub '+s[2]+'" '+onclick+'><div class="cb-sub-e">'+s[0]+'</div><div class="cb-sub-b"><div class="cb-sub-nm">'+s[1]+'</div><span class="cb-sub-tag">'+tag+'</span></div></div>';}).join('');
-      subHtml+='<div class="cb-sub cb-more" onclick="go(\'ttgame\')"><div class="cb-sub-e">🎮</div><div class="cb-sub-nm">语文闯关<br>糖糖乐园</div></div>';
+      subHtml+='<div class="cb-sub game" onclick="go(\'ttgame\')"><div class="cb-sub-e">🎮</div><div class="cb-sub-b"><div class="cb-sub-tag">糖糖乐园</div><div class="cb-sub-nm">语文闯关</div></div></div>';
       root.innerHTML='<div class="cb-card cb-home">'+hero+cbContinueHTML()+cbProgressHTML()+'<div class="cb-home-body">'+big+'<div class="cb-subs">'+subHtml+'</div></div><div class="cb-foot"><span class="pill">💡 今天也要加油哦！已学会 <b>'+LEARNED.length+'</b> 个字</span></div></div>';
     } else if(cbState.view==='textbook'){
       if(cbState.selUnit==null)cbState.selUnit=0;
@@ -21264,6 +21264,8 @@ window.__monoBack = function () {
   .cb-sub.purple{background:linear-gradient(150deg,#C9A6EC,#B392E3)}
   .cb-sub.teal{background:linear-gradient(150deg,#9FE3D8,#6FD3C7)}
   .cb-sub.pink{background:linear-gradient(150deg,#FBC0D6,#F9A8C0)}
+  .cb-sub.game{background:linear-gradient(150deg,#F8B4D0,#F472B6);color:#fff}
+  .cb-sub.game .cb-sub-tag{background:rgba(255,255,255,.35);color:#fff}
   .cb-sub.more{background:linear-gradient(150deg,#FFE3EC,#FBD3DF);color:#E8507E;align-items:center;justify-content:center;text-align:center}
   .cb-sub.more .cb-sub-e{font-size:50px}
   .cb-sub.more .cb-sub-nm{font-size:20px;font-weight:900;text-align:center}
