@@ -2218,8 +2218,8 @@
 
   /* ====== 游戏中心 ====== */
   .games-unlock{text-align:center;font-size:14px;color:var(--ink-soft);margin-bottom:16px;background:var(--butter-s);border-radius:12px;padding:10px}
-  .games-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-  .game-card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:20px 14px;text-align:center;cursor:pointer;transition:.15s}
+  .games-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+  .game-card{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:14px 14px;text-align:center;cursor:pointer;transition:.15s}
   .game-card:active{transform:scale(.97)}
   .game-card.locked{opacity:.5}
   .game-card .gc-icon{font-size:46px;margin-bottom:10px}
@@ -2232,6 +2232,34 @@
   .gs-row .gs-v{font-weight:900;color:var(--brand-d)}
   .sfx-toggle{margin-left:auto;width:30px;height:30px;border-radius:9px;border:1px solid var(--line);background:var(--surface-2);font-size:16px;cursor:pointer;display:grid;place-items:center;transition:transform .1s}
   .sfx-toggle:active{transform:scale(.9)}
+  /* 游戏中心 · 顶部 Tab 分栏（方案2：屏内分区，零滚轮、不超出固定范围） */
+  .games-tabs{display:flex;gap:8px;margin:0 2px 12px;flex:0 0 auto}
+  .games-tabs .gtab{flex:1;padding:11px 4px;border:1px solid var(--line);background:var(--surface);border-radius:14px;font-size:14px;font-weight:800;color:var(--ink-soft);cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:5px}
+  .games-tabs .gtab.on{background:var(--brand);color:#fff;border-color:var(--brand);box-shadow:0 4px 10px rgba(221,94,134,.22)}
+  .games-tabs .gtab:active{transform:scale(.97)}
+  .gpane{display:none;flex:1 1 auto;min-height:0;flex-direction:column;overflow:hidden}
+  .gpane.on{display:flex}
+  .gpane > .learn-section-h:first-child, .gpane > .games-stats:first-child{margin-top:14px}
+  /* 屏级保险：即便某面板略超也不出现滚轮，裁切在固定范围内 */
+  #sc-games.on > .card{overflow:hidden!important}
+
+  /* 方块数学乐园 · 独立板块入口（像素风门户卡，对应外部 iframe 游戏） */
+  .mp-entry{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#7AC74F,#5A9E3A);border:4px solid #3A2E2A;box-shadow:6px 6px 0 rgba(58,46,42,.45);border-radius:16px;padding:16px 18px;cursor:pointer;color:#fff;margin-top:6px;transition:transform .08s steps(2)}
+  .mp-entry:active{transform:translateY(3px)}
+  .mp-entry .ge-ic{font-size:34px;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.3))}
+  .mp-entry .ge-tx{flex:1;min-width:0}
+  .mp-entry .ge-n{font-weight:900;font-size:18px;text-shadow:2px 2px 0 rgba(0,0,0,.25)}
+  .mp-entry .ge-d{font-size:13px;opacity:.92;margin-top:2px}
+  .mp-entry .ge-go{font-size:22px;font-weight:900}
+  /* ===== 游戏中心·重点闯关游戏（统一大游戏卡，奶油 iOS 风 + 各自主色） ===== */
+  .big-game{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:14px 16px;margin-top:12px;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
+  .big-game:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.10)}
+  .big-game:active{transform:translateY(0)}
+  .big-game .bg-ic{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex:0 0 auto;box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+  .big-game .bg-tx{flex:1;min-width:0}
+  .big-game .bg-n{font-size:16px;font-weight:600;color:#33312e}
+  .big-game .bg-d{font-size:13px;color:#9a978f;margin-top:3px;line-height:1.4}
+  .big-game .bg-go{font-size:20px;color:#cfccc4;flex:0 0 auto}
 
   /* ===== 游戏交互增强（XR 直觉交互：可见性 / 即时反馈 / 仪式闭环） ===== */
   .game-card{position:relative;overflow:hidden}
@@ -2651,6 +2679,10 @@
     --ah-icobg:transparent;--ah-btn:rgba(255,255,255,.26);--ah-shadow:0 6px 14px rgba(127,198,232,.28)}
   .app-head.skin-mathbook .ah-t{text-shadow:0 1px 2px rgba(0,0,0,.08)}
   .app-head.skin-mathbook .ah-icon{box-shadow:none;line-height:0}
+  /* 方块数学乐园：悬浮返回钮，盖在 iframe 上，永远可退出 */
+  #sc-mathpark .card{position:relative}
+  .mpk-float-back{position:absolute;left:16px;top:16px;z-index:60;width:48px;height:48px;border-radius:50%;border:none;background:rgba(255,255,255,.94);color:#5b4a3a;font-size:24px;font-weight:900;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.22)}
+  .mpk-float-back:active{transform:scale(.94)}
   .app-head.skin-mathbook .ah-mini:active,.app-head.skin-mathbook .ah-back:active{background:rgba(255,255,255,.42)}
   /* 皮肤 · 绘本：暖米糖果粉 */
   .app-head.skin-book{--ah-bg:linear-gradient(120deg,#FFE3EC 0%,#FFD6C2 100%);--ah-fg:#7a4a52;
@@ -5921,6 +5953,14 @@
       </div>
     </div>
 
+    <!-- ==================== 方块数学乐园（游戏中心·Minecraft 像素数学闯关） ==================== -->
+    <div class="screen" id="sc-mathpark">
+      <div class="card" style="margin:0 auto;display:flex;flex-direction:column;position:relative;height:100%">
+        <iframe id="mathParkFrame" title="方块数学乐园" style="flex:1;min-height:0;width:100%;border:0;background:#7EC8E8"></iframe>
+      </div>
+      <button class="mpk-float-back" onclick="goBack()" title="返回萌宠小屋">←</button>
+    </div>
+
     <!-- ==================== 游戏中心屏 ==================== -->
     <div class="screen" id="sc-games" data-page-node-id="B7YcTJ4rMMXquaeD3CvHjl">
       <div class="card" style="margin:0 auto" data-page-node-id="SBUj5AOEQCjX7OFWaL8Dg9">
@@ -5937,33 +5977,65 @@
           <button class="btn sm" onclick="goGachaStore()" data-page-node-id="k3uIBkhuUcrTWegxJE0RhF">🎰 去花星星币</button>
         </div>
 
-        <!-- 萌趣学园 · 12 大玩法（8/1 设计：游戏中心当壳，萌趣学园降为其中一栏） -->
-        <div class="learn-section-h" data-page-node-id="eHiLPz5nu228PMEREE68Ut"><span class="l" data-page-node-id="x76KjsTnuRZUDTBbtA8RCK">🌟 萌趣学园 · 12 大玩法</span><span class="r" data-page-node-id="exWDgBe05BbA6hIAdclnRQ">点哪个玩哪个 →</span></div>
-        <div class="acts" data-page-node-id="IncUVcD9Ry0fdMxNznDASC">
-          <div class="act" onclick="go('bank')" data-page-node-id="zESUvTXBaVvHTFdtV675Ce"><div class="e" data-page-node-id="xnAwg4UELETz9uAAZ510ax">🏦</div><div class="t" data-page-node-id="I4iYt7wH3rZXsPWM5NOl9m">积分银行</div></div>
-          <div class="act" onclick="go('rich')" data-page-node-id="zRDuqYSKbaytEark86UEg1"><div class="e" data-page-node-id="vJSqf7BN6yc2t1FhNBCWnB">🎲</div><div class="t" data-page-node-id="8nK96FOb2Y8FxxeihoSLMD">学习大富翁</div></div>
-          <div class="act" onclick="openTaskGacha()" data-page-node-id="5jBgFEHB8Ex9aLrQELQvng"><div class="e" data-page-node-id="XA40SHWlcDXWlXqfHyyWu7">📦</div><div class="t" data-page-node-id="AtS9yZXXIYygeTJD9TuHJF">任务盲盒</div></div>
-          <div class="act" onclick="go('level')" data-page-node-id="Nk68le0oBPGbXQDSX62sDv"><div class="e" data-page-node-id="TA2E4ZUoGH42iVxbhsgD2O">🗡️</div><div class="t" data-page-node-id="5Cq3ln9q2T0t6YMtlJR8UP">闯关升级</div></div>
-          <div class="act" onclick="go('role')" data-page-node-id="WupGxA3BF7skBlQFHQz7hB"><div class="e" data-page-node-id="j9nAVZQm4OLtM2ZdGMmAaf">🎭</div><div class="t" data-page-node-id="uWEQ2BCHeThnD6hz2bJ656">角色扮演</div></div>
-          <div class="act" onclick="go('challenge')" data-page-node-id="SRNrbUkXColWHKORSc6eKv"><div class="e" data-page-node-id="HRNfeQMFoj0QN66I4jCxWp">⏳</div><div class="t" data-page-node-id="dOgfU3vpyD4sTPRaMSIK8j">时间挑战</div></div>
-          <div class="act" onclick="go('passport')" data-page-node-id="Iyb4TpyLwa2BFBvsgz97Fu"><div class="e" data-page-node-id="zmFWMj185YgqWnHYDj15Ur">📔</div><div class="t" data-page-node-id="ug2kltYbyngwmF86mPXzii">学习护照</div></div>
-          <div class="act" onclick="go('quiz')" data-page-node-id="pa6VjJwEYdwfHnwsSWfpQm"><div class="e" data-page-node-id="EX5THbaJa7C0rq1EGMoCK1">🏆</div><div class="t" data-page-node-id="FcJkQu4vk7VrZRTqd0VcP5">家庭知识竞赛</div></div>
-          <div class="act" onclick="go('achievements')" data-page-node-id="51PsLQD3DjbB0qGpdkNLX2"><div class="e" data-page-node-id="N4T0YEM8TgYoqSIrO1asFa">🏅</div><div class="t" data-page-node-id="MPW6O5HS2xJ0BhumyukSUK">成就徽章墙</div></div>
-          <div class="act" onclick="go('script')" data-page-node-id="oYIR28mRbJILZGLtEVdaK8"><div class="e" data-page-node-id="u0NjnZn2IuHpBcKaQSYkjH">🎬</div><div class="t" data-page-node-id="t1DE5IKGAqBSD1ZIdd2ehl">学习剧本杀</div></div>
-          <div class="act" onclick="go('gacha')" data-page-node-id="FUiztO4wTBr63Q3xmh0AB4"><div class="e" data-page-node-id="GGfZLvNX8CbJsk8XGl2fAx">🎰</div><div class="t" data-page-node-id="fdAFWAHTjuuT5TTtCfKRYK">学习扭蛋机</div></div>
+        <!-- 游戏中心 · 顶部 Tab 分栏（方案2：屏内分区，零滚轮、不超出固定范围） -->
+        <div class="games-tabs">
+          <button class="gtab on" data-tab="play" onclick="gamesTab('play')">🌟 玩法</button>
+          <button class="gtab" data-tab="mini" onclick="gamesTab('mini')">🎮 小游戏</button>
+          <button class="gtab" data-tab="big" onclick="gamesTab('big')">🎯 闯关</button>
+          <button class="gtab" data-tab="stat" onclick="gamesTab('stat')">📊 成绩</button>
         </div>
-        <div class="pb-entry" onclick="go('playbook')" data-page-node-id="SkPVH6v2D94lqpz6OvDp2D">📖 玩法说明书 →</div>
 
-        <div class="learn-section-h" style="margin-top:18px" data-page-node-id="CBKLDEudtz0Es0fqt536Eh"><span class="l" data-page-node-id="9E6Fl1pbcj43fa8ShK1tvT">🎮 基础小游戏</span><span class="r" data-page-node-id="grvMlXnFkaIjnopZncpRs6">点卡片上的 ? 看玩法</span></div>
-        <div class="games-unlock" data-page-node-id="tc2ibGQEStD1pejXzw1qm7">完成今日打卡可解锁基础小游戏 (<b id="taskCount" data-page-node-id="4ackWMYekEpwYdUw11QMDL">0</b>/5)</div>
-        <div class="games-grid" id="gamesGrid" data-page-node-id="ZynTXGGE1sQPDOsZkVZfyS"></div>
-        <div class="games-stats" data-page-node-id="DO7JYljyL6CtrfWpD4hAHw">
-          <div class="sec-h" style="margin-bottom:8px;display:flex;align-items:center" data-page-node-id="iaI1Xd9xusvhxHWaBqlpop">📊 游戏成绩 · ⭐ 越亮代表玩得越好<button class="sfx-toggle" data-sfx onclick="toggleSfx()" title="音效开关" data-page-node-id="6ZUSHhniBWztRnSkxYCFjr">🔊</button></div>
-          <div class="gs-row" data-page-node-id="U4IW0wxY4DbLxgea8gImaO"><span class="gs-ic" data-page-node-id="1jfA3avLCcOPej23CAcBg0">🧩</span><span class="gs-n" data-page-node-id="3TaxTNNp2zF6Oo2MnHz57T">方块最高分：</span><span class="gs-v" id="gsBlock" data-page-node-id="e3ZH6qb5xKtI8uBKHhEiHE">0</span></div>
-          <div class="gs-row" data-page-node-id="51Dv8B2tprXEdzBDvJ79CC"><span class="gs-ic" data-page-node-id="ekPWmlvLS7JmDoDSlE7mXz">🃏</span><span class="gs-n" data-page-node-id="G0fNKIKayNOThp7W2OjzVs">记忆牌最佳连：</span><span class="gs-v" id="gsMem" data-page-node-id="plrBSD7WMYUUkzMjAlHGth">0 步</span></div>
-          <div class="gs-row" data-page-node-id="t9NBZ2YxC0euL9vm5knWxx"><span class="gs-ic" data-page-node-id="5FpFHuE8REuw593OkSSYuA">🔢</span><span class="gs-n" data-page-node-id="VabHNkr7sO2SjnHuQdHaQT">数字规律通关：</span><span class="gs-v" id="gsSeq" data-page-node-id="KC5KP60x34CnxJtb1QH96T">0 次</span></div>
-          <div class="gs-row" data-page-node-id="0pCDfFIjYCPYxVFOKwXLqw"><span class="gs-ic" data-page-node-id="brE8EWx2KcsLN3eXoz48fE">🔍</span><span class="gs-n" data-page-node-id="0tPhiUrEYKAlge8sgZxPAZ">火眼金睛通关：</span><span class="gs-v" id="gsDiff" data-page-node-id="sdFOYskAPI9Jq0jdNXMzmC">0 次</span></div>
-        </div>
+        <div class="gpane on" id="gp-play">
+          <div class="learn-section-h" data-page-node-id="eHiLPz5nu228PMEREE68Ut"><span class="l" data-page-node-id="x76KjsTnuRZUDTBbtA8RCK">🌟 萌趣学园 · 玩法</span><span class="r" data-page-node-id="exWDgBe05BbA6hIAdclnRQ">点哪个玩哪个 →</span></div>
+          <div class="acts" data-page-node-id="IncUVcD9Ry0fdMxNznDASC">
+            <div class="act" onclick="go('bank')" data-page-node-id="zESUvTXBaVvHTFdtV675Ce"><div class="e" data-page-node-id="xnAwg4UELETz9uAAZ510ax">🏦</div><div class="t" data-page-node-id="I4iYt7wH3rZXsPWM5NOl9m">积分银行</div></div>
+            <div class="act" onclick="openTaskGacha()" data-page-node-id="5jBgFEHB8Ex9aLrQELQvng"><div class="e" data-page-node-id="XA40SHWlcDXWlXqfHyyWu7">📦</div><div class="t" data-page-node-id="AtS9yZXXIYygeTJD9TuHJF">任务盲盒</div></div>
+            <div class="act" onclick="go('level')" data-page-node-id="Nk68le0oBPGbXQDSX62sDv"><div class="e" data-page-node-id="TA2E4ZUoGH42iVxbhsgD2O">🗡️</div><div class="t" data-page-node-id="5Cq3ln9q2T0t6YMtlJR8UP">闯关升级</div></div>
+            <div class="act" onclick="go('role')" data-page-node-id="WupGxA3BF7skBlQFHQz7hB"><div class="e" data-page-node-id="j9nAVZQm4OLtM2ZdGMmAaf">🎭</div><div class="t" data-page-node-id="uWEQ2BCHeThnD6hz2bJ656">角色扮演</div></div>
+            <div class="act" onclick="go('challenge')" data-page-node-id="SRNrbUkXColWHKORSc6eKv"><div class="e" data-page-node-id="HRNfeQMFoj0QN66I4jCxWp">⏳</div><div class="t" data-page-node-id="dOgfU3vpyD4sTPRaMSIK8j">时间挑战</div></div>
+            <div class="act" onclick="go('passport')" data-page-node-id="Iyb4TpyLwa2BFBvsgz97Fu"><div class="e" data-page-node-id="zmFWMj185YgqWnHYDj15Ur">📔</div><div class="t" data-page-node-id="ug2kltYbyngwmF86mPXzii">学习护照</div></div>
+            <div class="act" onclick="go('quiz')" data-page-node-id="pa6VjJwEYdwfHnwsSWfpQm"><div class="e" data-page-node-id="EX5THbaJa7C0rq1EGMoCK1">🏆</div><div class="t" data-page-node-id="FcJkQu4vk7VrZRTqd0VcP5">家庭知识竞赛</div></div>
+            <div class="act" onclick="go('achievements')" data-page-node-id="51PsLQD3DjbB0qGpdkNLX2"><div class="e" data-page-node-id="N4T0YEM8TgYoqSIrO1asFa">🏅</div><div class="t" data-page-node-id="MPW6O5HS2xJ0BhumyukSUK">成就徽章墙</div></div>
+            <div class="act" onclick="go('script')" data-page-node-id="oYIR28mRbJILZGLtEVdaK8"><div class="e" data-page-node-id="u0NjnZn2IuHpBcKaQSYkjH">🎬</div><div class="t" data-page-node-id="t1DE5IKGAqBSD1ZIdd2ehl">学习剧本杀</div></div>
+            <div class="act" onclick="go('gacha')" data-page-node-id="FUiztO4wTBr63Q3xmh0AB4"><div class="e" data-page-node-id="GGfZLvNX8CbJsk8XGl2fAx">🎰</div><div class="t" data-page-node-id="fdAFWAHTjuuT5TTtCfKRYK">学习扭蛋机</div></div>
+          </div>
+          <div class="pb-entry" onclick="go('playbook')" data-page-node-id="SkPVH6v2D94lqpz6OvDp2D">📖 玩法说明书 →</div>
+        </div><!-- /gp-play -->
+
+        <div class="gpane" id="gp-mini">
+          <div class="learn-section-h" style="margin-top:0" data-page-node-id="CBKLDEudtz0Es0fqt536Eh"><span class="l" data-page-node-id="9E6Fl1pbcj43fa8ShK1tvT">🎮 基础小游戏</span><span class="r" data-page-node-id="grvMlXnFkaIjnopZncpRs6">点卡片上的 ? 看玩法</span></div>
+          <div class="games-unlock" data-page-node-id="tc2ibGQEStD1pejXzw1qm7">完成今日打卡可解锁基础小游戏 (<b id="taskCount" data-page-node-id="4ackWMYekEpwYdUw11QMDL">0</b>/5)</div>
+          <div class="games-grid" id="gamesGrid" data-page-node-id="ZynTXGGE1sQPDOsZkVZfyS"></div>
+        </div><!-- /gp-mini -->
+
+        <div class="gpane" id="gp-big">
+          <div class="learn-section-h" style="margin-top:0"><span class="l">🎯 重点闯关游戏</span><span class="r">大游戏集中入口 →</span></div>
+          <div class="big-game" onclick="go('mathpark')">
+            <span class="bg-ic" style="background:#7AC74F">🧱</span>
+            <div class="bg-tx"><div class="bg-n">方块数学乐园</div><div class="bg-d">Minecraft 像素风 · 口算闯关 · 宠物养成</div></div>
+            <span class="bg-go">▶</span>
+          </div>
+          <div class="big-game" onclick="go('rich')">
+            <span class="bg-ic" style="background:#8FBC8D">🎲</span>
+            <div class="bg-tx"><div class="bg-n">学习大富翁</div><div class="bg-d">棋盘掷骰 · 答题买地盖房 · 跨学科出题</div></div>
+            <span class="bg-go">▶</span>
+          </div>
+          <div class="big-game" onclick="openPhonicsMapGame()">
+            <span class="bg-ic" style="background:#8CB4DC">🔤</span>
+            <div class="bg-tx"><div class="bg-n">英语大闯关</div><div class="bg-d">自然拼读 · 听音拼读六关闯关地图</div></div>
+            <span class="bg-go">▶</span>
+          </div>
+        </div><!-- /gp-big -->
+
+        <div class="gpane" id="gp-stat">
+          <div class="games-stats" data-page-node-id="DO7JYljyL6CtrfWpD4hAHw">
+            <div class="sec-h" style="margin-bottom:8px;display:flex;align-items:center" data-page-node-id="iaI1Xd9xusvhxHWaBqlpop">📊 游戏成绩 · ⭐ 越亮代表玩得越好<button class="sfx-toggle" data-sfx onclick="toggleSfx()" title="音效开关" data-page-node-id="6ZUSHhniBWztRnSkxYCFjr">🔊</button></div>
+            <div class="gs-row" data-page-node-id="U4IW0wxY4DbLxgea8gImaO"><span class="gs-ic" data-page-node-id="1jfA3avLCcOPej23CAcBg0">🧩</span><span class="gs-n" data-page-node-id="3TaxTNNp2zF6Oo2MnHz57T">方块最高分：</span><span class="gs-v" id="gsBlock" data-page-node-id="e3ZH6qb5xKtI8uBKHhEiHE">0</span></div>
+            <div class="gs-row" data-page-node-id="51Dv8B2tprXEdzBDvJ79CC"><span class="gs-ic" data-page-node-id="ekPWmlvLS7JmDoDSlE7mXz">🃏</span><span class="gs-n" data-page-node-id="G0fNKIKayNOThp7W2OjzVs">记忆牌最佳连：</span><span class="gs-v" id="gsMem" data-page-node-id="plrBSD7WMYUUkzMjAlHGth">0 步</span></div>
+            <div class="gs-row" data-page-node-id="t9NBZ2YxC0euL9vm5knWxx"><span class="gs-ic" data-page-node-id="5FpFHuE8REuw593OkSSYuA">🔢</span><span class="gs-n" data-page-node-id="VabHNkr7sO2SjnHuQdHaQT">数字规律通关：</span><span class="gs-v" id="gsSeq" data-page-node-id="KC5KP60x34CnxJtb1QH96T">0 次</span></div>
+            <div class="gs-row" data-page-node-id="0pCDfFIjYCPYxVFOKwXLqw"><span class="gs-ic" data-page-node-id="brE8EWx2KcsLN3eXoz48fE">🔍</span><span class="gs-n" data-page-node-id="0tPhiUrEYKAlge8sgZxPAZ">火眼金睛通关：</span><span class="gs-v" id="gsDiff" data-page-node-id="sdFOYskAPI9Jq0jdNXMzmC">0 次</span></div>
+          </div>
+        </div><!-- /gp-stat -->
       </div>
     </div>
 
@@ -7225,7 +7297,7 @@
     const map={home:'sc-home',parent:'sc-parent',pset:'sc-pset',pets:'sc-pets',checkin:'sc-checkin',me:'sc-me',
       english:'sc-english-hub',phonics:'sc-phonics',read:'sc-read',write:'sc-write',math:'sc-math',mathbook:'sc-mathbook',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
-      science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',chinesebook:'sc-chinesebook',ttgame:'sc-ttgame',
+      science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',chinesebook:'sc-chinesebook',ttgame:'sc-ttgame',mathpark:'sc-mathpark',
       timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',qbank:'sc-qbank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',challenge:'sc-challenge',role:'sc-role',quiz:'sc-quiz',script:'sc-script',playbook:'sc-playbook',recycle:'sc-recycle',plan:'sc-plan',hwcal:'sc-hwcal',
       'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff','game-phonics':'sc-game-phonics',mall:'sc-mall','mall-supply':'sc-mall-supply','mall-dress':'sc-mall-dress','mall-wish':'sc-mall-wish',anime:'sc-anime'};
     let target=map[screen];
@@ -7248,6 +7320,7 @@
     else if(target==='sc-games'){ try{refreshPointUI();}catch(e){} renderGames(); }
     else if(target==='sc-chinesebook'){ renderChineseBook(); }
     else if(target==='sc-ttgame'){ renderTtGame(); }
+    else if(target==='sc-mathpark'){ renderMathPark(); }
     else if(target==='sc-timer')initTimer();
     else if(target==='sc-report')initReport();
     else if(target==='sc-achievements')initAchievements();
@@ -7279,6 +7352,11 @@
     else if(target==='sc-hwcal'){try{renderCal();}catch(e){}}
     navSync(screen);
     window.scrollTo({top:0,behavior:'smooth'});
+  }
+  /* 游戏中心 · 顶部 Tab 分栏切换（方案2：玩法 / 小游戏 / 闯关 / 成绩） */
+  function gamesTab(id){
+    document.querySelectorAll('#sc-games .gpane').forEach(function(p){ p.classList.toggle('on', p.id==='gp-'+id); });
+    document.querySelectorAll('#sc-games .gtab').forEach(function(t){ t.classList.toggle('on', t.getAttribute('data-tab')===id); });
   }
   function goBack(){
     const cur=document.querySelector('.screen.on');
@@ -7620,6 +7698,27 @@
     if(f && !f.getAttribute('data-loaded')){
       f.src='tangtang-yuwen.html';
       f.setAttribute('data-loaded','1');
+    }
+  }
+
+  /* ===== 方块数学乐园 · 懒加载游戏 iframe ===== */
+  /* ⛔ 改动 fangkuai-shuxue.html 后必须把 MPK_GAME_V 改一次（换 URL 才会绕过 iPad/Safari 强缓存，
+     否则会出现「本地已修好、设备上还是旧游戏」的假故障）。 */
+  var MPK_GAME_V='20260918b';
+  function renderMathPark(){
+    var f=document.getElementById('mathParkFrame');
+    if(f && !f.getAttribute('data-loaded')){
+      f.src='fangkuai-shuxue.html?v='+MPK_GAME_V;
+      f.setAttribute('data-loaded','1');
+    }
+    // 游戏内视图同步：只在「游戏首页」（无自带返回）显示退出钮；其余页游戏自带「← 返回」→ 隐藏，避免两个返回钮重复
+    if(!window.__mpkViewBound){
+      window.__mpkViewBound=1;
+      window.addEventListener('message',function(e){
+        var d=e.data; if(!d||typeof d.__mpView!=='string') return;
+        var b=document.querySelector('.mpk-float-back'); if(!b) return;
+        b.style.display=(d.__mpView==='home')?'flex':'none';
+      });
     }
   }
 
