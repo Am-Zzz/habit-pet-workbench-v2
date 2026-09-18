@@ -542,6 +542,10 @@
   .learn-edit-btn{font-size:12px;font-weight:800;color:var(--brand-d);background:var(--brand-s);border:none;border-radius:999px;padding:5px 12px;cursor:pointer;margin-left:auto}
   .learn-edit-btn.on{background:var(--brand);color:#fff}
   .learn .learn-x{position:absolute;top:4px;right:4px;width:18px;height:18px;line-height:18px;text-align:center;border-radius:50%;background:rgba(0,0,0,.06);color:#c0392b;font-size:12px;font-weight:800;cursor:pointer}
+  .learn-mv{position:absolute;top:4px;left:4px;display:flex;gap:3px}
+  .learn-mv .lmv{width:20px;height:18px;line-height:16px;text-align:center;border-radius:6px;background:var(--brand);color:#fff;font-size:11px;font-weight:800;cursor:pointer;box-shadow:0 2px 6px rgba(221,94,134,.3);border:1px solid #fff}
+  .learn-mv .lmv:active{transform:scale(.92)}
+  .learn-edit-tip{font-size:12px;font-weight:700;color:var(--brand-d);background:var(--brand-s);border-radius:999px;padding:1px 8px;margin-left:6px}
   .learn-add{border:2px dashed var(--brand-s);background:transparent;color:var(--brand-d)}
   .learn-add .e{font-size:22px;color:var(--brand)}
   .learn-add .t{color:var(--brand-d)}
@@ -4251,7 +4255,7 @@
             </div>
           </div>
           <div class="learn-sec" data-page-node-id="BQIoynkA5rIdH5zI0fVsoa">
-            <div class="learn-section-h" data-page-node-id="eJMBFmxExDvexvOKTXfUZo"><span class="l" data-page-node-id="rShCul9E8ZcDHbUbYviMNf">🎓 学习乐园 · <b id="learnCount" data-page-node-id="EL9wJTm13KW1agDwE4RPc2">9 大模块</b></span><button class="learn-edit-btn" id="learnEditBtn" onclick="toggleLearnEdit()">✎ 编辑</button></div>
+            <div class="learn-section-h" data-page-node-id="eJMBFmxExDvexvOKTXfUZo"><span class="l" data-page-node-id="rShCul9E8ZcDHbUbYviMNf">🎓 学习乐园 · <b id="learnCount" data-page-node-id="EL9wJTm13KW1agDwE4RPc2">9 大模块</b><span class="learn-edit-tip" id="learnEditTip" style="display:none"> · 编辑时点 ◀▶ 调顺序</span></span><button class="learn-edit-btn" id="learnEditBtn" onclick="toggleLearnEdit()">✎ 编辑</button></div>
             <div class="learn-grid" id="learnGrid" data-page-node-id="zcYwGUhbzzYJmUBESdUalx"></div>
           </div>
         </div>
@@ -5903,6 +5907,20 @@
       <div id="cbRoot" class="cb-root"></div>
     </div>
 
+    <!-- ==================== 糖糖语文乐园（语文宝典·闯关小游戏） ==================== -->
+    <div class="screen" id="sc-ttgame">
+      <div class="card" style="margin:0 auto;display:flex;flex-direction:column">
+        <div class="app-head skin-plain">
+          <div class="ah-back" onclick="goBack()" data-page-node-id="ttgBack001">←</div>
+          <div class="ah-icon" data-page-node-id="ttgIco001"><span class="bi" data-page-node-id="ttgIco002">🎮</span></div>
+          <div class="ah-txt" data-page-node-id="ttgTtl001"><div class="ah-t" data-page-node-id="ttgTtl002">糖糖语文乐园</div><div class="ah-s" data-page-node-id="ttgTtl003">一年级上册 · 课文延伸闯关</div></div>
+          <div class="ah-sp" data-page-node-id="ttgSp001"></div>
+          <div class="ah-act" data-page-node-id="ttgAct001"><div class="ah-mini gear" onclick="go('parent')" title="家长模式">⚙️</div></div>
+        </div>
+        <iframe id="ttGameFrame" title="糖糖语文乐园" style="flex:1;min-height:0;width:100%;border:0;background:#FFF0F6"></iframe>
+      </div>
+    </div>
+
     <!-- ==================== 游戏中心屏 ==================== -->
     <div class="screen" id="sc-games" data-page-node-id="B7YcTJ4rMMXquaeD3CvHjl">
       <div class="card" style="margin:0 auto" data-page-node-id="SBUj5AOEQCjX7OFWaL8Dg9">
@@ -7207,7 +7225,7 @@
     const map={home:'sc-home',parent:'sc-parent',pset:'sc-pset',pets:'sc-pets',checkin:'sc-checkin',me:'sc-me',
       english:'sc-english-hub',phonics:'sc-phonics',read:'sc-read',write:'sc-write',math:'sc-math',mathbook:'sc-mathbook',
       chars:'sc-chars',pinyin:'sc-pinyin',words:'sc-words',dialogue:'sc-dialogue',
-      science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',chinesebook:'sc-chinesebook',
+      science:'sc-science',poem:'sc-poem',books:'sc-books',logic:'sc-logic',games:'sc-games',learned:'sc-learned',library:'sc-library',hanzi:'sc-hanzi',gacha:'sc-gacha',morning:'sc-morning',outdoor:'sc-outdoor',pack:'sc-pack',netdisk:'sc-netdisk',chinesebook:'sc-chinesebook',ttgame:'sc-ttgame',
       timer:'sc-timer',report:'sc-report',achievements:'sc-achievements',bank:'sc-bank',qbank:'sc-qbank',level:'sc-level',rich:'sc-rich',passport:'sc-passport',challenge:'sc-challenge',role:'sc-role',quiz:'sc-quiz',script:'sc-script',playbook:'sc-playbook',recycle:'sc-recycle',plan:'sc-plan',hwcal:'sc-hwcal',
       'game-block':'sc-game-block','game-memory':'sc-game-memory','game-seq':'sc-game-seq','game-diff':'sc-game-diff','game-phonics':'sc-game-phonics',mall:'sc-mall','mall-supply':'sc-mall-supply','mall-dress':'sc-mall-dress','mall-wish':'sc-mall-wish',anime:'sc-anime'};
     let target=map[screen];
@@ -7229,6 +7247,7 @@
     else if(target==='sc-me')initMe();
     else if(target==='sc-games'){ try{refreshPointUI();}catch(e){} renderGames(); }
     else if(target==='sc-chinesebook'){ renderChineseBook(); }
+    else if(target==='sc-ttgame'){ renderTtGame(); }
     else if(target==='sc-timer')initTimer();
     else if(target==='sc-report')initReport();
     else if(target==='sc-achievements')initAchievements();
@@ -7593,6 +7612,15 @@
     var tl=CB_BOOK.units.reduce(function(a,u){return a+u.lessons.length;},0);
     var cur=cbState.current?('📌 正在学：第 '+(CB_BOOK.units[cbState.current.unit].no||(cbState.current.unit+1))+' 单元 · '+CB_BOOK.units[cbState.current.unit].t):'还没标记正在学的课文';
     return '<div class="cb-prog-line">'+cur+' · 全册 '+tu+' 单元 '+tl+' 课</div>';
+  }
+
+  /* ===== 糖糖语文乐园 · 懒加载游戏 iframe ===== */
+  function renderTtGame(){
+    var f=document.getElementById('ttGameFrame');
+    if(f && !f.getAttribute('data-loaded')){
+      f.src='tangtang-yuwen.html';
+      f.setAttribute('data-loaded','1');
+    }
   }
 
   /* ===== 课文页媒体（图片/视频/PPT）· 独立存储，不动绘本数据 ===== */
@@ -8198,7 +8226,7 @@
         ['🔤','识字','green','openChars()'],['🔡','拼音','blue','openPinyin()'],['📜','国学·古诗','teal','openPoem()']
       ];
       var subHtml=subs.map(function(s){var act=s[3];var onclick=act?('onclick="'+act+'"'):'onclick="toast(\'敬请期待\')"';var tag=act?'立即学习':'即将上线';return '<div class="cb-sub '+s[2]+'" '+onclick+'><div class="cb-sub-e">'+s[0]+'</div><div class="cb-sub-b"><div class="cb-sub-nm">'+s[1]+'</div><span class="cb-sub-tag">'+tag+'</span></div></div>';}).join('');
-      subHtml+='<div class="cb-sub cb-more" onclick="toast(\'更多模块陆续解锁\')"><div class="cb-sub-e">🎁</div><div class="cb-sub-nm">更多模块<br>陆续解锁</div></div>';
+      subHtml+='<div class="cb-sub cb-more" onclick="go(\'ttgame\')"><div class="cb-sub-e">🎮</div><div class="cb-sub-nm">语文闯关<br>糖糖乐园</div></div>';
       root.innerHTML='<div class="cb-card cb-home">'+hero+cbContinueHTML()+cbProgressHTML()+'<div class="cb-home-body">'+big+'<div class="cb-subs">'+subHtml+'</div></div><div class="cb-foot"><span class="pill">💡 今天也要加油哦！已学会 <b>'+LEARNED.length+'</b> 个字</span></div></div>';
     } else if(cbState.view==='textbook'){
       if(cbState.selUnit==null)cbState.selUnit=0;
@@ -15721,6 +15749,7 @@ LOGIC_LEVELS.forEach(function(L){
           +'<span class="t">'+esc(m.name)+'</span>'
           +(meta.sub?'<span class="sub">（'+meta.sub+'）</span>':'')
           +'<span class="learn-x" onclick="event.stopPropagation();removeLearnModule('+idx+')" title="删除">✕</span>'
+          +'<span class="learn-mv"><span class="lmv" onclick="event.stopPropagation();moveModule('+idx+',-1)" title="左移">◀</span><span class="lmv" onclick="event.stopPropagation();moveModule('+idx+',1)" title="右移">▶</span></span>'
           +'</div>';
       }else{
         html+='<div class="learn" onclick="openModuleByIdx('+idx+')">'
@@ -15740,7 +15769,25 @@ LOGIC_LEVELS.forEach(function(L){
     var lc=document.getElementById('learnCount');if(lc)lc.textContent=cnt+' 大模块';
     renderMiniClass();
   }
-  function toggleLearnEdit(){LEARN_EDIT=!LEARN_EDIT;var b=document.getElementById('learnEditBtn');if(b)b.classList.toggle('on',LEARN_EDIT);renderLearnGrid();}
+  /* 学习乐园 · 卡片顺序调整（点 ◀▶ 在可见模块间相邻交换并保存） */
+  function moveModule(idx,dir){
+    if(idx==null)return;
+    var visible=[];
+    MODULES.forEach(function(m,i){
+      if(!m.on)return;
+      var meta=MODULE_META[m.id]||{};
+      if(meta.ext)return;
+      if(m.id==='m_games'||m.id==='m_logic')return;
+      visible.push(i);
+    });
+    var pos=visible.indexOf(idx);
+    if(pos<0)return;
+    var tgt=(dir<0?visible[pos-1]:visible[pos+1]);
+    if(tgt==null)return;
+    var tmp=MODULES[idx];MODULES[idx]=MODULES[tgt];MODULES[tgt]=tmp;
+    saveModules();renderLearnGrid();
+  }
+  function toggleLearnEdit(){LEARN_EDIT=!LEARN_EDIT;var b=document.getElementById('learnEditBtn');if(b){b.classList.toggle('on',LEARN_EDIT);b.textContent=LEARN_EDIT?'✓ 完成':'✎ 编辑';}var tip=document.getElementById('learnEditTip');if(tip)tip.style.display=LEARN_EDIT?'inline':'none';renderLearnGrid();}
   function removeLearnModule(idx){var m=MODULES[idx];if(!m)return;showConfirmDlg({title:'删除板块',msg:'确定把「'+m.name+'」从学习乐园移除？',onOk:function(yes){if(yes){MODULES.splice(idx,1);saveModules();renderLearnGrid();if(typeof renderStudies==='function')renderStudies();}}});}
 
   function renderMiniClass(){var g=document.getElementById('miniClassGrid');if(!g)return;var html='';MODULES.forEach(function(m){if(!m.on)return;var meta=MODULE_META[m.id]||{};if(!meta.ext)return;html+='<div class="mini-mod" onclick="openMini(\''+m.screen+'\')">'+(meta.new?'<span class="badge bd-new">NEW</span>':'')+'<span class="e">'+m.emoji+'</span><span class="t">'+esc(m.name)+'</span>'+(meta.sub?'<span class="sub">'+esc(m.sub)+'</span>':'')+'<span class="ext" title="站外学习网站">🔗</span></div>';});g.innerHTML=html||'<div class="empty">暂无在线学习模块</div>';}
