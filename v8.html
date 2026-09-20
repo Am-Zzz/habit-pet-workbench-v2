@@ -36,7 +36,7 @@
   .doc-sub{font-size:15px;color:var(--ink-soft);margin-bottom:22px;line-height:1.7}
 
   /* 设备外壳 */
-  .device{background:linear-gradient(160deg,#FFFFFF 0%,#FCF4EF 100%);border:1px solid var(--line);border-radius:34px;box-shadow:var(--shadow);overflow:hidden;position:absolute;top:50%;left:50%;width:1366px;height:1024px;transform:translate(-50%,-50%) scale(var(--shell-scale,1));transform-origin:center center;display:flex;flex-direction:column}
+  .device{background:linear-gradient(160deg,#FFFFFF 0%,#FCF4EF 100%);overflow:hidden;position:absolute;top:50%;left:50%;width:1366px;height:1024px;transform:translate(-50%,-50%) scale(var(--shell-scale,1));transform-origin:center center;display:flex;flex-direction:column}
   /* 固定虚拟壳 shellStyle：iPad 横屏设计基准 1366x1024，整壳等比缩放自适应（--shell-scale 由 JS 设置），根除忽大忽小 */
   html,body{height:100%}
   body{position:relative;min-height:100vh;margin:0;overflow:hidden;background:linear-gradient(160deg,#F3E7DF 0%,#EFE0D6 100%)}
@@ -390,6 +390,7 @@
   .ptag{font-size:13px;font-weight:700;color:var(--brand-d);background:var(--brand-s);padding:4px 9px;border-radius:999px;white-space:nowrap}
   .ptag.req,.rtag.req{color:#9A7416;background:var(--butter-s)}
   .rtag{font-size:13px;font-weight:700;color:var(--brand-d);background:var(--brand-s);padding:4px 9px;border-radius:999px;white-space:nowrap;margin-left:auto}
+  .rw-badge{font-size:12.5px;font-weight:800;color:#7a5a00;background:linear-gradient(135deg,#FFF3C4,#FFE08A);border:1px solid #F2C94C;padding:3px 9px;border-radius:999px;white-space:nowrap;flex:none;margin-left:6px}
   /* 主页卡片标题右侧组 + 编辑胶囊（默认只读防误触） */
   .ch-right{display:flex;align-items:center;gap:8px}
   .hcard-edit{flex:none;font-size:13px;font-weight:800;color:var(--brand-d);background:var(--brand-s);border:1.5px solid transparent;padding:5px 11px;border-radius:999px;cursor:pointer;transition:.15s;user-select:none}
@@ -623,7 +624,7 @@
     .screen#sc-home .grid3 > .card:last-child .qk-grid{flex:0 0 auto}
     .screen#sc-home .grid3 > .card:last-child .home-link-list{display:none}
     .screen#sc-home .learn-grid{grid-template-columns:repeat(3,1fr);gap:11px}
-    .screen#sc-home .pet-stage{width:184px;height:184px}   /* 2026-09-15：删掉重复进度条后腾出的空间分给头像 */
+    .screen#sc-home .pet-stage{width:150px;height:150px}   /* 2026-09-20：左栏内容过多导致滚动，头像从 184 收小到 150，给下方按钮/横幅留余量 */
     /* 左栏：宠物互动区自然展开，禁止内部滚动 */
     /* ⛔ 原为 justify-content:space-between —— flex 会把剩余空间平摊给 12 处区块间隙
        （实测 308px，占整卡 1/3），导致顶部被拉散、下面操作区被挤到 9~12px。
@@ -632,20 +633,35 @@
       height:100%;
       align-self:stretch;
       justify-content:flex-start;
-      padding:14px;
+      padding:10px;
     }
     /* 左栏单卡：自然展开、不内部滚动 */
     .screen#sc-home .grid3 > .card.partner-card{
       height:100%;
       align-self:stretch;
       justify-content:flex-start;
-      padding:14px;
+      padding:10px;
       overflow:hidden;
       position:relative;
     }
-    .screen#sc-home .grid3 > .card.partner-card .partner-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;scrollbar-width:none}
+    .screen#sc-home .grid3 > .card.partner-card .card-h{margin-bottom:8px}
+    .screen#sc-home .grid3 > .card.partner-card .ptab-row{margin-bottom:6px}
+    .screen#sc-home .grid3 > .card.partner-card .pet-face{margin:0 0 6px}
+    .screen#sc-home .grid3 > .card.partner-card .pet-stage{width:150px;height:150px}
+    .screen#sc-home .grid3 > .card.partner-card .name-row{margin-bottom:6px}
+    .screen#sc-home .grid3 > .card.partner-card .bond-row{margin:0 0 6px}
+    .screen#sc-home .grid3 > .card.partner-card .grow-line{margin:0 0 4px}
+    .screen#sc-home .grid3 > .card.partner-card .grow-tip{margin:0 0 6px}
+    .screen#sc-home .grid3 > .card.partner-card .stat-block{margin:0 0 8px;padding:8px 10px;gap:8px}
+    .screen#sc-home .grid3 > .card.partner-card .vst{padding:7px 8px 8px}
+    .screen#sc-home .grid3 > .card.partner-card .rt-box{padding:6px 8px;margin:0 0 8px}
+    .screen#sc-home .grid3 > .card.partner-card .rt-box .rt-d{height:30px;width:30px;min-width:30px;max-width:30px;flex:0 0 30px;font-size:14px}
+    .screen#sc-home .grid3 > .card.partner-card .bagrow{margin:0 0 8px;padding:6px 8px}
+    .screen#sc-home .grid3 > .card.partner-card .partner-foot{margin-top:0}
+    .screen#sc-home .grid3 > .card.partner-card .act-grid .btn{min-height:54px;padding:8px 4px}
+    .screen#sc-home .grid3 > .card.partner-card .partner-scroll{flex:1 1 auto;min-height:0;overflow:hidden;overflow-x:hidden;display:flex;flex-direction:column;justify-content:space-between;scrollbar-width:none}
     .screen#sc-home .grid3 > .card.partner-card .partner-scroll::-webkit-scrollbar{display:none}
-    .screen#sc-home .grid3 > .card.partner-card .partner-time{position:static;margin-top:auto;flex:0 0 auto;text-align:center;font-size:14px;font-weight:800;color:var(--ink-soft);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:8px 10px;white-space:normal;max-width:100%}
+    .screen#sc-home .grid3 > .card.partner-card .partner-time{position:static;margin-top:auto;flex:0 0 auto;text-align:center;font-size:13px;font-weight:800;color:var(--ink-soft);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:6px 9px;white-space:normal;max-width:100%}
   /* 高度链贯通：横屏约束 home 屏高度，栏内滚动彻底修「看不全」。左栏自然展开，故放宽 30px 给它空间 */
     #sc-home.screen{flex:1 1 auto;min-height:0;flex-direction:column;overflow:hidden;box-sizing:border-box}
     /* 仅「已激活」的主页才 flex 显示；否则沿用 .screen{display:none} 让主页可被隐藏，避免新页面堆到主页下方 */
@@ -2475,8 +2491,37 @@
   .pop-overlay{position:fixed;inset:0;background:rgba(46,41,38,.55);display:none;place-items:center;z-index:80;padding:20px}
   .pop-overlay.on{display:grid}
   .pop-card{background:linear-gradient(180deg,#FFFFFF,#FFFCF9);border:1px solid var(--line);border-radius:26px;padding:22px;max-width:360px;width:100%;box-shadow:var(--shadow);position:relative;animation:popIn .35s ease}
+  /* 打卡完成庆祝卡片 */
+  #ckCelePop{z-index:90}
+  .ck-cele{max-width:360px;text-align:center;padding:24px 22px 22px}
+  .ck-cele .ck-burst{font-size:54px;line-height:1;margin-bottom:6px;animation:ckPop .55s ease both}
+  .ck-cele h3{font-size:21px;color:var(--brand-d);margin:4px 0 12px;font-weight:800}
+  .ck-cele .ck-stars{font-size:25px;letter-spacing:2px;margin-bottom:8px;min-height:30px;line-height:1.25}
+  .ck-cele .ck-sub{font-size:15px;color:var(--ink-soft);margin-bottom:3px}
+  .ck-cele .ck-sub b{color:var(--brand-d);font-size:18px}
+  .ck-cele .ck-name{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:6px}
+  .ck-cele .ck-emo{margin:8px 0 0}
+  .ck-cele .ck-emo-t{font-size:14px;color:var(--ink-soft);margin:10px 0 12px}
+  .ck-cele .ck-emo .emo-grid{gap:8px;margin-bottom:16px}
+  .ck-cele .ck-emo .emo-btn{width:54px;height:64px}
+  .ck-cele .ck-emo-btns{display:flex;gap:10px;justify-content:center;align-items:center;margin-top:2px}
+  .ck-cele .ck-emo-btns .bank-btn{margin:0;max-width:none;flex:1}
+  .ck-cele .ck-emo-btns .btn.ghost{flex:1;max-width:none}
+  @keyframes ckPop{0%{transform:scale(.4) rotate(-8deg);opacity:0}60%{transform:scale(1.15) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
   @keyframes popIn{from{opacity:0;transform:scale(.92) translateY(12px)}to{opacity:1;transform:none}}
   .pop-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;font-size:16px;cursor:pointer;border:1px solid var(--line)}
+
+  /* ---- 趣味挑战弹窗（独立，不借用陪玩弹窗） ---- */
+  .funquiz-pop{max-width:380px;max-height:calc(100vh - 40px);overflow-y:auto}
+  .funquiz-pop h3{font-size:20px;color:var(--brand-d);margin:2px 0 2px}
+  .funquiz-pop .fq-sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:10px}
+  .fq-mascot{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .fq-face{width:62px;height:62px;flex:none;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#FFF3F0,#FFE3EE);border-radius:50%;border:1px solid var(--line);overflow:hidden}
+  .fq-face svg,.fq-face img{width:100%;height:100%;object-fit:contain}
+  .fq-bubble{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:10px 12px;font-size:14px;color:var(--ink);line-height:1.5;text-align:left}
+  .fq-q{font-size:17px;font-weight:800;color:var(--ink);margin:4px 0 12px;line-height:1.5}
+  .fq-opts{display:block}
+  .fq-foot{margin-top:14px;display:flex;justify-content:center;flex-direction:column;align-items:center;gap:10px}
 
   /* ---- 陪宠物玩弹窗 ---- */
   .play-pop{text-align:center}
@@ -4254,7 +4299,7 @@
           <div class="partner-foot">
             <div class="bubble" id="bubble">今天元气满满！要不要一起挑战趣题呀？😊</div>
             <div class="act-grid">
-              <button class="btn qz" onclick="openQuizFromCard()">🧩 趣题挑战<span class="sub">答对得星星币</span></button>
+              <button class="btn qz" onclick="openFunQuiz()">🧩 趣味挑战<span class="sub">答对得星星币</span></button>
               <button class="btn" onclick="openPlayPet()">🐾 陪小萌玩<span class="sub">喂食 · 洗澡 · 哄睡</span></button>
             </div>
           </div>
@@ -6976,7 +7021,6 @@
       <div class="play-acts" data-page-node-id="zVDLp39jgCLlPdPUtGOT5x">
         <button class="pbtn" onclick="playPetTouch()" data-page-node-id="76rXOQo0BUodgRXmPM30pP">🤚 摸摸头</button>
         <button class="pbtn" onclick="playPetChat()" data-page-node-id="ig5q9UZpGtTTlgX9DIL6J7">💬 聊聊天</button>
-        <button class="pbtn" onclick="playPetQuiz()" data-page-node-id="lVcUFa4JkpTfUsbFeKtTbK">🧩 趣题挑战</button>
       </div>
       <div class="play-acts" style="margin-top:8px" data-page-node-id="VJsYQI2FqpX2UC6n5Vu2mT">
         <button class="pbtn" onclick="playPetFeed()" data-page-node-id="1bIL2pUJPFOW22C23ZAbb4">🍖 喂食物</button>
@@ -6993,6 +7037,50 @@
       <div class="play-sub" id="playBag" data-page-node-id="4RtmTDj8DRW17D0cBZjUtz"></div>
       <div class="play-sub" id="playDress"></div>
       <div class="play-sub" id="playPhoto"></div>
+    </div>
+  </div>
+
+  <!-- 趣味挑战弹窗（独立，不借用陪玩弹窗） -->
+  <div class="pop-overlay" id="funQuizPop" onclick="if(event.target===this)closeFunQuiz()">
+    <div class="pop-card funquiz-pop" onclick="event.stopPropagation()">
+      <div class="pop-close" onclick="closeFunQuiz()">✕</div>
+      <h3>🧩 趣味挑战</h3>
+      <div class="fq-sub">答对一题得 1 颗星星 ⭐，每天有上限哦</div>
+      <div class="fq-mascot">
+        <div class="fq-face" id="fqFace"></div>
+        <div class="fq-bubble" id="fqBubble">来挑战吧！看你能答对几题～</div>
+      </div>
+      <div class="fq-quiz">
+        <div class="fq-q" id="fqQ">点下面的按钮开始答题</div>
+        <div class="fq-opts" id="fqOpts"></div>
+        <div class="fq-foot" id="fqFoot"><button class="bank-btn" onclick="funQuizStart()">🎲 开始答题</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 打卡完成庆祝卡片 -->
+  <div class="pop-overlay" id="ckCelePop" onclick="if(event.target===this)closeCkCele()">
+    <div class="pop-card ck-cele" onclick="event.stopPropagation()">
+      <div class="pop-close" onclick="closeCkCele()">✕</div>
+      <div class="ck-burst">🎉</div>
+      <h3>恭喜完成打卡！</h3>
+      <div class="ck-stars" id="ckCeleStars">⭐</div>
+      <div class="ck-sub">送给你 <b id="ckCeleNum">1</b> 颗 ⭐</div>
+      <div class="ck-name" id="ckCeleName"></div>
+      <div class="ck-emo">
+        <p class="ck-emo-t">现在心情怎么样呀？</p>
+        <div class="emo-grid">
+          <div class="emo-btn" data-v="100" onclick="pickEmotion(100,'开心',this)"><span class="e">😊</span><span class="l">开心</span></div>
+          <div class="emo-btn" data-v="75" onclick="pickEmotion(75,'还好',this)"><span class="e">🙂</span><span class="l">还好</span></div>
+          <div class="emo-btn" data-v="50" onclick="pickEmotion(50,'一般',this)"><span class="e">😐</span><span class="l">一般</span></div>
+          <div class="emo-btn" data-v="30" onclick="pickEmotion(30,'有点难',this)"><span class="e">😣</span><span class="l">有点难</span></div>
+          <div class="emo-btn" data-v="10" onclick="pickEmotion(10,'很难',this)"><span class="e">😭</span><span class="l">很难</span></div>
+        </div>
+      </div>
+      <div class="ck-emo-btns">
+        <button class="btn ghost" onclick="skipCkEmotion()">跳过</button>
+        <button class="bank-btn" onclick="saveCkEmotion()">收下啦</button>
+      </div>
     </div>
   </div>
 
@@ -7025,7 +7113,6 @@
     </div>
   </div>
 
-  <p class="foot-note" data-page-node-id="R0BcSph1kiOywoCQDiGKoW">这是 <b data-page-node-id="U1BH8aR3mfTMGGHNmdqbDA">全模块预览</b>（可点切换屏幕 / 切心情表情 / 改名），整合参考 App 全部 9 大学习板块。确认风格后落地到真实 app。</p>
 </div>
 
 <script src="chars_data.js"></script>
@@ -8911,13 +8998,19 @@
     }
     const _vl=charViewList, _vi=charViewIdx;
     if(!known){
-      /* 未认识 → 认识：标记认识 + 按规则发星（每日上限 / 每字仅一次） */
+      /* 首次认识：标记认识 + 按规则发星（每日上限 / 每字仅一次） */
       toggleLearned(ch,null);
       const got=awardCharStar(ch);
       if(got && window.toast)toast('认字成功 +1⭐');
     }else{
-      /* 已认识 → 取消：只取消，已领的星不回收、不补发 */
-      toggleLearned(ch,null);
+      /* 已认识 → 不再反向取消（避免误点丢失进度）：
+         旧数据从未领过星则补发一次并保留“已认识”，已领过则仅提示 */
+      if(!CHARS_STARRED.includes(ch)){
+        const got=awardCharStar(ch);
+        if(got && window.toast)toast('补发认字星星 +1⭐');
+      }else{
+        if(window.toast)toast('已经认识啦～');
+      }
     }
     renderCharModal();
     loadChars();
@@ -14616,11 +14709,11 @@ LOGIC_LEVELS.forEach(function(L){
   const MGMT_KEY='mp_mgmt_v1';
   let mgmtData={
     checkins:[
-      {name:'晨读 15 分钟',tag:'语文·绘本朗读',right:'已朗读',on:true,act:'morning'},
-      {name:'口算练习',tag:'数学·20题',right:'来出题',on:true,act:'math'},
-      {name:'英语跟读',tag:'英语·对话练',right:'对话练',on:true,act:'dialogue'},
-      {name:'户外运动 30 分',tag:'体能·跳绳',right:'必做',req:true,on:true,act:'outdoor'},
-      {name:'整理书包',tag:'习惯·自理',right:'必做',req:true,on:true,act:'pack'}
+      {name:'晨读 15 分钟',tag:'语文·绘本朗读',right:'已朗读',on:true,act:'morning',reward:1},
+      {name:'口算练习',tag:'数学·20题',right:'来出题',on:true,act:'math',reward:1},
+      {name:'英语跟读',tag:'英语·对话练',right:'对话练',on:true,act:'dialogue',reward:1},
+      {name:'户外运动 30 分',tag:'体能·跳绳',right:'必做',req:true,on:true,act:'outdoor',reward:1},
+      {name:'整理书包',tag:'习惯·自理',right:'必做',req:true,on:true,act:'pack',reward:1}
     ],
     studies:[
       {name:'识字：一年级上册',tag:'1–3年级'},
@@ -14669,7 +14762,8 @@ LOGIC_LEVELS.forEach(function(L){
         return;
       }
       box.innerHTML=mgmtData.checkins.map((c,i)=>{
-        return `<div class="mrow"><span class="nm">${esc(c.name)}<span class="tg">${esc(c.tag||'')}</span></span><span class="sw ${c.on?'':'off'}" onclick="toggleCheckin(${i})"><i></i></span><button class="mini-btn" onclick="editCheckin(${i})">✎</button><button class="mini-btn del" onclick="delCheckin(${i})">✕</button></div>`;
+        const rw=(c.reward||1);
+        return `<div class="mrow"><span class="nm">${esc(c.name)}<span class="tg">${esc(c.tag||'')}</span></span><span class="rw-badge" style="margin-right:8px">+${rw}⭐</span><span class="sw ${c.on?'':'off'}" onclick="toggleCheckin(${i})"><i></i></span><button class="mini-btn" onclick="editCheckin(${i})">✎</button><button class="mini-btn del" onclick="delCheckin(${i})">✕</button></div>`;
       }).join('');
     }catch(e){
       box.innerHTML=mcError('打卡列表加载失败','数据可能读取异常','<button class="btn" onclick="renderCheckins()">重试</button>');
@@ -14933,12 +15027,32 @@ LOGIC_LEVELS.forEach(function(L){
     try{ LocalRepo.exportToFile(); }catch(e){}
   }
 
+  /* 选择「完成奖励星星币」：预设 1/2/3/5/10，外加自定义（正整数）。
+     cur 为当前值（旧数据缺省按 1）。onOk 回调拿到的是数字。 */
+  function askReward(cur,onOk){
+    var cv=parseInt(cur,10);if(!cv||cv<1)cv=1;
+    var presets=['1','2','3','5','10'];
+    var opts=presets.map(function(p){return {value:p,label:p+' ⭐'};});
+    if(presets.indexOf(String(cv))<0){opts.unshift({value:String(cv),label:cv+' ⭐（自定义）'});}
+    opts.push({value:'__c',label:'✏️ 自定义…'});
+    showInputDlg({title:'完成奖励',msg:'完成这项打卡能得几颗星星币？',options:opts,value:String(cv),onOk:function(v){
+      if(v===null)return;
+      if(v==='__c'){
+        showInputDlg({title:'自定义奖励',msg:'输入完成可得星星币数量（正整数）',placeholder:'如 8',required:true,onOk:function(s){
+          var n=parseInt(s,10);if(!n||n<1){toast('请输入正整数');return;}onOk(n);
+        }});return;
+      }
+      onOk(parseInt(v,10));
+    }});
+  }
   function addCheckin(){
     showInputDlg({title:'添加打卡项',msg:'打卡项名称（如：晨读 15 分钟）',placeholder:'打卡项名称',required:true,onOk:function(name){
       if(name===null)return;
-      showInputDlg({title:'添加打卡项',msg:'标签（如：语文 / 必做 / 数学，可留空）',placeholder:'标签',onOk:function(tag){
+      showInputDlg({title:'添加打卡项',msg:'标签（如：语文 / 必做 / 数学，可留空）',placeholder:'标签',okText:'下一步',onOk:function(tag){
         if(tag===null)return;
-        mgmtData.checkins.push({name:name.trim(),tag:(tag||'').trim(),on:true});saveMgmt();renderCheckins();
+        askReward(1,function(rw){
+          mgmtData.checkins.push({name:name.trim(),tag:(tag||'').trim(),on:true,reward:rw});saveMgmt();renderCheckins();toast('已添加（完成得 '+rw+'⭐）');
+        });
       }});
     }});
   }
@@ -14946,9 +15060,11 @@ LOGIC_LEVELS.forEach(function(L){
     var c=mgmtData.checkins[i];if(!c)return;
     showInputDlg({title:'修改打卡项',msg:'打卡项名称',value:c.name,placeholder:'名称',required:true,onOk:function(name){
       if(name===null)return;
-      showInputDlg({title:'修改打卡项',msg:'标签',value:c.tag||'',placeholder:'标签',onOk:function(tag){
+      showInputDlg({title:'修改打卡项',msg:'标签',value:c.tag||'',placeholder:'标签',okText:'下一步',onOk:function(tag){
         if(tag===null)return;
-        mgmtData.checkins[i]={name:name.trim(),tag:(tag||'').trim(),on:c.on};saveMgmt();renderCheckins();
+        askReward(c.reward||1,function(rw){
+          mgmtData.checkins[i]={name:name.trim(),tag:(tag||'').trim(),on:c.on,reward:rw};saveMgmt();renderCheckins();toast('已修改（完成得 '+rw+'⭐）');
+        });
       }});
     }});
   }
@@ -16939,9 +17055,11 @@ LOGIC_LEVELS.forEach(function(L){
   function addHomeCheckin(){
     showInputDlg({title:'添加打卡项',msg:'例如：练琴 20 分钟',placeholder:'输入打卡项名称',required:true,okText:'下一步',onOk:function(v){
       if(v===null||!String(v).trim())return;
-      showInputDlg({title:'副标题（可留空）',msg:'例如：钢琴·哈农',placeholder:'可留空',okText:'添加',onOk:function(t){
-        mgmtData.checkins.push({id:newCkId(),name:String(v).trim(),tag:(t||'').trim(),right:'',on:true,req:false});
-        saveMgmt();renderCheckins();renderHomeTasks();renderCheckinTasks();toast('已添加打卡项');
+      showInputDlg({title:'副标题（可留空）',msg:'例如：钢琴·哈农',placeholder:'可留空',okText:'下一步',onOk:function(t){
+        askReward(1,function(rw){
+          mgmtData.checkins.push({id:newCkId(),name:String(v).trim(),tag:(t||'').trim(),right:'',on:true,req:false,reward:rw});
+          saveMgmt();renderCheckins();renderHomeTasks();renderCheckinTasks();toast('已添加打卡项（完成得 '+rw+'⭐）');
+        });
       }});
     }});
   }
@@ -16949,9 +17067,11 @@ LOGIC_LEVELS.forEach(function(L){
     var c=mgmtData.checkins[i];if(!c)return;
     showInputDlg({title:'修改打卡项',value:c.name,placeholder:'打卡项名称',required:true,okText:'下一步',onOk:function(v){
       if(v===null||!String(v).trim())return;
-      showInputDlg({title:'副标题（可留空）',value:c.tag||'',placeholder:'可留空',okText:'保存',onOk:function(t){
-        mgmtData.checkins[i].name=String(v).trim();mgmtData.checkins[i].tag=(t||'').trim();
-        saveMgmt();renderCheckins();renderHomeTasks();renderCheckinTasks();toast('已修改');
+      showInputDlg({title:'副标题（可留空）',value:c.tag||'',placeholder:'可留空',okText:'下一步',onOk:function(t){
+        askReward(c.reward||1,function(rw){
+          mgmtData.checkins[i].name=String(v).trim();mgmtData.checkins[i].tag=(t||'').trim();mgmtData.checkins[i].reward=rw;
+          saveMgmt();renderCheckins();renderHomeTasks();renderCheckinTasks();toast('已修改（完成得 '+rw+'⭐）');
+        });
       }});
     }});
   }
@@ -17360,6 +17480,50 @@ LOGIC_LEVELS.forEach(function(L){
     if(pop&&pop.classList.contains('on')){ try{ playPetQuiz(); }catch(e){} }
   }
   window.openQuizFromCard=openQuizFromCard;
+  /* 独立「趣味挑战」弹窗：不复用陪玩弹窗，顶部只留小萌加油，答题区按框设计不溢出；
+     复用 PLAY_QUIZ 题库与 awardPlayStar('quiz',5) 发星（沿用原每日上限），不另造经济系统 */
+  var fqIdx=-1;
+  function openFunQuiz(){
+    if(typeof petSleepGuard==='function'&&petSleepGuard())return;
+    var pf=document.getElementById('petFace'),box=document.getElementById('fqFace');
+    if(pf&&box)box.innerHTML=pf.innerHTML;
+    var q=document.getElementById('fqQ'),o=document.getElementById('fqOpts'),f=document.getElementById('fqFoot'),b=document.getElementById('fqBubble');
+    if(q)q.textContent='点下面的按钮开始答题';
+    if(o)o.innerHTML='';
+    if(f)f.innerHTML='<button class="bank-btn" onclick="funQuizStart()">🎲 开始答题</button>';
+    if(b)b.textContent='来挑战吧！看你能答对几题～';
+    var pop=document.getElementById('funQuizPop');if(pop)pop.classList.add('on');
+  }
+  function closeFunQuiz(){var pop=document.getElementById('funQuizPop');if(pop)pop.classList.remove('on');}
+  function funQuizStart(){
+    fqIdx=Math.floor(Math.random()*PLAY_QUIZ.length);
+    var q=PLAY_QUIZ[fqIdx];if(!q)return;
+    var qe=document.getElementById('fqQ');if(qe)qe.textContent=q.q;
+    var o=document.getElementById('fqOpts');if(o){o.innerHTML='';q.opts.forEach(function(op,j){var d=document.createElement('div');d.className='play-quiz-opt';d.textContent=op;d.onclick=function(){funQuizAnswer(j,d);};o.appendChild(d);});}
+    var f=document.getElementById('fqFoot');if(f)f.innerHTML='';
+  }
+  function funQuizAnswer(j,el){
+    var q=PLAY_QUIZ[fqIdx];if(!q)return;
+    var opts=document.querySelectorAll('#fqOpts .play-quiz-opt');
+    opts.forEach(function(o){o.onclick=null;});
+    var b=document.getElementById('fqBubble');
+    if(j===q.ans){
+      el.classList.add('ok');
+      var got=awardPlayStar('quiz',5,'趣味挑战答对');
+      if(b)b.textContent='答对啦！你真棒～'+(got?'奖励你一颗星星⭐':'今天已经超厉害啦！')+playRewardHint('quiz',5);
+      try{checkAchievements();}catch(e){}
+      bumpMood(6);
+    }else{
+      el.classList.add('no');
+      if(opts[q.ans])opts[q.ans].classList.add('ok');
+      if(b)b.textContent='差一点点～正确答案是「'+q.opts[q.ans]+'」，再试一次嘛😉';
+      bumpMood(2);
+    }
+    playConsume();
+    var again=document.createElement('button');again.className='bank-btn';again.style.marginTop='10px';again.textContent='🔄 换一题';again.onclick=funQuizStart;
+    var f=document.getElementById('fqFoot');if(f)f.appendChild(again);
+  }
+  window.openFunQuiz=openFunQuiz;window.closeFunQuiz=closeFunQuiz;window.funQuizStart=funQuizStart;window.funQuizAnswer=funQuizAnswer;
   function floatEmoji(e){
     var face=document.getElementById('playPetFace');if(!face)return;
     var d=document.createElement('div');d.className='float-heart';d.textContent=e;
@@ -19290,20 +19454,19 @@ LOGIC_LEVELS.forEach(function(L){
     return n>=limit?'（今日星星已拿满）':'（今日还可拿 '+(limit-n)+' 次⭐）';
   }
 
-  /* ---- 7. 把情绪打卡接入任务完成 ---- */
+  /* ---- 7. 把情绪打卡合并进完成庆祝卡片（不再单独弹第二张） ---- */
   function onTaskCompleted(idx){
     var c=mgmtData.checkins[idx];var name=c?c.name:'';
     awardCheckinStar(idx);
-    setTimeout(function(){showEmotionPop(name);},350);
     checkAchievements();
   }
   // 打卡奖励：每完成 1 项 +1⭐，当日全勤额外 +2⭐（每天一次），并写入流水
   function awardCheckinStar(idx){
     recordCheckinDay();
-    gachaPoints+=1;gachaSet(GACHA_KEYS.p,gachaPoints);
-    var c=mgmtData.checkins[idx];addEarn('star',1,'checkin','完成：'+(c?c.name:''));
-    floatStar(1);toast('完成打卡 +1⭐');
-    if(window.celebrate)window.celebrate({type:'small',emoji:'⭐',text:'+1⭐'});
+    var c=mgmtData.checkins[idx];var rw=(c&&c.reward)?parseInt(c.reward,10):1;if(!rw||rw<1)rw=1;
+    gachaPoints+=rw;gachaSet(GACHA_KEYS.p,gachaPoints);
+    addEarn('star',rw,'checkin','完成：'+(c?c.name:''));
+    floatStar(rw);showCkCele(rw,(c?c.name:''));
     var done=(loadCheckinDone()[getTodayKey()]||[]);
     var onN=mgmtData.checkins.filter(function(c){return c.on!==false;}).length;
     if(onN>0&&done.length>=onN&&STATS.dailyBonus!==getTodayKey()){
@@ -19312,6 +19475,23 @@ LOGIC_LEVELS.forEach(function(L){
     }
     refreshPointsUI();updateMilestone();
   }
+  function showCkCele(rw,name){
+    var pop=document.getElementById('ckCelePop');if(!pop)return;
+    rw=parseInt(rw,10);if(!rw||rw<1)rw=1;
+    var num=document.getElementById('ckCeleNum');if(num)num.textContent=rw;
+    var sf=document.getElementById('ckCeleStars');
+    if(sf){var n=Math.min(rw,12),s='';for(var k=0;k<n;k++)s+='⭐';if(rw>12)s='⭐×'+rw;sf.textContent=s;}
+    var nm=document.getElementById('ckCeleName');if(nm)nm.textContent=name?('「'+name+'」'):'';
+    /* 合并情绪打卡：重置选择 + 记录任务名 */
+    emotionTask=name||'任务';emotionPick=null;
+    var g=pop.querySelector('.emo-grid');if(g)g.querySelectorAll('.emo-btn').forEach(function(b){b.classList.remove('sel');});
+    pop.classList.add('on');
+  }
+  function closeCkCele(){var pop=document.getElementById('ckCelePop');if(pop)pop.classList.remove('on');emotionPick=null;emotionTask=null;}
+  function saveCkEmotion(){if(emotionPick){logMood(emotionPick.v,emotionPick.label,emotionTask);toast('情绪已记录 '+emotionPick.label+' 😊');}closeCkCele();}
+  function skipCkEmotion(){closeCkCele();}
+  if(window)window.showCkCele=showCkCele;
+  if(window)window.closeCkCele=closeCkCele;
 
   function saveAiConfig(){
     const endpoint=document.getElementById('aiEndpoint').value.trim();
