@@ -36,7 +36,7 @@
   .doc-sub{font-size:15px;color:var(--ink-soft);margin-bottom:22px;line-height:1.7}
 
   /* 设备外壳 */
-  .device{background:linear-gradient(160deg,#FFFFFF 0%,#FCF4EF 100%);overflow:hidden;position:absolute;top:50%;left:50%;width:1366px;height:1024px;transform:translate(-50%,-50%) scale(var(--shell-scale,1));transform-origin:center center;display:flex;flex-direction:column}
+  .device{background:linear-gradient(160deg,#FFFFFF 0%,#FCF4EF 100%);overflow:hidden;position:absolute;top:50%;left:50%;width:1366px;height:1024px;margin-left:-683px;margin-top:-512px;zoom:var(--shell-scale,1);display:flex;flex-direction:column}
   /* 固定虚拟壳 shellStyle：iPad 横屏设计基准 1366x1024，整壳等比缩放自适应（--shell-scale 由 JS 设置），根除忽大忽小 */
   html,body{height:100%}
   body{position:relative;min-height:100vh;margin:0;overflow:hidden;background:linear-gradient(160deg,#F3E7DF 0%,#EFE0D6 100%)}
@@ -429,7 +429,7 @@
   .hw-tag.plan .hw-bar-f{height:100%;background:var(--sage);border-radius:999px}
   .task.hw .hw-subj{margin-left:0}
   /* 添加/修改作业弹窗 */
-  .hw-add-mask{position:fixed;inset:0;background:rgba(40,30,38,.45);z-index:9000;display:none;align-items:center;justify-content:center;padding:16px}
+  .hw-add-mask{position:absolute;inset:0;background:rgba(40,30,38,.45);z-index:9000;display:none;align-items:center;justify-content:center;padding:16px}
   .hw-add-mask.on{display:flex}
   .hw-add-card{width:100%;max-width:380px;background:var(--surface);border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.28);overflow:hidden}
   .hw-add-h{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;font-size:16px;font-weight:800;color:var(--ink);border-bottom:1px solid var(--line)}
