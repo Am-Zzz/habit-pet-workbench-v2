@@ -3850,6 +3850,9 @@
   .mth-timer.off .dot{background:var(--ink-faint)}
   .mth-reshuffle{flex:none;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:800;color:var(--ink);cursor:pointer}
   .mth-reshuffle:active{background:var(--brand-s)}
+  .mth-wrongbtn{flex:none;background:#fff;border:1.5px solid var(--brand);border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:800;color:var(--brand-d);cursor:pointer;display:flex;align-items:center;gap:4px}
+  .mth-wrongbtn:active{background:var(--brand-s)}
+  .mth-wrongbtn b{color:var(--brand);min-width:10px;text-align:center}
   .mth-body{flex:1 1 auto;min-height:0;display:flex;box-sizing:border-box;margin-top:12px;border-top:1px solid var(--line)}
   .mth-left{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;box-sizing:border-box}
   .mth-left-hd{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 6px;font-size:13px;color:var(--ink-soft);font-weight:700;flex:0 0 auto}
@@ -3880,7 +3883,7 @@
   .mth-pad button:active{background:var(--brand-s);transform:scale(.96)}
   .mth-pad .fn{background:var(--surface);color:var(--ink-soft);font-size:16px}
   .mth-pad .fn.go{background:var(--brand-s);color:var(--brand-d)}
-  .mth-submit{margin-top:auto;flex:0 0 auto;width:100%;padding:15px 0;font-size:16px;font-weight:900;border:none;border-radius:12px;background:var(--brand);color:#fff;cursor:pointer}
+  .mth-submit{margin-top:14px;flex:0 0 auto;width:100%;padding:15px 0;font-size:16px;font-weight:900;border:none;border-radius:12px;background:var(--brand);color:#fff;cursor:pointer}
   .mth-submit:active{filter:brightness(.94)}
   .mth-result-acts{flex:0 0 auto;display:none;flex-direction:column;gap:10px;margin-top:auto}
   .mth-result-acts .btn{width:100%;padding:14px 0;font-size:15px;font-weight:800;border-radius:12px;border:1.5px solid var(--brand);cursor:pointer;background:var(--brand);color:#fff}
@@ -3906,6 +3909,11 @@
   .mth-check .cb-grade{background:var(--brand);color:#fff}
   .mth-check .cb-check:active{background:var(--line)}
   .mth-check .cb-grade:active{filter:brightness(.94)}
+  .mth-check .mth-check-list{width:100%;max-width:320px;max-height:190px;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-bottom:16px;text-align:left}
+  .mth-check .mth-check-list .ck-row{display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--ink);padding:4px 2px;border-bottom:1px dashed var(--line)}
+  .mth-check .mth-check-list .ck-row:last-child{border-bottom:none}
+  .mth-check .mth-check-list .ck-row b{font-size:15px;font-weight:900;color:var(--brand-d);margin-left:10px;min-width:34px;text-align:right}
+  .mth-check .mth-check-list .ck-h{font-size:12px;color:var(--ink-faint);font-weight:800;margin:2px 2px 6px}
 </style>
 
 <style>
@@ -5090,8 +5098,9 @@
           <div class="mth-levels" id="mthLevels"></div>
           <div class="mth-top">
             <div class="mth-day" id="mthDay">今日练习</div>
-            <div class="mth-tools">
+              <div class="mth-tools">
               <div class="mth-timer" id="mthTimer" onclick="mthToggleTimer()"><span class="dot"></span><span id="mthTime">00:00</span></div>
+              <button class="mth-wrongbtn" onclick="mthShowWrong()" title="错题库">📒 错题库 <b id="mthWrongN2">0</b></button>
               <button class="mth-reshuffle" onclick="mthReshuffle()">🔀 换一批</button>
             </div>
           </div>
@@ -14785,7 +14794,7 @@ LOGIC_LEVELS.forEach(function(L){
     m.addEventListener('click',function(e){if(e.target===m)closeDataDlg(null);});
     return m;
   }
-  function closeDataDlg(v){var m=document.getElementById('wbDataDlg');if(m){m.style.display='none';var cb=m._cb;m._cb=null;if(cb)cb(v);}}
+  function closeDataDlg(v){var m=document.getElementById('wbDataDlg');if(m){m.style.display='none';var pb=document.getElementById('mthWrongPracticeBtn');if(pb&&pb.parentNode)pb.parentNode.removeChild(pb);var cb=m._cb;m._cb=null;if(cb)cb(v);}}
   function exportAppData(){
     var data={};
     for(var i=0;i<LS.length;i++){var k=LS.key(i);try{data[k]=LS.getItem(k);}catch(e){}}
@@ -16010,7 +16019,7 @@ LOGIC_LEVELS.forEach(function(L){
     if(mthState.timerOn){ mthStartTimer(); }
     else { mthState.elapsed=Date.now()-mthState.start; var t=document.getElementById('mthTime'); if(t)t.textContent=mthFmt(mthState.elapsed); }
   }
-  function mthRenderWrongCount(){var n=Object.keys(mthLoadWrong()).length;var el=document.getElementById('mthWrongN');if(el)el.textContent=n;}
+  function mthRenderWrongCount(){var n=Object.keys(mthLoadWrong()).length;var el=document.getElementById('mthWrongN');if(el)el.textContent=n;var el2=document.getElementById('mthWrongN2');if(el2)el2.textContent=n;}
   function mthExpr(p){
     if(p.cmp) return '❓ '+p.a+' 和 '+p.b+' 哪个大？';
     return p.a+' '+p.op+' '+p.b+' =';
@@ -16195,6 +16204,7 @@ LOGIC_LEVELS.forEach(function(L){
           '<div class="ic">🔍</div>'+
           '<div class="ct">先检查一遍再批改</div>'+
           '<div class="cs">小提示：做完题目先自己<b>检查一遍</b>（算一算、对一对），养成检查作业的好习惯，再交给爸爸妈妈批改哦～</div>'+
+          '<div class="mth-check-list"><div class="ck-h">你写的答案（点开看看有没有算错）</div>'+mthState.probs.map(function(p,i){var mine=mthState.answers[i];var tx=p.cmp?(p.a+' 和 '+p.b+' 比大小'):(p.a+' '+p.op+' '+p.b+' =');return '<div class=\"ck-row\"><span>'+tx+'</span><b>'+(mine===null?'?':mine)+'</b></div>';}).join('')+'</div>'+
           '<div class="cbtns">'+
             '<button class="cb-check" onclick="mthBackToCheck()">我再检查一遍</button>'+
             '<button class="cb-grade" onclick="mthGrade()">检查好了，批改吧</button>'+
@@ -16249,8 +16259,47 @@ LOGIC_LEVELS.forEach(function(L){
     copy.onclick=function(){area.focus();area.select();try{document.execCommand('copy');copy.textContent='已复制 ✔';setTimeout(function(){copy.textContent='复制';},1500);}catch(e){}};
     var ok=document.getElementById('wbDataOk');ok.textContent='关闭';ok.onclick=function(){closeDataDlg(null);};
     var cancel=document.getElementById('wbDataCancel');cancel.style.display='none';
+    var oldPb=document.getElementById('mthWrongPracticeBtn'); if(oldPb&&oldPb.parentNode)oldPb.parentNode.removeChild(oldPb);
+    if(keys.length){
+      var pb=document.createElement('button');
+      pb.id='mthWrongPracticeBtn';
+      pb.textContent='📝 重练错题';
+      pb.style.cssText='flex:1;padding:10px;border:none;background:var(--brand);border-radius:10px;font-size:15px;font-weight:800;color:#fff;cursor:pointer';
+      pb.onclick=function(){ mthPracticeWrong(); };
+      var okb=document.getElementById('wbDataOk'); if(okb&&okb.parentNode)okb.parentNode.insertBefore(pb,okb);
+    }
     m.style.display='flex';
     setTimeout(function(){area.focus();area.select();},50);
+  }
+  function mthPracticeWrong(){
+    var lvKey=mthState.level;
+    var wrongKeys=mthWrongList(lvKey);
+    if(!wrongKeys.length){ if(typeof toast==='function')toast('这个难度还没有错题哦～'); return; }
+    mthShuffle(wrongKeys);
+    var pool=[], seen={};
+    wrongKeys.forEach(function(wk){
+      var pk=wk.slice(lvKey.length+1); var p=mthParseKey(lvKey,pk);
+      if(p&&!seen[wk]){ seen[wk]=1; pool.push(p); }
+    });
+    var cnt=(MTH_LEVELS[lvKey]&&MTH_LEVELS[lvKey].count)||30;
+    /* ⛔ 红线：补足随机题不做 seen 去重——5以内题空间仅42种但一页60题，
+       若去重会永远凑不满而陷入死循环。练习题重复无害，仅错题部分去重即可。 */
+    while(pool.length<cnt){ pool.push(mthGenOne(MTH_LEVELS[lvKey])); }
+    pool=mthShuffle(pool);
+    if(typeof closeDataDlg==='function')closeDataDlg(null);
+    mthStopTimer();
+    mthState.phase='answer';
+    mthState.probs=pool;
+    mthState.sheetDaily=false;
+    mthState.answers=new Array(pool.length).fill(null);
+    mthState.sel=null; mthState.correct=0;
+    mthState.start=Date.now(); mthState.elapsed=0; mthState.timerOn=true; mthState.timerStarted=false;
+    var t=document.getElementById('mthTimer'); if(t)t.classList.remove('off');
+    var tt=document.getElementById('mthTime'); if(tt)tt.textContent='00:00';
+    mthRenderDay();
+    mthRenderGrid();
+    mthRenderFoot('answer');
+    if(typeof toast==='function')toast('已抽出 '+wrongKeys.length+' 道错题，先练这些～');
   }
 
   const MODULES_KEY='mp_modules_v1';
