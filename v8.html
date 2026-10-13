@@ -20175,7 +20175,11 @@ LOGIC_LEVELS.forEach(function(L){
 #sc-anime .anime-intro{font-size:12px;color:var(--ink-soft);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 #sc-anime .anime-player{background:#1c1a1f;border-radius:16px;overflow:hidden;aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
 #sc-anime .anime-player iframe,#sc-anime .anime-player video{width:100%;height:100%;border:0;display:block}
-#sc-anime .anime-jump{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.9);color:var(--brand-d);border:none;border-radius:18px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;display:none}
+#sc-anime .anime-badge{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;padding:4px 10px;border-radius:12px;z-index:3;pointer-events:none}
+#sc-anime .anime-watch{display:flex;flex-direction:column;gap:6px;flex:0 0 auto}
+#sc-anime .anime-watch-btn{width:100%;background:var(--brand);color:#fff;border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:800;cursor:pointer}
+#sc-anime .anime-watch-btn:active{filter:brightness(.95)}
+#sc-anime .anime-watch-tip{font-size:11px;color:var(--ink-faint);text-align:center;line-height:1.5}
 #sc-anime .anime-now{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 #sc-anime .anime-now-t{font-size:16px;font-weight:800}
 #sc-anime .anime-now-s{font-size:12px;color:var(--ink-faint)}
@@ -20239,7 +20243,11 @@ LOGIC_LEVELS.forEach(function(L){
       <div class="anime-grid" id="animeGrid"></div>
     </div>
     <div class="anime-body anime-detail" id="animeDetailView" style="display:none">
-      <div class="anime-player" id="animePlayer"><div class="ph">视频加载中…</div><button class="anime-jump" id="animeJumpBtn" onclick="animeJumpWeb()">↗ 跳转网页观看</button></div>
+      <div class="anime-player" id="animePlayer"><div class="ph">视频加载中…</div><div class="anime-badge">内嵌预览 · 清晰度有限</div></div>
+      <div class="anime-watch">
+        <button class="anime-watch-btn" id="animeWatchBtn" onclick="animeJumpWeb()">📺 在 B站网页看高清（登录后可选 1080P + 弹幕）</button>
+        <div class="anime-watch-tip">内嵌预览清晰度有限；在网页登录 B站 后即可看高清、发弹幕</div>
+      </div>
       <div class="anime-now">
         <div><div class="anime-now-t" id="animeNowTitle">—</div><div class="anime-now-s" id="animeNowSub"></div></div>
       </div>
@@ -20413,7 +20421,7 @@ LOGIC_LEVELS.forEach(function(L){
     document.getElementById('animeNowSub').textContent='第 '+(i+1)+' / '+t.episodes.length+' 集';
     document.getElementById('animeIntroBox').textContent=t.intro||'';
     var p=document.getElementById('animePlayer');
-    p.innerHTML=animeEmbed(ep.url)+'<button class="anime-jump" id="animeJumpBtn" style="display:block" onclick="animeJumpWeb()">↗ 跳转网页观看</button>';
+    p.innerHTML=animeEmbed(ep.url)+'<div class="anime-badge">内嵌预览 · 清晰度有限</div>';
     var eps=document.getElementById('animeEps');if(!eps)return;eps.innerHTML='';
     t.episodes.forEach(function(e,idx){
       var b=document.createElement('div');b.className='anime-epbtn'+(idx===i?' cur':'');
@@ -20424,7 +20432,17 @@ LOGIC_LEVELS.forEach(function(L){
   }
   window.animeJumpWeb=function(){
     var t=animeData.themes.find(function(x){return x.id===animeCurId;});if(!t)return;
-    var ep=t.episodes[animeCurEp];if(ep&&ep.url)window.open(ep.url,'_blank');
+    var ep=t.episodes[animeCurEp];if(!ep||!ep.url)return;
+    var s=ep.url,u=ep.url;
+    var m=s.match(/bilibili\.com\/video\/(BV[\w]+)/i)||s.match(/bvid=(BV[\w]+)/i);
+    if(m){
+      var bv=m[1];
+      var bp=s.match(/[?&]p=(\d+)/i);
+      var page=bp?bp[1]:'1';
+      if(!bp){var pp=s.match(/[?&]page=(\d+)/i);page=pp?pp[1]:'1';}
+      u='https://www.bilibili.com/video/'+bv+'?p='+page;
+    }
+    window.open(u,'_blank');
   };
   window.animeToggleAuto=function(){
     var t=animeData.themes.find(function(x){return x.id===animeCurId;});if(!t)return;
